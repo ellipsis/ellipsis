@@ -1,0 +1,64 @@
+#!/usr/bin/env python
+
+# desc: copypasta via file, pipe or stdin
+
+import argparse, json, sys, requests
+
+url = 'http://snips.tk'
+
+lexers = {
+    '.sh':      'bash',
+    '.c':       'c',
+    '.css':     'css',
+    '.html':    'django',
+    '.js':      'js',
+    '.pl':      'perl',
+    '.php':     'php',
+    '.py':      'python',
+    '.rb':      'ruby',
+    '.sql':     'sql',
+    '.zsh':     'bash',
+}
+
+post = {'_call': 'new'}
+parser = argparse.ArgumentParser()
+parser.add_argument('filename', nargs='?')
+parser.add_argument('--author')
+parser.add_argument('--content')
+parser.add_argument('--lexer')
+parser.add_argument('--title')
+args = parser.parse_args()
+
+if args.content:
+	post['content'] = str(args.content)
+elif args.filename:
+    post['content'] = open(args.filename).read()
+    post['title'] = args.filename
+    for lexer in lexers:
+        if args.filename.endswith(lexer):
+            post['lexer'] = lexers[lexer]
+            break
+elif sys.stdin.isatty():
+    print 'Enter your snippet, Ctrl+D to end'
+    post['content'] = ''.join(sys.stdin.readlines())
+else:
+	post['content'] = ''.join(sys.stdin.readlines())
+
+if args.author:
+    post['author'] = args.author
+if args.title:
+    post['title'] = args.title
+if args.lexer:
+    post['lexer'] = args.lexer
+
+try:
+    res = requests.get(url + '/api/', params=post)
+    url = ''.join((url, json.loads(res.content)['result']))
+    print 'Your post is available at: %s' % url
+    if sys.platform == 'darwin':
+        import subprocess
+        p = subprocess.Popen('pbcopy', stdin=subprocess.PIPE)
+        p.stdin.write(url)
+        p.stdin.close()
+except Exception as e:
+    print 'An error occured!', e

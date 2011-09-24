@@ -1,0 +1,11 @@
+escape              ^Zz
+shelltitle          ''
+shell               zsh
+defscrollback       10000
+vbell               off
+startup_message     off
+terminfo            xterm*      ti=:te=
+termcap             linux       'AF=\E[3%dm:AB=\E[4%dm'
+termcap             xterm*      'AF=\E[3%dm:AB=\E[4%dm'
+terminfo            linux       'AF=\E[3%p1%dm:AB=\E[4%p1%dm'
+terminfo            xterm*      'AF=\E[3%p1%dm:AB=\E[4%p1%dm'

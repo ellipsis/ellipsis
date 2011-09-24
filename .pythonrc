@@ -1,0 +1,89 @@
+from __future__ import print_function
+import os, sys
+
+# version check
+version = 'pypy' if 'PyPy' in sys.version else 'py2' if sys.version_info[0] == 2 else 'py3'
+
+django = ipython = False
+
+# ipython check
+if version != 'pypy':
+    try:
+        import IPython
+        if sys.stdout is not sys.__stdout__:
+            print('IPython not usable in non-standard Python shell.')
+        else:
+            ipython = True
+    except ImportError: pass
+
+# django check
+if os.path.isfile('settings.py') and os.path.isfile('manage.py'):
+    django = True
+
+def django_setup():
+    import traceback
+    django_ns = {}
+    try:
+        # import models
+        project_dir = os.getcwd()
+        sys.path.insert(0, os.path.dirname(project_dir))
+        os.environ["DJANGO_SETTINGS_MODULE"] = '.'.join([os.path.split(project_dir)[-1], 'settings'])
+        from django.db.models.loading import get_models
+        for m in get_models():
+            try:
+                django_ns[m.__name__] = getattr(__import__(m.__module__, fromlist=[m.__name__]), m.__name__)
+            except ImportError:
+                raise
+        django_ns['models_list'] = django_ns.copy()
+
+        # set logging level
+        import logging
+        l = logging.getLogger('django.db.backends')
+        l.setLevel(logging.DEBUG)
+        l.addHandler(logging.StreamHandler())
+    except:
+        e_type, e_value, tb = sys.exc_info()
+        e_type = str(e_type).split("'")[1].split('.')[1]
+        print()
+        print("{0}: {1}".format(e_type, e_value))
+        print(traceback.format_list(traceback.extract_tb(tb))[-1].strip())
+    return django_ns
+
+if ipython:
+    user_ns = {
+        'os': os,
+        'sys': sys,
+    }
+    if django:
+        user_ns.update(django_setup())
+    if IPython.__version__ < '0.11':
+        shell = IPython.Shell.IPShell(user_ns=user_ns)
+        sys.exit(shell.mainloop())
+    else:
+        from IPython.frontend.terminal.ipapp import TerminalIPythonApp
+        app = TerminalIPythonApp.instance()
+        app.initialize()
+        app.shell.user_ns.update(user_ns)
+        sys.exit(app.start())
+else:
+    if django:
+        django_setup()
+    try:
+        import readline
+    except ImportError:
+        print("Module readline not available.")
+    else:
+        import rlcompleter
+        readline.parse_and_bind("tab: complete")
+        histfile = os.path.join(os.environ["HOME"], ".python_history")
+        try:
+            try: readline.read_history_file(histfile)
+            except IOError: pass
+            import atexit
+            atexit.register(readline.write_history_file, histfile)
+            del atexit
+        except AttributeError: pass
+        del histfile
+        del readline
+
+# vim: ft=python
