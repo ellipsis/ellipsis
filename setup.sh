@@ -3,11 +3,16 @@
 
 BASEDIR="$( cd -P "$( dirname "$0" )" && pwd )"
 
-for DOTFILE in $BASEDIR/.*; do
-    DOTNAME="$(basename $DOTFILE)"
+for DOTFILE in $BASEDIR/dot.*; do
+    NAME="$(basename $DOTFILE)"
+    DOTNAME="${NAME:3}"
+    DEST=~/"$DOTNAME"
+
+    # erasing existing dotfiles
+    if [ "$1" == "-f" ]; then
+        rm -rf "$DEST"
+    fi
 
     echo linking $DOTNAME
-    # check if file exists and overwrite if -f passed
-    [ "$1" == "-f" ] && [ -f ~/"$DOTNAME" ] && rm -rf ~/"$DOTNAME"
-    ln -s "$DOTFILE" ~/"$DOTNAME"
+    ln -s "$DOTFILE" "$DEST"
 done
