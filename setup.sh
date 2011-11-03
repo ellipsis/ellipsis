@@ -1,33 +1,41 @@
 #!/bin/sh
 # Script to automatically setup dotfile
+basedir="$( cd -p "$( dirname "$0" )" && pwd )"
 
-BASEDIR="$( cd -P "$( dirname "$0" )" && pwd )"
-
-for DOTFILE in $BASEDIR/dot.*; do
-    NAME="$(basename $DOTFILE)"
-    DOTNAME="${NAME:3}"
-    DEST=~/"$DOTNAME"
+for dotfile in $basedir/dot.*; do
+    name="$(basename $dotfile)"
+    dotname="${name:3}"
+    dest=~/"$dotname"
 
     # erasing existing dotfiles
     if [ "$1" == "-f" ]; then
-        rm -rf "$DEST"
+        rm -rf "$dest"
     fi
 
-    echo linking $DOTNAME
-    ln -s "$DOTFILE" "$DEST"
+    echo linking $dotname
+    ln -s "$dotfile" "$dest"
 done
 
 echo "list any additional external repos to install or enter to exit"
-read EXTERNAL_REPOS
+read external_repos
 
-for REPO in $EXTERNAL_REPOS; do
-    echo -n "install dot files from $REPO? (y/n) "
-    read INPUT
-    if [ "$INPUT" == "y" ]; then
-        if [ -d "$BASEDIR/dot-$REPO" ]; then
-            rm -rf $BASEDIR/dot-$REPO
+for repo in $external_repos; do
+    echo -n "install dot files from $repo? (y/n) "
+    read input
+    if [ "$input" == "y" ]; then
+        if [ "${repo[1,3]}" == "hg+" ]; then
+            name=`echo ${repo:3} | rev | cut -d "/" -f1 | rev`
+            hg clone ${repo:3} $basedir/$name
+        elif [ "${repo[1,4]}" == "git+" ]; then
+            name=`echo ${repo:4} | rev | cut -d "/" -f1 | rev`
+            git clone ${repo:4} $basedir/$name
+        else
+            name=$repo
+            hg clone https://bitbucket.org/zeekay/dot-$repo $basedir/dot-$repo
         fi
-        hg clone https://bitbucket.org/zeekay/dot-$REPO $BASEDIR/dot-$REPO
-        . $DEST/setup.sh
+        repo_basedir=$basedir/$name
+        . $real_basedir/setup.sh
     fi
 done
+unset basedir
+unset repo_basedir
