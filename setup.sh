@@ -22,8 +22,10 @@ echo "list any additional external repos to install or enter to exit"
 read external_repos
 
 for repo in $external_repos; do
+    echo
     echo -n "install dot files from $repo? (y/n) "
     read input
+    echo
     if [ "$input" == "y" ]; then
         if [ "${repo[1,3]}" == "hg+" ]; then
             name=`echo ${repo:3} | rev | cut -d "/" -f1 | rev`
