@@ -1,6 +1,6 @@
 #!/bin/sh
 # Script to automatically setup dotfile
-basedir="$( cd -p "$( dirname "$0" )" && pwd )"
+basedir="$( cd -P "$( dirname "$0" )" && pwd )"
 
 for dotfile in $basedir/dot.*; do
     name="$(basename $dotfile)"
@@ -37,5 +37,3 @@ for repo in $external_repos; do
         . $real_basedir/setup.sh
     fi
 done
-unset basedir
-unset repo_basedir
