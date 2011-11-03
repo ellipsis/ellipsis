@@ -30,8 +30,8 @@ for repo in $external_repos; do
             name=`echo ${repo:4} | rev | cut -d "/" -f1 | rev`
             git clone ${repo:4} $basedir/$name
         else
-            name=$repo
-            hg clone https://bitbucket.org/zeekay/dot-$repo $basedir/dot-$repo
+            name=dot-$repo
+            hg clone https://bitbucket.org/zeekay/$name $basedir/$name
         fi
         repo_basedir=$basedir/$name
         . $repo_basedir/setup.sh
