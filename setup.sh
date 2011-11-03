@@ -2,6 +2,7 @@
 # Script to automatically setup dotfile
 basedir="$( cd -P "$( dirname "$0" )" && pwd )"
 
+echo "linking dot files"
 for dotfile in $basedir/dot.*; do
     name="$(basename $dotfile)"
     dotname="${name:3}"
@@ -16,6 +17,7 @@ for dotfile in $basedir/dot.*; do
     ln -s "$dotfile" "$dest"
 done
 
+echo 
 echo "list any additional external repos to install or enter to exit"
 read external_repos
 
