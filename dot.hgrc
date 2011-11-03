@@ -23,14 +23,14 @@ group = hg
 #hgext.extdiff =
 hgext.fetch =
 #hgext.record=
-#transplant=
+transplant=
 #printparents = ~/.hgext/printparents.py
 #prompt = ~/.hgext/prompt.py
 #hgext.bookmarks =
 #hggit = ~/.hgext/hggit
 #hgext.graphlog = 
 #hggit = 
-
+histedit = ~/.hgext/hg_histedit.py
 #[web]
 #cacerts = /etc/hg-dummy-cert.pem #mac
 #cacerts = /etc/ssl/certs/ca-certificates.crt #linux
