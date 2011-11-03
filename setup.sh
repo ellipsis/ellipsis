@@ -1,5 +1,5 @@
 #!/bin/sh
-# Script to automatically create dotfile symlinks
+# Script to automatically setup dotfile
 
 BASEDIR="$( cd -P "$( dirname "$0" )" && pwd )"
 
