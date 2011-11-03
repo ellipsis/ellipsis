@@ -16,6 +16,8 @@ for dotfile in $basedir/dot.*; do
     if [ -z "$dest" ]; then
         echo linking $dotname
         ln -s "$dotfile" "$dest"
+    else
+        echo $dotname already exists
     fi
 done
 
