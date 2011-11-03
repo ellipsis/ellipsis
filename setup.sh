@@ -13,8 +13,10 @@ for dotfile in $basedir/dot.*; do
         rm -rf "$dest"
     fi
 
-    echo linking $dotname
-    ln -s "$dotfile" "$dest"
+    if [ -z "$dest" ]; then
+        echo linking $dotname
+        ln -s "$dotfile" "$dest"
+    fi
 done
 
 echo 
