@@ -34,6 +34,6 @@ for repo in $external_repos; do
             hg clone https://bitbucket.org/zeekay/dot-$repo $basedir/dot-$repo
         fi
         repo_basedir=$basedir/$name
-        . $real_basedir/setup.sh
+        . $repo_basedir/setup.sh
     fi
 done
