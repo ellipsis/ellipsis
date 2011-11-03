@@ -21,7 +21,7 @@ echo
 echo "list any additional external repos to install or enter to exit"
 read external_repos
 
-for repo in $external_repos; do
+for repo in ${external_repos[*]}; do
     echo
     echo -n "install dot files from $repo? (y/n) "
     read input
