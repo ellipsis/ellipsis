@@ -21,7 +21,10 @@ echo
 echo "list any additional external repos to install or enter to exit"
 read external_repos
 
-for repo in ${external_repos[*]}; do
+dotfiles_dir=$basedir
+for repo in $external_repos; do
+    # reset basedir
+    basedir=$dotfiles_dir
     echo
     echo -n "install dot files from $repo? (y/n) "
     read input
