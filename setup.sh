@@ -21,7 +21,7 @@ echo "list any additional external repos to install or enter to exit"
 read EXTERNAL_REPOS
 
 for REPO in $EXTERNAL_REPOS; do
-    echo "install dot files from $REPO? (y/n)"
+    echo -n "install dot files from $REPO? (y/n) "
     read INPUT
     if [ "$INPUT" == "y" ]; then
         DEST=~/."$REPO"
