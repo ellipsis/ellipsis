@@ -1,5 +1,5 @@
 term                xterm-256color
-attrcolor           b           ".I"
+attrcolor           b ".I"
 defbce              "on"
 escape              ^Zz
 shelltitle          ''
