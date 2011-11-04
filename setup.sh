@@ -4,20 +4,20 @@ basedir="$( cd -P "$( dirname "$0" )" && pwd )"
 
 echo "linking dot files"
 for dotfile in $basedir/dot.*; do
-    name="$(basename $dotfile)"
-    dotname="${name:3}"
-    dest=~/"$dotname"
+    name="`basename $dotfile`"
+    dotname="`echo $name | cut -c4-`"
+    dest="$HOME/$dotname"
 
     # erasing existing dotfiles
-    if [ "$1" == "-f" ]; then
+    if [ "$1" = "-f" ]; then
         rm -rf "$dest"
     fi
 
     if [ -z "$dest" ]; then
-        echo linking $dotname
+        echo "linking $dotname"
         ln -s "$dotfile" "$dest"
     else
-        echo $dotname already exists
+        echo "$dotname already exists"
     fi
 done
 
@@ -32,18 +32,23 @@ for repo in $external_repos; do
     echo
     echo -n "install dot files from $repo? (y/n) "
     read input
-    echo
-    if [ "$input" == "y" ]; then
-        if [ "${repo[1,3]}" == "hg+" ]; then
-            name=`echo ${repo:3} | rev | cut -d "/" -f1 | rev`
-            hg clone ${repo:3} $basedir/$name
-        elif [ "${repo[1,4]}" == "git+" ]; then
-            name=`echo ${repo:4} | rev | cut -d "/" -f1 | rev`
-            git clone ${repo:4} $basedir/$name
-        else
-            name=dot-$repo
-            hg clone https://bitbucket.org/zeekay/$name $basedir/$name
-        fi
+    if [ "$input" = "y" ]; then
+        case $repo in
+            hg+*)
+                repo=`echo $repo | cut -c 3-`
+                name=`echo $repo  rev | cut -d "/" -f1 | rev`
+                hg clone $repo $basedir/$name
+            ;;
+            git+*)
+                repo=`echo $repo | cut -c 4-`
+                name=`echo $repo | rev | cut -d "/" -f1 | rev`
+                git clone $repo $basedir/$name
+            ;;
+            *)
+                name=dot-$repo
+                hg clone https://bitbucket.org/zeekay/$name $basedir/$name
+            ;;
+        esac
         repo_basedir=$basedir/$name
         . $repo_basedir/setup.sh
     fi
