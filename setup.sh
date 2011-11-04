@@ -10,14 +10,15 @@ for dotfile in $basedir/dot.*; do
 
     # erasing existing dotfiles
     if [ "$1" = "-f" ]; then
+        echo "removing $dest"
         rm -rf "$dest"
     fi
 
-    if [ -z "$dest" ]; then
+    if [ -f "$dest" ] || [ -d "$dest" ]; then
+        echo "$dotname already exists"
+    else
         echo "linking $dotname"
         ln -s "$dotfile" "$dest"
-    else
-        echo "$dotname already exists"
     fi
 done
 
