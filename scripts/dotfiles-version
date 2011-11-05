@@ -2,7 +2,7 @@
 
 # echos repo names & version info
 
-basedir="$( cd -P "$( dirname "$0" )" && pwd )"
+basedir="$( cd -P "$( dirname "$0" )" && pwd )"/..
 
 echo dot-files
 hg id -n $basedir

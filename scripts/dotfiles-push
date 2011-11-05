@@ -1,6 +1,6 @@
 #!/bin/sh
 
-basedir="$( cd -P "$( dirname "$0" )" && pwd )"
+basedir="$( cd -P "$( dirname "$0" )" && pwd )"/..
 
 cd $basedir
 hg ci
