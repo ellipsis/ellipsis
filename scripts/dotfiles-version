@@ -3,11 +3,12 @@
 # echos repo names & version info
 
 basedir="$( cd -P "$( dirname "$0" )" && pwd )"/..
+version=`hg id -n $basedir`
 
-echo dot-files
-hg id -n $basedir
+echo dot-files $version
 
 for dir in $basedir/dot-*; do
-    echo $dir | rev | cut -d "/" -f1 | rev
-    hg id -n $dir
+    name=`echo $dir | rev | cut -d "/" -f1 | rev | cut -c5-`
+    version=`hg id -n $dir`
+    echo $name $version
 done

@@ -13,10 +13,11 @@ fi
 
 for dir in $basedir/dot-*; do
     cd $dir
+    name=`echo $dir | rev | cut -d "/" -f1 | rev | cut -c5-`
     status="`hg status`"
     if [ "$status" ]; then
         echo "\033[1m"
-        echo `echo $dir | rev | cut -d "/" -f1 | rev` "\033[0m"
+        echo "$name \033[0m"
         echo $status
     fi
 done
