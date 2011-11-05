@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# echos repo names & version info
+
+basedir="$( cd -P "$( dirname "$0" )" && pwd )"/..
+
+cd $basedir
+status="`hg status`"
+if [ "$status" ]; then
+    echo "\033[1mdot-files \033[0m"
+    echo $status
+fi
+
+for dir in $basedir/dot-*; do
+    cd $dir
+    status="`hg status`"
+    if [ "$status" ]; then
+        echo "\033[1m"
+        echo `echo $dir | rev | cut -d "/" -f1 | rev` "\033[0m"
+        echo $status
+    fi
+done
