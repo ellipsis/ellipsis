@@ -45,8 +45,7 @@ MD5=$(which md5sum 2>/dev/null) || \
     MD5=$(which md5 2>/dev/null)
 [ -x "${MD5}" ] && CHECKSUM=`${MD5} "$HGTMP/msg"`
 if [ -s "$HGTMP/diff" ]; then
-    vim "+e $HGTMP/diff" '+set buftype=help filetype=diff' "+vsplit $HGTMP/msg" || exit $?
-    # $EDITOR "$HGTMP/msg" "$HGTMP/diff" || exit $?
+    vim "+e $HGTMP/msg" "+vsplit $HGTMP/diff" '+set buftype=help filetype=diff' '+wincmd w' || exit $?
 else
     $EDITOR "$HGTMP/msg" || exit $?
 fi

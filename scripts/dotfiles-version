@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# echos repo names & version info
+
 basedir="$( cd -P "$( dirname "$0" )" && pwd )"
 
 echo dot-files
