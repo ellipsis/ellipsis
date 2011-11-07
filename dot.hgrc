@@ -19,15 +19,19 @@ histedit = ~/.hgext/hg_histedit.py
 #hgext.bookmarks =
 #hgext.graphlog = 
 
+[mergetool "threesome"]
+cmd = "vim -f $BASE $LOCAL $REMOTE $MERGED -c 'ThreesomeInit'"
+trustExitCode = true
+
 [merge-tools]
 vimdiff.executable = vim
 vimdiff.args = -d -c "wincmd J" "$output" "$local" "$other" "$base"
 vimdiff.checkchanged = true
 #vimdiff.gui = true
-threesome.executable = vim
-threesome.args = -f $base $local $other $output -c 'ThreesomeInit'
-threesome.premerge = keep
-threesome.priority = 1
+#threesome.executable = vim
+#threesome.args = -f $base $local $other $output -c 'ThreesomeInit'
+#threesome.premerge = keep
+#threesome.priority = 1
 
 [hostfingerprints]
 bitbucket.org = 81:2b:08:90:dc:d3:71:ee:e0:7c:b4:75:ce:9b:6c:48:94:56:a1:fe
