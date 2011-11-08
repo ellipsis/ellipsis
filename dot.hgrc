@@ -4,10 +4,6 @@ editor = ~/.bin/hgeditor
 ssh = ssh -o ControlMaster=no
 merge = vimdiff
 
-[trusted]
-users = zeekay, zk, root, hg
-group = hg
-
 [defaults]
 log = -r :
 
