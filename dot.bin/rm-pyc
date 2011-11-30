@@ -7,7 +7,7 @@ import os
 import sys
 
 def rm_pyc(f):
-    if f[-3:] == 'pyc':
+    if f[-3:] in ['pyc', 'pyo']:
         print '- ' + f
         os.remove(f)
 
