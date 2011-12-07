@@ -4,20 +4,11 @@
 
 basedir="$( cd -P "$( dirname "$0" )" && pwd )"/..
 
-cd $basedir
-status="`hg status`"
-if [ "$status" ]; then
-    echo "\033[1mdot-files \033[0m"
-    echo $status
-fi
+echo "\033[1mdot-file\033[0m `hg id -n $basedir`"
+hg status $basedir
 
 for dir in $basedir/dot-*; do
-    cd $dir
     name=`echo $dir | rev | cut -d "/" -f1 | rev | cut -c5-`
-    status="`hg status`"
-    if [ "$status" ]; then
-        echo "\033[1m"
-        echo "$name \033[0m"
-        echo $status
-    fi
+    echo "\033[1m$name\033[0m `hg id -n $dir`"
+    hg status $dir
 done
