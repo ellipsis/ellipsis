@@ -2,15 +2,21 @@
 
 basedir="$( cd -P "$( dirname "$0" )" && pwd )"/..
 
-cd $basedir
-hg ci
-hg push
+hg_push(){
+    cd $1
+    hg ci
+    hg push
+}
 
-for dir in dot*; do
-    dir=$basedir/$dir
-    if [ -d "$dir" ] && [ -f "$dir/.hg/hgrc" ]; then
-        cd $dir
-        hg ci
-        hg push
-    fi
+git_push(){
+    cd $1
+    git commit -a
+    git push
+}
+
+[ -d "$basedir/.hg" ] && hg_push $basedir || git_push $basedir
+
+for repo in `find . -depth 2 -name '.hg' -o -depth 2 -name '.git' | cut -d / -f 2`; do
+    dir=$basedir/$repo
+    [ -d "$dir/.hg" ] && hg_push $dir || git_push $dir
 done
