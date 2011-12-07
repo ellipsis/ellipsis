@@ -4,7 +4,7 @@
 
 basedir="$( cd -P "$( dirname "$0" )" && pwd )"/..
 
-echo "\033[1mdot-file\033[0m `hg id -n $basedir`"
+echo "\033[1mdotfiles\033[0m `hg id -n $basedir`"
 hg status $basedir
 
 for dir in $basedir/dot-*; do
