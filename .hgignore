@@ -1,4 +1,3 @@
 syntax: glob
 *.pyc
-dot-ipython/profile_default
-dot.ipython/profile_default
+ipython/profile_default

@@ -1,12 +1,19 @@
 #!/bin/sh
-# Script to automatically setup dotfile
+
+# Script to automatically setup dotfiles
+
 basedir="$( cd -P "$( dirname "$0" )" && pwd )"
 
 echo "linking dot files"
-for dotfile in $basedir/dot.*; do
+
+for dotfile in `find $basedir -depth 1 -name '*' \
+    -a ! -name 'setup.sh' \
+    -a ! -name 'scripts' \
+    -a ! -name '.*' \
+    -a ! -name 'dot-*'`; do
+
     name="`basename $dotfile`"
-    dotname="`echo $name | cut -c4-`"
-    dest="$HOME/$dotname"
+    dest="$HOME/.$name"
 
     # erasing existing dotfiles
     if [ "$1" = "-f" ]; then
@@ -15,14 +22,14 @@ for dotfile in $basedir/dot.*; do
     fi
 
     if [ -f "$dest" ] || [ -d "$dest" ]; then
-        echo "$dotname already exists"
+        echo "$name already exists"
     else
-        echo "linking $dotname"
+        echo "linking $name"
         ln -s "$dotfile" "$dest"
     fi
 done
 
-echo 
+echo
 echo "list any additional external repos to install or enter to exit"
 read external_repos
 
