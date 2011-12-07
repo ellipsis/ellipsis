@@ -3,8 +3,10 @@ XTerm*loginShell: on
 XTerm*reverseWrap: on
 XTerm*scrollBar: false
 XTerm*scrollBar_floating: true
-XTerm*font: xft:Dina:pixelsize=8
-
+! XTerm*font: xft:Dina:pixelsize=8
+XTerm*font: xft:MonteCarlo:pixelsize=8
+! hack to make cursor show up with xft font
+urxvt*cursorUnderline: true
 URxvt*foreground: #f2f2f2
 URxvt*background: #101010
 
@@ -53,7 +55,8 @@ URxvt.saveLines:32767
 URxvt*scrollBar:        false
 
 URxvt*tint: black
-URxvt*font:          xft:Dina:pixelsize=8
+!URxvt*font:          xft:Dina:pixelsize=8
+URxvt*font:          xft:MonteCarlo:pixelsize=8
 
 ! clickable urls
 URxvt.perl-ext-common: default,matcher

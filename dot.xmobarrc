@@ -1,0 +1,22 @@
+Config { font = "xft:MonteCarlo:pixelsize=8"
+       , bgColor = "#000000"
+       , fgColor = "#ffffff"
+       , position = TopSize C 100 18
+       , lowerOnStart = True
+       , commands = [ Run Date "%a %b %_d %H:%M" "date" 10
+                    -- , Run Weather "KMKC" ["-t","<station>: <tempC>C","-L","18","-H","25","--normal","green","--high","red","--low","lightblue"] 36000
+                    -- , Run Network "eth0" ["-L","0","-H","32","--normal","green","--high","red"] 10
+                    -- , Run Network "eth1" ["-L","0","-H","32","--normal","green","--high","red"] 10
+                    -- , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
+                    -- , Run Memory ["-t","Mem: <usedratio>%"] 10
+                    -- , Run Swap [] 10
+                    -- , Run Com "uname" ["-s","-r"] "" 36000
+                    , Run StdinReader
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "%StdinReader% }{ <fc=#ffffcc>%date%</fc>"
+       -- , template = "%StdinReader% %cpu% %memory% %swap% %eth0% - %eth1% }{ <fc=#ffffcc>%date%</fc> %KMKC% %uname%"
+}
+
+-- vim:set filetype=haskell:

@@ -13,19 +13,21 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
   unset f
 fi
 
+xset +fp ~/.fonts
+xsetroot -cursor_name left_ptr
+if [ `hostname` == "fool" ]; then
+    jack_control start
+    ffado-dbus-server &
+fi
+xrdb ~/.Xdefaults &
+xcompmgr -c &
+nitrogen --restore
+# ~/.bin/tray &
+# capslock into escape, swap alt/win keys
+# xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+xmodmap ~/.Xmodmap
 # exec gnome-session
 # exec startkde
 # exec startxfce4
 # ...or the Window Manager of your choice
-xset +fp ~/.fonts
-xsetroot -cursor_name left_ptr
-jack_control start
-ffado-dbus-server &
-xrdb ~/.Xdefaults &
-xcompmgr -c &
-nitrogen --restore &
-xscreensaver &
-~/.bin/tray &
-# capslock into escape
-xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
 exec ck-launch-session xmonad
