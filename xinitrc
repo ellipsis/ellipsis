@@ -22,7 +22,7 @@ fi
 xrdb ~/.Xdefaults &
 xcompmgr -c &
 nitrogen --restore
-# ~/.bin/tray &
+nm-applet &
 # capslock into escape, swap alt/win keys
 # xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
 xmodmap ~/.Xmodmap
