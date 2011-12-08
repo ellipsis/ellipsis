@@ -1,0 +1,9 @@
+"3.3 (created: 2011/11/13 17:32:12)
+
+command! -nargs=+ g open g <args>
+map ; :
+map <C-h> :tabprevious<Return>
+map <C-l> :tabnext<Return>
+source! ~/.vimperatorrc.local
+
+" vim: set ft=vimperator:
