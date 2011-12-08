@@ -7,22 +7,22 @@ basedir="$( cd -P "$( dirname "$0" )" && pwd )"/..
 cd $basedir
 
 if [ -d ".hg" ]; then
-    echo "\033[1mdotfiles\033[0m `hg id -n`"
+    echo -e "\033[1mdotfiles\033[0m `hg id -n`"
     hg status
 else
-    echo "\033[1mdotfiles\033[0m `git rev-parse --short HEAD`"
+    echo -e "\033[1mdotfiles\033[0m `git rev-parse --short HEAD`"
     git status
 fi
 
-for dir in `find . -maxdepth 2 -name '.hg' -o -maxdepth 2 -name '.git' | cut -d / -f 2`; do
+for dir in `find . -mindepth 2 -maxdepth 2 -name '.hg' -o -name '.git' | cut -d / -f 2`; do
     cd $basedir/$dir
     name="`pwd | rev | cut -d / -f1 | rev`"
 
     if [ -d ".hg" ]; then
-        echo "\033[1m$name\033[0m `hg id -n`"
+        echo -e "\033[1m$name\033[0m `hg id -n`"
         hg status
     else
-        echo "\033[1m$name\033[0m `git rev-parse --short HEAD`"
+        echo -e "\033[1m$name\033[0m `git rev-parse --short HEAD`"
         git status
     fi
 

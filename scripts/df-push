@@ -11,9 +11,9 @@ else
     git push
 fi
 
-for dir in `find . \
-    -mindepth 2 -maxdepth 2 -name '.hg' -o \
-    -mindepth 2 -maxdepth 2 -name '.git' | cut -d / -f 2`; do
+for dir in `find . -mindepth 2 -maxdepth 2 \
+    -name '.hg' -o \
+    -name '.git' | cut -d / -f 2`; do
 
     cd $basedir/$dir
     if [ -d ".hg" ]; then
