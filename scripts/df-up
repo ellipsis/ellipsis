@@ -3,12 +3,20 @@
 basedir="$( cd -P "$( dirname "$0" )" && pwd )"/..
 
 cd $basedir
-hg pull && hg up
 
-for dir in dot*; do
-    dir=$basedir/$dir
-    if [ -d "$dir" ] && [ -f "$dir/.hg/hgrc" ]; then
-        cd $dir
+if [ -d ".hg" ]; then
+    hg pull && hg up
+else
+    git pull
+fi
+
+for dir in `find . -depth 2 -name '.hg' -o -depth 2 -name '.git' | cut -d / -f 2`; do
+    cd $basedir/$dir
+
+    if [ -d ".hg" ]; then
         hg pull && hg up
+    else
+        git pull
     fi
+
 done
