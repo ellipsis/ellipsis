@@ -44,16 +44,22 @@ for repo in $external_repos; do
         case $repo in
             hg+*)
                 repo=`echo $repo | cut -c 4-`
-                name=`echo $repo | rev | cut -d "/" -f1 | rev | cut -c5-`
+                name=`echo $repo | rev | cut -d "/" -f1 | rev`
+                # trim dot- from beginning of repo name
+                [ "`echo $name | cut -c1-4`" = "dot-" ] && name=`echo $name | cut -c5-`
                 hg clone $repo $basedir/$name
             ;;
             git+*)
                 repo=`echo $repo | cut -c 5-`
                 name=`echo $repo | rev | cut -d "/" -f1 | rev | cut -c5-`
+                # trim dot- from beginning of repo name
+                [ "`echo $name | cut -c1-4`" = "dot-" ] && name=`echo $name | cut -c5-`
                 git clone $repo $basedir/$name
             ;;
             *)
-                name=${repo:4}
+                name=$repo
+                # trim dot- from beginning of repo name
+                [ "`echo $name | cut -c1-4`" = "dot-" ] && name=`echo $name | cut -c5-`
                 hg clone https://bitbucket.org/zeekay/$name $basedir/$name
             ;;
         esac
