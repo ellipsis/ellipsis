@@ -4,6 +4,8 @@
 
 basedir="$( cd -P "$( dirname "$0" )" && pwd )"
 
+trap "exit 0" SIGINT
+
 echo "linking dot files"
 
 for dotfile in `find $basedir -maxdepth 1 -name '*' \

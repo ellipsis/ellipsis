@@ -4,6 +4,8 @@ basedir="$( cd -P "$( dirname "$0" )" && pwd )"/..
 
 cd $basedir
 
+trap "exit 0" SIGINT
+
 if [ -d ".hg" ]; then
     hg pull && hg up
 else

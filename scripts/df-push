@@ -2,6 +2,8 @@
 
 basedir="$( cd -P "$( dirname "$0" )" && pwd )"/..
 
+trap "exit 0" SIGINT
+
 cd $basedir
 if [ -d ".hg" ]; then
     hg ci
