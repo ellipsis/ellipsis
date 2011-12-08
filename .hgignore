@@ -1,6 +1,11 @@
 syntax: glob
 *.pyc
-ipython/
+ipython/**/db
+ipython/**/log
+ipython/**/pid
+ipython/**/security
+ipython/**/startup
+ipython/**/history.sqlite
 *.orig
 xmonad
 vimperator/info
