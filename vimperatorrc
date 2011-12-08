@@ -4,6 +4,9 @@ command! -nargs=+ g open g <args>
 map ; :
 map <C-h> :tabprevious<Return>
 map <C-l> :tabnext<Return>
+map J <C-u>
+map K <C-d>
+
 source! ~/.vimperatorrc.local
 
 " vim: set ft=vimperator:
