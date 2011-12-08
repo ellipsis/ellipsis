@@ -43,17 +43,17 @@ for repo in $external_repos; do
     if [ "$input" = "y" ]; then
         case $repo in
             hg+*)
-                repo=`echo $repo | cut -c 3-`
-                name=`echo $repo  rev | cut -d "/" -f1 | rev`
+                repo=`echo $repo | cut -c 4-`
+                name=`echo $repo | rev | cut -d "/" -f1 | rev | cut -c5-`
                 hg clone $repo $basedir/$name
             ;;
             git+*)
-                repo=`echo $repo | cut -c 4-`
-                name=`echo $repo | rev | cut -d "/" -f1 | rev`
+                repo=`echo $repo | cut -c 5-`
+                name=`echo $repo | rev | cut -d "/" -f1 | rev | cut -c5-`
                 git clone $repo $basedir/$name
             ;;
             *)
-                name=dot-$repo
+                name=${repo:4}
                 hg clone https://bitbucket.org/zeekay/$name $basedir/$name
             ;;
         esac
