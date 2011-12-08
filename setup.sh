@@ -12,7 +12,7 @@ for dotfile in `find $basedir -maxdepth 1 -name '*' \
     -a ! -name 'setup.sh' \
     -a ! -name 'scripts' \
     -a ! -name '.*' \
-    -a ! -name 'dot-*'`; do
+    -a ! -name 'dot-*' | sort`; do
 
     name="`basename $dotfile`"
     dest="$HOME/.$name"

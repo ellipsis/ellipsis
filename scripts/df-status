@@ -16,7 +16,7 @@ else
     git status
 fi
 
-for dir in `find . -mindepth 2 -maxdepth 2 -name '.hg' -o -name '.git' | cut -d / -f 2`; do
+for dir in `find . -mindepth 2 -maxdepth 2 -name '.hg' -o -name '.git' | cut -d / -f 2 | sort`; do
     cd $basedir/$dir
     name="`pwd | rev | cut -d / -f1 | rev`"
 
