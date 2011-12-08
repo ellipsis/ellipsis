@@ -10,7 +10,7 @@ else
     git pull
 fi
 
-for dir in `find . -depth 2 -name '.hg' -o -depth 2 -name '.git' | cut -d / -f 2`; do
+for dir in `find . -maxdepth 2 -name '.hg' -o -maxdepth 2 -name '.git' | cut -d / -f 2`; do
     cd $basedir/$dir
 
     if [ -d ".hg" ]; then

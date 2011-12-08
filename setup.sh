@@ -6,7 +6,7 @@ basedir="$( cd -P "$( dirname "$0" )" && pwd )"
 
 echo "linking dot files"
 
-for dotfile in `find $basedir -depth 1 -name '*' \
+for dotfile in `find $basedir -maxdepth 1 -name '*' \
     -a ! -name 'setup.sh' \
     -a ! -name 'scripts' \
     -a ! -name '.*' \

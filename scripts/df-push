@@ -11,8 +11,8 @@ else
     git push
 fi
 
-for repo in `find . -depth 2 -name '.hg' -o -depth 2 -name '.git' | cut -d / -f 2`; do
-    cd $basedir/$repo
+for dir in `find . -maxdepth 2 -name '.hg' -o -maxdepth 2 -name '.git' | cut -d / -f 2`; do
+    cd $basedir/$dir
     if [ -d ".hg" ]; then
         hg ci
         hg push
