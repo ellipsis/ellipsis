@@ -3,3 +3,4 @@ syntax: glob
 ipython/
 *.orig
 xmonad
+vimperator/info
