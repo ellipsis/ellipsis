@@ -62,7 +62,7 @@ for repo in $external_repos; do
                 name=$repo
                 # trim dot- from beginning of repo name
                 [ "`echo $name | cut -c1-4`" = "dot-" ] && name=`echo $name | cut -c5-`
-                hg clone https://bitbucket.org/zeekay/$name $basedir/$name
+                hg clone https://bitbucket.org/zeekay/dot-$name $basedir/$name
             ;;
         esac
         repo_basedir=$basedir/$name
