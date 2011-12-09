@@ -5,8 +5,12 @@ set keymap vi-insert
 set keymap vi-command
 "gg": beginning-of-history
 "G": end-of-history
+"\C-h": vi-delete
+"\e[A": history-search-backward
+"\e[B": history-search-forward
 
 set keymap vi-insert
 # "jj": vi-movement-mode
 "\C-w": backward-kill-word
-"\C-p": history-search-backward
+"\e[A": history-search-backward
+"\e[B": history-search-forward
