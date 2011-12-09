@@ -4,8 +4,13 @@ command! -nargs=+ g open g <args>
 map ; :
 map <C-h> :tabprevious<Return>
 map <C-l> :tabnext<Return>
-map J <C-u>
-map K <C-d>
+map J <C-d>
+map K <C-u>
+
+" unset titlestring
+set titlestring=
+" hide dotted border at top
+highlight ContentSeparator display: none;
 
 source! ~/.vimperatorrc.local
 
