@@ -3,6 +3,7 @@
 # Script to automatically setup dotfiles
 
 basedir="$( cd -P "$( dirname "$0" )" && pwd )"
+[ "$1" = "-f" ] && remove_existing=yes
 
 trap "exit 0" SIGINT
 
@@ -11,19 +12,17 @@ echo "linking dot files"
 for dotfile in `find $basedir -maxdepth 1 -name '*' \
     -a ! -name 'setup.sh' \
     -a ! -name 'scripts' \
-    -a ! -name '.*' \
-    -a ! -name 'dot-*' | sort`; do
+    -a ! -name '.*' | sort`; do
 
     name="`basename $dotfile`"
     dest="$HOME/.$name"
 
-    # erasing existing dotfiles
-    if [ "$1" = "-f" ]; then
+    if [ "$remove_existing" ] && [ -e "$dest" ]; then
         echo "removing $dest"
         rm -rf "$dest"
     fi
 
-    if [ -f "$dest" ] || [ -d "$dest" ]; then
+    if [ -e "$dest" ]; then
         echo "$name already exists"
     else
         echo "linking $name"
@@ -32,7 +31,7 @@ for dotfile in `find $basedir -maxdepth 1 -name '*' \
 done
 
 echo
-echo "list any additional external repos to install or enter to exit"
+echo "list any additional external repos to install (enter to exit)"
 read external_repos
 
 dotfiles_dir=$basedir
@@ -40,7 +39,7 @@ for repo in $external_repos; do
     # reset basedir
     basedir=$dotfiles_dir
     echo
-    echo -n "clone and install $repo? (y/n) "
+    echo -n "clone and install $repo? (y/n) (default: n)"
     read input
     if [ "$input" = "y" ]; then
         case $repo in
