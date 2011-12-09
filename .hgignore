@@ -8,4 +8,4 @@ ipython/**/startup
 ipython/**/history.sqlite
 *.orig
 xmonad
-vimperator/info
+pentadactyl/info
