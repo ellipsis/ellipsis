@@ -3,7 +3,7 @@ Config { font = "xft:MonteCarlo:pixelsize=8"
        , fgColor = "#ffffff"
        , position = TopSize C 100 18
        , lowerOnStart = True
-       , commands = [ Run Date "%a %b %_d %H:%M" "date" 10
+       , commands = [ Run Date "%a %b %_d %I:%M" "date" 10
                     -- , Run Weather "KMKC" ["-t","<station>: <tempC>C","-L","18","-H","25","--normal","green","--high","red","--low","lightblue"] 36000
                     -- , Run Network "eth0" ["-L","0","-H","32","--normal","green","--high","red"] 10
                     -- , Run Network "eth1" ["-L","0","-H","32","--normal","green","--high","red"] 10

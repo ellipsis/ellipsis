@@ -259,7 +259,7 @@ myManageHook = composeAll
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
-myFocusFollowsMouse = False
+myFocusFollowsMouse = True
 
 ------------------------------------------------------------------------
 -- Status bars and logging
