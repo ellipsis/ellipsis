@@ -64,7 +64,8 @@ myNumlockMask   = mod2Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["1:code","2:web","3:msg","4:vm","5:media","6","7","8","9"]
+myWorkspaces    = map show [1..9]
+-- ["1:code","2:web","3:msg","4:vm","5:media","6","7","8","9"]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -288,11 +289,16 @@ myStartupHook = return ()
 -- Run xmonad with the settings you specify. No need to modify this.
 --
 main = do
-    xmproc <- spawnPipe "trayer --edge top --align right --widthtype request --tint 0x000000 --transparent true --alpha 0 --margin 100 --height 12 --padding 1"
-    xmproc <- spawnPipe "xmobar"
+    spawn "nitrogen --restore"
+    spawn "xcompmgr -c"
+    spawn "xrdb ~/.Xdefaults"
+    spawn "xmodmap ~/.Xmodmap"
+    xmobar <- spawnPipe "xmobar"
+    spawn "trayer --edge top --align right --margin 100 --height 16 --padding 1 --widthtype request --transparent true --tint 0x000000 --alpha 0"
+    spawn "nm-applet"
     xmonad $ defaults {
         logHook = dynamicLogWithPP $ xmobarPP {
-            ppOutput = hPutStrLn xmproc
+            ppOutput = hPutStrLn xmobar
             , ppTitle = xmobarColor "#FFB6B0" "" . shorten 100
             , ppCurrent = xmobarColor "#CEFFAC" ""
             , ppSep = "   "
