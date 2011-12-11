@@ -290,7 +290,7 @@ myStartupHook = return ()
 --
 main = do
     spawn "nitrogen --restore"
-    spawn "xcompmgr -c"
+    spawn "xcompmgr -cCfF -r7 -o 0.65 -l-10 -t-8 -D4 -I 0.020 -O 0.020"
     spawn "xrdb ~/.Xdefaults"
     spawn "xmodmap ~/.Xmodmap"
     xmobar <- spawnPipe "xmobar"
