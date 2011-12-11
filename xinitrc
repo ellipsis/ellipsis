@@ -31,4 +31,9 @@ fi
 # exec startkde
 # exec startxfce4
 # ...or the Window Manager of your choice
+
+if [ -f "~/.xinitrc-local" ]
+    . ~/.xinitrc-local
+fi
+
 exec ck-launch-session xmonad

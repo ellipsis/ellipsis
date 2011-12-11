@@ -1,5 +1,6 @@
 syntax: glob
 *.pyc
+*.pyo
 ipython/**/db
 ipython/**/log
 ipython/**/pid
