@@ -39,7 +39,7 @@ for repo in $external_repos; do
     # reset basedir
     basedir=$dotfiles_dir
     echo
-    echo -n "clone and install $repo? (y/n) (default: n)"
+    echo "clone and install $repo? (y/n) (default: n)"
     read input
     if [ "$input" = "y" ]; then
         case $repo in
