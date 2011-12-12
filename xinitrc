@@ -32,8 +32,8 @@ fi
 # exec startxfce4
 # ...or the Window Manager of your choice
 
-if [ -f "~/.xinitrc-local" ]; then
-    . ~/.xinitrc-local
+if [ -f "$HOME/.xinitrc_local" ]; then
+    . ~/.xinitrc_local
 fi
 
 exec ck-launch-session xmonad
