@@ -32,7 +32,7 @@ fi
 # exec startxfce4
 # ...or the Window Manager of your choice
 
-if [ -f "~/.xinitrc-local" ]
+if [ -f "~/.xinitrc-local" ]; then
     . ~/.xinitrc-local
 fi
 
