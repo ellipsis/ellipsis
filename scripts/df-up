@@ -7,18 +7,18 @@ cd $basedir
 trap "exit 0" SIGINT
 
 if [ -d ".hg" ]; then
-    hg pull && hg up &
+    hg fetch
 else
-    git pull &
+    git pull
 fi
 
 for dir in `find . -mindepth 2 -maxdepth 2 -name '.hg' -o -name '.git' | cut -d / -f 2 | sort`; do
     cd $basedir/$dir
 
     if [ -d ".hg" ]; then
-        hg pull && hg up &
+        hg fetch
     else
-        git pull &
+        git pull
     fi
 
 done
