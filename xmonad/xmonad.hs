@@ -27,7 +27,7 @@ import qualified Data.Map        as M
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "lilyterm"
+myTerminal      = "terminator"
 
 -- Width of the window border in pixels.
 --
@@ -289,13 +289,7 @@ myStartupHook = return ()
 -- Run xmonad with the settings you specify. No need to modify this.
 --
 main = do
-    spawn "nitrogen --restore"
-    spawn "xcompmgr -cCfF -r7 -o 0.65 -l-10 -t-8 -D2 -I 0.020 -O 0.020"
-    spawn "xrdb ~/.Xdefaults"
-    spawn "xmodmap ~/.Xmodmap"
     xmobar <- spawnPipe "xmobar"
-    spawn "trayer --edge top --align right --margin 100 --height 16 --padding 1 --widthtype request --transparent true --tint 0x000000 --alpha 0"
-    spawn "nm-applet"
     xmonad $ defaults {
         logHook = dynamicLogWithPP $ xmobarPP {
             ppOutput = hPutStrLn xmobar
@@ -319,7 +313,7 @@ defaults = defaultConfig {
         focusFollowsMouse  = myFocusFollowsMouse,
         borderWidth        = myBorderWidth,
         modMask            = myModMask,
-        numlockMask        = myNumlockMask,
+        -- numlockMask        = myNumlockMask,
         workspaces         = myWorkspaces,
         normalBorderColor  = myNormalBorderColor,
         focusedBorderColor = myFocusedBorderColor,

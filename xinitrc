@@ -17,15 +17,15 @@ if [ `hostname` == "fool" ]; then
     ffado-dbus-server &
 fi
 
-# xrdb ~/.Xdefaults &
-# nitrogen --restore
-# xcompmgr -c &
-# trayer --edge top --align right --margin 100 --height 16 --padding 1 --widthtype request --transparent true --tint 0x000000 --alpha 0 &
-# nm-applet &
+nitrogen --restore
+xrdb ~/.Xdefaults &
+# xcompmgr -cCfF -r7 -o 0.65 -l-10 -t-8 -D2 -I 0.020 -O 0.020
+trayer --edge top --align right --margin 100 --height 16 --padding 1 --widthtype request --transparent true --tint 0x000000 --alpha 0 &
+nm-applet &
 
 # capslock into escape, swap alt/win keys
 # xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
-# xmodmap ~/.Xmodmap
+xmodmap ~/.Xmodmap
 
 # exec gnome-session
 # exec startkde
