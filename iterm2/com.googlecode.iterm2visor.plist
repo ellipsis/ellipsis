@@ -3809,9 +3809,9 @@
 	<key>Hotkey</key>
 	<true/>
 	<key>HotkeyChar</key>
-	<integer>96</integer>
+	<integer>27</integer>
 	<key>HotkeyCode</key>
-	<integer>50</integer>
+	<integer>53</integer>
 	<key>HotkeyModifiers</key>
 	<integer>1048840</integer>
 	<key>IRMemory</key>
@@ -3974,21 +3974,21 @@
 	<key>NSWindow Frame NSColorPanel</key>
 	<string>506 473 409 344 0 0 1920 1058 </string>
 	<key>NSWindow Frame NSFontPanel</key>
-	<string>486 590 445 270 0 0 1920 1058 </string>
+	<string>-546 458 445 270 -1920 0 1920 1080 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>98 573 924 485 0 0 1920 1058 </string>
+	<string>144 395 924 485 0 0 1920 1058 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>1157 323 592 625 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>119 662 570 351 0 0 1920 1058 </string>
+	<string>0 704 1916 354 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>1132 556 570 351 0 0 1920 1058 </string>
+	<string>-581 3 570 338 -1920 0 1920 1080 </string>
 	<key>NSWindow Frame iTerm Window 10</key>
-	<string>-1743 575 570 351 -1920 0 1920 1080 </string>
+	<string>485 508 570 362 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 11</key>
-	<string>-1857 26 985 599 -1920 0 1920 1080 </string>
+	<string>506 499 570 351 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 12</key>
-	<string>73 471 1592 509 0 0 1920 1058 </string>
+	<string>527 476 570 351 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 13</key>
 	<string>548 453 570 351 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 14</key>
@@ -4004,7 +4004,7 @@
 	<key>NSWindow Frame iTerm Window 19</key>
 	<string>674 315 570 351 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>-1470 177 912 530 -1920 0 1920 1080 </string>
+	<string>-1692 142 570 351 -1920 0 1920 1080 </string>
 	<key>NSWindow Frame iTerm Window 20</key>
 	<string>695 292 570 351 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 21</key>
@@ -4020,19 +4020,19 @@
 	<key>NSWindow Frame iTerm Window 26</key>
 	<string>821 154 570 351 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>-1220 261 1212 801 -1920 0 1920 1080 </string>
+	<string>-995 93 773 670 -1920 0 1920 1080 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
-	<string>-1332 291 1375 689 -1920 0 1920 1080 </string>
+	<string>-579 324 570 362 -1920 0 1920 1080 </string>
 	<key>NSWindow Frame iTerm Window 5</key>
-	<string>-1785 196 1696 837 -1920 0 1920 1080 </string>
+	<string>-1751 287 992 561 -1920 0 1920 1080 </string>
 	<key>NSWindow Frame iTerm Window 6</key>
-	<string>-669 342 570 351 -1920 0 1920 1080 </string>
+	<string>-1845 52 815 362 -1920 0 1920 1080 </string>
 	<key>NSWindow Frame iTerm Window 7</key>
-	<string>-1878 38 570 351 -1920 0 1920 1080 </string>
+	<string>828 17 570 362 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 8</key>
-	<string>-1799 621 570 351 -1920 0 1920 1080 </string>
+	<string>-1413 367 1291 642 -1920 0 1920 1080 </string>
 	<key>NSWindow Frame iTerm Window 9</key>
-	<string>-585 409 570 351 -1920 0 1920 1080 </string>
+	<string>-581 310 570 362 -1920 0 1920 1080 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -5724,17 +5724,19 @@
 	<key>RightOption</key>
 	<integer>3</integer>
 	<key>SUAutomaticallyUpdate</key>
-	<true/>
+	<false/>
 	<key>SUEnableAutomaticChecks</key>
-	<true/>
+	<false/>
 	<key>SUFeedURL</key>
 	<string>http://iterm2.googlecode.com/svn/trunk/appcasts/testing.xml</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2011-12-24T18:59:31Z</date>
+	<date>2011-08-25T00:14:41Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
+	<key>SUSkippedVersion</key>
+	<string>1.0.0.20110727</string>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>
@@ -5758,7 +5760,7 @@
 	<key>TripleClickSelectsFullWrappedLines</key>
 	<false/>
 	<key>UKCrashReporterLastCrashReportDate</key>
-	<real>1319839488</real>
+	<real>1298768768</real>
 	<key>URLHandlersByGuid</key>
 	<dict/>
 	<key>UseBorder</key>
