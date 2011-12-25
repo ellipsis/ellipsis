@@ -3807,7 +3807,7 @@
 	<key>HotKeyTogglesWindow</key>
 	<true/>
 	<key>Hotkey</key>
-	<true/>
+	<false/>
 	<key>HotkeyChar</key>
 	<integer>96</integer>
 	<key>HotkeyCode</key>
@@ -3980,7 +3980,7 @@
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>1157 323 592 625 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>119 662 570 351 0 0 1920 1058 </string>
+	<string>-605 29 570 351 -1920 0 1920 1080 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>1132 556 570 351 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 10</key>
