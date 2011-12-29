@@ -10,6 +10,10 @@
 (setq visible-cursor nil)
 (setq cursor-in-non-selected-windows nil)
 (fset 'yes-or-no-p 'y-or-n-p)
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
 
 ;; Evil
 (add-to-list 'load-path "~/.emacs.d/evil")
