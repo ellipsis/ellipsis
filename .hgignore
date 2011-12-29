@@ -11,3 +11,6 @@ ipython/**/history.sqlite
 *.orig
 xmonad
 pentadactyl/info
+.git/
+.gitignore
+.gitattribute
