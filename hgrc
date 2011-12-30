@@ -12,9 +12,6 @@ ignorews = True
 ignorewsamount = True
 ignoreblanklines = True
 
-[defaults]
-log = -r :
-
 [extensions]
 bookmarks =
 color =
