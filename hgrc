@@ -5,6 +5,13 @@ editor = ~/.bin/hgeditor
 merge = vimdiff
 ignore = ~/.cvsignore
 
+[diff]
+git = True
+showfunc = True
+ignorews = True
+ignorewsamount = True
+ignoreblanklines = True
+
 [defaults]
 log = -r :
 
