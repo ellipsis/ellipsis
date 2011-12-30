@@ -8,12 +8,12 @@ merge = vimdiff
 log = -r :
 
 [extensions]
-hgext.fetch =
-hgext.transplant=
-histedit = ~/.hgext/hg_histedit.py
-#hgext.record=
-#hgext.bookmarks =
-#hgext.graphlog =
+bookmarks =
+color =
+fetch =
+graphlog =
+# pager =
+record =
 
 #[mergetool "threesome"]
 #cmd = "vim -f $BASE $LOCAL $REMOTE $MERGED -c 'ThreesomeInit'"
