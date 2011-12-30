@@ -6,7 +6,6 @@ merge = vimdiff
 ignore = ~/.cvsignore
 
 [diff]
-git = True
 showfunc = True
 ignorews = True
 ignorewsamount = True
@@ -19,6 +18,9 @@ fetch =
 graphlog =
 # pager =
 record =
+
+[alias]
+last = log -r -5:-1
 
 #[mergetool "threesome"]
 #cmd = "vim -f $BASE $LOCAL $REMOTE $MERGED -c 'ThreesomeInit'"
