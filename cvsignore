@@ -3,3 +3,5 @@ tags
 .hg
 .git
 .svn
+.gitignore
+.hgignore
