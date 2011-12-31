@@ -11,6 +11,7 @@ cd $basedir
 if [ -d ".hg" ]; then
     echo -e "\033[1mdotfiles\033[0m `hg id -n`" | sed 's/\-e //'
     hg status
+    hg diff --stat
 else
     echo -e "\033[1mdotfiles\033[0m `git rev-parse --short HEAD`" | sed 's/\-e //'
     git status
@@ -23,6 +24,7 @@ for dir in `find . -mindepth 2 -maxdepth 2 -name '.hg' -o -name '.git' | cut -d 
     if [ -d ".hg" ]; then
         echo -e "\033[1m$name\033[0m `hg id -n`" | sed 's/\-e //'
         hg status
+        hg diff --stat
     else
         echo -e "\033[1m$name\033[0m `git rev-parse --short HEAD`" | sed 's/\-e //'
         git status
