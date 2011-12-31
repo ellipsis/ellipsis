@@ -3,20 +3,21 @@
 # echos repo names & version info
 
 basedir="$( cd -P "$( dirname "$0" )" && pwd )"/..
+cachedir=~/.cache/dotfiles/status
+
+# clear cachedir
+mkdir -p $cachedir
+rm -rf $cachedir/*
 
 trap "exit 0" SIGINT
-
-# clean up old jobs output
-rm -rf /tmp/df-st-output
-mkdir /tmp/df-st-output
 
 # enable job control
 set -m
 
 checkstatus(){
     if [ -d ".hg" ]; then
-        echo -e "\033[1m$1\033[0m `hg id -n`" | sed 's/\-e //' > /tmp/df-st-output/$1
-        hg diff --stat >> /tmp/df-st-output/$1 2>&1 &
+        echo -e "\033[1m$1\033[0m `hg id -n`" | sed 's/\-e //' > $cachedir/$1
+        hg diff --stat >> $cachedir/$1 2>&1 &
     else
         git status
     fi
@@ -35,4 +36,4 @@ done
 while [ 1 ]; do fg &> /dev/null; [ $? == 1 ] && break; done
 
 # print output
-cat /tmp/df-st-output/*
+cat $cachedir/*

@@ -3,20 +3,21 @@
 # updates repos
 
 basedir="$( cd -P "$( dirname "$0" )" && pwd )"/..
+cachedir=~/.cache/dotfiles/up
+
+# clear cachedir
+mkdir -p $cachedir
+rm -rf $cachedir/*
 
 trap "exit 0" SIGINT
-
-# clean up old jobs output
-rm -rf /tmp/df-up-output
-mkdir /tmp/df-up-output
 
 # enable job control
 set -m
 
 update(){
     if [ -d ".hg" ]; then
-        echo -e "\033[1m$1 updated\033[0m" | sed 's/\-e //' > /tmp/df-up-output/$1
-        hg fetch >> /tmp/df-up-output/$1 2>&1 &
+        echo -e "\033[1m$1 updated\033[0m" | sed 's/\-e //' > $cachedir/$1
+        hg fetch >> $cachedir/$1 2>&1 &
     else
         git pull
     fi
@@ -34,4 +35,4 @@ done
 while [ 1 ]; do fg &> /dev/null; [ $? == 1 ] && break; done
 
 # print output
-cat /tmp/df-up-output/*
+cat $cachedir/*

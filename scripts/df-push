@@ -3,21 +3,22 @@
 # push changes back to repo
 
 basedir="$( cd -P "$( dirname "$0" )" && pwd )"/..
+cachedir=~/.cache/dotfiles/push
+
+# clear cachedir
+mkdir -p $cachedir
+rm -rf $cachedir/*
 
 trap "exit 0" SIGINT
-
-# clean up old jobs output
-rm -rf /tmp/df-push-output
-mkdir /tmp/df-push-output
 
 # enable job control
 set -m
 
 push(){
     if [ -d ".hg" ]; then
-        echo -e "\033[1m$1 pushed\033[0m" | sed 's/\-e //' > /tmp/df-push-output/$1
+        echo -e "\033[1m$1 pushed\033[0m" | sed 's/\-e //' > $cachedir/$1
         hg ci -q
-        hg push >> /tmp/df-push-output/$1 2>&1 &
+        hg push >> $cachedir/$1 2>&1 &
     else
         git push
     fi
@@ -38,4 +39,4 @@ done
 while [ 1 ]; do fg &> /dev/null; [ $? == 1 ] && break; done
 
 # print output
-cat /tmp/df-push-output/*
+cat $cachedir/*
