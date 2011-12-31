@@ -1,28 +1,40 @@
 #!/bin/sh
 
+# push changes back to repo
+
 basedir="$( cd -P "$( dirname "$0" )" && pwd )"/..
 
 trap "exit 0" SIGINT
 
+# clean up old jobs output
+rm -rf /tmp/df-push-output
+mkdir /tmp/df-push-output
+
+# enable job control
+set -m
+
+push(){
+    if [ -d ".hg" ]; then
+        hg ci -q
+        hg push > /tmp/df-push-output/$1 2>&1 &
+    else
+        git push
+    fi
+}
+
 cd $basedir
-if [ -d ".hg" ]; then
-    hg ci
-    hg push
-else
-    git commit -a
-    git push
-fi
+push dotfiles
 
 for dir in `find . -mindepth 2 -maxdepth 2 \
     -name '.hg' -o \
     -name '.git' | cut -d / -f 2 | sort`; do
 
     cd $basedir/$dir
-    if [ -d ".hg" ]; then
-        hg ci
-        hg push
-    else
-        git commit -a
-        git push
-    fi
+    push $dir
 done
+
+# wait for parallel jobs to finish
+while [ 1 ]; do fg &> /dev/null; [ $? == 1 ] && break; done
+
+# print output
+cat /tmp/df-push-output/*

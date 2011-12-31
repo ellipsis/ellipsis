@@ -6,28 +6,33 @@ basedir="$( cd -P "$( dirname "$0" )" && pwd )"/..
 
 trap "exit 0" SIGINT
 
-cd $basedir
+# clean up old jobs output
+rm -rf /tmp/df-st-output
+mkdir /tmp/df-st-output
 
-if [ -d ".hg" ]; then
-    echo -e "\033[1mdotfiles\033[0m `hg id -n`" | sed 's/\-e //'
-    hg status
-    hg diff --stat
-else
-    echo -e "\033[1mdotfiles\033[0m `git rev-parse --short HEAD`" | sed 's/\-e //'
-    git status
-fi
+# enable job control
+set -m
+
+checkstatus(){
+    if [ -d ".hg" ]; then
+        echo -e "\033[1m$1\033[0m `hg id -n`" | sed 's/\-e //' > /tmp/df-st-output/$1
+        hg diff --stat >> /tmp/df-st-output/$1 2>&1 &
+    else
+        git status
+    fi
+}
+
+cd $basedir
+checkstatus dotfiles
 
 for dir in `find . -mindepth 2 -maxdepth 2 -name '.hg' -o -name '.git' | cut -d / -f 2 | sort`; do
     cd $basedir/$dir
     name="`pwd | rev | cut -d / -f1 | rev`"
-
-    if [ -d ".hg" ]; then
-        echo -e "\033[1m$name\033[0m `hg id -n`" | sed 's/\-e //'
-        hg status
-        hg diff --stat
-    else
-        echo -e "\033[1m$name\033[0m `git rev-parse --short HEAD`" | sed 's/\-e //'
-        git status
-    fi
-
+    checkstatus $dir
 done
+
+# wait for parallel jobs to finish
+while [ 1 ]; do fg &> /dev/null; [ $? == 1 ] && break; done
+
+# print output
+cat /tmp/df-st-output/*

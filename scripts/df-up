@@ -1,24 +1,37 @@
 #!/bin/sh
 
-basedir="$( cd -P "$( dirname "$0" )" && pwd )"/..
+# updates repos
 
-cd $basedir
+basedir="$( cd -P "$( dirname "$0" )" && pwd )"/..
 
 trap "exit 0" SIGINT
 
-if [ -d ".hg" ]; then
-    hg fetch
-else
-    git pull
-fi
+# clean up old jobs output
+rm -rf /tmp/df-up-output
+mkdir /tmp/df-up-output
 
-for dir in `find . -mindepth 2 -maxdepth 2 -name '.hg' -o -name '.git' | cut -d / -f 2 | sort`; do
-    cd $basedir/$dir
+# enable job control
+set -m
 
+update(){
     if [ -d ".hg" ]; then
-        hg fetch
+        echo -e "\033[1m$1 updated\033[0m" | sed 's/\-e //' > /tmp/df-up-output/$1
+        hg fetch >> /tmp/df-up-output/$1 2>&1 &
     else
         git pull
     fi
+}
 
+cd $basedir
+update dotfiles
+
+for dir in `find . -mindepth 2 -maxdepth 2 -name '.hg' -o -name '.git' | cut -d / -f 2 | sort`; do
+    cd $basedir/$dir
+    update $dir
 done
+
+# wait for parallel jobs to finish
+while [ 1 ]; do fg &> /dev/null; [ $? == 1 ] && break; done
+
+# print output
+cat /tmp/df-up-output/*
