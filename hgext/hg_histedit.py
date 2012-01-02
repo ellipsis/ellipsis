@@ -259,7 +259,11 @@ def message(ui, repo, ctx, ha, opts):
     new = repo.commit(text=message, user=oldctx.user(), date=oldctx.date(),
                       extra=oldctx.extra())
     newctx = repo[new]
-    return newctx.parents()[0], [new], [oldctx.node()], []
+    if oldctx.node() != newctx.node():
+        return newctx, [new], [oldctx.node()], []
+    # We didn't make an edit, so just indicate no replaced nodes
+    return newctx, [new], [], []
+
 
 
 actiontable = {'p': pick,
@@ -412,6 +416,12 @@ def histedit(ui, repo, *parent, **opts):
                                for c in ctxs])
             rules += editcomment % (node.hex(parent)[:12], node.hex(tip)[:12], )
             rules = ui.edit(rules, ui.username())
+            # Save edit rules in .hg/histedit-last-edit.txt in case
+            # the user needs to ask for help after something
+            # surprising happens.
+            f = open(repo.join('histedit-last-edit.txt'), 'w')
+            f.write(rules)
+            f.close()
         else:
             f = open(rules)
             rules = f.read()

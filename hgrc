@@ -14,10 +14,14 @@ ignoreblanklines = True
 [extensions]
 bookmarks =
 color =
+collapse =
 fetch =
 graphlog =
 # pager =
+rebase =
 record =
+histedit = ~/.hgext/hg_histedit.py
+collapse = ~/.hgext/collapse.py
 
 [alias]
 last = log -r -5:-1
