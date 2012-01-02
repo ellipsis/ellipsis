@@ -14,3 +14,4 @@ pentadactyl/info
 .git/
 .gitignore
 .gitattribute
+pip.log
