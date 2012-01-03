@@ -3976,13 +3976,13 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>486 590 445 270 0 0 1920 1058 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>98 573 924 485 0 0 1920 1058 </string>
+	<string>98 572 924 485 0 0 1920 1058 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>1157 323 592 625 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-605 29 570 351 -1920 0 1920 1080 </string>
+	<string>-2 26 682 672 0 0 1280 698 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>1132 556 570 351 0 0 1920 1058 </string>
+	<string>-1252 671 570 351 -1920 0 1920 1080 </string>
 	<key>NSWindow Frame iTerm Window 10</key>
 	<string>-1743 575 570 351 -1920 0 1920 1080 </string>
 	<key>NSWindow Frame iTerm Window 11</key>
@@ -4004,7 +4004,7 @@
 	<key>NSWindow Frame iTerm Window 19</key>
 	<string>674 315 570 351 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>-1470 177 912 530 -1920 0 1920 1080 </string>
+	<string>50 64 830 610 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 20</key>
 	<string>695 292 570 351 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 21</key>
@@ -4020,13 +4020,13 @@
 	<key>NSWindow Frame iTerm Window 26</key>
 	<string>821 154 570 351 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>-1220 261 1212 801 -1920 0 1920 1080 </string>
+	<string>-675 650 570 351 -1920 0 1920 1080 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
-	<string>-1332 291 1375 689 -1920 0 1920 1080 </string>
+	<string>613 304 570 351 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 5</key>
-	<string>-1785 196 1696 837 -1920 0 1920 1080 </string>
+	<string>664 307 607 462 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 6</key>
-	<string>-669 342 570 351 -1920 0 1920 1080 </string>
+	<string>-1068 338 1002 570 -1920 0 1920 1080 </string>
 	<key>NSWindow Frame iTerm Window 7</key>
 	<string>-1878 38 570 351 -1920 0 1920 1080 </string>
 	<key>NSWindow Frame iTerm Window 8</key>
@@ -5732,7 +5732,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2011-12-24T18:59:31Z</date>
+	<date>2012-01-01T18:59:31Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
@@ -5742,7 +5742,7 @@
 	<key>ShowBookmarkName</key>
 	<false/>
 	<key>ShowPaneTitles</key>
-	<true/>
+	<false/>
 	<key>SmartPlacement</key>
 	<false/>
 	<key>SplitPaneDimmingAmount</key>
