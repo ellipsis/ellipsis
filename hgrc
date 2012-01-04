@@ -25,10 +25,11 @@ histedit = ~/.hgext/hg_histedit.py
 collapse = ~/.hgext/collapse.py
 
 [alias]
-last = log -r -5:-1
+latest = log -r -5:-1 --stat
+last = log -r -1 --stat
 threesome = merge -t threesome
-# vimdiff current revision against and older revision, ex: vimdiff -r 2 foo
-vimdiff = !hg cat $1 $2 | vim - -c ":w $2$1" -c ":vert diffsplit $2"; rm $2$1
+# vimdiff file against an older revision, ex: vimdiff foo -r2
+vimdiff = !$HG cat $1 $2 > "/tmp/$1$2"; vim $1 -c ":vert diffsplit /tmp/$1$2" -c ":wincmd h"; rm "/tmp/$1$2"
 
 [merge-tools]
 vimdiff.executable = vim
