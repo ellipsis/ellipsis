@@ -27,6 +27,8 @@ collapse = ~/.hgext/collapse.py
 [alias]
 last = log -r -5:-1
 threesome = merge -t threesome
+# vimdiff current revision against and older revision, ex: vimdiff -r 2 foo
+vimdiff = !hg cat $1 $2 | vim - -c ":w $2$1" -c ":vert diffsplit $2"; rm $2$1
 
 [merge-tools]
 vimdiff.executable = vim
