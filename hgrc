@@ -13,8 +13,9 @@ ignoreblanklines = True
 
 [extensions]
 bookmarks =
-color =
+churn =
 collapse =
+color =
 fetch =
 graphlog =
 # pager =
@@ -22,25 +23,18 @@ rebase =
 record =
 histedit = ~/.hgext/hg_histedit.py
 collapse = ~/.hgext/collapse.py
-churn =
 
 [alias]
 last = log -r -5:-1
-
-#[mergetool "threesome"]
-#cmd = "vim -f $BASE $LOCAL $REMOTE $MERGED -c 'ThreesomeInit'"
-#trustExitCode = False
 
 [merge-tools]
 vimdiff.executable = vim
 vimdiff.args = -d -c "wincmd J" "$output" "$local" "$base" "$other"
 vimdiff.checkchanged = True
 vimdiff.premerge = True
-#vimdiff.gui = True
 threesome.executable = vim
 threesome.args = -f $base $local $other $output -c 'ThreesomeInit'
-#threesome.args = -f $base $local $other $output -c 'ThreesomeInit' '+exe 1 . "wincmd w"' '+close'
-#threesome.premerge = keep
+threesome.premerge = keep
 threesome.priority = 1
 
 [hostfingerprints]
