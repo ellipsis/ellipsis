@@ -3980,7 +3980,7 @@
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>1157 323 592 625 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 704 1916 354 0 0 1920 1058 </string>
+	<string>0 729 1916 329 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>-581 3 570 338 -1920 0 1920 1080 </string>
 	<key>NSWindow Frame iTerm Window 10</key>
@@ -5744,7 +5744,7 @@
 	<key>ShowBookmarkName</key>
 	<false/>
 	<key>ShowPaneTitles</key>
-	<true/>
+	<false/>
 	<key>SmartPlacement</key>
 	<false/>
 	<key>SplitPaneDimmingAmount</key>
