@@ -2,7 +2,7 @@
 username = zeekay <zeekayy@gmail.com>
 editor = ~/.bin/hgeditor
 # ssh = ssh -o ControlMaster=no
-merge = vimdiff
+merge = vimdiff-simple
 ignore = ~/.cvsignore
 
 [diff]
@@ -36,6 +36,12 @@ vimdiff.executable = vim
 vimdiff.args = -d -c "wincmd J" "$output" "$local" "$base" "$other"
 vimdiff.checkchanged = True
 vimdiff.premerge = True
+
+vimdiff-simple.executable = vim
+vimdiff-simple.args = -d -O2 "$output" "$other" "$local" "$base"
+vimdiff-simple.checkchanged = True
+vimdiff-simple.premerge = True
+
 threesome.executable = vim
 threesome.args = -f $base $local $other $output -c 'ThreesomeInit'
 threesome.premerge = keep
