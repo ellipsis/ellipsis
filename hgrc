@@ -26,6 +26,7 @@ collapse = ~/.hgext/collapse.py
 
 [alias]
 last = log -r -5:-1
+threesome = merge -t threesome
 
 [merge-tools]
 vimdiff.executable = vim
