@@ -18,6 +18,7 @@ fetch =
 graphlog =
 # pager =
 record =
+churn =
 
 [alias]
 last = log -r -5:-1
