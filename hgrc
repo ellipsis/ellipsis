@@ -1,7 +1,7 @@
 [ui]
 username = zeekay <zeekayy@gmail.com>
 editor = ~/.bin/hgeditor
-ssh = ssh -o ControlMaster=no
+# ssh = ssh -o ControlMaster=no
 merge = vimdiff
 ignore = ~/.cvsignore
 
@@ -14,10 +14,14 @@ ignoreblanklines = True
 [extensions]
 bookmarks =
 color =
+collapse =
 fetch =
 graphlog =
 # pager =
+rebase =
 record =
+histedit = ~/.hgext/hg_histedit.py
+collapse = ~/.hgext/collapse.py
 churn =
 
 [alias]
