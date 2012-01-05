@@ -6,13 +6,16 @@ merge = vimdiff-simple
 ignore = ~/.cvsignore
 
 [diff]
+git = True
 showfunc = True
 ignorews = True
 ignorewsamount = True
 ignoreblanklines = True
 
+[bookmarks]
+track.current = True
+
 [extensions]
-bookmarks =
 churn =
 collapse =
 color =
@@ -30,6 +33,8 @@ last = log -r -1 --stat
 threesome = merge -t threesome
 # vimdiff file against an older revision, ex: vimdiff foo -r2
 vimdiff = !$HG cat $1 $2 > "/tmp/$1$2"; vim -d $1 "/tmp/$1$2" -c ":wincmd h"; rm "/tmp/$1$2"
+bk = bookmark
+bks = bookmarks
 
 [merge-tools]
 vimdiff.executable = vim
