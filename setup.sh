@@ -9,10 +9,7 @@ trap "exit 0" SIGINT
 
 echo "linking dot files"
 
-for dotfile in `find $basedir -maxdepth 1 -name '*' \
-    -a ! -name 'setup.sh' \
-    -a ! -name 'scripts' \
-    -a ! -name '.*' | sort`; do
+for dotfile in `find $basedir -maxdepth 1 -name '*' ! -name 'setup.sh' ! -name 'scripts' ! -name '.*' | sort`; do
 
     name="`basename $dotfile`"
     dest="$HOME/.$name"
