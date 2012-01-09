@@ -3,16 +3,14 @@
 import argparse
 import codecs
 from datetime import datetime
+import errno
 import json
 import os
 import sys
 
 CONFIG_DIR = '~/.ff'
-DATE_FORMAT = "%a-%b-%d-%I:%M"
+DATE_FORMAT = "%Y%m%d%H%M"
 PROFILE = '~/Library/Application Support/Firefox/Profiles/ah5u2jfa.default'
-
-# set encoding for stdout
-sys.stdout = codecs.getwriter('UTF-8')(sys.stdout)
 
 
 class AttrDict(dict):
@@ -36,8 +34,11 @@ class Session(object):
         return list(self.itertabs())
 
 
-def format_date(timestamp):
-    dt = datetime.fromtimestamp(float(timestamp))
+def format_date(timestamp=None):
+    if timestamp:
+        dt = datetime.fromtimestamp(float(timestamp))
+    else:
+        dt = datetime.now()
     return dt.strftime(DATE_FORMAT)
 
 
@@ -54,11 +55,13 @@ def load_session():
         return Session(json.load(f, object_hook=AttrDict))
 
 
-def clone_session():
+def save_session():
     import shutil
-    make_dir(CONFIG_DIR)
+    cfg_dir = os.path.expanduser(CONFIG_DIR)
+    make_dir(cfg_dir)
     current_session = os.path.join(os.path.expanduser(PROFILE), 'sessionstore.js')
-    shutil.copy
+    shutil.copy(current_session, os.path.join(cfg_dir, format_date() + '.js'))
+
 
 def list_command(args=None):
     session = load_session()
@@ -87,13 +90,21 @@ def read_command(args):
         print res.headers['status']
 
 
+def save_command(args):
+    save_session()
+
 if __name__ == '__main__':
+    sys.stdout = codecs.getwriter('UTF-8')(sys.stdout)
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers()
 
     # list command
     list_parser = subparsers.add_parser('list', help='List open tabs')
     list_parser.set_defaults(command=list_command)
+
+    # save command
+    save_parser = subparsers.add_parser('save', help='Save current session')
+    save_parser.set_defaults(command=save_command)
 
     # read command
     read_parser = subparsers.add_parser('read', help='read url')

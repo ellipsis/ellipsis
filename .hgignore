@@ -15,3 +15,5 @@ pentadactyl/info
 .gitignore
 .gitattribute
 pip.log
+matplotlib/fontList.cache
+bin/*.py

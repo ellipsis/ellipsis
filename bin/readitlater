@@ -15,9 +15,6 @@ SETTINGS_FILE = os.path.join(CONFIG_DIR, 'settings.json')
 REQUIRED_SETTINGS = ['username', 'password', 'apikey']
 DATE_FORMAT = "%a %b %d %I:%M %p"
 
-# set encoding for stdout
-sys.stdout = codecs.getwriter('UTF-8')(sys.stdout)
-
 # global settings
 settings = {}
 
@@ -178,6 +175,7 @@ def settings_command(args):
     locals()[args.subcommand]()
 
 if __name__ == '__main__':
+    sys.stdout = codecs.getwriter('UTF-8')(sys.stdout)
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers()
 
