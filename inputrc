@@ -1,6 +1,5 @@
 set blink-matching-paren on
 set editing-mode vi
-set keymap vi-insert
 
 set keymap vi-command
 "gg": beginning-of-history

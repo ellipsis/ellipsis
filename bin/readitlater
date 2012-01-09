@@ -1,8 +1,13 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-import argparse, errno, json, os
+import argparse
+import codecs
 from datetime import datetime
+import errno
+import json
+import os
+import sys
 import requests
 
 CONFIG_DIR = os.path.expanduser('~/.config/readitlater')
@@ -10,14 +15,19 @@ SETTINGS_FILE = os.path.join(CONFIG_DIR, 'settings.json')
 REQUIRED_SETTINGS = ['username', 'password', 'apikey']
 DATE_FORMAT = "%a %b %d %I:%M %p"
 
+# set encoding for stdout
+sys.stdout = codecs.getwriter('UTF-8')(sys.stdout)
+
 # global settings
 settings = {}
+
 
 class AttrDict(dict):
     def __getattr__(self, name):
         if name.startswith('_') or name == 'trait_names':
             raise AttributeError
         return self[name]
+
 
 class API(object):
     def __init__(self, url='https://readitlaterlist.com/v2/'):
@@ -28,11 +38,11 @@ class API(object):
             # Attempt to load settings in case this module is used externally or interactively.
             load_settings()
         # remove any invalid params
-        params = {k:v for k,v in params.items() if v}
+        params = {k: v for k, v in params.items() if v}
         # inject settings
         params.update(settings)
         # make request
-        res = requests.get(self.url+method, params=params)
+        res = requests.get(self.url + method, params=params)
         # try to convert response content to json
         try:
             res.json = json.loads(res.content, object_hook=AttrDict)
@@ -45,6 +55,7 @@ class API(object):
             raise AttributeError
         return lambda **params: self.request(name, **params)
 
+
 # utility functions
 def make_dir():
     try:
@@ -52,11 +63,14 @@ def make_dir():
     except OSError as e:
         if e.errno == errno.EEXIST:
             pass
-        else: raise
+        else:
+            raise
+
 
 def format_date(timestamp):
     dt = datetime.fromtimestamp(float(timestamp))
     return dt.strftime(DATE_FORMAT)
+
 
 def load_settings():
     if not os.path.exists(SETTINGS_FILE):
@@ -67,6 +81,7 @@ def load_settings():
             settings.update(json.load(f))
     except ValueError:
         raise Exception('{0} is invalid'.format(SETTINGS_FILE))
+
 
 def settings_valid():
     try:
@@ -81,12 +96,14 @@ def settings_valid():
     else:
         return True
 
+
 # commands
 def add_command(args):
     api = API()
     res = api.add(url=args.url)
     if not res.ok:
         print 'Unable to add url'
+
 
 def list_command(args):
     # defaults
@@ -102,13 +119,22 @@ def list_command(args):
     else:
         print res.headers['status']
 
+
 def read_command(args):
-    api = API(url='http://text.readitlaterlist.com/v2/')
-    res = api.text(url=args.url)
+    from readability.readability import Document
+    import html2text
+    h = html2text.HTML2Text()
+    h.inline_links = False
+    h.ignore_images = True
+    h.ignore_emphasis = True
+    res = requests.get(args.url)
     if res.ok:
-        print res.content
+        article = Document(res.content)
+        print article.short_title()
+        print h.handle(article.summary())
     else:
         print res.headers['status']
+
 
 def search_command(args):
     api = API()
@@ -118,17 +144,19 @@ def search_command(args):
             time_added = datetime.fromtimestamp(float(item.time_added))
             print time_added, item.title, item.url
 
+
 def limit_command(args):
     api = API()
     res = api.api()
-    for k,v in sorted(res.headers.items()):
+    for k, v in sorted(res.headers.items()):
         if k.startswith('x-limit'):
             print ' '.join(k[8:].split('-')) + ':', v
+
 
 def settings_command(args):
     def show():
         if settings_valid():
-            for k,v in settings.items():
+            for k, v in settings.items():
                 print k + ':', v
 
     def set():

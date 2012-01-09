@@ -2,14 +2,18 @@
 
 import argparse
 import codecs
+from datetime import datetime
 import json
 import os
 import sys
 
+CONFIG_DIR = '~/.ff'
+DATE_FORMAT = "%a-%b-%d-%I:%M"
 PROFILE = '~/Library/Application Support/Firefox/Profiles/ah5u2jfa.default'
 
 # set encoding for stdout
 sys.stdout = codecs.getwriter('UTF-8')(sys.stdout)
+
 
 class AttrDict(dict):
     def __getattr__(self, name):
@@ -32,10 +36,29 @@ class Session(object):
         return list(self.itertabs())
 
 
+def format_date(timestamp):
+    dt = datetime.fromtimestamp(float(timestamp))
+    return dt.strftime(DATE_FORMAT)
+
+
+def make_dir(path):
+    try:
+        os.makedirs(path)
+    except OSError as e:
+        if e.errno == errno.EEXIST:
+            pass
+
+
 def load_session():
     with open(os.path.join(os.path.expanduser(PROFILE), 'sessionstore.js')) as f:
         return Session(json.load(f, object_hook=AttrDict))
 
+
+def clone_session():
+    import shutil
+    make_dir(CONFIG_DIR)
+    current_session = os.path.join(os.path.expanduser(PROFILE), 'sessionstore.js')
+    shutil.copy
 
 def list_command(args=None):
     session = load_session()
@@ -46,6 +69,24 @@ def list_command(args=None):
             except KeyError:
                 pass
 
+
+def read_command(args):
+    import requests
+    from readability.readability import Document
+    import html2text
+    h = html2text.HTML2Text()
+    h.inline_links = False
+    h.ignore_images = True
+    h.ignore_emphasis = True
+    res = requests.get(args.url)
+    if res.ok:
+        article = Document(res.content)
+        print article.short_title()
+        print h.handle(article.summary())
+    else:
+        print res.headers['status']
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers()
@@ -54,9 +95,14 @@ if __name__ == '__main__':
     list_parser = subparsers.add_parser('list', help='List open tabs')
     list_parser.set_defaults(command=list_command)
 
+    # read command
+    read_parser = subparsers.add_parser('read', help='read url')
+    read_parser.add_argument('url', action='store', help='Url to add')
+    read_parser.set_defaults(command=read_command)
+
     if sys.argv[1:]:
         args = parser.parse_args()
         command = args.command
         command(args)
-    else:
-        list_command()
+    # else:
+    #     list_command()
