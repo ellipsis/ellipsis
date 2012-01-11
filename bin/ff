@@ -10,7 +10,6 @@ import sys
 
 CONFIG_DIR = '~/.ff'
 DATE_FORMAT = "%Y%m%d%H%M"
-PROFILE = '~/Library/Application Support/Firefox/Profiles/ah5u2jfa.default'
 
 
 class AttrDict(dict):
@@ -34,6 +33,15 @@ class Session(object):
         return list(self.itertabs())
 
 
+def itersessions():
+    if sys.platform == 'darwin':
+        path = os.path.expanduser('~/Library/Application Support/Firefox/Profiles')
+    else:
+        path = os.path.expanduser('~/.mozilla/firefox')
+    for profile in (x for x in os.listdir(path) if x.endswith('.default')):
+        yield (profile, os.path.join(path, profile, 'sessionstore.js'))
+
+
 def format_date(timestamp=None):
     if timestamp:
         dt = datetime.fromtimestamp(float(timestamp))
@@ -51,7 +59,8 @@ def make_dir(path):
 
 
 def load_session():
-    with open(os.path.join(os.path.expanduser(PROFILE), 'sessionstore.js')) as f:
+    profile, session = next(itersessions())
+    with open(session) as f:
         return Session(json.load(f, object_hook=AttrDict))
 
 
@@ -59,8 +68,8 @@ def save_session():
     import shutil
     cfg_dir = os.path.expanduser(CONFIG_DIR)
     make_dir(cfg_dir)
-    current_session = os.path.join(os.path.expanduser(PROFILE), 'sessionstore.js')
-    shutil.copy(current_session, os.path.join(cfg_dir, format_date() + '.js'))
+    profile, session = next(itersessions())
+    shutil.copy(session, os.path.join(cfg_dir, format_date() + '.js'))
 
 
 def list_command(args=None):
