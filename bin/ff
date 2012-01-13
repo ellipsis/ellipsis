@@ -8,7 +8,8 @@ import json
 import os
 import sys
 
-CONFIG_DIR = '~/.ff'
+CONFIG_DIR = os.path.expanduser('~/.ff')
+SESSIONS_DIR = os.path.join(CONFIG_DIR, 'sessions')
 DATE_FORMAT = "%Y%m%d%H%M"
 
 
@@ -33,20 +34,9 @@ class Session(object):
         return list(self.itertabs())
 
 
-def itersessions():
-    if sys.platform == 'darwin':
-        path = os.path.expanduser('~/Library/Application Support/Firefox/Profiles')
-    else:
-        path = os.path.expanduser('~/.mozilla/firefox')
-    for profile in (x for x in os.listdir(path) if x.endswith('.default')):
-        yield (profile, os.path.join(path, profile, 'sessionstore.js'))
-
-
 def format_date(timestamp=None):
-    if timestamp:
-        dt = datetime.fromtimestamp(float(timestamp))
-    else:
-        dt = datetime.now()
+    if timestamp: dt = datetime.fromtimestamp(float(timestamp))
+    else: dt = datetime.now()
     return dt.strftime(DATE_FORMAT)
 
 
@@ -58,6 +48,17 @@ def make_dir(path):
             pass
 
 
+def itersessions(include_saved=False):
+    if sys.platform == 'darwin':
+        path = os.path.expanduser('~/Library/Application Support/Firefox/Profiles')
+    else:
+        path = os.path.expanduser('~/.mozilla/firefox')
+    for profile in (x for x in os.listdir(path) if x.endswith('.default')):
+        yield (profile, os.path.join(path, profile, 'sessionstore.js'))
+    if include_saved:
+        for session in os.listdir(SESSIONS_DIR):
+            print 'saved session:', session
+
 def load_session():
     profile, session = next(itersessions())
     with open(session) as f:
@@ -66,23 +67,49 @@ def load_session():
 
 def save_session():
     import shutil
-    cfg_dir = os.path.expanduser(CONFIG_DIR)
-    make_dir(cfg_dir)
     profile, session = next(itersessions())
-    shutil.copy(session, os.path.join(cfg_dir, format_date() + '.js'))
+    shutil.copy(session, os.path.join(SESSIONS_DIR, format_date() + '.js'))
 
 
-def list_command(args=None):
+def replace_session(new_session):
+    import shutil
+    profile, current_session = next(itersessions())
+    shutil.copy(new_session, current_session)
+
+
+def list_tabs():
     session = load_session()
-    for tab in session.tabs:
-        for entry in tab.entries:
+    for s_idx, tab in enumerate(session.tabs):
+        for t_idx, entry in enumerate(tab.entries):
             try:
-                print entry.title, '-', entry.url
+                print ':'.join(str(x) for x in [s_idx, t_idx]), entry.title, '-', entry.url
             except KeyError:
                 pass
 
 
+def list_sessions():
+    for s in itersessions(include_saved=True):
+        print s[0], s[1]
+
+# commands
+def list_command(args):
+    if args.tabs:
+        list_tabs()
+    elif args.sessions:
+        list_sessions()
+    else:
+        list_tabs()
+
+
 def read_command(args):
+    session = load_session()
+    try:
+        s_idx, t_idx = (int(x) for x in args.idx.split(':'))
+        url = session.tabs[s_idx].entries[t_idx].url
+    except:
+        print 'Invalid index'
+        return
+
     import requests
     from readability.readability import Document
     import html2text
@@ -90,7 +117,7 @@ def read_command(args):
     h.inline_links = False
     h.ignore_images = True
     h.ignore_emphasis = True
-    res = requests.get(args.url)
+    res = requests.get(url)
     if res.ok:
         article = Document(res.content)
         print article.short_title()
@@ -99,16 +126,27 @@ def read_command(args):
         print res.headers['status']
 
 
+def open_command(args):
+    pass
+
+
 def save_command(args):
     save_session()
 
+
 if __name__ == '__main__':
+    # make sure config dir exists
+    if not os.path.exists(SESSIONS_DIR):
+        make_dir(SESSIONS_DIR)
+
     sys.stdout = codecs.getwriter('UTF-8')(sys.stdout)
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers()
 
     # list command
     list_parser = subparsers.add_parser('list', help='List open tabs')
+    list_parser.add_argument('--tabs', action='store_true', help='List open tabs')
+    list_parser.add_argument('--sessions', action='store_true', help='List open tabs')
     list_parser.set_defaults(command=list_command)
 
     # save command
@@ -116,9 +154,14 @@ if __name__ == '__main__':
     save_parser.set_defaults(command=save_command)
 
     # read command
-    read_parser = subparsers.add_parser('read', help='read url')
-    read_parser.add_argument('url', action='store', help='Url to add')
+    read_parser = subparsers.add_parser('read', help='Read idx')
+    read_parser.add_argument('idx', action='store', help='Index of article to read')
     read_parser.set_defaults(command=read_command)
+
+    # open command
+    open_parser = subparsers.add_parser('open', help='Open idx')
+    open_parser.add_argument('idx', action='store', help='Index of article to open in Firefox')
+    open_parser.set_defaults(command=open_command)
 
     if sys.argv[1:]:
         args = parser.parse_args()
