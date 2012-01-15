@@ -9,7 +9,7 @@ url = 'http://snips.tk'
 lexers = {
     '.sh':      'bash',
     '.c':       'c',
-    '.coffee':  'coffeescript'
+    '.coffee':  'coffeescript',
     '.cpp':     'cpp',
     '.css':     'css',
     '.html':    'django',
