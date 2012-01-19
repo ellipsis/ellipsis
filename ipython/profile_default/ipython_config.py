@@ -55,7 +55,7 @@ c.InteractiveShellApp.extensions = ['autoreload']
 # c.TerminalIPythonApp.exec_lines = []
 
 # Enable GUI event loop integration ('qt', 'wx', 'gtk', 'glut', 'pyglet').
-# c.TerminalIPythonApp.gui = None
+# c.TerminalIPythonApp.gui = 'qt'
 
 # Pre-load matplotlib and numpy for interactive use, selecting a particular
 # matplotlib backend and loop integration.

@@ -7,5 +7,6 @@
 	tool = vimdiff3
 [alias]
 	ci = commit
+    st = status
 [core]
 	excludesfile = ~/.cvsignore

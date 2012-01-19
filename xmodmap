@@ -1,0 +1,10 @@
+clear Lock
+clear mod1
+clear mod4
+keycode 66 = Escape
+keycode 64 = Super_L
+keycode 108 = Super_R
+keycode 133 = Alt_L Meta_L
+keycode 135 = Alt_R Meta_R
+add mod4 = Super_L Super_R
+add mod1 = Alt_L Alt_R Meta_L Meta_R
