@@ -8,5 +8,6 @@
 [alias]
 	ci = commit
     st = status
+    a = add .
 [core]
 	excludesfile = ~/.cvsignore
