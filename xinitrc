@@ -27,6 +27,9 @@ nm-applet &
 # xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
 xmodmap ~/.xmodmap
 
+# Dim screen
+xbacklight -set 85
+
 # exec gnome-session
 # exec startkde
 # exec startxfce4

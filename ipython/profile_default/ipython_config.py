@@ -151,7 +151,7 @@ c.TerminalInteractiveShell.autoindent = True
 # forces a full reload of modules whose code may have changed, which the default
 # reload() function does not.  When deep_reload is off, IPython will use the
 # normal reload(), but deep_reload will still be available as dreload().
-# c.TerminalInteractiveShell.deep_reload = False
+c.TerminalInteractiveShell.deep_reload = True
 
 # Make IPython automatically call any callable object even if you didn't type
 # explicit parentheses. For example, 'str 43' becomes 'str(43)' automatically.
@@ -173,6 +173,7 @@ c.TerminalInteractiveShell.autoindent = True
 
 # Set the editor used by IPython (default to $EDITOR/vi/notepad).
 # c.TerminalInteractiveShell.editor = 'vim'
+c.IPythonWidget.editor = 'gvim'
 
 # Deprecated, use PromptManager.justify
 # c.TerminalInteractiveShell.prompts_pad_left = True
@@ -364,7 +365,7 @@ c.IPCompleter.omit__names = 1
 #
 # If False, only the completion results from the first non-empty completer will
 # be returned.
-# c.IPCompleter.merge_completions = True
+c.IPCompleter.merge_completions = True
 
 # Activate greedy completion
 #
