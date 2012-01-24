@@ -222,19 +222,13 @@ myTabConfig = defaultTheme {   activeBorderColor = "#7C7C7C"
 myLayout = avoidStruts $ boringWindows $ (
             named "vert" tiled |||
             named "horiz" tiled2 |||
-            -- named "grid" Grid |||
-            named "full" Full
-
-            -- named "spiral" spiral (6/7)
+            named "full" full
             )
 --
   where
-     tiled   = smartBorders $ mouseResizableTile { isMirrored = True, draggerType = FixedDragger { gapWidth = 0, draggerWidth = 4 }}
-     tiled2  = smartBorders $ mouseResizableTile { draggerType = FixedDragger { gapWidth = 0, draggerWidth = 4 }}
-      -- (ResizableTall 1 (2/100) (1/2) [])
+     tiled   = smartBorders $ mouseResizableTile { draggerType = FixedDragger { gapWidth = 0, draggerWidth = 4 }}
+     tiled2  = smartBorders $ mouseResizableTile { isMirrored = True, draggerType = FixedDragger { gapWidth = 0, draggerWidth = 4 }}
      full    = noBorders Full
-     -- default tiling algorithm partitions the screen into two panes
-     -- tiled   = Tall nmaster delta ratio
 
      -- The default number of windows in the master pane
      nmaster = 1
