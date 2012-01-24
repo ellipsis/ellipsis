@@ -4,16 +4,30 @@
 import System.IO
 import System.Exit
 import XMonad
+import XMonad.Config.Bluetile
+import XMonad.Util.Replace
+
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.SetWMName
 
 -- layouts
+--
+import XMonad.Layout.BoringWindows
+import XMonad.Layout.BorderResize
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Grid
 import XMonad.Layout.Spiral
 import XMonad.Layout.Tabbed
+import XMonad.Layout.DraggingVisualizer
+-- import XMonad.Layout.LayoutCombinators
+import XMonad.Layout.Maximize
+import XMonad.Layout.Minimize
+import XMonad.Layout.MouseResizableTile
+import XMonad.Layout.Named
+import XMonad.Layout.NoBorders
+import XMonad.Layout.PositionStoreFloat
 
 -- actions
 import qualified XMonad.Actions.FlexibleResize as Flex
@@ -122,11 +136,13 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     -- Swap the focused window with the previous window
     , ((modMask .|. shiftMask, xK_k     ), windows W.swapUp    )
 
-    -- Shrink the master area
+    -- Expand/Shrink the master area
     , ((modMask,               xK_h     ), sendMessage Shrink)
-
-    -- Expand the master area
     , ((modMask,               xK_l     ), sendMessage Expand)
+
+    -- Expand/Shrink a slave area
+    , ((modMask,               xK_u     ), sendMessage ShrinkSlave)
+    , ((modMask,               xK_i     ), sendMessage ExpandSlave)
 
     -- Push window back into tiling
     , ((modMask,               xK_t     ), withFocused $ windows . W.sink)
@@ -137,6 +153,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     -- Deincrement the number of windows in the master area
     , ((modMask              , xK_period), sendMessage (IncMasterN (-1)))
 
+    --
     -- toggle the status bar gap
     -- TODO, update this binding with avoidStruts , ((modMask              , xK_b     ),
 
@@ -202,11 +219,19 @@ myTabConfig = defaultTheme {   activeBorderColor = "#7C7C7C"
                              , inactiveBorderColor = "#7C7C7C"
                              , inactiveTextColor = "#EEEEEE"
                              , inactiveColor = "#000000" }
--- myLayout = avoidStruts (tiled ||| Mirror tiled ||| Grid ||| tabbed shrinkText myTabConfig ||| Full ||| spiral (6/7))
-myLayout = avoidStruts (tiled ||| Mirror tiled ||| spiral (6/7) ||| tabbed shrinkText myTabConfig ||| Full)
-  where
+myLayout = avoidStruts $ boringWindows $ (
+            named "vert" tiled |||
+            named "horiz" tiled2 |||
+            -- named "grid" Grid |||
+            named "full" Full
 
-     tiled   = smartBorders (ResizableTall 1 (2/100) (1/2) [])
+            -- named "spiral" spiral (6/7)
+            )
+--
+  where
+     tiled   = smartBorders $ mouseResizableTile { isMirrored = True, draggerType = FixedDragger { gapWidth = 0, draggerWidth = 4 }}
+     tiled2  = smartBorders $ mouseResizableTile { draggerType = FixedDragger { gapWidth = 0, draggerWidth = 4 }}
+      -- (ResizableTall 1 (2/100) (1/2) [])
      full    = noBorders Full
      -- default tiling algorithm partitions the screen into two panes
      -- tiled   = Tall nmaster delta ratio
@@ -281,7 +306,7 @@ myFocusFollowsMouse = True
 -- per-workspace layout choices.
 --
 -- By default, do nothing.
-myStartupHook = return ()
+-- myStartupHook = return ()
 
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
@@ -308,22 +333,21 @@ main = do
 -- No need to modify this.
 --
 defaults = defaultConfig {
-      -- simple stuff
-        terminal           = myTerminal,
-        focusFollowsMouse  = myFocusFollowsMouse,
-        borderWidth        = myBorderWidth,
-        modMask            = myModMask,
-        -- numlockMask        = myNumlockMask,
-        workspaces         = myWorkspaces,
-        normalBorderColor  = myNormalBorderColor,
-        focusedBorderColor = myFocusedBorderColor,
+        -- simple stuff
+          terminal           = myTerminal
+        , focusFollowsMouse  = myFocusFollowsMouse
+        , borderWidth        = myBorderWidth
+        , modMask            = myModMask
+        -- numlockMask        = myNumlockMask
+        , workspaces         = myWorkspaces
+        , normalBorderColor  = myNormalBorderColor
+        , focusedBorderColor = myFocusedBorderColor
 
-      -- key bindings
-        keys               = myKeys,
-        mouseBindings      = myMouseBindings,
+        -- key bindings
+        , keys               = myKeys
+        , mouseBindings      = myMouseBindings
 
-      -- hooks, layouts
-        layoutHook         = smartBorders $ myLayout,
-        manageHook         = myManageHook,
-        startupHook        = myStartupHook
+        -- hooks, layouts
+        , layoutHook         = smartBorders $ myLayout
+        , manageHook         = myManageHook
     }
