@@ -6,7 +6,7 @@ merge = vimdiff-simple
 ignore = ~/.cvsignore
 
 [diff]
-git = True
+# git = True
 showfunc = True
 ignorews = True
 ignorewsamount = True
