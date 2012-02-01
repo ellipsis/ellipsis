@@ -4,6 +4,7 @@
 import System.IO
 import System.Exit
 import XMonad
+import XMonad.Config.Gnome
 import XMonad.Config.Bluetile
 import XMonad.Util.Replace
 
@@ -158,7 +159,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     -- TODO, update this binding with avoidStruts , ((modMask              , xK_b     ),
 
     -- Quit xmonad
-    , ((modMask .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
+    , ((modMask .|. shiftMask, xK_q     ), spawn "gnome-session-quit")
 
     -- Restart xmonad
     , ((modMask              , xK_q     ), restart "xmonad" True)
@@ -281,58 +282,13 @@ myManageHook = composeAll
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = True
 
-------------------------------------------------------------------------
--- Status bars and logging
-
--- Perform an arbitrary action on each internal state change or X event.
--- See the 'DynamicLog' extension for examples.
---
--- To emulate dwm's status bar
---
--- > logHook = dynamicLogDzen
---
-
-------------------------------------------------------------------------
--- Startup hook
-
--- Perform an arbitrary action each time xmonad starts or is restarted
--- with mod-q.  Used by, e.g., XMonad.Layout.PerWorkspace to initialize
--- per-workspace layout choices.
---
--- By default, do nothing.
--- myStartupHook = return ()
-
-------------------------------------------------------------------------
--- Now run xmonad with all the defaults we set up.
-
--- Run xmonad with the settings you specify. No need to modify this.
---
 main = do
     xmobar <- spawnPipe "xmobar"
-    xmonad $ defaults {
-        logHook = dynamicLogWithPP $ xmobarPP {
-            ppOutput = hPutStrLn xmobar
-            , ppTitle = xmobarColor "#FFB6B0" "" . shorten 100
-            , ppCurrent = xmobarColor "#CEFFAC" ""
-            , ppSep = "   "
-        }
-        , manageHook = manageDocks <+> myManageHook
-        , startupHook = setWMName "LG3D"
-    }
-
--- A structure containing your configuration settings, overriding
--- fields in the default config. Any you don't override, will
--- use the defaults defined in xmonad/XMonad/Config.hs
---
--- No need to modify this.
---
-defaults = defaultConfig {
-        -- simple stuff
+    xmonad $ gnomeConfig {
           terminal           = myTerminal
         , focusFollowsMouse  = myFocusFollowsMouse
         , borderWidth        = myBorderWidth
         , modMask            = myModMask
-        -- numlockMask        = myNumlockMask
         , workspaces         = myWorkspaces
         , normalBorderColor  = myNormalBorderColor
         , focusedBorderColor = myFocusedBorderColor
@@ -342,6 +298,14 @@ defaults = defaultConfig {
         , mouseBindings      = myMouseBindings
 
         -- hooks, layouts
+        , logHook = dynamicLogWithPP $ xmobarPP {
+            ppOutput = hPutStrLn xmobar
+            , ppTitle = xmobarColor "#FFB6B0" "" . shorten 100
+            , ppCurrent = xmobarColor "#CEFFAC" ""
+            , ppSep = "   "
+        }
         , layoutHook         = smartBorders $ myLayout
-        , manageHook         = myManageHook
+        , manageHook = myManageHook <+> manageHook gnomeConfig
+        , startupHook = do
+            setWMName "LG3D"
     }

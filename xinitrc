@@ -39,4 +39,4 @@ if [ -f "$HOME/.xinitrc_local" ]; then
     . ~/.xinitrc_local
 fi
 
-exec ck-launch-session xmonad
+exec ck-launch-session dbus-launch xmonad
