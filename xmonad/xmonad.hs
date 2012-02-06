@@ -1,19 +1,14 @@
 -- Author: Zach Kelling
--- Source: https://github.com/zeekay/dot-files or https://bitbucket.org/zeekay/dot-files
+-- Source: https://github.com/zeekay/dot-files || https://bitbucket.org/zeekay/dot-files
 
 import System.IO
 import System.Exit
 import XMonad
 import XMonad.Config.Gnome
-import XMonad.Config.Bluetile
 import XMonad.Util.Replace
-
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.SetWMName
-
--- layouts
---
 import XMonad.Layout.BoringWindows
 import XMonad.Layout.BorderResize
 import XMonad.Layout.NoBorders
@@ -22,84 +17,39 @@ import XMonad.Layout.Grid
 import XMonad.Layout.Spiral
 import XMonad.Layout.Tabbed
 import XMonad.Layout.DraggingVisualizer
--- import XMonad.Layout.LayoutCombinators
 import XMonad.Layout.Maximize
 import XMonad.Layout.Minimize
 import XMonad.Layout.MouseResizableTile
 import XMonad.Layout.Named
 import XMonad.Layout.NoBorders
 import XMonad.Layout.PositionStoreFloat
-
--- actions
 import qualified XMonad.Actions.FlexibleResize as Flex
 import XMonad.Actions.GridSelect
-
 import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.EZConfig(additionalKeys)
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
--- The preferred terminal program, which is used in a binding below and by
--- certain contrib modules.
---
 myTerminal      = "terminator"
-
--- Width of the window border in pixels.
---
 myBorderWidth   = 1
-
--- modMask lets you specify which modkey you want to use. The default
--- is mod1Mask ("left alt").  You may also consider using mod3Mask
--- ("right alt"), which does not conflict with emacs keybindings. The
--- "windows key" is usually mod4Mask.
---
 myModMask       = mod4Mask
-
--- The mask for the numlock key. Numlock status is "masked" from the
--- current modifier status, so the keybindings will work with numlock on or
--- off. You may need to change this on some systems.
---
--- You can find the numlock modifier by running "xmodmap" and looking for a
--- modifier with Num_Lock bound to it:
---
--- > $ xmodmap | grep Num
--- > mod2        Num_Lock (0x4d)
---
--- Set numlockMask = 0 if you don't have a numlock key, or want to treat
--- numlock status separately.
---
 myNumlockMask   = mod2Mask
-
--- The default number of workspaces (virtual screens) and their names.
--- By default we use numeric strings, but any string may be used as a
--- workspace name. The number of workspaces is determined by the length
--- of this list.
---
--- A tagging example:
---
--- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
---
 myWorkspaces    = map show [1..9]
--- ["1:code","2:web","3:msg","4:vm","5:media","6","7","8","9"]
-
--- Border colors for unfocused and focused windows, respectively.
---
+myFocusFollowsMouse = True
 myNormalBorderColor  = "#7c7c7c"
 myFocusedBorderColor = "#ffb6b0"
 
-------------------------------------------------------------------------
--- Key bindings. Add, modify or remove key bindings here.
---
+-- keybindings
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
     -- launch a terminal
     [ ((modMask .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
 
-    -- launch gmrun
+    -- lock screen
     , ((modMask .|. controlMask, xK_l     ), spawn "xscreensaver-command -lock")
 
     -- launch dmenu
-    , ((modMask,               xK_r     ), spawn "exe=`dmenu_run -fn 'montecarlo-8' -nb '#000000' -nf '#FFFFFF' -sb '#7C7C7C' -sf '#CEFFAC'` && eval \"exec $exe\"")
+    , ((modMask,               xK_r     ), spawn "exec dmenu_run")
 
     -- GridSelect
     , ((modMask, xK_g), goToSelected defaultGSConfig)
@@ -154,10 +104,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     -- Deincrement the number of windows in the master area
     , ((modMask              , xK_period), sendMessage (IncMasterN (-1)))
 
-    --
-    -- toggle the status bar gap
-    -- TODO, update this binding with avoidStruts , ((modMask              , xK_b     ),
-
     -- Quit xmonad
     , ((modMask .|. shiftMask, xK_q     ), spawn "gnome-session-quit")
 
@@ -166,66 +112,32 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     ]
     ++
 
-    --
     -- mod-[1..9], Switch to workspace N
     -- mod-shift-[1..9], Move client to workspace N
-    --
     [((m .|. modMask, k), windows $ f i)
         | (i, k) <- zip myWorkspaces [xK_1 .. xK_9]
         , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
     ++
 
-    --
     -- mod-{F1-F3}, Switch to physical/Xinerama screens 1..3
     -- mod-shift-{F1-F3}, Move client to screen 1..3
-    --
    [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
        | (key, sc) <- zip [xK_F1..xK_F3] [0..]
        , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
-
-------------------------------------------------------------------------
--- Mouse bindings: default actions bound to mouse events
---
+-- mouse bindings
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
-
     [ ((modMask, button1), (\w -> focus w >> mouseMoveWindow w >> windows W.shiftMaster)) -- set the window to floating mode and move by dragging
     , ((modMask, button2), (\w -> focus w >> windows W.shiftMaster)) -- raise the window to the top of the stack
     , ((modMask, button3), (\w -> focus w >> Flex.mouseResizeWindow w)) -- set the window to floating mode and resize by dragging
-
-    -- mod-button1, Set the window to floating mode and move by dragging
-    --[ ((modMask, button1), (\w -> focus w >> mouseMoveWindow w))
-     -- mod-button2, Raise the window to the top of the stack
-    --, ((modMask, button2), (\w -> focus w >> windows W.swapMaster))
-     -- mod-button3, Set the window to floating mode and resize by dragging
-    --, ((modMask, button3), (\w -> focus w >> mouseResizeWindow w))
-
-    -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
 
-------------------------------------------------------------------------
--- Layouts:
-
--- You can specify and transform your layouts by modifying these values.
--- If you change layout bindings be sure to use 'mod-shift-space' after
--- restarting (with 'mod-q') to reset your layout state to the new
--- defaults, as xmonad preserves your old layout settings by default.
---
--- The available layouts.  Note that each layout is separated by |||,
--- which denotes layout choice.
---
-myTabConfig = defaultTheme {   activeBorderColor = "#7C7C7C"
-                             , activeTextColor = "#CEFFAC"
-                             , activeColor = "#000000"
-                             , inactiveBorderColor = "#7C7C7C"
-                             , inactiveTextColor = "#EEEEEE"
-                             , inactiveColor = "#000000" }
+-- layout
 myLayout = avoidStruts $ boringWindows $ (
             named "vert" tiled |||
             named "horiz" tiled2 |||
             named "full" full
             )
---
   where
      tiled   = smartBorders $ mouseResizableTile { draggerType = FixedDragger { gapWidth = 0, draggerWidth = 4 }}
      tiled2  = smartBorders $ mouseResizableTile { isMirrored = True, draggerType = FixedDragger { gapWidth = 0, draggerWidth = 4 }}
@@ -240,47 +152,12 @@ myLayout = avoidStruts $ boringWindows $ (
      -- Percent of screen to increment by when resizing panes
      delta   = 3/100
 
-------------------------------------------------------------------------
--- Window rules:
-
--- Execute arbitrary actions and WindowSet manipulations when managing
--- a new window. You can use this to, for example, always float a
--- particular program, or have a client always appear on a particular
--- workspace.
---
--- To find the property name associated with a program, use
--- > xprop | grep WM_CLASS
--- and click on the client you're interested in.
---
--- To match on the WM_NAME, you can use 'title' in the same way that
--- 'className' and 'resource' are used below.
---
+-- hooks
 myManageHook = composeAll
-    [ className =? "MPlayer"        --> doFloat
-    , className =? "Smplayer"       --> doFloat
-    , className =? "Psx.real"       --> doFloat
-    , className =? "Gimp"           --> doFloat
-    , className =? "Galculator"     --> doFloat
-    , resource  =? "Komodo_find2"   --> doFloat
+    [ className =? "Gimp"           --> doFloat
     , resource  =? "compose"        --> doFloat
-    , className =? "Terminal"       --> doShift "1:code"
-    , className =? "Gedit"          --> doShift "1:code"
-    , className =? "Emacs"          --> doShift "1:code"
-    , className =? "Komodo Edit"    --> doShift "1:code"
-    , className =? "Emacs"          --> doShift "1:code"
-    , className =? "Google-chrome"  --> doShift "2:web"
-    , className =? "Thunderbird-bin" --> doShift "3:msg"
-    , className =? "Pidgin"         --> doShift "3:msg"
-    , className =? "VirtualBox"     --> doShift "4:vm"
-    , className =? "banshee-1"      --> doShift "5:media"
-    , className =? "Ktorrent"       --> doShift "5:media"
-    , className =? "Xchat"          --> doShift "5:media"
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore ]
-
--- Whether focus follows the mouse pointer.
-myFocusFollowsMouse :: Bool
-myFocusFollowsMouse = True
 
 main = do
     xmobar <- spawnPipe "xmobar"
@@ -290,22 +167,16 @@ main = do
         , borderWidth        = myBorderWidth
         , modMask            = myModMask
         , workspaces         = myWorkspaces
-        , normalBorderColor  = myNormalBorderColor
-        , focusedBorderColor = myFocusedBorderColor
-
-        -- key bindings
         , keys               = myKeys
         , mouseBindings      = myMouseBindings
-
-        -- hooks, layouts
-        , logHook = dynamicLogWithPP $ xmobarPP {
+        , layoutHook         = smartBorders $ myLayout
+        , manageHook         = manageHook $ gnomeConfig
+        , logHook            = dynamicLogWithPP $ xmobarPP {
             ppOutput = hPutStrLn xmobar
             , ppTitle = xmobarColor "#FFB6B0" "" . shorten 100
             , ppCurrent = xmobarColor "#CEFFAC" ""
             , ppSep = "   "
         }
-        , layoutHook         = smartBorders $ myLayout
-        , manageHook = myManageHook <+> manageHook gnomeConfig
-        , startupHook = do
+        , startupHook        = do
             setWMName "LG3D"
     }
