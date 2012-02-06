@@ -2,6 +2,8 @@ syntax: glob
 .DS_Store
 *.pyc
 *.pyo
+ipython/db
+ipython/history
 ipython/**/db
 ipython/**/log
 ipython/**/pid
