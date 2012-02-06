@@ -11,5 +11,6 @@
     a = add .
     fshow = ! sh -c 'git show --pretty="format:" --name-only $1 | grep -v "^$" | uniq | sed -e "s#^#`git rev-parse --show-toplevel`/#"' -
     vim   = ! sh -c 'vim `git fshow $1`' -
+    pullf = ! git reset --hard && git pull
 [core]
 	excludesfile = ~/.cvsignore
