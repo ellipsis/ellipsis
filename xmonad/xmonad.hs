@@ -49,7 +49,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask .|. controlMask, xK_l     ), spawn "xscreensaver-command -lock")
 
     -- launch dmenu
-    , ((modMask,               xK_r     ), spawn "exec dmenu_run")
+    , ((modMask,               xK_r     ), spawn "exec ~/.bin/dmenu_run")
 
     -- GridSelect
     , ((modMask, xK_g), goToSelected defaultGSConfig)
