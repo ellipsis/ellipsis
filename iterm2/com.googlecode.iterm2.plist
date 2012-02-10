@@ -14,6 +14,8 @@
 	<integer>0</integer>
 	<key>AppleSmoothFixedFontsSizeThreshold</key>
 	<integer>1</integer>
+	<key>AutoHideTmuxClientSession</key>
+	<false/>
 	<key>CheckTestRelease</key>
 	<true/>
 	<key>ClosingHotkeySwitchesSpaces</key>
@@ -4190,9 +4192,9 @@
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>1157 323 592 625 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-620 77 570 351 -1920 0 1920 1080 </string>
+	<string>508 516 570 351 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>-1095 325 1075 739 -1920 0 1920 1080 </string>
+	<string>-666 22 640 507 -1920 0 1920 1080 </string>
 	<key>NSWindow Frame iTerm Window 10</key>
 	<string>-1743 575 570 351 -1920 0 1920 1080 </string>
 	<key>NSWindow Frame iTerm Window 11</key>
@@ -4214,7 +4216,7 @@
 	<key>NSWindow Frame iTerm Window 19</key>
 	<string>674 315 570 351 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>-1350 37 570 351 -1920 0 1920 1080 </string>
+	<string>41 25 868 322 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 20</key>
 	<string>695 292 570 351 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 21</key>
@@ -4230,15 +4232,15 @@
 	<key>NSWindow Frame iTerm Window 26</key>
 	<string>821 154 570 351 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>-1587 177 894 633 -1920 0 1920 1080 </string>
+	<string>999 238 773 761 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
-	<string>-1404 454 570 351 -1920 0 1920 1080 </string>
+	<string>161 455 1197 603 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 5</key>
-	<string>664 307 607 462 0 0 1920 1058 </string>
+	<string>1018 63 807 373 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 6</key>
-	<string>-1068 338 1002 570 -1920 0 1920 1080 </string>
+	<string>-1686 502 570 351 -1920 0 1920 1080 </string>
 	<key>NSWindow Frame iTerm Window 7</key>
-	<string>-1878 38 570 351 -1920 0 1920 1080 </string>
+	<string>339 111 954 861 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 8</key>
 	<string>-1799 621 570 351 -1920 0 1920 1080 </string>
 	<key>NSWindow Frame iTerm Window 9</key>
@@ -4409,6 +4411,8 @@
 			</dict>
 			<key>Background Image Location</key>
 			<string></string>
+			<key>Blend</key>
+			<real>0.30000001192092896</real>
 			<key>Blink Allowed</key>
 			<false/>
 			<key>Blinking Cursor</key>
@@ -4479,6 +4483,8 @@
 			</dict>
 			<key>Guid</key>
 			<string>FDFF2972-506F-458B-B10B-B4F710961013</string>
+			<key>Hide After Opening</key>
+			<false/>
 			<key>Horizontal Spacing</key>
 			<real>1</real>
 			<key>Idle Code</key>
@@ -6755,7 +6761,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2012-01-24T07:08:35Z</date>
+	<date>2012-02-07T16:40:50Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
@@ -6812,6 +6818,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>1.0.0.20120108</string>
+	<string>1.0.0.20120203</string>
 </dict>
 </plist>
