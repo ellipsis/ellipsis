@@ -8,8 +8,8 @@ fi
 (
 	IFS=:
 	if stest -dqr -n "$cache" $PATH; then
-		stest -flx $PATH | sort -u | tee "$cache" | dmenu -fn 'montecarlo-12' -nb '#000000' -nf '#FFFFFF' -sb '#7C7C7C' -sf '#CEFFAC' "$@"
+		stest -flx $PATH | sort -u | tee "$cache" | dmenu -fn 'Inconsolata:size=11' -nb '#000000' -nf '#FFFFFF' -sb '#7C7C7C' -sf '#CEFFAC' "$@"
 	else
-		dmenu -fn 'montecarlo-12' -nb '#000000' -nf '#FFFFFF' -sb '#7C7C7C' -sf '#CEFFAC' "$@" < "$cache"
+		dmenu -fn 'Inconsolata:size=11' -nb '#000000' -nf '#FFFFFF' -sb '#7C7C7C' -sf '#CEFFAC' "$@" < "$cache"
 	fi
 ) | ${SHELL:-"/bin/sh"} &

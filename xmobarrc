@@ -1,7 +1,7 @@
-Config { font = "xft:MonteCarlo:pixelsize=8"
+Config { font = "xft:Inconsolata:size=11"
        , bgColor = "#000000"
        , fgColor = "#ffffff"
-       , position = TopSize C 100 20
+       , position = TopSize C 100 16
        , lowerOnStart = True
        , commands = [ Run Date "%a %b %_d %I:%M" "date" 10
                     -- , Run Weather "KMKC" ["-t","<station>: <tempC>C","-L","18","-H","25","--normal","green","--high","red","--low","lightblue"] 36000
