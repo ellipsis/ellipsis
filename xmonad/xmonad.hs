@@ -209,20 +209,20 @@ pangoSanitize = foldr sanitize ""
     sanitize x    xs = x:xs
 
 -- Use xmobar
--- main = do
-    -- xmobar <- spawnPipe "xmobar"
-    -- xmonad $ gnomeConfig {
-        -- logHook              = dynamicLogWithPP $ xmobarPP {
-        --     ppOutput = hPutStrLn xmobar
-        --     , ppTitle = xmobarColor "#FFB6B0" "" . shorten 100
-        --     , ppCurrent = xmobarColor "#CEFFAC" ""
-        --     , ppSep = "   "
-        -- }
+main = do
+    xmobar <- spawnPipe "xmobar"
+    xmonad $ gnomeConfig {
+        logHook              = dynamicLogWithPP $ xmobarPP {
+            ppOutput = hPutStrLn xmobar
+            , ppTitle = xmobarColor "#FFB6B0" "" . shorten 100
+            , ppCurrent = xmobarColor "#CEFFAC" ""
+            , ppSep = "   "
+        }
 
 -- Use xmonad log applet
-main = withConnection Session $ \ dbus -> do
-    xmonad $ gnomeConfig {
-          logHook            = dynamicLogWithPP (prettyPrinter dbus)
+-- main = withConnection Session $ \ dbus -> do
+--     xmonad $ gnomeConfig {
+--           logHook            = dynamicLogWithPP (prettyPrinter dbus)
         , terminal           = myTerminal
         , focusFollowsMouse  = myFocusFollowsMouse
         , borderWidth        = myBorderWidth
@@ -234,7 +234,7 @@ main = withConnection Session $ \ dbus -> do
         , manageHook         = manageHook $ gnomeConfig
         , startupHook        = do
             setWMName "LG3D"
-            -- spawn "nm-applet"
-            -- spawn "gnome-sound-applet"
-            -- spawn "trayer --edge top --align right --widthtype request --margin 120 --height 18 --padding 1 --transparent true --tint 0x000000 --alpha 0 &"
+            spawn "nm-applet"
+            spawn "gnome-sound-applet"
+            spawn "trayer --edge top --align right --widthtype request --margin 120 --height 18 --padding 1 --transparent true --tint 0x000000 --alpha 0 &"
     }
