@@ -14,7 +14,7 @@ for dotfile in `find $basedir -maxdepth 1 -name '*' ! -name 'setup.sh' ! -name '
     name="`basename $dotfile`"
     dest="$HOME/.$name"
 
-    if [ "$remove_existing" ] && [ -e "$dest" ]; then
+    if [ "$remove_existing" ] && [ -e "$dest" ] || [ -h "$dest" ]; then
         echo "removing $dest"
         rm -rf "$dest"
     fi
