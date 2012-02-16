@@ -1,5 +1,5 @@
-Config { font = "xft:Inconsolata:size=11"
-       , bgColor = "#000000"
+Config { font = "xft:Inconsolata:size=10"
+       , bgColor = "#111111"
        , fgColor = "#ffffff"
        , position = TopSize C 100 18
        , lowerOnStart = True
