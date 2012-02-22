@@ -16,7 +16,7 @@ set -m
 
 push(){
     if [ -d ".hg" ]; then
-        echo -e "\033[1m$1 pushed\033[0m" | sed 's/\-e //' > $cachedir/$1
+        echo -e "\033[1mpushing $1\033[0m" | sed 's/\-e //' > $cachedir/$1
         hg ci -q
         hg push >> $cachedir/$1 2>&1 &
     else
