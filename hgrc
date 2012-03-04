@@ -36,6 +36,13 @@ vim = !$HG cat "$1" -r "$2" > "/tmp/$1"; vim "/tmp/$1"; rm "/tmp/$1"
 vimdiff = !$HG cat $1 $2 > "/tmp/$1$2"; vim -d $1 "/tmp/$1$2" -c ":wincmd h"; rm "/tmp/$1$2"
 bk = bookmark
 bks = bookmarks
+u = up
+p = pull
+ps = push
+f = fetch
+c = commit
+l = log
+i = id -n -i -b -t -B
 
 [merge-tools]
 vimdiff.executable = vim
