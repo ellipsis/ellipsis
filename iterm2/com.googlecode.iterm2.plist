@@ -4186,15 +4186,15 @@
 	<key>NSWindow Frame NSColorPanel</key>
 	<string>506 473 409 344 0 0 1920 1058 </string>
 	<key>NSWindow Frame NSFontPanel</key>
-	<string>486 590 445 270 0 0 1920 1058 </string>
+	<string>859 478 445 270 0 0 1920 1058 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>98 572 924 485 0 0 1920 1058 </string>
+	<string>484 386 605 485 0 0 1920 1058 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>1157 323 592 625 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>508 516 570 351 0 0 1920 1058 </string>
+	<string>236 410 570 376 0 0 1920 1080 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>-666 22 640 507 -1920 0 1920 1080 </string>
+	<string>-1064 696 570 351 -1920 0 1920 1080 </string>
 	<key>NSWindow Frame iTerm Window 10</key>
 	<string>-1743 575 570 351 -1920 0 1920 1080 </string>
 	<key>NSWindow Frame iTerm Window 11</key>
@@ -4216,7 +4216,7 @@
 	<key>NSWindow Frame iTerm Window 19</key>
 	<string>674 315 570 351 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>41 25 868 322 0 0 1920 1058 </string>
+	<string>445 622 570 351 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 20</key>
 	<string>695 292 570 351 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 21</key>
@@ -4232,13 +4232,13 @@
 	<key>NSWindow Frame iTerm Window 26</key>
 	<string>821 154 570 351 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>999 238 773 761 0 0 1920 1058 </string>
+	<string>34 491 570 351 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
-	<string>161 455 1197 603 0 0 1920 1058 </string>
+	<string>91 -492 2284 985 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 5</key>
-	<string>1018 63 807 373 0 0 1920 1058 </string>
+	<string>-1679 538 769 477 -1920 0 1920 1080 </string>
 	<key>NSWindow Frame iTerm Window 6</key>
-	<string>-1686 502 570 351 -1920 0 1920 1080 </string>
+	<string>-1904 79 1789 954 -1920 0 1920 1080 </string>
 	<key>NSWindow Frame iTerm Window 7</key>
 	<string>339 111 954 861 0 0 1920 1058 </string>
 	<key>NSWindow Frame iTerm Window 8</key>
@@ -4249,7 +4249,7 @@
 	<array>
 		<dict>
 			<key>ASCII Anti Aliased</key>
-			<false/>
+			<true/>
 			<key>Ambiguous Double Width</key>
 			<false/>
 			<key>Ansi 0 Color</key>
@@ -4888,11 +4888,11 @@
 			<key>Name</key>
 			<string>Default</string>
 			<key>Non Ascii Font</key>
-			<string>Monaco 12</string>
+			<string>DejaVuSansMono 12</string>
 			<key>Non-ASCII Anti Aliased</key>
-			<false/>
+			<true/>
 			<key>Normal Font</key>
-			<string>Dinamedium 13</string>
+			<string>DejaVuSansMono-Bold 12</string>
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
@@ -5054,7 +5054,7 @@
 			<key>Use Bright Bold</key>
 			<false/>
 			<key>Vertical Spacing</key>
-			<real>0.92195415496826172</real>
+			<real>0.99915540218353271</real>
 			<key>Visual Bell</key>
 			<false/>
 			<key>Window Type</key>
@@ -6761,7 +6761,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2012-02-07T16:40:50Z</date>
+	<date>2012-03-04T18:54:20Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
