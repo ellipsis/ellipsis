@@ -4042,16 +4042,12 @@
 	<false/>
 	<key>MinimumContrast</key>
 	<real>0.0</real>
-	<key>NSColorPanelMode</key>
-	<string>6</string>
-	<key>NSColorPickerSlidersDefaults</key>
-	<string>3</string>
 	<key>NSFontPanelAttributes</key>
 	<string>1, 4</string>
+	<key>NSFontPanelPreviewHeight</key>
+	<real>0.0</real>
 	<key>NSNavLastRootDirectory</key>
 	<string>~</string>
-	<key>NSNavPanelExpandedSizeForOpenMode</key>
-	<string>{537, 400}</string>
 	<key>NSQuotedKeystrokeBinding</key>
 	<string></string>
 	<key>NSRepeatCountBinding</key>
@@ -4069,187 +4065,25 @@
 		</data>
 		<string>198</string>
 	</array>
-	<key>NSTableView Columns NSNavOutlineColumnSettings.v1</key>
-	<array>
-		<data>
-		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
-		hAErC2Rpc3BsYXlOYW1lhg==
-		</data>
-		<string>259</string>
-		<data>
-		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
-		hAErB21vZERhdGWG
-		</data>
-		<string>88</string>
-		<data>
-		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
-		hAErDGNyZWF0aW9uRGF0ZYY=
-		</data>
-		<string>95</string>
-		<data>
-		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
-		hAErDmxhc3RPcGVuZWREYXRlhg==
-		</data>
-		<string>95</string>
-		<data>
-		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
-		hAErE2tpbmRXaXRob3V0UGxhdGZvcm2G
-		</data>
-		<string>62</string>
-		<data>
-		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
-		hAErDHNob3J0VmVyc2lvboY=
-		</data>
-		<string>62</string>
-		<data>
-		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
-		hAErCWxhYmVsTmFtZYY=
-		</data>
-		<string>62</string>
-		<data>
-		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
-		hAErDHBoeXNpY2FsU2l6ZYY=
-		</data>
-		<string>60</string>
-	</array>
 	<key>NSTableView Hidden Columns KeyBingingTable</key>
 	<array/>
-	<key>NSTableView Hidden Columns NSNavOutlineColumnSettings.v1</key>
-	<array>
-		<data>
-		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
-		hAErDGNyZWF0aW9uRGF0ZYY=
-		</data>
-		<data>
-		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
-		hAErDmxhc3RPcGVuZWREYXRlhg==
-		</data>
-		<data>
-		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
-		hAErE2tpbmRXaXRob3V0UGxhdGZvcm2G
-		</data>
-		<data>
-		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
-		hAErDHNob3J0VmVyc2lvboY=
-		</data>
-		<data>
-		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
-		hAErCWxhYmVsTmFtZYY=
-		</data>
-		<data>
-		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
-		hAErDHBoeXNpY2FsU2l6ZYY=
-		</data>
-	</array>
 	<key>NSTableView Sort Ordering KeyBingingTable</key>
 	<array/>
-	<key>NSTableView Sort Ordering NSNavOutlineColumnSettings.v1</key>
-	<array>
-		<data>
-		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
-		hAErC2Rpc3BsYXlOYW1lhg==
-		</data>
-		<true/>
-	</array>
-	<key>NSToolbar Configuration Terminal Toolbar</key>
-	<dict>
-		<key>TB Default Item Identifiers</key>
-		<array>
-			<string>New</string>
-			<string>Info</string>
-			<string>Close</string>
-			<string>Command</string>
-			<string>Profiles</string>
-		</array>
-		<key>TB Display Mode</key>
-		<integer>1</integer>
-		<key>TB Icon Size Mode</key>
-		<integer>1</integer>
-		<key>TB Is Shown</key>
-		<integer>0</integer>
-		<key>TB Item Identifiers</key>
-		<array>
-			<string>New</string>
-			<string>Info</string>
-			<string>NSToolbarSeparatorItem</string>
-			<string>NSToolbarCustomizeToolbarItem</string>
-			<string>Close</string>
-			<string>NSToolbarSeparatorItem</string>
-			<string>Command</string>
-			<string>Profiles</string>
-		</array>
-		<key>TB Size Mode</key>
-		<integer>1</integer>
-		<key>TB Visibility Priority Values</key>
-		<dict/>
-	</dict>
 	<key>NSWindow Frame NSColorPanel</key>
-	<string>506 473 409 344 0 0 1920 1058 </string>
-	<key>NSWindow Frame NSFontPanel</key>
-	<string>859 478 445 270 0 0 1920 1058 </string>
+	<string>72 438 201 309 0 0 1440 878 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>484 386 605 485 0 0 1920 1058 </string>
-	<key>NSWindow Frame UKCrashReporter</key>
-	<string>1157 323 592 625 0 0 1920 1058 </string>
+	<string>301 301 924 485 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>236 410 570 376 0 0 1920 1080 </string>
+	<string>0 0 1440 900 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>-1064 696 570 351 -1920 0 1920 1080 </string>
-	<key>NSWindow Frame iTerm Window 10</key>
-	<string>-1743 575 570 351 -1920 0 1920 1080 </string>
-	<key>NSWindow Frame iTerm Window 11</key>
-	<string>-1857 26 985 599 -1920 0 1920 1080 </string>
-	<key>NSWindow Frame iTerm Window 12</key>
-	<string>73 471 1592 509 0 0 1920 1058 </string>
-	<key>NSWindow Frame iTerm Window 13</key>
-	<string>548 453 570 351 0 0 1920 1058 </string>
-	<key>NSWindow Frame iTerm Window 14</key>
-	<string>569 430 570 351 0 0 1920 1058 </string>
-	<key>NSWindow Frame iTerm Window 15</key>
-	<string>590 407 570 351 0 0 1920 1058 </string>
-	<key>NSWindow Frame iTerm Window 16</key>
-	<string>611 384 570 351 0 0 1920 1058 </string>
-	<key>NSWindow Frame iTerm Window 17</key>
-	<string>632 361 570 351 0 0 1920 1058 </string>
-	<key>NSWindow Frame iTerm Window 18</key>
-	<string>653 338 570 351 0 0 1920 1058 </string>
-	<key>NSWindow Frame iTerm Window 19</key>
-	<string>674 315 570 351 0 0 1920 1058 </string>
+	<string>434 408 490 326 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>445 622 570 351 0 0 1920 1058 </string>
-	<key>NSWindow Frame iTerm Window 20</key>
-	<string>695 292 570 351 0 0 1920 1058 </string>
-	<key>NSWindow Frame iTerm Window 21</key>
-	<string>716 269 570 351 0 0 1920 1058 </string>
-	<key>NSWindow Frame iTerm Window 22</key>
-	<string>737 246 570 351 0 0 1920 1058 </string>
-	<key>NSWindow Frame iTerm Window 23</key>
-	<string>758 223 570 351 0 0 1920 1058 </string>
-	<key>NSWindow Frame iTerm Window 24</key>
-	<string>779 200 570 351 0 0 1920 1058 </string>
-	<key>NSWindow Frame iTerm Window 25</key>
-	<string>800 177 570 351 0 0 1920 1058 </string>
-	<key>NSWindow Frame iTerm Window 26</key>
-	<string>821 154 570 351 0 0 1920 1058 </string>
-	<key>NSWindow Frame iTerm Window 3</key>
-	<string>34 491 570 351 0 0 1920 1058 </string>
-	<key>NSWindow Frame iTerm Window 4</key>
-	<string>91 -492 2284 985 0 0 1920 1058 </string>
-	<key>NSWindow Frame iTerm Window 5</key>
-	<string>-1679 538 769 477 -1920 0 1920 1080 </string>
-	<key>NSWindow Frame iTerm Window 6</key>
-	<string>-1904 79 1789 954 -1920 0 1920 1080 </string>
-	<key>NSWindow Frame iTerm Window 7</key>
-	<string>339 111 954 861 0 0 1920 1058 </string>
-	<key>NSWindow Frame iTerm Window 8</key>
-	<string>-1799 621 570 351 -1920 0 1920 1080 </string>
-	<key>NSWindow Frame iTerm Window 9</key>
-	<string>-585 409 570 351 -1920 0 1920 1080 </string>
+	<string>90 219 570 351 0 0 1440 878 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
 			<key>ASCII Anti Aliased</key>
-			<true/>
+			<false/>
 			<key>Ambiguous Double Width</key>
 			<false/>
 			<key>Ansi 0 Color</key>
@@ -4888,11 +4722,11 @@
 			<key>Name</key>
 			<string>Default</string>
 			<key>Non Ascii Font</key>
-			<string>DejaVuSansMono 12</string>
+			<string>Monaco 12</string>
 			<key>Non-ASCII Anti Aliased</key>
-			<true/>
+			<false/>
 			<key>Normal Font</key>
-			<string>DejaVuSansMono-Bold 12</string>
+			<string>MonteCarloRegular 11</string>
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
@@ -5054,7 +4888,7 @@
 			<key>Use Bright Bold</key>
 			<false/>
 			<key>Vertical Spacing</key>
-			<real>0.99915540218353271</real>
+			<real>0.9897724986076355</real>
 			<key>Visual Bell</key>
 			<false/>
 			<key>Window Type</key>
@@ -6694,7 +6528,7 @@
 	<key>OnlyWhenMoreTabs</key>
 	<false/>
 	<key>OpenArrangementAtStartup</key>
-	<false/>
+	<true/>
 	<key>OpenBookmark</key>
 	<false/>
 	<key>OpenTmuxWindowsIn</key>
@@ -6741,7 +6575,7 @@
 		</dict>
 	</dict>
 	<key>PrefsCustomFolder</key>
-	<string>/Volumes/Data/zk/.iterm2</string>
+	<string>/Users/zkelling/.iterm2</string>
 	<key>PromptOnClose</key>
 	<false/>
 	<key>PromptOnQuit</key>
@@ -6752,8 +6586,6 @@
 	<integer>8</integer>
 	<key>RightOption</key>
 	<integer>3</integer>
-	<key>SUAutomaticallyUpdate</key>
-	<true/>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedURL</key>
@@ -6761,9 +6593,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2012-03-04T18:54:20Z</date>
-	<key>SUSendProfileInfo</key>
-	<false/>
+	<date>2012-03-05T22:23:24Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>
@@ -6788,8 +6618,6 @@
 	<integer>10</integer>
 	<key>TripleClickSelectsFullWrappedLines</key>
 	<false/>
-	<key>UKCrashReporterLastCrashReportDate</key>
-	<real>1319839488</real>
 	<key>URLHandlersByGuid</key>
 	<dict/>
 	<key>UseBorder</key>
