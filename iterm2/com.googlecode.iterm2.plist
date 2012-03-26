@@ -4284,18 +4284,22 @@
 	<key>NSWindow Frame NSColorPanel</key>
 	<string>72 438 201 309 0 0 1440 878 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>301 301 924 485 0 0 1440 878 </string>
+	<string>353 393 924 485 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 267 941 586 0 0 1440 878 </string>
+	<string>0 502 570 376 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>0 12 1431 866 0 0 1440 878 </string>
+	<string>57 306 1022 503 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>89 193 570 376 0 0 1440 878 </string>
+	<string>8 460 570 376 0 0 1440 878 </string>
+	<key>NSWindow Frame iTerm Window 3</key>
+	<string>781 245 570 376 0 0 1440 878 </string>
+	<key>NSWindow Frame iTerm Window 4</key>
+	<string>52 482 756 396 0 0 1440 878 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
 			<key>ASCII Anti Aliased</key>
-			<false/>
+			<true/>
 			<key>Ambiguous Double Width</key>
 			<false/>
 			<key>Ansi 0 Color</key>
@@ -4934,11 +4938,11 @@
 			<key>Name</key>
 			<string>Default</string>
 			<key>Non Ascii Font</key>
-			<string>Monaco 12</string>
+			<string>Inconsolata 14</string>
 			<key>Non-ASCII Anti Aliased</key>
-			<false/>
+			<true/>
 			<key>Normal Font</key>
-			<string>Dinamedium 13</string>
+			<string>Inconsolata 14</string>
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
@@ -6805,7 +6809,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2012-03-16T06:27:03Z</date>
+	<date>2012-03-24T19:54:20Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>
