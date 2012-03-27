@@ -12,6 +12,17 @@
     fshow = ! sh -c 'git show --pretty="format:" --name-only $1 | grep -v "^$" | uniq | sed -e "s#^#`git rev-parse --show-toplevel`/#"' -
     vim   = ! sh -c 'vim `git fshow $1`' -
     pullf = ! git reset --hard && git pull
+    serve = daemon --reuseaddr --verbose  --base-path=. --export-all ./.git
+    lc = log ORIG_HEAD.. --stat --no-merges
+    changes=diff --name-status -r
+    diffstat=diff --stat -rundo=reset --hard
+    record = ! sh -c '(git add -p -- $@ && git commit) || git reset' --
+    cherry-pick-svn = !GIT_EDITOR='sed -i /^git-svn-id:/d' git cherry-pick -e
+    branch-svn = svn branch
+    merge-svn = merge --squash
+    up = svn rebase
+    update = svn rebase
+    push-svn = svn dcommit
 [core]
 	excludesfile = ~/.cvsignore
 [instaweb]
