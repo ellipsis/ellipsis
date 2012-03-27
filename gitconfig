@@ -6,6 +6,7 @@
 [merge]
     tool            = vimdiff3
 [alias]
+    co              = checkout
     ci              = commit
     st              = status
     a               = add .
@@ -24,6 +25,16 @@
     update          = svn rebase
     push-svn        = svn dcommit
 [core]
+    symlinks        = false
     excludesfile    = ~/.cvsignore
+	autocrlf        = input
+	safecrlf        = true
+[color]
+    diff            = auto
+    status          = auto
+    branch          = auto
+    interactive     = true
+[rebase]
+    autosquash      = true
 [instaweb]
     httpd           = webrick
