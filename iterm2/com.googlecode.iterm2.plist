@@ -4284,13 +4284,13 @@
 	<key>NSWindow Frame NSColorPanel</key>
 	<string>72 438 201 309 0 0 1440 878 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>353 393 924 485 0 0 1440 878 </string>
+	<string>276 224 924 485 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 502 570 376 0 0 1440 878 </string>
+	<string>2 4 802 506 0 0 1600 878 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>57 306 1022 503 0 0 1440 878 </string>
+	<string>91 127 759 426 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>8 460 570 376 0 0 1440 878 </string>
+	<string>1 4 1438 874 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
 	<string>781 245 570 376 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
@@ -5104,7 +5104,7 @@
 			<key>Use Bright Bold</key>
 			<false/>
 			<key>Vertical Spacing</key>
-			<real>0.9897724986076355</real>
+			<real>0.87658363580703735</real>
 			<key>Visual Bell</key>
 			<false/>
 			<key>Window Type</key>
@@ -6809,7 +6809,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2012-03-24T19:54:20Z</date>
+	<date>2012-03-26T21:14:44Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>
