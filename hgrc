@@ -26,6 +26,7 @@ rebase =
 record =
 histedit = ~/.hgext/hg_histedit.py
 collapse = ~/.hgext/collapse.py
+hgsubversion =
 
 [alias]
 latest = log -r -5:-1 --stat

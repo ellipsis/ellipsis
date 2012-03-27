@@ -14,3 +14,5 @@
     pullf = ! git reset --hard && git pull
 [core]
 	excludesfile = ~/.cvsignore
+[instaweb]
+    httpd=webrick
