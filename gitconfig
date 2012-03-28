@@ -1,40 +1,47 @@
 [user]
-    name            = zeekay
-    email           = zeekayy@gmail.com
+name            = zeekay
+email           = zeekayy@gmail.com
+
 [mergetool "vimdiff3"]
-    cmd             = vim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
+cmd             = vim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
+
 [merge]
-    tool            = vimdiff3
+tool            = vimdiff3
+
 [alias]
-    co              = checkout
-    ci              = commit
-    st              = status
-    a               = add .
-    pullf           = ! git reset --hard && git pull
-    lc              = log ORIG_HEAD.. --stat --no-merges
-    fshow           = ! sh -c 'git show --pretty="format:" --name-only $1 | grep -v "^$" | uniq | sed -e "s#^#`git rev-parse --show-toplevel`/#"' -
-    vim             = ! sh -c 'vim `git fshow $1`' -
-    changes         = diff --name-status -r
-    diffstat        = diff --stat -rundo=reset --hard
-    record          = ! sh -c '(git add -p -- $@ && git commit) || git reset' --
-    serve           = daemon --reuseaddr --verbose  --base-path=. --export-all ./.git
-    cherry-pick-svn = !GIT_EDITOR='sed -i /^git-svn-id:/d' git cherry-pick -e
-    branch-svn      = svn branch
-    merge-svn       = merge --squash
-    up              = svn rebase
-    update          = svn rebase
-    push-svn        = svn dcommit
+co              = checkout
+ci              = commit
+st              = status
+a               = add .
+pullf           = ! git reset --hard && git pull
+lc              = log ORIG_HEAD.. --stat --no-merges
+fshow           = ! sh -c 'git show --pretty="format:" --name-only $1 | grep -v "^$" | uniq | sed -e "s#^#`git rev-parse --show-toplevel`/#"' -
+vim             = ! sh -c 'vim `git fshow $1`' -
+changes         = diff --name-status -r
+diffstat        = diff --stat -rundo=reset --hard
+record          = ! sh -c '(git add -p -- $@ && git commit) || git reset' --
+serve           = daemon --reuseaddr --verbose  --base-path=. --export-all ./.git
+cherry-pick-svn = !GIT_EDITOR='sed -i /^git-svn-id:/d' git cherry-pick -e
+branch-svn      = svn branch
+merge-svn       = merge --squash
+up              = svn rebase
+update          = svn rebase
+push-svn        = svn dcommit
+
 [core]
-    symlinks        = false
-    excludesfile    = ~/.cvsignore
-	autocrlf        = input
-	safecrlf        = true
+symlinks        = false
+excludesfile    = ~/.cvsignore
+autocrlf        = input
+safecrlf        = true
+
 [color]
-    diff            = auto
-    status          = auto
-    branch          = auto
-    interactive     = true
+diff            = auto
+status          = auto
+branch          = auto
+interactive     = true
+
 [rebase]
-    autosquash      = true
+autosquash      = true
+
 [instaweb]
-    httpd           = webrick
+httpd           = webrick
