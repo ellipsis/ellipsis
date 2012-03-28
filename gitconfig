@@ -10,6 +10,7 @@
     ci              = commit
     st              = status
     a               = add .
+    b               = branch
     pullf           = ! git reset --hard && git pull
     lc              = log ORIG_HEAD.. --stat --no-merges
     fshow           = ! sh -c 'git show --pretty="format:" --name-only $1 | grep -v "^$" | uniq | sed -e "s#^#`git rev-parse --show-toplevel`/#"' -
@@ -25,7 +26,6 @@
     update          = svn rebase
     push-svn        = svn dcommit
 [core]
-    symlinks        = false
     excludesfile    = ~/.cvsignore
 	autocrlf        = input
 	safecrlf        = true

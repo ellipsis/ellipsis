@@ -5,3 +5,5 @@ tags
 .svn
 .gitignore
 .hgignore
+.pyc
+.pyo
