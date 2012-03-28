@@ -46,3 +46,8 @@
 
 [instaweb]
     httpd           = webrick
+[github]
+	user = zeekay
+[gist]
+	private = true
+	browse = true
