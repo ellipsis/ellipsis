@@ -30,7 +30,6 @@
     push-svn        = svn dcommit
 
 [core]
-    symlinks        = false
     excludesfile    = ~/.cvsignore
     autocrlf        = input
     safecrlf        = true
