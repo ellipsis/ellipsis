@@ -1,6 +1,6 @@
 [user]
-    name            = zeekay
-    email           = zeekayy@gmail.com
+	name = Zach Kelling
+	email = zeekayy@gmail.com
 
 [mergetool "vimdiff3"]
     cmd             = vim -f -d -c \"wincmd J\" \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\"
@@ -11,7 +11,7 @@
 [alias]
     co              = checkout
     ci              = commit
-    st              = status
+    st              = status -s
     a               = add .
     b               = branch
     pullf           = ! git reset --hard && git pull
