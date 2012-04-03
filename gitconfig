@@ -31,7 +31,7 @@
 
 [core]
     excludesfile    = ~/.cvsignore
-    autocrlf        = input
+	autocrlf        = input
     safecrlf        = true
 
 [color]
