@@ -27,7 +27,7 @@
     push-svn        = svn dcommit
 [core]
     excludesfile    = ~/.cvsignore
-    autocrlf        = input
+    autocrlf        = false
 [color]
     diff            = auto
     status          = auto
