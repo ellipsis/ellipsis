@@ -33,4 +33,4 @@ faces[27]='（ ﾟД ﾟ）'
 faces[28]='(Ｔ▽ Ｔ)'
 faces[29]='（￣□￣；）'
 
-echo $faces[$[${RANDOM}%20]]
+echo $faces[$[${RANDOM}%30]]
