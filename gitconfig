@@ -1,5 +1,5 @@
 [user]
-    name            = Zach Kelling
+    name            = zeekay
     email           = zeekayy@gmail.com
 [mergetool "mvim"]
     cmd             = mvim "+Gdiff" $MERGED -c 'wincmd h' -c 'close' -c 'Gread :2'
@@ -11,6 +11,7 @@
     st              = status -s
     a               = add .
     b               = branch
+    l               = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
     pullf           = ! git reset --hard && git pull
     lc              = log ORIG_HEAD.. --stat --no-merges
     fshow           = ! sh -c 'git show --pretty="format:" --name-only $1 | grep -v "^$" | uniq | sed -e "s#^#`git rev-parse --show-toplevel`/#"' -
