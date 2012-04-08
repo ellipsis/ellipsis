@@ -12,17 +12,21 @@
     a               = add .
     b               = branch
     l = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white)%an, %ar%Creset'
-    pullf           = ! git reset --hard && git pull
+    pullf           = reset --hard && git pull
     lc              = log ORIG_HEAD.. --stat --no-merges
     fshow           = ! sh -c 'git show --pretty="format:" --name-only $1 | grep -v "^$" | uniq | sed -e "s#^#`git rev-parse --show-toplevel`/#"' -
     vim             = ! sh -c 'vim `git fshow $1`' -
     changes         = diff --name-status -r
     diffstat        = diff --stat -rundo=reset --hard
+    unstage = reset HEAD
+    staged = diff --cached
+    unstaged = diff
+    current-branch = !git symbolic-ref -q HEAD | sed -e 's|^refs/heads/||'
+    # Usage: git track origin/feature-123-login-form
+    track = checkout -t
     record          = ! sh -c '(git add -p -- $@ && git commit) || git reset' --
     serve           = daemon --reuseaddr --verbose  --base-path=. --export-all ./.git
     cherry-pick-svn = !GIT_EDITOR='sed -i /^git-svn-id:/d' git cherry-pick -e
-    branch-svn      = svn branch
-    merge-svn       = merge --squash
     up              = svn rebase
     update          = svn rebase
     push-svn        = svn dcommit
