@@ -17,6 +17,7 @@
     coi-ours        = checkout-index -f -a --stage=2
     coi-theirs      = checkout-index -f -a --stage=3
     d               = diff
+    ds              = diff --stat
     l               = log --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white)%an, %ar%Creset'
     lg              = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white)%an, %ar%Creset'
     ls              = log --stat --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white)%an, %ar%Creset'
