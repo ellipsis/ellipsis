@@ -17,7 +17,10 @@
     coi-ours        = checkout-index -f -a --stage=2
     coi-theirs      = checkout-index -f -a --stage=3
     d               = diff
-    l               = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white)%an, %ar%Creset'
+    l               = log --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white)%an, %ar%Creset'
+    lg              = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white)%an, %ar%Creset'
+    ls              = log --stat --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white)%an, %ar%Creset'
+    lp              = log --patch --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white)%an, %ar%Creset'
     lc              = log ORIG_HEAD.. --stat --no-merges
     mt              = mergetool -y
     st              = status -s
@@ -31,7 +34,6 @@
     track           = checkout -t
     unstage         = reset HEAD
     unstaged        = diff
-    versions        = log --stat --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white)%an, %ar%Creset'
 
     vim             = !vim -o $1 -c 'setlocal bufhidden=delete' -c 'Gedit %' -c 'wincmd w' -c 'wincmd q'
     mvim            = !mvim -o $1 -c 'setlocal bufhidden=delete' -c 'Gedit %' -c 'wincmd q'
