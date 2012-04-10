@@ -2,11 +2,13 @@
     name            = zeekay
     email           = zeekayy@gmail.com
 [mergetool "mvim"]
-    cmd             = mvim "+Gdiff" $MERGED -c 'wincmd h' -c 'close' -c 'Gread :2'
+    cmd             = mvim "+Gdiff" $MERGED -c 'wincmd h' -c 'close' -c 'Gread :2' -c 'map <leader>q :qa<cr>' -c 'map Q :qa<cr>'
 [merge]
     tool            = mvim
 [alias]
     co              = checkout
+    coi-ours         = checkout-index -f -a --stage=2
+    coi-theirs       = checkout-index -f -a --stage=3
     ci              = commit
     st              = status -s
     a               = add .
@@ -16,8 +18,10 @@
     lc              = log ORIG_HEAD.. --stat --no-merges
     vim             = !vim -o $1 -c 'setlocal bufhidden=delete' -c 'Gedit %' -c 'wincmd w' -c 'wincmd q'
     mvim            = !mvim -o $1 -c 'setlocal bufhidden=delete' -c 'Gedit %' -c 'wincmd q'
+    mt              = mergetool -y
     changes         = diff --name-status -r
     diffstat        = diff --stat -rundo=reset --hard
+    unmerged        = !git --no-pager diff --name-only --diff-filter=U
     unstage         = reset HEAD
     staged          = diff --cached
     unstaged        = diff
