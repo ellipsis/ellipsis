@@ -7,3 +7,8 @@ tags
 .hgignore
 .pyc
 .pyo
+.BACKUP.*.*
+.BASE.*.*
+.LOCAL.*.*
+.REMOTE.*.*
+.orig
