@@ -62,7 +62,7 @@
     httpd           = webrick
 
 [github]
-    user            = zeekay
+	user = zeekay
 
 [gist]
     private         = true
