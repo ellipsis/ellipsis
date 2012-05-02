@@ -7,6 +7,7 @@
 
 [merge]
     tool            = mvim
+	stat = true
 
 [alias]
     a               = add
@@ -48,12 +49,14 @@
 [core]
     excludesfile    = ~/.cvsignore
     autocrlf        = false
+	whitespace = trailing-space,space-before-tab
 
 [color]
     diff            = auto
     status          = auto
     branch          = auto
     interactive     = true
+	ui = auto
 
 [rebase]
     autosquash      = true
@@ -68,3 +71,14 @@
 [gist]
     private         = true
     browse          = true
+[diff]
+	mnemonicprefix = true
+	renames = copies
+[advice]
+	statusHints = false
+[branch]
+	autosetupmerge = true
+[push]
+	default = tracking
+[rerere]
+	enabled = true
