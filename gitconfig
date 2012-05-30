@@ -1,13 +1,13 @@
 [user]
-	name            = zeekay
-	email           = zeekayy@gmail.com
+    name            = zeekay
+    email           = zeekayy@gmail.com
 
 [mergetool "mvim"]
     cmd             = mvim "+Gdiff" $MERGED -c 'wincmd h' -c 'close' -c 'Gread :2' -c 'map Q :qa<cr>' -c 'map <leader>q :qa<cr>'
 
 [merge]
     tool            = mvim
-	stat            = true
+    stat            = true
 
 [alias]
     br              = branch
@@ -58,14 +58,14 @@
 [core]
     excludesfile    = ~/.cvsignore
     autocrlf        = false
-	whitespace      = trailing-space,space-before-tab
+    whitespace      = trailing-space,space-before-tab
 
 [color]
     diff            = auto
     status          = auto
     branch          = auto
     interactive     = true
-	ui = auto
+    ui = auto
 
 [rebase]
     autosquash      = true
@@ -82,17 +82,17 @@
     browse          = true
 
 [diff]
-	mnemonicprefix  = true
-	renames         = copies
+    mnemonicprefix  = true
+    renames         = copies
 
 [advice]
-	statusHints     = false
+    statusHints     = false
 
 [branch]
-	autosetupmerge  = true
+    autosetupmerge  = true
 
 [push]
-	default         = tracking
+    default         = tracking
 
 [rerere]
-	enabled         = true
+    enabled         = true
