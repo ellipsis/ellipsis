@@ -19,8 +19,8 @@ checkstatus(){
         echo -e "\033[1m$1\033[0m `hg id -n`" | sed 's/\-e //' > $cachedir/$1
         hg diff --stat --color=always >> $cachedir/$1 2>&1 &
     else
-        echo -e "\033[1m$1\033[0m `git rev-parse --short HEAD`" | sed 's/\-e //' > $cachedir/$1
-        git --no-pager diff --stat >> $cachedir/$1 2>&1 &
+        echo -e "\033[1m$1\033[0m `git --no-pager log --pretty=format:'%h %ad' --abbrev-commit --date=relative -1`" | sed 's/\-e //' > $cachedir/$1
+        git --no-pager diff --stat --color=always >> $cachedir/$1 2>&1 &
     fi
 }
 
