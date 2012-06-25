@@ -16,10 +16,11 @@ set -m
 
 checkstatus(){
     if [ -d ".hg" ]; then
-        echo -e "\033[1m$1\033[0m `hg id -n`" | sed 's/\-e //' > $cachedir/$1
-        hg diff --stat >> $cachedir/$1 2>&1 &
+        echo -e "\033[1m$1\033[0m `hg branch`@`hg id -n`" | sed 's/\-e //' > $cachedir/$1
+        hg diff --stat --color=always >> $cachedir/$1 2>&1 &
     else
-        git status
+        echo -e "\033[1m$1\033[0m `git branch --no-color | cut -c 3-`@`git rev-parse --short HEAD`" | sed 's/\-e //'
+        git --no-pager diff --stat
     fi
 }
 

@@ -21,7 +21,6 @@ collapse =
 color =
 fetch =
 graphlog =
-pager =
 rebase =
 record =
 histedit = ~/.hgext/hg_histedit.py
