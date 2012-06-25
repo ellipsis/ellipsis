@@ -19,7 +19,8 @@ update(){
         echo -e "\033[1mupdating $1\033[0m" | sed 's/\-e //' > $cachedir/$1
         hg fetch >> $cachedir/$1 2>&1 &
     else
-        git pull
+        echo -e "\033[1mupdating $1\033[0m" | sed 's/\-e //' > $cachedir/$1
+        git pull >> $cachedir/$1 2>&1 &
     fi
 }
 
