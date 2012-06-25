@@ -20,7 +20,9 @@ push(){
         hg ci -q
         hg push >> $cachedir/$1 2>&1 &
     else
-        git push
+        echo -e "\033[1mpushing $1\033[0m" | sed 's/\-e //' > $cachedir/$1
+        git commit -a
+        git push >> $cachedir/$1 2>&1 &
     fi
 }
 
