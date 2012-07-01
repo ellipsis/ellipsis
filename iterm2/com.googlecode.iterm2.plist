@@ -4284,17 +4284,95 @@
 	<key>NSWindow Frame NSColorPanel</key>
 	<string>72 438 201 309 0 0 1440 878 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>276 224 924 485 0 0 1440 878 </string>
+	<string>35 213 924 485 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>2 4 802 506 0 0 1600 878 </string>
+	<string>737 23 570 401 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>91 127 759 426 0 0 1440 878 </string>
+	<string>407 329 874 520 0 0 1440 878 </string>
+	<key>NSWindow Frame iTerm Window 10</key>
+	<string>402 286 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 11</key>
+	<string>423 263 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 12</key>
+	<string>444 240 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 13</key>
+	<string>465 217 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 14</key>
+	<string>486 194 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 15</key>
+	<string>507 72 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 16</key>
+	<string>528 49 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 17</key>
+	<string>549 26 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 18</key>
+	<string>570 281 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 19</key>
+	<string>591 145 570 401 0 0 1600 878 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>1 4 1438 874 0 0 1440 878 </string>
+	<string>0 4 570 401 0 0 1440 878 </string>
+	<key>NSWindow Frame iTerm Window 20</key>
+	<string>612 122 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 21</key>
+	<string>633 99 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 22</key>
+	<string>654 76 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 23</key>
+	<string>675 53 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 24</key>
+	<string>696 30 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 25</key>
+	<string>717 7 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 26</key>
+	<string>738 446 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 27</key>
+	<string>759 423 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 28</key>
+	<string>780 400 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 29</key>
+	<string>801 377 570 401 0 0 1600 878 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>781 245 570 376 0 0 1440 878 </string>
+	<string>781 215 570 401 0 0 1440 878 </string>
+	<key>NSWindow Frame iTerm Window 30</key>
+	<string>822 354 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 31</key>
+	<string>843 331 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 32</key>
+	<string>864 308 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 33</key>
+	<string>885 285 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 34</key>
+	<string>906 262 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 35</key>
+	<string>927 239 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 36</key>
+	<string>948 216 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 37</key>
+	<string>969 193 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 38</key>
+	<string>990 170 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 39</key>
+	<string>20 147 570 401 0 0 1600 878 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
-	<string>52 482 756 396 0 0 1440 878 </string>
+	<string>64 467 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 40</key>
+	<string>41 124 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 41</key>
+	<string>62 101 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 42</key>
+	<string>103 233 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 43</key>
+	<string>124 210 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 5</key>
+	<string>127 72 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 6</key>
+	<string>318 422 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 7</key>
+	<string>339 399 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 8</key>
+	<string>360 376 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 9</key>
+	<string>381 353 570 401 0 0 1600 878 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -4483,7 +4561,7 @@
 			<key>Character Encoding</key>
 			<integer>4</integer>
 			<key>Close Sessions On End</key>
-			<true/>
+			<false/>
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
@@ -4946,7 +5024,7 @@
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
-			<integer>2</integer>
+			<integer>0</integer>
 			<key>Right Option Key Sends</key>
 			<integer>0</integer>
 			<key>Rows</key>
@@ -5276,6 +5354,8 @@
 			</dict>
 			<key>Background Image Location</key>
 			<string></string>
+			<key>Blend</key>
+			<real>0.30000001192092896</real>
 			<key>Blink Allowed</key>
 			<false/>
 			<key>Blinking Cursor</key>
@@ -5296,7 +5376,7 @@
 			<key>Character Encoding</key>
 			<integer>4</integer>
 			<key>Close Sessions On End</key>
-			<true/>
+			<false/>
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
@@ -5346,6 +5426,8 @@
 			</dict>
 			<key>Guid</key>
 			<string>E90E04DF-C1A6-4DED-9242-81DF6973364C</string>
+			<key>Hide After Opening</key>
+			<false/>
 			<key>Horizontal Spacing</key>
 			<real>1</real>
 			<key>Idle Code</key>
@@ -5757,7 +5839,7 @@
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
-			<integer>2</integer>
+			<integer>0</integer>
 			<key>Right Option Key Sends</key>
 			<integer>0</integer>
 			<key>Rows</key>
@@ -6089,6 +6171,8 @@
 			</dict>
 			<key>Background Image Location</key>
 			<string></string>
+			<key>Blend</key>
+			<real>0.30000001192092896</real>
 			<key>Blink Allowed</key>
 			<false/>
 			<key>Blinking Cursor</key>
@@ -6109,7 +6193,7 @@
 			<key>Character Encoding</key>
 			<integer>4</integer>
 			<key>Close Sessions On End</key>
-			<true/>
+			<false/>
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
@@ -6159,6 +6243,8 @@
 			</dict>
 			<key>Guid</key>
 			<string>A3138A96-FF1A-4EAB-A7B2-D310CF070B8A</string>
+			<key>Hide After Opening</key>
+			<false/>
 			<key>Horizontal Spacing</key>
 			<real>1</real>
 			<key>Idle Code</key>
@@ -6570,7 +6656,7 @@
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
-			<integer>2</integer>
+			<integer>0</integer>
 			<key>Right Option Key Sends</key>
 			<integer>0</integer>
 			<key>Rows</key>
@@ -6809,7 +6895,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2012-03-26T21:14:44Z</date>
+	<date>2012-06-30T11:15:17Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>
@@ -6862,6 +6948,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>1.0.0.20120203</string>
+	<string>unknown</string>
 </dict>
 </plist>

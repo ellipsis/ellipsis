@@ -1,2 +1,4 @@
 vim/
 zsh/
+*.pyc
+ipython/profile_default/

@@ -3860,9 +3860,15 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>856 139 445 270 0 0 1440 878 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>516 235 924 485 0 0 1440 878 </string>
+	<string>0 202 924 485 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>276 207 570 401 0 0 1440 878 </string>
+	<string>11 4 570 401 0 0 1440 878 </string>
+	<key>NSWindow Frame iTerm Window 1</key>
+	<string>242 45 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 2</key>
+	<string>255 22 570 401 0 0 1600 878 </string>
+	<key>NSWindow Frame iTerm Window 3</key>
+	<string>276 477 570 401 0 0 1600 878 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -4051,7 +4057,7 @@
 			<key>Character Encoding</key>
 			<integer>4</integer>
 			<key>Close Sessions On End</key>
-			<true/>
+			<false/>
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
@@ -4514,7 +4520,7 @@
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
-			<integer>2</integer>
+			<integer>0</integer>
 			<key>Right Option Key Sends</key>
 			<integer>0</integer>
 			<key>Rows</key>
@@ -4866,7 +4872,7 @@
 			<key>Character Encoding</key>
 			<integer>4</integer>
 			<key>Close Sessions On End</key>
-			<true/>
+			<false/>
 			<key>Columns</key>
 			<integer>80</integer>
 			<key>Command</key>
@@ -5329,7 +5335,7 @@
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
-			<integer>2</integer>
+			<integer>0</integer>
 			<key>Right Option Key Sends</key>
 			<integer>0</integer>
 			<key>Rows</key>
@@ -5623,6 +5629,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>1.0.0.20120203</string>
+	<string>unknown</string>
 </dict>
 </plist>
