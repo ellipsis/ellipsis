@@ -1,4 +1,4 @@
-# ...
+# …
 A framework for managing dotfiles. Meant to be used in conjunction with my other dot-* repos.
 
 ## Install
