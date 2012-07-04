@@ -77,6 +77,8 @@ npm install -g \
     jsontool \
     mocha
 
+rehash
+
 # Ruby gems
 gem install CoffeeTags
 gem install git-issues
