@@ -30,7 +30,7 @@ brew install \
     leiningen \
     libev \
     libevent \
-    macvim \
+    https://raw.github.com/gist/3046782/6f0034e21897e5a3fe07e06d8ee3a9eaf0271eb3/macvim.rb \
     mercurial \
     mongodb \
     node \
