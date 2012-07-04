@@ -11,7 +11,6 @@
 
 [alias]
     br              = branch
-    sb              = show-branch
     ci              = commit
     co              = checkout
     coi             = checkout-index
@@ -21,19 +20,23 @@
     df              = diff
     ds              = diff --stat
     last            = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white)%an, %ar%Creset' -n 20
-    ls              = log --stat --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white)%an, %ar%Creset'
-    lp              = log --patch --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white)%an, %ar%Creset'
     lc              = log ORIG_HEAD.. --stat --no-merges
+    lp              = log --patch --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white)%an, %ar%Creset'
+    ls              = log --stat --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white)%an, %ar%Creset'
     mt              = mergetool -y
-    st              = status -s
+    pu              = pull
+    pul             = pull
+    pus             = push
     rb              = rebase
     rbc             = rebase --continue
     rbs             = rebase --skip
     rl              = reflog
+    rp              = remote prune
     rs              = remote show
     rt              = remote
     ru              = remote update
-    rp              = remote prune
+    sb              = show-branch
+    st              = status -s
     changes         = diff --name-status -r
     current-branch  = !git symbolic-ref -q HEAD | sed -e 's|^refs/heads/||'
     diffstat        = diff --stat
