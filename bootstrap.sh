@@ -5,7 +5,11 @@
 # Install homebrew
 /usr/bin/ruby -e "$(/usr/bin/curl -fsSL https://raw.github.com/mxcl/homebrew/master/Library/Contributions/install_homebrew.rb)"
 
+export PATH=/usr/local/bin:/usr/local/share/python:$PATH
+
 # Use homebrew to install a few necessities
+brew install libevent
+brew link libevent
 brew install \
     ack \
     cloc \
@@ -17,7 +21,6 @@ brew install \
     elinks \
     fuse4x \
     fuse4x-kext \
-    gettext \
     gist \
     git \
     haskell-platform \
@@ -29,37 +32,48 @@ brew install \
     lame \
     leiningen \
     libev \
-    libevent \
-    https://raw.github.com/gist/3046782/6f0034e21897e5a3fe07e06d8ee3a9eaf0271eb3/macvim.rb \
+    https://raw.github.com/gist/3046782/099ff1aea934fc1169babfbb57b985f55f735d91/macvim.rb \
     mercurial \
     mongodb \
     node \
     pianobar \
     postgresql \
     pypy \
-    pyqt \
-    pyside \
-    pyside-tools \
     python \
     python3 \
     readline \
     redis \
+    repl \
     rhino \
     riak \
-    rlwrap \
     ruby \
-    sqlite \
+    spidermonkey \
     ssh-copy-id \
     sshfs \
     tmux \
     tree \
     unrar \
-    valgrind \
     vimpager \
     wget \
     z \
     zeromq \
     zsh
+
+# links apps installed by homebrew
+brew linkapps
+
+# Add zsh to list of shells
+sudo sh -c "echo /usr/local/bin/zsh >> /etc/shells"
+
+# Fix apple misconfiguration so Zsh has proper PATH
+sudo mv /etc/zshenv /etc/zprofile
+
+# Install fuse4x kext
+sudo cp -rfX /usr/local/Cellar/fuse4x-kext/0.9.1/Library/Extensions/fuse4x.kext /Library/Extensions
+sudo chmod +s /Library/Extensions/fuse4x.kext/Support/load_fuse4x
+
+# Update cabal
+cabal update
 
 # brew refuses to install npm for whatever reason
 curl http://npmjs.org/install.sh | sh
@@ -77,13 +91,12 @@ npm install -g \
     jsontool \
     mocha
 
-rehash
-
 # Ruby gems
 gem install CoffeeTags
 gem install git-issues
 
 # Python packages
+easy_install pip
 pip install httpie
 pip install virtualenv
 
