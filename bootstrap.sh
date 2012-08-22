@@ -21,6 +21,7 @@ brew install \
     elinks \
     fuse4x \
     fuse4x-kext \
+    gnu-sed \
     gist \
     git \
     haskell-platform \
@@ -28,6 +29,7 @@ brew install \
     https://raw.github.com/Homebrew/homebrew-dupes/master/grep.rb \
     https://raw.github.com/Homebrew/homebrew-dupes/master/httpd.rb \
     https://raw.github.com/Homebrew/homebrew-games/master/nethack.rb \
+    https://raw.github.com/simonair/homebrew-dupes/e5177ef4fc82ae5246842e5a544124722c9e975b/ab.rb \
     hub \
     lame \
     leiningen \
@@ -35,6 +37,7 @@ brew install \
     https://raw.github.com/gist/3046782/099ff1aea934fc1169babfbb57b985f55f735d91/macvim.rb \
     mercurial \
     mongodb \
+    netcat \
     node \
     pianobar \
     postgresql \
@@ -54,6 +57,7 @@ brew install \
     tree \
     unrar \
     vimpager \
+    watch \
     wget \
     z \
     zeromq \
