@@ -109,5 +109,5 @@ lein plugin install org.clojars.ibdknox/lein-nailgun 1.1.1
 
 # Install syntax checkers
 cabal install ghc-mod
-npm install -g jshint
+npm install -g jshint csslint
 pip install flake8
