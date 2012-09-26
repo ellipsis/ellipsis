@@ -63,6 +63,9 @@ brew install \
     zeromq \
     zsh
 
+# install wc3 version of tidy, which is a head only formula
+brew install https://raw.github.com/gist/3790109/373a9eb28d41ee413caf189cdb1d3044bec24857/tidy-html5.rb --HEAD
+
 # links apps installed by homebrew
 brew linkapps
 
