@@ -36,6 +36,7 @@ brew install \
     libev \
     https://raw.github.com/gist/3046782/099ff1aea934fc1169babfbb57b985f55f735d91/macvim.rb \
     mercurial \
+    mkvtoolnix \
     mongodb \
     netcat \
     node \
@@ -87,30 +88,31 @@ curl http://npmjs.org/install.sh | sh
 
 # Install node.js utilities
 npm install -g \
+    cdir \
+    chai \
     coffee-script \
     coffeelint \
-    chai \
-    cdir \
+    csslint \
     docco \
     html2jade \
     jitsu \
     js2coffee \
+    jshint \
     jsontool \
     mocha
 
 # Ruby gems
 gem install CoffeeTags
 gem install git-issues
+gem install coloration
 
 # Python packages
-easy_install pip
 pip install httpie
 pip install virtualenv
+pip install flake8
 
 # Clojure
 lein plugin install org.clojars.ibdknox/lein-nailgun 1.1.1
 
-# Install syntax checkers
-cabal install ghc-mod
-npm install -g jshint csslint
-pip install flake8
+# Haskell
+cabal install ghc-mod pandoc
