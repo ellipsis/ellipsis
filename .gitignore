@@ -1,4 +1,5 @@
 vim/
 zsh/
+emacs/
 *.pyc
 ipython/profile_default/
