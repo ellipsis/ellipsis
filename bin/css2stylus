@@ -1,0 +1,2 @@
+#!/bin/sh
+stylus --css --include `dirname $1` < $1 | cat
