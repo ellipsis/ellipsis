@@ -63,6 +63,8 @@ brew install \
     z \
     zeromq \
     zsh
+brew install --HEAD ffmpeg
+brew install --HEAD https://raw.github.com/pigoz/homebrew-mplayer2/master/Formula/mplayer2.rb
 
 # install wc3 version of tidy, which is a head only formula
 brew install https://raw.github.com/gist/3790109/373a9eb28d41ee413caf189cdb1d3044bec24857/tidy-html5.rb --HEAD
