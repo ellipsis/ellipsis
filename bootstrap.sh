@@ -61,8 +61,9 @@ brew install \
     watch \
     wget \
     z \
-    zeromq \
-    zsh
+    zeromq
+
+brew install zsh --disable-etcdir
 brew install --HEAD ffmpeg
 brew install --HEAD https://raw.github.com/pigoz/homebrew-mplayer2/master/Formula/mplayer2.rb
 
