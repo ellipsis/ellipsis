@@ -3,7 +3,7 @@
 # I need this stuff installed to operate. Specifically for OSX.
 
 # Install homebrew
-/usr/bin/ruby -e "$(/usr/bin/curl -fsSL https://raw.github.com/mxcl/homebrew/master/Library/Contributions/install_homebrew.rb)"
+ruby -e "$(curl -fsSkL raw.github.com/mxcl/homebrew/go)"
 
 export PATH=/usr/local/bin:/usr/local/share/python:$PATH
 
