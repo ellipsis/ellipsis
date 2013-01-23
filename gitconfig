@@ -37,6 +37,9 @@
     ru              = remote update
     sb              = show-branch
     st              = status -s
+
+    pop             = stash pop
+
     changes         = diff --name-status -r
     current-branch  = !git symbolic-ref -q HEAD | sed -e 's|^refs/heads/||'
     diffstat        = diff --stat

@@ -4,3 +4,4 @@ emacs/
 *.pyc
 ipython/profile_default/
 pip/pip.log
+pentadactyl/info/
