@@ -1,0 +1,48 @@
+let vimpager_disable_x11 = 1
+let vimpager_scrolloff = 0
+
+let g:vice = {
+    \ 'addons': [
+        \ 'github:zeekay/AnsiEsc.vim',
+        \ 'github:zeekay/vice-colors',
+        \ 'github:zeekay/vice-standard-issue',
+    \ ]
+\ }
+
+let &rtp.=','.expand('~/.vim/addons/vice')
+call vice#Initialize()
+
+function s:Escape()
+    set laststatus=0
+
+    " Use AnsiEsc for highlighting if ft is not detected.
+    if &ft == ''
+        so ~/.vim/addons/AnsiEsc.vim/plugin/cecutil.vim
+        so ~/.vim/addons/AnsiEsc.vim/plugin/AnsiEscPlugin.vim
+        so ~/.vim/addons/AnsiEsc.vim/autoload/AnsiEsc.vim
+
+        " Initialize highlighting
+        AnsiEsc
+        " Change default for ansiWhite
+        hi ansiWhite ctermfg=245
+    endif
+endfunction
+
+au BufReadPost * call s:Escape()
+
+map ; :
+map <cr> <cr>
+map <c-d> <c-d>
+map <c-u> <c-u>
+map J <c-d>
+map K <c-u>
+map j <cr>
+map k k
+map h h
+map l l
+map Q :q<cr>
+map g g
+map gg gg
+map A $
+
+" vim:set filetype=vim:

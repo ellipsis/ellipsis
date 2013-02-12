@@ -38,11 +38,12 @@
     sb              = show-branch
     st              = status -s
 
-    pop             = stash pop
-
     changes         = diff --name-status -r
     current-branch  = !git symbolic-ref -q HEAD | sed -e 's|^refs/heads/||'
     diffstat        = diff --stat
+    full            = git fetch --depth=999999999
+    pop             = stash pop
+    pom             = push --set-upstream origin master
     record          = !sh -c '(git add -p -- $@ && git commit) || git reset' --
     serve           = daemon --reuseaddr --verbose  --base-path=. --export-all ./.git
     staged          = diff --cached
@@ -81,12 +82,8 @@
     httpd           = webrick
 
 [github]
-    user            = zeekay
+	user = zeekay
     password        = !security 2>&1 >/dev/null find-generic-password -gs github.password | ruby -e 'print $1 if STDIN.gets =~ /^password: \\\"(.*)\\\"$/'
-
-[gist]
-    private         = true
-    browse          = true
 
 [diff]
     mnemonicprefix  = true
@@ -103,3 +100,5 @@
 
 [rerere]
     enabled         = true
+[gist]
+	browse = true

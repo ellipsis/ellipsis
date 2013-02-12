@@ -1,0 +1,89 @@
+zeesh_plugins=(
+    upstart
+    autocomplete
+    vi-mode
+    vi-visual-mode
+    osx
+    python
+    django
+    virtualenv
+    clojure
+    haskell
+    mercurial
+    git
+    vcs-info
+    syntax-highlighting
+    history-substring-search
+    theme
+)
+source ~/.zsh/zeesh.zsh
+
+export ZEESH_THEME_NORMAL_CHAR='\n⊙'
+export ZEESH_THEME_VISUAL_CHAR='\n⊡'
+export ZEESH_THEME_INSERT_CHAR='\n›'
+export ZEESH_THEME_PROMPT_CHAR=
+
+bindkey -M viins "^[[0A" history-substring-search-up
+bindkey -M viins "^[[0B" history-substring-search-down
+bindkey -M viins "^[[A"  history-substring-search-up
+bindkey -M viins "^[[B"  history-substring-search-down
+bindkey -M vicmd "^[[0A" history-substring-search-up
+bindkey -M vicmd "^[[0B" history-substring-search-down
+bindkey -M vicmd "^[[A"  history-substring-search-up
+bindkey -M vicmd "^[[B"  history-substring-search-down
+bindkey -M viins "^[[0C" forward-char
+bindkey -M viins "^[[0D" backward-char
+bindkey -M viins "^[[C"  forward-char
+bindkey -M viins "^[[D"  backward-char
+bindkey -M vicmd "^[[0C" forward-char
+bindkey -M vicmd "^[[0D" backward-char
+bindkey -M vicmd "^[[C"  forward-char
+bindkey -M vicmd "^[[D"  backward-char
+
+alias gist=jist
+alias git='noglob hub'
+alias http='noglob http'
+alias irssi='ssh irssi'
+alias utc='date -u'
+alias v=vim
+
+export PATH=/usr/local/share/npm/bin:$PATH
+export NODE_PATH=/usr/local/share/npm/lib/node_modules
+
+update() {
+    brew update && brew upgrade
+    vim -c 'call vice#UpdateAddons()' -c q
+}
+
+npm-name-check() {
+    res="`curl https://npmjs.org/package/$1 -sI | grep 404`"
+    if [ -z "$res" ]; then
+        echo awws
+    else
+        echo get dat shit
+    fi
+}
+
+act-addon-sdk() {
+    last=`pwd`
+    cd /usr/local/src/addon-sdk;
+    source bin/activate
+    cd $last
+}
+
+mount-ssh() {
+    umount /Volumes/$1 > /dev/null 2>&1
+    mkdir -p /Volumes/$1
+    sshfs $1:/ /Volumes/$1 -oauto_cache,reconnect,defer_permissions,negative_vncache,volname=$1
+    open /Volumes/$1
+}
+
+sbox-add-torrents() {
+    for torrent in *.torrent; do
+        scp $torrent sbox:torrents/watch && rm $torrent
+    done
+}
+
+if [ -e ~/.private/zsh ]; then
+    source ~/.private/zsh
+fi

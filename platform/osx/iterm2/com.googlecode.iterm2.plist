@@ -4,7 +4,11 @@
 <dict>
 	<key>AFRStrokeThickness</key>
 	<real>-0.10000000149011612</real>
+	<key>AdjustWindowForFontSizeChange</key>
+	<true/>
 	<key>AdvancedFontRendering</key>
+	<false/>
+	<key>AllowClipboardAccess</key>
 	<false/>
 	<key>AnimateDimming</key>
 	<false/>
@@ -4358,11 +4362,13 @@
 	<key>NSFontPanelPreviewHeight</key>
 	<real>0.0</real>
 	<key>NSNavLastRootDirectory</key>
-	<string>~/Documents</string>
+	<string>~/Desktop</string>
 	<key>NSQuotedKeystrokeBinding</key>
 	<string></string>
 	<key>NSRepeatCountBinding</key>
 	<string></string>
+	<key>NSScrollAnimationEnabled</key>
+	<false/>
 	<key>NSTableView Columns KeyBingingTable</key>
 	<array>
 		<data>
@@ -4383,21 +4389,21 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>1180 62 445 270 0 0 1680 1028 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>1598 918 924 485 0 0 2560 1418 </string>
+	<string>610 895 924 485 0 0 2560 1418 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>1662 1004 882 395 0 0 2560 1418 </string>
+	<string>14 3 998 669 0 0 1680 1028 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>483 79 570 386 0 0 2560 1418 </string>
+	<string>1 420 817 608 0 0 1680 1028 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>1245 314 570 476 0 0 1920 1058 </string>
+	<string>52 1038 570 346 0 0 2560 1418 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>616 299 570 386 0 0 1920 1058 </string>
+	<string>82 445 570 346 0 0 1920 1178 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
-	<string>1199 511 570 401 0 0 2560 1418 </string>
+	<string>652 276 570 346 0 0 1920 1178 </string>
 	<key>NSWindow Frame iTerm Window 5</key>
-	<string>665 52 570 401 0 0 1680 1028 </string>
+	<string>809 102 570 346 0 0 1920 1178 </string>
 	<key>NSWindow Frame iTerm Window 6</key>
-	<string>473 300 570 401 0 0 1680 1028 </string>
+	<string>848 533 570 346 0 0 2560 1418 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -6103,7 +6109,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2012-11-19T20:39:00Z</date>
+	<date>2013-02-13T09:40:39Z</date>
 	<key>SUSkippedVersion</key>
 	<string>1.0.0.20120203</string>
 	<key>SavePasteHistory</key>
@@ -6155,6 +6161,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>1.0.0.20120724</string>
+	<string>1.0.0.20121224</string>
 </dict>
 </plist>
