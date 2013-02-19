@@ -27,7 +27,7 @@ update() {
 }
 
 case $1 in
-    status)
+    status|st)
         status $HOME/.ellipsis
 
         for module in $HOME/.ellipsis/modules/*; do
@@ -45,7 +45,7 @@ case $1 in
             fi
         done
     ;;
-    update)
+    pull|update|up)
         update $HOME/.ellipsis
 
         for module in $HOME/.ellipsis/modules/*; do
@@ -53,5 +53,8 @@ case $1 in
                 . $module/.ellipsis-module/update
             fi
         done
+    ;;
+    *)
+        echo unknown command
     ;;
 esac
