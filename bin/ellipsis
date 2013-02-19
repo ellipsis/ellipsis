@@ -26,33 +26,25 @@ update() {
     git pull
 }
 
+_do() {
+    $1 $HOME/.ellipsis
+
+    for module in $HOME/.ellipsis/modules/*; do
+        if [ -e $module/.ellipsis-module/$1 ]; then
+            . $module/.ellipsis-module/$1
+        fi
+    done
+}
+
 case $1 in
     status|st)
-        status $HOME/.ellipsis
-
-        for module in $HOME/.ellipsis/modules/*; do
-            if [ -e $module/.ellipsis-module/status ]; then
-                . $module/.ellipsis-module/status
-            fi
-        done
+        _do status
     ;;
     push)
-        push $HOME/.ellipsis
-
-        for module in $HOME/.ellipsis/modules/*; do
-            if [ -e $module/.ellipsis-module/push ]; then
-                . $module/.ellipsis-module/push
-            fi
-        done
+        _do push
     ;;
     pull|update|up)
-        update $HOME/.ellipsis
-
-        for module in $HOME/.ellipsis/modules/*; do
-            if [ -e $module/.ellipsis-module/update ]; then
-                . $module/.ellipsis-module/update
-            fi
-        done
+        _do pull
     ;;
     *)
         echo unknown command
