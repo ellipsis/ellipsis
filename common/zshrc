@@ -47,7 +47,7 @@ alias irssi='ssh irssi'
 alias utc='date -u'
 alias v=vim
 
-export PATH=/usr/local/share/npm/bin:$PATH
+export PATH=/usr/local/share/npm/bin:$PATH:~/.ellipsis/bin
 export NODE_PATH=/usr/local/share/npm/lib/node_modules
 
 update() {

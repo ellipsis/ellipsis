@@ -1,0 +1,57 @@
+#!/bin/sh
+
+status() {
+    cd $1
+    [[ `git status --untracked-files=no --porcelain 2> /dev/null | tail -n1` = "" ]] && return
+
+    name=`basename $1 | sed 's/^\.//'`
+    echo -e "\033[1m$name\033[0m `git --no-pager log --pretty=format:'%h %ad' --abbrev-commit --date=relative -1`" | sed 's/\-e //'
+
+    git --no-pager diff --stat --color=always
+}
+
+push() {
+    name=`basename $1 | sed 's/^\.//'`
+    echo -e "\033[1mpushing $name\033[0m" | sed 's/\-e //'
+
+    cd $1
+    git push
+}
+
+update() {
+    name=`basename $1 | sed 's/^\.//'`
+    echo -e "\033[1mupdating $name\033[0m" | sed 's/\-e //'
+
+    cd $1
+    git pull
+}
+
+case $1 in
+    status)
+        status $HOME/.ellipsis
+
+        for module in $HOME/.ellipsis/modules/*; do
+            if [ -e $module/.ellipsis-module/status ]; then
+                . $module/.ellipsis-module/status
+            fi
+        done
+    ;;
+    push)
+        push $HOME/.ellipsis
+
+        for module in $HOME/.ellipsis/modules/*; do
+            if [ -e $module/.ellipsis-module/push ]; then
+                . $module/.ellipsis-module/push
+            fi
+        done
+    ;;
+    update)
+        update $HOME/.ellipsis
+
+        for module in $HOME/.ellipsis/modules/*; do
+            if [ -e $module/.ellipsis-module/update ]; then
+                . $module/.ellipsis-module/update
+            fi
+        done
+    ;;
+esac

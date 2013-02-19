@@ -1,9 +1,9 @@
 #!/bin/sh
 
-ellipsis="`pwd`/ellipsis-$$.sh"
-curl -s "https://raw.github.com/zeekay/ellipsis/master/ellipsis.sh" > $ellipsis
-. $ellipsis
-rm $ellipsis
+lib="`pwd`/ellipsis-install-$$.sh"
+curl -s "https://raw.github.com/zeekay/ellipsis/master/lib/install" > $lib
+. $lib
+rm $lib
 
 backup $HOME/.ellipsis
 git_clone "https://github.com/zeekay/ellipsis" "$HOME/.ellipsis"
