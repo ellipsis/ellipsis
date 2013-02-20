@@ -5,6 +5,12 @@ backup() {
     backup="$original.bak"
     name="`basename $original`"
 
+    if [ "`find -L $original -maxdepth 0 -type l`" = "" ]; then
+        echo "rm $original (broken link to `readlink $original`)"
+        rm $original
+        return
+    fi
+
     if [ -e "$original" ]; then
         echo "Backing up ~/$name"
 
@@ -63,10 +69,6 @@ backup $HOME/.ellipsis
 git_clone "https://github.com/zeekay/ellipsis" "$HOME/.ellipsis"
 
 trap "exit 0" SIGINT
-
-for broken_link in `find -L $HOME -maxdepth 1 -type 1`; do
-    rm $broken_link
-done
 
 link_files "$HOME/.ellipsis/common"
 
