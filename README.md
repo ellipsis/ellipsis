@@ -1,17 +1,34 @@
 # …
-My dotfiles, of course.
+     _    _    _
+    /\_\ /\_\ /\_\
+    \/_/ \/_/ \/_/
+
+A framework for managing dotfiles.
 
 ## Install
 Clone and symlink or use handy-dandy installer:
 
     curl https://raw.github.com/zeekay/ellipsis/master/install.sh | sh
 
-## Customization
-Both Git and Mercurial repos can be used to customize an install, and cloned and symlinked automatically. Any `setup.sh` file found contained in the root of the repo will be executed automatically. I use a blend of the following dot-repos:
+## Usage
 
-## Scripts
-You can add `scripts` to your PATH and use the various scripts to manage your dotfiles:
+- `ellipsis status` - get current commit of every dotfile module.
+- `ellipsis update` - update each dotfile module.
+- `ellipsis push`   - push updates to all dotfile modules back to github.
 
-- `df-up`       Update all dotfile repos
-- `df-status`   Display status of all dotfile repos
-- `df-push`     Push changes back from all dotfile repos
+## Configuration
+You can fork this repository and customize or use modules to extend your
+ellipsis installation. You can list additional modules, i.e.:
+`github:user/repo github:user/repo2`, etc.
+
+## Modules
+A module is any github repo which has a `.ellipsis-module` dir in the root.
+Hooks are just shell scripts which customize how the module behaves.
+
+### Available hooks
+- `.ellipsis-module/install` - Controls how module is installed, what files are
+  symlinked into `$HOME`.
+- `.ellipsis-module/push` - Control how changes to the module are pushed back to
+  github.
+- `.ellipsis-module/pull` - Control how how changes are pulled in.
+- `.ellipsis-module/status` - Output current status of module.

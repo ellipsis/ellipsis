@@ -51,8 +51,9 @@ export PATH=/usr/local/share/npm/bin:$PATH:~/.ellipsis/bin
 export NODE_PATH=/usr/local/share/npm/lib/node_modules
 
 update() {
+    echo -e "\033[1mupdating homebrew\033[0m" | sed 's/\-e //'
     brew update && brew upgrade
-    vim -c 'call vice#UpdateAddons()' -c q
+    ellipsis update
 }
 
 npm-name-check() {
