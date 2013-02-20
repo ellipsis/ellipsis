@@ -6,6 +6,7 @@ let g:vice = {
         \ 'github:scrooloose/syntastic',
         \ 'github:tpope/vim-commentary',
         \ 'github:tpope/vim-eunuch',
+        \ 'github:tpope/vim-fugitive',
         \ 'github:tpope/vim-git',
         \ 'github:tpope/vim-repeat',
         \ 'github:tpope/vim-surround',
@@ -13,15 +14,13 @@ let g:vice = {
         \ 'github:zeekay/vim-color-switch',
         \ 'github:zeekay/vice-colors',
         \ 'github:zeekay/vice-standard-issue',
+        \ 'github:zeekay/vice-neocompletion',
         \ 'github:zeekay/vice-beautify',
+        \ 'github:michaeljsmith/vim-indent-object',
     \ ],
     \ 'ft_addons': {
         \ 'actionscript': [
             \ 'github:endel/actionscript.vim',
-        \ ],
-        \ 'c$\|cpp': [
-            \ 'github:Rip-Rip/clang_complete',
-            \ 'github:osyo-manga/neocomplcache-clang_complete',
         \ ],
         \ 'css\|sass\|scss\|stylus': [
             \ 'github:hail2u/vim-css3-syntax',
@@ -34,9 +33,6 @@ let g:vice = {
         \ 'coffee': [
             \ 'github:kchmck/vim-coffee-script',
         \ ],
-        \ 'coffee\|javascript': [
-            \ 'github:teramako/jscomplete-vim',
-        \ ],
         \ 'go': [
             \ 'github:jnwhiteh/vim-golang',
         \ ],
@@ -46,7 +42,6 @@ let g:vice = {
         \ 'haskell': [
             \ 'github:wlangstroth/vim-haskell',
             \ 'github:zeekay/haskellmode-vim',
-            \ 'github:ujihisa/neco-ghc',
         \ ],
         \ 'html\|xhtml\|xml': [
             \ 'github:gregsexton/MatchTag',
@@ -58,9 +53,6 @@ let g:vice = {
         \ ],
         \ 'javascript': [
             \ 'github:zeekay/vim-js2coffee',
-        \ ],
-        \ 'javascript\|python': [
-            \ 'github:alfredodeza/chapa.vim',
         \ ],
         \ 'json': [
             \ 'github:elzr/vim-json',
@@ -87,24 +79,19 @@ let g:vice = {
         \ 'ColorV':         ['github:Rykka/colorv.vim'],
         \ 'Gist':           ['github:mattn/gist-vim', 'github:mattn/webapi-vim'],
         \ 'UndotreeToggle': ['github:mbbill/undotree'],
+        \ 'Gitv':            ['github:gregsexton/gitv'],
     \ }
 \ }
 
-
 " Order is significant for these addons, so they are grouped for clarity
 let g:vice.addons += [
-    \ 'github:tpope/vim-fugitive',
-    \ 'github:gregsexton/gitv',
     \ 'github:zeekay/vim-powerline-hax',
     \ 'github:Lokaltog/vim-powerline',
     \ 'github:scrooloose/nerdtree',
     \ 'github:zeekay/nerdtree-hax',
 \ ]
 
-if version > 702
-    let g:vice.addons += ['github:Shougo/neocomplcache']
-    " let g:vice.addons += ['github:Shougo/neosnippet']
-endif
+let g:vice.addons += ['github:Shougo/vimproc', 'github:Shougo/vimshell']
 
 if version > 702 && executable('ctags')
     let g:vice.commands.TagbarToggle = ['github:majutsushi/tagbar']
@@ -116,6 +103,7 @@ if has('python')
 endif
 
 let g:vice.ft_addons['markdown'] += ['github:suan/vim-instant-markdown']
+
 let &rtp.=','.expand('~/.vim/addons/vice')
 call vice#Initialize()
 
@@ -136,3 +124,12 @@ nnoremap W :w<cr>
 nnoremap Q ZQ
 au CmdwinEnter * unmap q;
 au CmdwinLeave * map q; q:
+
+nnoremap <c-u> dd
+inoremap <c-u> <c-o>dd
+
+cabbrev ack <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Ack' : 'ack')<CR>
+cabbrev gist <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Gist' : 'gist')<CR>
+cabbrev git <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Git' : 'git')<CR>
+cabbrev shell <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShell' : 'shell')<CR>
+cabbrev shelli <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShellInteractive' : 'shell')<CR>
