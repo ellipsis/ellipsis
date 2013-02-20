@@ -10,20 +10,20 @@ status() {
     git --no-pager diff --stat --color=always
 }
 
-push() {
-    name=`basename $1 | sed 's/^\.//'`
-    echo -e "\033[1mpushing $name\033[0m" | sed 's/\-e //'
-
-    cd $1
-    git push
-}
-
 pull() {
     name=`basename $1 | sed 's/^\.//'`
     echo -e "\033[1mupdating $name\033[0m" | sed 's/\-e //'
 
     cd $1
     git pull
+}
+
+push() {
+    name=`basename $1 | sed 's/^\.//'`
+    echo -e "\033[1mpushing $name\033[0m" | sed 's/\-e //'
+
+    cd $1
+    git push
 }
 
 _do() {
@@ -40,11 +40,11 @@ case $1 in
     status|st)
         _do status
     ;;
-    push)
-        _do push
-    ;;
     pull|update|up)
         _do pull
+    ;;
+    push)
+        _do push
     ;;
     *)
         echo unknown command
