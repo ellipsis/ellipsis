@@ -5,15 +5,13 @@ backup() {
     backup="$original.bak"
     name="`basename $original`"
 
-    if [ "`find -L $original -maxdepth 0 -type l`" = "" ]; then
-        echo "rm $original (broken link to `readlink $original`)"
+    if [ "`find -L $original -maxdepth 0 -type l 2>/dev/null`" = "" ]; then
+        echo "rm ~/$name (broken link to `readlink $original`)"
         rm $original
         return
     fi
 
     if [ -e "$original" ]; then
-        echo "Backing up ~/$name"
-
         if [ -e "$backup" ]; then
             n=1
             while [ -e "$backup.$n" ]; do
@@ -21,6 +19,8 @@ backup() {
             done
             backup="$backup.$n"
         fi
+
+        echo "mv ~/$name $backup"
         mv "$original" "$backup"
     fi
 }
