@@ -10,6 +10,10 @@ git_clone "https://github.com/zeekay/ellipsis" "$HOME/.ellipsis"
 
 trap "exit 0" SIGINT
 
+for broken_link in `find -L $HOME -maxdepth 1 -type 1`; do
+    rm $broken_link
+done
+
 link_files "$HOME/.ellipsis/common"
 
 case `uname | tr '[:upper:]' '[:lower:]'` in
