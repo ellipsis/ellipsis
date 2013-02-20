@@ -6,8 +6,15 @@ backup() {
     name="`basename $original`"
 
     if [ "`find -L $original -maxdepth 0 -type l 2>/dev/null`" != "" ]; then
-        echo "rm ~/$name (broken link to `readlink $original`)"
-        rm $original
+        broken="`readlink $original`"
+
+        if [ "`echo $broken | grep .ellipsis`" != "" ]; then
+            rm $original
+        else
+            echo "rm ~/$name (broken link to $broken)"
+            rm $original
+        fi
+
         return
     fi
 
