@@ -18,7 +18,7 @@ push() {
     git push
 }
 
-update() {
+pull() {
     name=`basename $1 | sed 's/^\.//'`
     echo -e "\033[1mupdating $name\033[0m" | sed 's/\-e //'
 
