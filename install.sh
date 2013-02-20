@@ -5,7 +5,7 @@ backup() {
     backup="$original.bak"
     name="`basename $original`"
 
-    if [ "`find -L $original -maxdepth 0 -type l 2>/dev/null`" = "" ]; then
+    if [ "`find -L $original -maxdepth 0 -type l 2>/dev/null`" != "" ]; then
         echo "rm ~/$name (broken link to `readlink $original`)"
         rm $original
         return
