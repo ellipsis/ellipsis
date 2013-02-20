@@ -31,7 +31,9 @@ _do() {
 
     for module in $HOME/.ellipsis/modules/*; do
         if [ -e $module/.ellipsis-module/$1 ]; then
-            . $module/.ellipsis-module/$1
+            module_path=$module
+            module=`basename $module`
+            . $module_path/.ellipsis-module/$1
         fi
     done
 }
