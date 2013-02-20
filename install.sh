@@ -5,12 +5,15 @@ backup() {
     backup="$original.bak"
     name="`basename $original`"
 
+    # check for broken symlinks
     if [ "`find -L $original -maxdepth 0 -type l 2>/dev/null`" != "" ]; then
         broken="`readlink $original`"
 
         if [ "`echo $broken | grep .ellipsis`" != "" ]; then
+            # silently remove old broken ellipsis symlinks
             rm $original
         else
+            # notify user we're removing a broken link
             echo "rm ~/$name (broken link to $broken)"
             rm $original
         fi
@@ -19,6 +22,12 @@ backup() {
     fi
 
     if [ -e "$original" ]; then
+        # remove, not backup old ellipsis symlinked files
+        if [ "`readlink $original | grep .ellipsis`" != "" ]; then
+            rm $original
+            return
+        fi
+
         if [ -e "$backup" ]; then
             n=1
             while [ -e "$backup.$n" ]; do
