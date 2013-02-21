@@ -4,7 +4,7 @@ let vimpager_scrolloff = 0
 let g:vice = {
     \ 'addons': [
         \ 'github:zeekay/AnsiEsc.vim',
-        \ 'github:zeekay/vice-colors',
+        \ 'github:zeekay/vice-colorful',
         \ 'github:zeekay/vice-standard-issue',
     \ ]
 \ }

@@ -1,3 +1,5 @@
 modules
 common/ipython/profile_default/history.sqlite
 common/ipython/profile_default/startup/
+pip
+*.pyc
