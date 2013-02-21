@@ -41,7 +41,7 @@
     changes         = diff --name-status -r
     current-branch  = !git symbolic-ref -q HEAD | sed -e 's|^refs/heads/||'
     diffstat        = diff --stat
-    full            = git fetch --depth=999999999
+    fetch-all       = fetch --depth=999999999
     pop             = stash pop
     pom             = push --set-upstream origin master
     record          = !sh -c '(git add -p -- $@ && git commit) || git reset' --

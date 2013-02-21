@@ -35,8 +35,6 @@ vnoremap ; :
 inoremap <Esc> <Esc>`^
 
 map <leader>q :q<cr>
-vnoremap q: :q<cr>
-nnoremap q: :q<cr>
 nnoremap J <c-d>
 nnoremap K <c-u>
 vnoremap J <c-d>
@@ -52,3 +50,5 @@ inoremap <c-u> <c-o>dd
 cabbrev ack <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Ack' : 'ack')<CR>
 cabbrev shell <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShell' : 'shell')<CR>
 cabbrev shelli <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShellInteractive' : 'shell')<CR>
+
+autocmd QuickFixCmdPost *grep* cwindow
