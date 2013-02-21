@@ -1,19 +1,17 @@
 let g:vice = {
     \ 'addons': [
         \ 'github:Raimondi/delimitMate',
-        \ 'github:juanpabloaj/help.vim',
         \ 'github:kien/ctrlp.vim',
         \ 'github:scrooloose/syntastic',
         \ 'github:tpope/vim-commentary',
         \ 'github:tpope/vim-eunuch',
-        \ 'github:tpope/vim-fugitive',
-        \ 'github:tpope/vim-git',
         \ 'github:tpope/vim-repeat',
         \ 'github:tpope/vim-surround',
         \ 'github:zeekay/vim-space',
         \ 'github:zeekay/vim-color-switch',
         \ 'github:zeekay/vice-colors',
         \ 'github:zeekay/vice-standard-issue',
+        \ 'github:zeekay/vice-git',
         \ 'github:zeekay/vice-neocompletion',
         \ 'github:zeekay/vice-beautify',
         \ 'github:michaeljsmith/vim-indent-object',
@@ -43,6 +41,9 @@ let g:vice = {
             \ 'github:wlangstroth/vim-haskell',
             \ 'github:zeekay/haskellmode-vim',
         \ ],
+        \ 'help': [
+            \ 'github:juanpabloaj/help.vim',
+	    \ ],
         \ 'html\|xhtml\|xml': [
             \ 'github:gregsexton/MatchTag',
             \ 'github:othree/html5.vim',
@@ -77,9 +78,7 @@ let g:vice = {
     \ 'commands': {
         \ 'Ack':            ['github:mileszs/ack.vim'],
         \ 'ColorV':         ['github:Rykka/colorv.vim'],
-        \ 'Gist':           ['github:mattn/gist-vim', 'github:mattn/webapi-vim'],
         \ 'UndotreeToggle': ['github:mbbill/undotree'],
-        \ 'Gitv':            ['github:gregsexton/gitv'],
     \ }
 \ }
 
@@ -129,7 +128,5 @@ nnoremap <c-u> dd
 inoremap <c-u> <c-o>dd
 
 cabbrev ack <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Ack' : 'ack')<CR>
-cabbrev gist <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Gist' : 'gist')<CR>
-cabbrev git <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Git' : 'git')<CR>
 cabbrev shell <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShell' : 'shell')<CR>
 cabbrev shelli <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShellInteractive' : 'shell')<CR>
