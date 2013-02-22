@@ -29,8 +29,10 @@ func! s:Escape()
 endf
 
 func! s:JumpToFirstDiff()
-    normal gg]]
-    echo
+    if &ft == 'diff'
+        normal gg]]
+        echo
+    endif
 endf
 
 au BufReadPost * call s:Escape()
