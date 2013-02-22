@@ -24,7 +24,6 @@ if has('mac') && version > 702
    let options.addons += ['github:Shougo/vimproc', 'github:Shougo/vimshell']
 endif
 
-let options.ft_addons = {}
 if has('python')
     let options.ft_addons['python'] = ['github:zeekay/vim-python']
 endif
