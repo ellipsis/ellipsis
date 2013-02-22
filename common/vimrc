@@ -1,6 +1,4 @@
-let &rtp.=','.expand('~/.vim/addons/vice')
-
-call vice#Initialize({
+let options = {
     \ 'addons': [
         \ 'github:zeekay/vice-beautify',
         \ 'github:zeekay/vice-colorful',
@@ -10,27 +8,29 @@ call vice#Initialize({
         \ 'github:zeekay/vice-neocompletion',
         \ 'github:zeekay/vice-nerdtree',
         \ 'github:zeekay/vice-polyglot',
+        \ 'github:zeekay/vice-powerline',
         \ 'github:zeekay/vice-standard-issue',
         \ 'github:zeekay/vice-syntastic',
-        \ 'github:zeekay/vice-powerline',
-        \ 'github:zeekay/vice-undo',
         \ 'github:zeekay/vice-tagbar',
+        \ 'github:zeekay/vice-undo',
     \ ],
+    \ 'ft_addons': {
+        \ 'markdown': ['github:suan/vim-instant-markdown'],
+    \ },
     \ 'neocompletion': {'enable_jscomplete': 1},
-\ })
+\ }
 
 if has('mac') && version > 702
-    call vice#Extend({'addons': ['github:Shougo/vimproc', 'github:Shougo/vimshell']})
-    if !filereadable(g:vice.addons_dir.'/vimproc/autoload/vimproc_mac.so')
-        exe '!cd '.g:vice.addons_dir.'/vimproc; make -f make_mac.mak'
-    endif
+   let options.addons += ['github:Shougo/vimproc', 'github:Shougo/vimshell']
 endif
 
+let options.ft_addons = {}
 if has('python')
-    call vice#Extend({'ft_addons': {'python': ['github:zeekay/vim-python']}})
+    let options.ft_addons['python'] = ['github:zeekay/vim-python']
 endif
 
-call vice#Extend({'ft_addons': {'markdown': ['github:suan/vim-instant-markdown']}})
+let &rtp.=','.expand('~/.vim/addons/vice')
+call vice#Initialize(options)
 
 nnoremap ; :
 vnoremap ; :
