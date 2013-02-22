@@ -12,7 +12,7 @@ let g:vice = {
 let &rtp.=','.expand('~/.vim/addons/vice')
 call vice#Initialize()
 
-function s:Escape()
+func! s:Escape()
     set laststatus=0
 
     " Use AnsiEsc for highlighting if ft is not detected.
@@ -26,10 +26,15 @@ function s:Escape()
         " Change default for ansiWhite
         hi ansiWhite ctermfg=245
     endif
-endfunction
+endf
+
+func! s:JumpToFirstDiff()
+    normal gg]]
+    echo
+endf
 
 au BufReadPost * call s:Escape()
-au VimEnter * normal gg
+au VimEnter * call s:JumpToFirstDiff()
 
 map ; :
 map <cr> <cr>
