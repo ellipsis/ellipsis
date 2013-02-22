@@ -29,6 +29,7 @@ function s:Escape()
 endfunction
 
 au BufReadPost * call s:Escape()
+au VimEnter * normal gg
 
 map ; :
 map <cr> <cr>
@@ -44,5 +45,15 @@ map Q :q<cr>
 map g g
 map gg gg
 map A $
+map w w
+map W W
+map b b
+map B B
+map <c-f> <c-f>
+map <c-b> <c-b>
+map { {
+map } }
+map y y
+map z z
 
 " vim:set filetype=vim:

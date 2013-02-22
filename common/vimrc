@@ -18,8 +18,11 @@ call vice#Initialize({
     \ 'neocompletion': {'enable_jscomplete': 1},
 \ })
 
-if version > 702
+if has('mac') && version > 702
     call vice#Extend({'addons': ['github:Shougo/vimproc', 'github:Shougo/vimshell']})
+    if !filereadable(g:vice.addons_dir.'/vimproc/autoload/vimproc_mac.so')
+        exe '!cd '.g:vice.addons_dir.'/vimproc; make -f make_mac.mak'
+    endif
 endif
 
 if has('python')
@@ -44,11 +47,8 @@ nnoremap Q ZQ
 au CmdwinEnter * unmap q;
 au CmdwinLeave * map q; q:
 
-nnoremap <c-u> dd
 inoremap <c-u> <c-o>dd
 
 cabbrev ack <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Ack' : 'ack')<CR>
 cabbrev shell <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShell' : 'shell')<CR>
 cabbrev shelli <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShellInteractive' : 'shell')<CR>
-
-autocmd QuickFixCmdPost *grep* cwindow
