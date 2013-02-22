@@ -14,6 +14,7 @@ call vice#Initialize({
         \ 'github:zeekay/vice-syntastic',
         \ 'github:zeekay/vice-powerline',
         \ 'github:zeekay/vice-undo',
+        \ 'github:zeekay/vice-tagbar',
     \ ],
     \ 'neocompletion': {'enable_jscomplete': 1},
 \ })
