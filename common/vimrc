@@ -50,5 +50,12 @@ inoremap <c-u> <c-o>dd
 cabbrev ack <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Ack' : 'ack')<CR>
 cabbrev shell <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShell' : 'shell')<CR>
 cabbrev shelli <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShellInteractive' : 'shell')<CR>
-nnoremap q; :q
-nnoremap q: :q
+" Command window mappings.
+nnoremap q; q:ddz-
+nnoremap q: q:ddz-
+au CmdwinEnter * nmap q :q<cr>
+au CmdwinEnter * unmap q;
+au CmdwinEnter * unmap q:
+au CmdwinLeave * unmap q
+au CmdwinLeave * nmap q; q:ddz-
+au CmdwinLeave * nmap q: q:ddz-
