@@ -44,8 +44,6 @@ vnoremap J <c-d>
 vnoremap K <c-u>
 nnoremap W :w<cr>
 nnoremap Q ZQ
-au CmdwinEnter * unmap q;
-au CmdwinLeave * map q; q:
 
 inoremap <c-u> <c-o>dd
 
