@@ -25,20 +25,28 @@ export ZEESH_THEME_PROMPT_CHAR=
 
 bindkey -M viins "^[[0A" history-substring-search-up
 bindkey -M viins "^[[0B" history-substring-search-down
+bindkey -M viins "OA" history-substring-search-up
+bindkey -M viins "OB" history-substring-search-down
 bindkey -M viins "^[[A"  history-substring-search-up
 bindkey -M viins "^[[B"  history-substring-search-down
 bindkey -M vicmd "^[[0A" history-substring-search-up
 bindkey -M vicmd "^[[0B" history-substring-search-down
 bindkey -M vicmd "^[[A"  history-substring-search-up
 bindkey -M vicmd "^[[B"  history-substring-search-down
+bindkey -M vicmd "OA" history-substring-search-up
+bindkey -M vicmd "OB" history-substring-search-down
 bindkey -M viins "^[[0C" forward-char
 bindkey -M viins "^[[0D" backward-char
 bindkey -M viins "^[[C"  forward-char
 bindkey -M viins "^[[D"  backward-char
+bindkey -M viins "OC"  forward-char
+bindkey -M viins "OD"  backward-char
 bindkey -M vicmd "^[[0C" forward-char
 bindkey -M vicmd "^[[0D" backward-char
 bindkey -M vicmd "^[[C"  forward-char
 bindkey -M vicmd "^[[D"  backward-char
+bindkey -M vicmd "OC"  forward-char
+bindkey -M vicmd "OD"  backward-char
 
 alias gist=jist
 alias git='noglob hub'

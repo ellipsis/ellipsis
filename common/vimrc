@@ -42,7 +42,6 @@ nnoremap J <c-d>
 nnoremap K <c-u>
 vnoremap J <c-d>
 vnoremap K <c-u>
-nnoremap W :w<cr>
 nnoremap Q ZQ
 
 inoremap <c-u> <c-o>dd
