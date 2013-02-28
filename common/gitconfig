@@ -1,6 +1,6 @@
 [user]
-	name = zeekay
-	email = zeekayy@gmail.com
+	name            = zeekay
+	email           = zeekayy@gmail.com
 
 [mergetool "mvim"]
     cmd             = mvim "+Gdiff" $MERGED -c 'wincmd h' -c 'close' -c 'Gread :2' -c 'map Q :qa<cr>' -c 'map <leader>q :qa<cr>'
@@ -62,6 +62,8 @@
 
     lost            = !"git fsck | awk '/dangling commit/ {print $3}' | git show --format='SHA1: %C(yellow)%h%Cblue%d%Creset %s %C(white)%an, %ar%Creset' --stdin | awk '/SHA1/ {sub(\"SHA1: \", \"\"); print}'"
     tags            = tag -l
+	g               = grep --break --heading --line-number
+	root            = !pwd
 
 [core]
     excludesfile    = ~/.cvsignore
@@ -73,7 +75,7 @@
     status          = auto
     branch          = auto
     interactive     = true
-    ui = auto
+    ui              = auto
 
 [rebase]
     autosquash      = true
@@ -82,7 +84,7 @@
     httpd           = webrick
 
 [github]
-	user = zeekay
+	user            = zeekay
     password        = !security 2>&1 >/dev/null find-generic-password -gs github.password | ruby -e 'print $1 if STDIN.gets =~ /^password: \\\"(.*)\\\"$/'
 
 [diff]
@@ -100,5 +102,9 @@
 
 [rerere]
     enabled         = true
+
 [gist]
-	browse = true
+	browse          = true
+
+[grep]
+	lineNumber      = true
