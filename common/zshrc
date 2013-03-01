@@ -96,3 +96,4 @@ sbox-add-torrents() {
 if [ -e ~/.private/zsh ]; then
     source ~/.private/zsh
 fi
+alias sl=ls
