@@ -42,6 +42,7 @@
     current-branch  = !git symbolic-ref -q HEAD | sed -e 's|^refs/heads/||'
     diffstat        = diff --stat
     fetch-all       = fetch --depth=999999999
+    reset-origin    = !git fetch && git reset --hard "origin/`git rev-parse --abbrev-ref HEAD`"
     pop             = stash pop
     pom             = push --set-upstream origin master
     record          = !sh -c '(git add -p -- $@ && git commit) || git reset' --

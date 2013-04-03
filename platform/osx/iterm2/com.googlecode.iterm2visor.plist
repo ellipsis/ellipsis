@@ -4870,7 +4870,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2013-02-27T23:29:08Z</date>
+	<date>2013-04-02T21:38:40Z</date>
 	<key>SUSkippedVersion</key>
 	<string>1.0.0.20120203</string>
 	<key>SavePasteHistory</key>
@@ -4925,6 +4925,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>1.0.0.20121224</string>
+	<string>1.0.0.20130319</string>
 </dict>
 </plist>

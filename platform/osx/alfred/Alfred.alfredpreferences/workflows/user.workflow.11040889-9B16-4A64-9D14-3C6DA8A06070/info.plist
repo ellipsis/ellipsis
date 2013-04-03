@@ -6,28 +6,6 @@
 	<string></string>
 	<key>connections</key>
 	<dict>
-		<key>075FCA61-5A05-4B19-AC56-4DBC9CAD28C9</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>2502B5B3-1F2F-4C8F-89EF-CFBDAB0BCEC5</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-			</dict>
-		</array>
-		<key>39372A4E-A75C-4780-A526-ECE16EE1ED4C</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>2502B5B3-1F2F-4C8F-89EF-CFBDAB0BCEC5</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-			</dict>
-		</array>
 		<key>4DF00E6B-0890-4B80-9C98-19D84F04ACFB</key>
 		<array>
 			<dict>
@@ -60,14 +38,6 @@
 				<key>modifiersubtext</key>
 				<string></string>
 			</dict>
-			<dict>
-				<key>destinationuid</key>
-				<string>66A713D2-FAD0-42A7-9D3F-C72B6525C23F</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-			</dict>
 		</array>
 	</dict>
 	<key>createdby</key>
@@ -80,53 +50,6 @@
 	<string>MacVim</string>
 	<key>objects</key>
 	<array>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>acceptsmulti</key>
-				<true/>
-				<key>filetypes</key>
-				<array/>
-				<key>name</key>
-				<string>Edit with MacVim</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.trigger.action</string>
-			<key>uid</key>
-			<string>4DF00E6B-0890-4B80-9C98-19D84F04ACFB</string>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>keyword</key>
-				<string>vi</string>
-				<key>subtext</key>
-				<string>Edit with MacVim</string>
-				<key>text</key>
-				<string>MacVim</string>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>39372A4E-A75C-4780-A526-ECE16EE1ED4C</string>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>autopaste</key>
-				<false/>
-				<key>clipboardtext</key>
-				<string>asshat</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.clipboard</string>
-			<key>uid</key>
-			<string>66A713D2-FAD0-42A7-9D3F-C72B6525C23F</string>
-		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
@@ -153,25 +76,6 @@ fi</string>
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
 			<string>2502B5B3-1F2F-4C8F-89EF-CFBDAB0BCEC5</string>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>keyword</key>
-				<string>v</string>
-				<key>subtext</key>
-				<string>Edit with MacVim</string>
-				<key>text</key>
-				<string>MacVim</string>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>075FCA61-5A05-4B19-AC56-4DBC9CAD28C9</string>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -211,35 +115,35 @@ fi</string>
 			<key>uid</key>
 			<string>F54473F5-E3DA-416A-AF70-DE466A92680A</string>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>acceptsmulti</key>
+				<true/>
+				<key>filetypes</key>
+				<array/>
+				<key>name</key>
+				<string>Edit with MacVim</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.action</string>
+			<key>uid</key>
+			<string>4DF00E6B-0890-4B80-9C98-19D84F04ACFB</string>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string></string>
 	<key>uidata</key>
 	<dict>
-		<key>075FCA61-5A05-4B19-AC56-4DBC9CAD28C9</key>
-		<dict>
-			<key>ypos</key>
-			<real>230</real>
-		</dict>
 		<key>2502B5B3-1F2F-4C8F-89EF-CFBDAB0BCEC5</key>
 		<dict>
 			<key>ypos</key>
 			<real>10</real>
 		</dict>
-		<key>39372A4E-A75C-4780-A526-ECE16EE1ED4C</key>
-		<dict>
-			<key>ypos</key>
-			<real>120</real>
-		</dict>
 		<key>4DF00E6B-0890-4B80-9C98-19D84F04ACFB</key>
 		<dict>
 			<key>ypos</key>
 			<real>430</real>
-		</dict>
-		<key>66A713D2-FAD0-42A7-9D3F-C72B6525C23F</key>
-		<dict>
-			<key>ypos</key>
-			<real>250</real>
 		</dict>
 		<key>92317938-A1AD-4D6C-BDB0-878314724543</key>
 		<dict>
