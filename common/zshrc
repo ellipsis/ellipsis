@@ -23,31 +23,6 @@ export ZEESH_THEME_VISUAL_CHAR='\n⊡'
 export ZEESH_THEME_INSERT_CHAR='\n›'
 export ZEESH_THEME_PROMPT_CHAR=
 
-bindkey -M viins "^[[0A" history-substring-search-up
-bindkey -M viins "^[[0B" history-substring-search-down
-bindkey -M viins "OA" history-substring-search-up
-bindkey -M viins "OB" history-substring-search-down
-bindkey -M viins "^[[A"  history-substring-search-up
-bindkey -M viins "^[[B"  history-substring-search-down
-bindkey -M vicmd "^[[0A" history-substring-search-up
-bindkey -M vicmd "^[[0B" history-substring-search-down
-bindkey -M vicmd "^[[A"  history-substring-search-up
-bindkey -M vicmd "^[[B"  history-substring-search-down
-bindkey -M vicmd "OA" history-substring-search-up
-bindkey -M vicmd "OB" history-substring-search-down
-bindkey -M viins "^[[0C" forward-char
-bindkey -M viins "^[[0D" backward-char
-bindkey -M viins "^[[C"  forward-char
-bindkey -M viins "^[[D"  backward-char
-bindkey -M viins "OC"  forward-char
-bindkey -M viins "OD"  backward-char
-bindkey -M vicmd "^[[0C" forward-char
-bindkey -M vicmd "^[[0D" backward-char
-bindkey -M vicmd "^[[C"  forward-char
-bindkey -M vicmd "^[[D"  backward-char
-bindkey -M vicmd "OC"  forward-char
-bindkey -M vicmd "OD"  backward-char
-
 alias gist=jist
 alias git='noglob hub'
 alias http='noglob http'
@@ -97,3 +72,7 @@ if [ -e ~/.private/zsh ]; then
     source ~/.private/zsh
 fi
 alias sl=ls
+export GIT=/usr/local/bin/git
+export GHI_TOKEN="aedcae3d6160d93708f8364d51ef504aff804af5"
+alias ghi='ghi --no-pager'
+

@@ -1,6 +1,5 @@
 --color-filename=bold blue
 --color-lineno=magenta
 --color-match=bold red
---all-types
 --smart-case
 --ignore-dir=node_modules
