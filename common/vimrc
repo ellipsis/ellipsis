@@ -2,7 +2,7 @@ let options = {
     \ 'addons': [
         \ 'github:zeekay/vice-beautify',
         \ 'github:zeekay/vice-colorful',
-    \ 'github:zeekay/vice-ctrlp',
+        \ 'github:zeekay/vice-ctrlp',
         \ 'github:zeekay/vice-delimitmate',
         \ 'github:zeekay/vice-git',
         \ 'github:zeekay/vice-neocompletion',
@@ -52,7 +52,6 @@ inoremap <c-u> <c-o>dd
 
 cabbrev ack <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Ack' : 'ack')<CR>
 cabbrev shell <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShell' : 'shell')<CR>
-
 cabbrev shelli <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShellInteractive' : 'shell')<CR>
 
 " Command window mappings.
@@ -66,7 +65,6 @@ cabbrev shelli <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShellInteractive
 " au CmdwinLeave * nmap q: q:ddz-
 
 let g:indent_guides_guide_size = 1
-
 " au FileType coffee nnoremap <buffer><leader>r :!node -e "require('source-map-support').install(); require('./lib/index')"<cr>
 au FileType coffee nnoremap <buffer><leader>t :!cake test<cr>
 
