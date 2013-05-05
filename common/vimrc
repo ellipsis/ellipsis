@@ -2,7 +2,7 @@ let options = {
     \ 'addons': [
         \ 'github:zeekay/vice-beautify',
         \ 'github:zeekay/vice-colorful',
-        \ 'github:zeekay/vice-ctrlp',
+    \ 'github:zeekay/vice-ctrlp',
         \ 'github:zeekay/vice-delimitmate',
         \ 'github:zeekay/vice-git',
         \ 'github:zeekay/vice-neocompletion',
@@ -66,12 +66,9 @@ cabbrev shelli <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShellInteractive
 " au CmdwinLeave * nmap q: q:ddz-
 
 let g:indent_guides_guide_size = 1
-let g:indent_guides_auto_colors = 0
-" so ~/.vim/addons/vim-indent-guides/plugin/indent_guides.vim
-" call indent_guides#enable()
 
 " au FileType coffee nnoremap <buffer><leader>r :!node -e "require('source-map-support').install(); require('./lib/index')"<cr>
-au FileType coffee nnoremap <buffer><leader>t :!cake -g cookie test<cr>
+au FileType coffee nnoremap <buffer><leader>t :!cake test<cr>
 
 nnoremap <F1> :ColorNext<cr>
 nnoremap <F2> :ColorPrev<cr>
@@ -89,11 +86,11 @@ func! s:CakeWatch()
     hi ansiWhite ctermfg=245
     wincmd p
 
-	" 8new cake-watch
+    " 8new cake-watch
     " setl buftype=nofile
     " setl nobuflisted
 
-	" let g:cake_watch_process = vimproc#popen2('cake watch')
+    " let g:cake_watch_process = vimproc#popen2('cake watch')
 
     " func! s:CheckOutput()
         " let res = g:cake_watch_process.stdout.read()
@@ -112,7 +109,7 @@ func! s:CakeWatch()
             " exe 'buf '.b
         " endif
     " endf
-	" call s:CheckOutput()
+    " call s:CheckOutput()
     " autocmd CursorMovedI,CursorHold,CursorHoldI * call s:CheckOutput()
 endf
 

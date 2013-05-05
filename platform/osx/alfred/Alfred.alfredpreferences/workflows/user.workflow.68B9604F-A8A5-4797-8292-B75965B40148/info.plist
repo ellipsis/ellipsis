@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.kapeli.dash.workflow</string>
+	<key>connections</key>
+	<dict>
+		<key>5C09F008-55F3-4966-BACC-DF3176E148A5</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>93F7A067-A613-4F70-99D8-7522C3F1DC37</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Kapeli</string>
+	<key>description</key>
+	<string>Search Dash for query</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Dash</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>plusspaces</key>
+				<false/>
+				<key>url</key>
+				<string>dash-workflow-callback://{query}</string>
+				<key>utf8</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>93F7A067-A613-4F70-99D8-7522C3F1DC37</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>docs</string>
+				<key>runningsubtext</key>
+				<string>Seaching for "{query}"</string>
+				<key>script</key>
+				<string>./dashAlfredWorkflow "{query}"</string>
+				<key>subtext</key>
+				<string>Search Dash for "{query}"</string>
+				<key>title</key>
+				<string>Search Dash</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>5C09F008-55F3-4966-BACC-DF3176E148A5</string>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>Usage:
+'dash {query}'
+'dash keyword:{query}'
+
+The keyword is either a docset keyword (defined in Preferences &gt; Docsets) or a search profile keyword trigger (defined by clicking on the loupe icon of the main search field).
+
+You can edit this extension to always include a keyword by editing the Script Filter to:
+
+./dashAlfredWorkflow "keyword:{query}"</string>
+	<key>uidata</key>
+	<dict>
+		<key>5C09F008-55F3-4966-BACC-DF3176E148A5</key>
+		<dict>
+			<key>ypos</key>
+			<real>90</real>
+		</dict>
+		<key>93F7A067-A613-4F70-99D8-7522C3F1DC37</key>
+		<dict>
+			<key>ypos</key>
+			<real>90</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>kapeli.com</string>
+</dict>
+</plist>

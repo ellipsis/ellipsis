@@ -75,4 +75,6 @@ alias sl=ls
 export GIT=/usr/local/bin/git
 export GHI_TOKEN="aedcae3d6160d93708f8364d51ef504aff804af5"
 alias ghi='ghi --no-pager'
-
+export AWS_ACCESS_KEY=AKIAIKANYT25QCVTF5EQ
+export AWS_SECRET_KEY=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
+export AWS_SSH_KEY=~/.ssh/demand-magic.pem
