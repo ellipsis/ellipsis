@@ -13,6 +13,7 @@ let options = {
         \ 'github:zeekay/vice-syntastic',
         \ 'github:zeekay/vice-tagbar',
         \ 'github:zeekay/vice-undo',
+        \ 'github:zeekay/vim-cake',
         \ 'github:nathanaelkane/vim-indent-guides',
         \ 'github:vim-scripts/Comceal',
         \ 'github:rizzatti/funcoo.vim',
@@ -47,210 +48,23 @@ nnoremap K <c-u>
 vnoremap J <c-d>
 vnoremap K <c-u>
 nnoremap Q ZQ
-
 inoremap <c-u> <c-o>dd
 
 cabbrev ack <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Ack' : 'ack')<CR>
 cabbrev shell <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShell' : 'shell')<CR>
 cabbrev shelli <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShellInteractive' : 'shell')<CR>
 
-" Command window mappings.
-" nnoremap q; q:ddz-
-" nnoremap q: q:ddz-
-" au CmdwinEnter * nmap q :q<cr>
-" au CmdwinEnter * unmap q;
-" au CmdwinEnter * unmap q:
-" au CmdwinLeave * unmap q
-" au CmdwinLeave * nmap q; q:ddz-
-" au CmdwinLeave * nmap q: q:ddz-
-
 let g:indent_guides_guide_size = 1
-" au FileType coffee nnoremap <buffer><leader>r :!node -e "require('source-map-support').install(); require('./lib/index')"<cr>
-au FileType coffee nnoremap <buffer><leader>t :!cake test<cr>
-
-nnoremap <F1> :ColorNext<cr>
-nnoremap <F2> :ColorPrev<cr>
-
-func! s:CakeWatch()
-    so ~/.vim/addons/AnsiEsc.vim/plugin/cecutil.vim
-    so ~/.vim/addons/AnsiEsc.vim/plugin/AnsiEscPlugin.vim
-    so ~/.vim/addons/AnsiEsc.vim/autoload/AnsiEsc.vim
-    VimShellInteractive cake watch
-    stopinsert
-    wincmd q
-    8split
-    buf iexe-cake\ watch
-    " Change default for ansiWhite
-    hi ansiWhite ctermfg=245
-    wincmd p
-
-    " 8new cake-watch
-    " setl buftype=nofile
-    " setl nobuflisted
-
-    " let g:cake_watch_process = vimproc#popen2('cake watch')
-
-    " func! s:CheckOutput()
-        " let res = g:cake_watch_process.stdout.read()
-        " if res != ''
-            " let b = bufname('%')
-            " buf cake-watch
-            " call append(0, split(res, '\r\n\|\r\|\n'))
-            " normal zb
-            " exe 'buf '.b
-        " endif
-        " if g:cake_watch_process.stdout.eof
-            " let b = bufname('%')
-            " buf cake-watch
-            " call append(0, ['done'])
-            " normal zb
-            " exe 'buf '.b
-        " endif
-    " endf
-    " call s:CheckOutput()
-    " autocmd CursorMovedI,CursorHold,CursorHoldI * call s:CheckOutput()
-endf
-
-func! s:CakeComplete(arglead, cmdline, cursorpos)
-    let output = split(system('cake'), '\n')
-    let tasks = []
-
-    for line in output[2:-1]
-        let task = split(line, ' ')[1]
-        call add(tasks, task)
-    endfor
-
-    let bits = split(a:cmdline, ' ')
-    if len(bits) > 1
-        let word = bits[1]
-        return filter(tasks, 'v:val =~ "'.word.'"')
-    else
-        return tasks
-    endif
-endf
-
-func! s:CakePreview(task)
-    pclose
-    pedit cake-tasks
-    wincmd p
-    silent! exe '0r!cake '.a:task
-    norm Gdd
-    setlocal ft=coffee
-    map <buffer> q :pclose<cr>
-    setl buftype=nofile
-    setl bufhidden=delete
-    setl nobuflisted
-endf
-
-func! s:Cake(bang, ...)
-    if a:0 == 0
-        call s:CakePreview('')
-    else
-        if a:1 == 'watch'
-            call s:CakeWatch()
-            return
-        endif
-
-        if a:bang == '!'
-            exe 'VimShellExecute cake '.join(a:000, ' ')
-            wincmd q
-            8split
-            buffer bg-cake
-        else
-            exe '!cake '.join(a:000, ' ')
-        endif
-    endif
-endf
-
-command! -bang -nargs=* -complete=customlist,s:CakeComplete Cake call s:Cake("<bang>", <f-args>)
-cabbrev cake <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Cake' : 'cake')<CR>
 
 if has('gui_running')
     color minimal
     hi Normal guifg=#fcffe0 guibg=#3b3933
 else
-
-    " colorscheme habiLight
-    " hi Normal ctermbg=235 ctermfg=248
-
-    " colorscheme impact
-    "
     colorscheme Tomorrow-Night-Eighties
     hi Normal ctermbg=235
-
-    " colorscheme xoria256
-    " hi Normal ctermbg=236
 endif
 
-set nolazyredraw
-set ttyfast
-au FileType coffee :set nolazyredraw
-au FileType coffee :set ttyfast
-
-" au FileType haskell nnoremap <buffer> <F1> :HdevtoolsType<CR>
-" au FileType haskell nnoremap <buffer> <silent> <F2> :HdevtoolsClear<CR>
-"
+nnoremap <F1> :ColorNext<cr>
+nnoremap <F2> :ColorPrev<cr>
 au FileType javascript command! Uglify silent! :%!uglifyjs
- function! g:brainfuck()
-  let vm = {
-  \ 'pc' : 0,
-  \ 'dc' : 0,
-  \ 'src' : split(join(readfile(expand('%:p'))), '\zs'),
-  \ 'buf' : repeat([0], 65536),
-  \}
-  function! vm.op0() dict
-    " NOP
-  endfunction
-  function! vm.op1() dict
-    let self.dc += 1
-  endfunction
-  function! vm.op2() dict
-    let self.dc -= 1
-  endfunction
-  function! vm.op3() dict
-    let self.buf[self.dc] = self.buf[self.dc]+1
-  endfunction
-  function! vm.op4() dict
-    let self.buf[self.dc] = self.buf[self.dc]-1
-  endfunction
-  function! vm.op5() dict
-    echon nr2char(self.buf[self.dc])
-  endfunction
-  function! vm.op6() dict
-    let self.buf[self.dc] = getchar()
-  endfunction
-  function! vm.op7() dict
-    if self.buf[self.dc] != 0 | return | endif
-    let self.pc += 1
-    let c = 0
-    while c > 0 || self.src[self.pc] != ']'
-      if self.src[self.pc] == '[' | let c += 1
-      elseif self.src[self.pc] == ']' | let c -= 1 | endif
-      let self.pc += 1
-    endwhile
-  endfunction
-  function! vm.op8() dict
-    let self.pc -= 1
-    let c = 0
-    while c > 0 || self.src[self.pc] != '['
-      if self.src[self.pc] == ']' | let c += 1
-      elseif self.src[self.pc] == '[' | let c -= 1 | endif
-      let self.pc -= 1
-    endwhile
-    let self.pc -= 1
-  endfunction
-
-  let m = "><+-.,[] \n\t"
-  for c in map(range(len(m)), '[m[v:val], v:val<8?v:val+1 :0]')
-    let vm[c[0]] = eval('vm.op'.c[1])
-  endfor
-  while vm.pc < len(vm.src)
-    try
-        call vm[vm.src[vm.pc]]()
-    catch
-    endtry
-    let vm.pc += 1
-  endwhile
-endfunction
-
-command! Brainfuck call g:brainfuck()
+au FileType coffee nnoremap <buffer><leader>t :!cake test<cr>
