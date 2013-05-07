@@ -16,8 +16,6 @@ let options = {
         \ 'github:zeekay/vim-cake',
         \ 'github:nathanaelkane/vim-indent-guides',
         \ 'github:vim-scripts/Comceal',
-        \ 'github:rizzatti/funcoo.vim',
-        \ 'github:rizzatti/dash.vim',
     \ ],
     \ 'ft_addons': {
         \ 'haskell': ['github:bitc/vim-hdevtools'],
@@ -49,11 +47,15 @@ vnoremap J <c-d>
 vnoremap K <c-u>
 nnoremap Q ZQ
 inoremap <c-u> <c-o>dd
+nnoremap <F1> :ColorNext<cr>
+nnoremap <F2> :ColorPrev<cr>
 
 cabbrev ack <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Ack' : 'ack')<CR>
 cabbrev shell <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShell' : 'shell')<CR>
 cabbrev shelli <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShellInteractive' : 'shell')<CR>
 
+au FileType javascript command! Uglify silent! :%!uglifyjs
+au FileType coffee nnoremap <buffer><leader>t :!cake test<cr>
 let g:indent_guides_guide_size = 1
 
 if has('gui_running')
@@ -64,7 +66,6 @@ else
     hi Normal ctermbg=235
 endif
 
-nnoremap <F1> :ColorNext<cr>
-nnoremap <F2> :ColorPrev<cr>
-au FileType javascript command! Uglify silent! :%!uglifyjs
-au FileType coffee nnoremap <buffer><leader>t :!cake test<cr>
+hi link coffeeFunction Function
+hi link coffeeMethod Function
+hi link coffeeObjAssign Statement

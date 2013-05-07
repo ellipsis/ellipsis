@@ -1,0 +1,10 @@
+#!/usr/bin/env node
+
+// Treat first argument to cake as task name, push it to the end so cake agrees
+if (process.argv[2] && process.argv[2].charAt(0) !== '-') process.argv.push(process.argv.splice(2, 1)[0])
+
+var path = require('path');
+var fs   = require('fs');
+var lib  = path.join(path.dirname(fs.realpathSync(__filename)), '../lib');
+
+require(lib + '/coffee-script/cake').run();
