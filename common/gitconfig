@@ -11,7 +11,6 @@
     cp              = cherry-pick
     df              = diff --color=never
     ds              = diff --stat --color=never
-    dc              = diff --cached --color=never
     ds              = diff --staged --color=never
     g               = grep --break --heading --line-number
     last            = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white)%an, %ar%Creset' -n 20
@@ -48,7 +47,7 @@
     root            = !pwd
     serve           = daemon --reuseaddr --verbose  --base-path=. --export-all ./.git
     stage           = add
-    staged          = diff --cached
+    staged          = diff --staged
     svn-ci          = svn dcommit
     svn-up          = svn rebase
     tags            = tag -l
