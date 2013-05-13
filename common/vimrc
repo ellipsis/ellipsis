@@ -15,7 +15,6 @@ let options = {
         \ 'github:zeekay/vice-undo',
         \ 'github:zeekay/vim-cake',
         \ 'github:nathanaelkane/vim-indent-guides',
-        \ 'github:vim-scripts/Comceal',
     \ ],
     \ 'ft_addons': {
         \ 'haskell': ['github:bitc/vim-hdevtools'],
