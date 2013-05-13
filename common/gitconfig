@@ -1,6 +1,5 @@
-[user]
-    name            = zeekay
-    email           = zk@monoid.io
+[advice]
+    statusHints     = false
 
 [alias]
     br              = branch
@@ -12,6 +11,7 @@
     cp              = cherry-pick
     df              = diff
     ds              = diff --stat
+    g               = grep --break --heading --line-number
     last            = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white)%an, %ar%Creset' -n 20
     lc              = log ORIG_HEAD.. --stat --no-merges
     lp              = log --patch --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white)%an, %ar%Creset'
@@ -31,84 +31,78 @@
     sb              = show-branch
     st              = status -s
 
+    catchup         = log --patch --reverse --topo-order _ribbon..origin/master
     changes         = diff --name-status -r
     current-branch  = !git symbolic-ref -q HEAD | sed -e 's|^refs/heads/||'
     diffstat        = diff --stat
     fetch-all       = fetch --depth=999999999
-    reset-origin    = !git fetch && git reset --hard "origin/`git rev-parse --abbrev-ref HEAD`"
-    pop             = stash pop
+    lost            = !"git fsck | awk '/dangling commit/ {print $3}' | git show --format='SHA1: %C(yellow)%h%Cblue%d%Creset %s %C(white)%an, %ar%Creset' --stdin | awk '/SHA1/ {sub(\"SHA1: \", \"\"); print}'"
     pom             = push --set-upstream origin master
+    pop             = stash pop
     record          = !sh -c '(git add -p -- $@ && git commit) || git reset' --
+    reset-origin    = !git fetch && git reset --hard "origin/`git rev-parse --abbrev-ref HEAD`"
+    ribbon          = tag --force _ribbon origin/master
+    root            = !pwd
     serve           = daemon --reuseaddr --verbose  --base-path=. --export-all ./.git
     staged          = diff --cached
+    svn-ci          = svn dcommit
+    svn-up          = svn rebase
+    tags            = tag -l
     track           = checkout -t
     unstage         = reset HEAD
     unstaged        = diff
 
-    vim             = !vim -o $1 -c 'setlocal bufhidden=delete' -c 'Gedit %' -c 'wincmd w' -c 'wincmd q'
-    mvim            = !mvim -o $1 -c 'setlocal bufhidden=delete' -c 'Gedit %' -c 'wincmd q'
-
-    svn-up          = svn rebase
-    svn-ci          = svn dcommit
-
-    ribbon          = tag --force _ribbon origin/master
-    catchup         = log --patch --reverse --topo-order _ribbon..origin/master
-
-    lost            = !"git fsck | awk '/dangling commit/ {print $3}' | git show --format='SHA1: %C(yellow)%h%Cblue%d%Creset %s %C(white)%an, %ar%Creset' --stdin | awk '/SHA1/ {sub(\"SHA1: \", \"\"); print}'"
-    tags            = tag -l
-    g               = grep --break --heading --line-number
-    root            = !pwd
-
-[merge]
-    tool            = vim
-    stat            = true
-
-[mergetool]
-    keepBackup      = false
-
-[mergetool "vim"]
-    cmd             = vim "+Gdiff" $MERGED -c 'wincmd h' -c 'close' -c 'Gread :2' -c 'map Q :qa<cr>' -c 'map <leader>q :qa<cr>'
-
-[core]
-    excludesfile    = ~/.cvsignore
-    autocrlf        = false
-    whitespace      = trailing-space,space-before-tab
+[branch]
+    autosetupmerge  = true
 
 [color]
-    diff            = auto
-    status          = auto
     branch          = auto
+    diff            = auto
     interactive     = true
+    status          = auto
     ui              = auto
 
-[rebase]
-    autosquash      = true
-
-[instaweb]
-    httpd           = webrick
-
-[github]
-    user            = zeekay
-    password        = !security 2>&1 >/dev/null find-generic-password -gs github.password | ruby -e 'print $1 if STDIN.gets =~ /^password: \\\"(.*)\\\"$/'
+[core]
+    autocrlf        = false
+    excludesfile    = ~/.cvsignore
+    whitespace      = trailing-space,space-before-tab
 
 [diff]
     mnemonicprefix  = true
     renames         = copies
 
-[advice]
-    statusHints     = false
+[gist]
+    browse          = true
 
-[branch]
-    autosetupmerge  = true
+[github]
+    password        = !security 2>&1 >/dev/null find-generic-password -gs github.password | ruby -e 'print $1 if STDIN.gets =~ /^password: \\\"(.*)\\\"$/'
+    user            = zeekay
+
+[grep]
+    lineNumber      = true
+
+[instaweb]
+    httpd           = webrick
+
+[merge]
+    stat            = true
+    tool            = vim
+
+[mergetool]
+    keepBackup      = false
+
+[mergetool "vim"]
+    cmd             = vim "+Gdiff" $MERGED -c 'wincmd h' -c 'close' -c 'Gread :2' -c 'au BufWinLeave <buffer> qa!'
 
 [push]
     default         = tracking
 
+[rebase]
+    autosquash      = true
+
 [rerere]
     enabled         = false
 
-[gist]
-    browse          = true
-
-[grep]
-    lineNumber      = true
+[user]
+    email           = zk@monoid.io
+    name            = zeekay
