@@ -92,7 +92,7 @@
     keepBackup      = false
 
 [mergetool "vim"]
-    cmd             = vim "+Gdiff" $MERGED -c 'wincmd h' -c 'close' -c 'Gread :2' -c 'au BufWinLeave <buffer> qa!'
+    cmd             = vim "+Gdiff" $MERGED -c 'wincmd h' -c 'close' -c 'Gread :2' -c 'au QuitPre <buffer> qa!'
 
 [push]
     default         = tracking
