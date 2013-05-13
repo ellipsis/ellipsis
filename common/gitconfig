@@ -9,10 +9,10 @@
     coi-ours        = checkout-index -f -a --stage=2
     coi-theirs      = checkout-index -f -a --stage=3
     cp              = cherry-pick
-    df              = diff
-    ds              = diff --stat
-    dc              = diff --cached
-    ds              = diff --staged
+    df              = diff --color=never
+    ds              = diff --stat --color=never
+    dc              = diff --cached --color=never
+    ds              = diff --staged --color=never
     g               = grep --break --heading --line-number
     last            = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white)%an, %ar%Creset' -n 20
     lc              = log ORIG_HEAD.. --stat --no-merges
@@ -36,7 +36,8 @@
     catchup         = log --patch --reverse --topo-order _ribbon..origin/master
     changes         = diff --name-status -r
     current-branch  = !git symbolic-ref -q HEAD | sed -e 's|^refs/heads/||'
-    diffstat        = diff --stat
+    diffstat        = diff --stat --color=never
+    diffall         = diff HEAD --color=never
     fetch-all       = fetch --depth=999999999
     lost            = !"git fsck | awk '/dangling commit/ {print $3}' | git show --format='SHA1: %C(yellow)%h%Cblue%d%Creset %s %C(white)%an, %ar%Creset' --stdin | awk '/SHA1/ {sub(\"SHA1: \", \"\"); print}'"
     pom             = push --set-upstream origin master
