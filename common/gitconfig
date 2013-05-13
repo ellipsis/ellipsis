@@ -1,12 +1,13 @@
 [user]
 	name            = zeekay
-	email           = zeekayy@gmail.com
+    email           = zk@monoid.io
 
-[mergetool "mvim"]
-    cmd             = mvim "+Gdiff" $MERGED -c 'wincmd h' -c 'close' -c 'Gread :2' -c 'map Q :qa<cr>' -c 'map <leader>q :qa<cr>'
+[mergetool "vim"]
+    cmd             = vim "+Gdiff" $MERGED -c 'wincmd h' -c 'close' -c 'Gread :2' -c 'map Q :qa<cr>' -c 'map <leader>q :qa<cr>'
+    keepBackup      = false
 
 [merge]
-    tool            = mvim
+    tool            = vim
     stat            = true
 
 [alias]
@@ -102,7 +103,7 @@
     default         = tracking
 
 [rerere]
-    enabled         = true
+    enabled         = false
 
 [gist]
 	browse          = true
