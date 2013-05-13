@@ -11,6 +11,8 @@
     cp              = cherry-pick
     df              = diff
     ds              = diff --stat
+    dc              = diff --cached
+    ds              = diff --staged
     g               = grep --break --heading --line-number
     last            = log --graph --pretty=format':%C(yellow)%h%Cblue%d%Creset %s %C(white)%an, %ar%Creset' -n 20
     lc              = log ORIG_HEAD.. --stat --no-merges
