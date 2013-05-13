@@ -46,6 +46,7 @@
     ribbon          = tag --force _ribbon origin/master
     root            = !pwd
     serve           = daemon --reuseaddr --verbose  --base-path=. --export-all ./.git
+    stage           = add
     staged          = diff --cached
     svn-ci          = svn dcommit
     svn-up          = svn rebase
