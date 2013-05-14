@@ -55,7 +55,9 @@ cabbrev shelli <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShellInteractive
 
 au FileType javascript command! Uglify silent! :%!uglifyjs
 au FileType coffee nnoremap <buffer><leader>t :!cake test<cr>
+
 let g:indent_guides_guide_size = 1
+let g:indent_guides_start_level = 2
 
 if has('gui_running')
     color minimal
