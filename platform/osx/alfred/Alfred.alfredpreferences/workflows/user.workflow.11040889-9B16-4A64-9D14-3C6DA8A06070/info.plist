@@ -65,7 +65,11 @@ cd ~
 
 local servername="`vim --serverlist | head -n 1`"
 if [ "$servername" ]; then
-    /usr/local/bin/mvim --servername "$servername" --remote-silent {query} &gt; /dev/null 2&gt;&amp;1
+	if [ -z "{query}" ]; then
+	    /usr/local/bin/mvim --servername "$servername" &gt; /dev/null 2&gt;&amp;1
+	else
+	    /usr/local/bin/mvim --servername "$servername" --remote-silent {query} &gt; /dev/null 2&gt;&amp;1
+	fi
 else
     /usr/local/bin/mvim {query} &gt; /dev/null 2&gt;&amp;1
 fi</string>
@@ -153,7 +157,7 @@ fi</string>
 		<key>F54473F5-E3DA-416A-AF70-DE466A92680A</key>
 		<dict>
 			<key>ypos</key>
-			<real>340</real>
+			<real>140</real>
 		</dict>
 	</dict>
 	<key>webaddress</key>
