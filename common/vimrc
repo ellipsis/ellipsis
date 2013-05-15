@@ -67,9 +67,6 @@ else
     hi Normal ctermbg=235
 endif
 
-" hi coffeeFunction ctermfg=1
-" hi coffeeMethod ctermfg=1
-
 hi link coffeeFunction Function
 hi link coffeeMethod Function
 hi link coffeeObjAssign Statement
