@@ -62,5 +62,15 @@ map { {
 map } }
 map y y
 map z z
+vmap G G
 
+augroup fastescape
+    au!
+    set notimeout
+    set ttimeout
+    set timeoutlen=10
+    au InsertEnter * set timeout
+    au InsertLeave * set notimeout
+augroup END
+" unmap 
 " vim:set filetype=vim:
