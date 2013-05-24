@@ -26,55 +26,15 @@ export ZEESH_THEME_PROMPT_CHAR=
 alias gist=jist
 alias git='noglob hub'
 alias http='noglob http'
-alias irssi='ssh irssi'
 alias utc='date -u'
 alias v=vim
 
 export PATH=~/.bin:~/.ellipsis/bin:/usr/local/share/npm/bin:$PATH
 export NODE_PATH=/usr/local/share/npm/lib/node_modules
 
-update() {
-    echo -e "\033[1mupdating homebrew\033[0m" | sed 's/\-e //'
-    brew update && brew upgrade
-    ellipsis update
-}
-
-npm-name-check() {
-    res="`curl https://npmjs.org/package/$1 -sI | grep 404`"
-    if [ -z "$res" ]; then
-        echo awws
-    else
-        echo get dat shit
-    fi
-}
-
-act-addon-sdk() {
-    last=`pwd`
-    cd /usr/local/src/addon-sdk;
-    source bin/activate
-    cd $last
-}
-
-mount-ssh() {
-    umount /Volumes/$1 > /dev/null 2>&1
-    mkdir -p /Volumes/$1
-    sshfs $1:/ /Volumes/$1 -oauto_cache,reconnect,defer_permissions,negative_vncache,volname=$1
-    open /Volumes/$1
-}
-
-sbox-add-torrents() {
-    for torrent in *.torrent; do
-        scp $torrent sbox:torrents/watch && rm $torrent
-    done
-}
-
 if [ -e ~/.private/zsh ]; then
     source ~/.private/zsh
 fi
+
 alias sl=ls
 export GIT=/usr/local/bin/git
-export GHI_TOKEN="aedcae3d6160d93708f8364d51ef504aff804af5"
-alias ghi='ghi --no-pager'
-export AWS_ACCESS_KEY=AKIAIKANYT25QCVTF5EQ
-export AWS_SECRET_KEY=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
-export AWS_SSH_KEY=~/.ssh/demand-magic.pem
