@@ -3,7 +3,6 @@ let options = {
         \ 'github:zeekay/vice-beautify',
         \ 'github:zeekay/vice-colorful',
         \ 'github:zeekay/vice-ctrlp',
-        \ 'github:zeekay/vice-delimitmate',
         \ 'github:zeekay/vice-git',
         \ 'github:zeekay/vice-neocompletion',
         \ 'github:zeekay/vice-nerdtree',
@@ -63,7 +62,8 @@ if has('gui_running')
     color minimal
     hi Normal guifg=#fcffe0 guibg=#3b3933
 else
-    colorscheme Tomorrow-Night-Eighties
+    " color Tomorrow-Night-Eighties
+    color hybrid
     hi Normal ctermbg=235
 endif
 
