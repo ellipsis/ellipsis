@@ -8,7 +8,7 @@ A framework for managing dotfiles.
 ## Install
 Clone and symlink or use handy-dandy installer:
 
-    curl https://raw.github.com/zeekay/ellipsis/master/install.sh | sh
+    curl https://raw.github.com/zeekay/ellipsis/master/scripts/install.sh | sh
 
 ## Usage
 
