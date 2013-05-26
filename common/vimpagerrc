@@ -72,5 +72,6 @@ augroup fastescape
     au InsertEnter * set timeout
     au InsertLeave * set notimeout
 augroup END
-" unmap 
+
+color hybrid
 " vim:set filetype=vim:
