@@ -46,7 +46,7 @@ git_clone() {
 }
 
 run_installer() {
-    curl -s "https://raw.github.com/zeekay/$1/master/install.sh" > $1-install-$$.sh
+    curl -s "https://raw.github.com/zeekay/$1/master/scripts/install.sh" > $1-install-$$.sh
     ELLIPSIS_INSTALL=1 sh $1-install-$$.sh
     rm $1-install-$$.sh
 }
