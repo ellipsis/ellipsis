@@ -49,6 +49,6 @@ case $1 in
         _do push
     ;;
     *)
-        echo unknown command
+        echo Usage: ellipsis {push|pull|status}
     ;;
 esac
