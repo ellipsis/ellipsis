@@ -1,0 +1,62 @@
+let options = {
+    \ 'addons': [
+        \ 'github:zeekay/vice-colorful',
+        \ 'github:zeekay/vice-ctrlp',
+        \ 'github:zeekay/vice-git',
+        \ 'github:zeekay/vice-neocompletion',
+        \ 'github:zeekay/vice-nerdtree',
+        \ 'github:zeekay/vice-polyglot',
+        \ 'github:zeekay/vice-powerline',
+        \ 'github:zeekay/vice-standard-issue',
+        \ 'github:zeekay/vice-syntastic',
+        \ 'github:zeekay/vice-undo',
+        \ 'github:zeekay/vim-cake',
+        \ 'github:nathanaelkane/vim-indent-guides',
+    \ ],
+    \ 'ft_addons': {
+        \ 'haskell': ['github:bitc/vim-hdevtools'],
+    \ },
+    \ 'neocompletion': {'enable_jscomplete': 1, 'enable_necoghc': 0},
+\ }
+
+let &rtp.=','.expand('~/.vim/addons/vice')
+call vice#Initialize(options)
+
+nnoremap ; :
+vnoremap ; :
+
+" Prevent cursor from moving when leavng insert mode
+inoremap <Esc> <Esc>`^
+
+map <leader>q :q<cr>
+nnoremap J <c-d>
+nnoremap K <c-u>
+vnoremap J <c-d>
+vnoremap K <c-u>
+nnoremap Q ZQ
+inoremap <c-u> <c-o>dd
+nnoremap <F1> :ColorNext<cr>
+nnoremap <F2> :ColorPrev<cr>
+
+cabbrev ack <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Ack' : 'ack')<CR>
+cabbrev shell <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShell' : 'shell')<CR>
+cabbrev shelli <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShellInteractive' : 'shell')<CR>
+
+au FileType javascript command! Uglify silent! :%!uglifyjs
+au FileType coffee nnoremap <buffer><leader>t :!cake test<cr>
+
+let g:indent_guides_guide_size = 1
+let g:indent_guides_start_level = 2
+
+if has('gui_running')
+    color minimal
+    hi Normal guifg=#fcffe0 guibg=#3b3933
+else
+    " color Tomorrow-Night-Eighties
+    color hybrid
+    hi Normal ctermbg=235
+endif
+
+hi link coffeeFunction Function
+hi link coffeeMethod Function
+hi link coffeeObjAssign Statement

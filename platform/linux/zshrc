@@ -1,0 +1,24 @@
+zeesh_plugins=(
+    autocomplete
+    vi-mode
+    vi-visual-mode
+    linux
+    git
+    vcs-info
+    syntax-highlighting
+    history-substring-search
+    theme
+)
+source ~/.zsh/zeesh.zsh
+
+export ZEESH_THEME_NORMAL_CHAR='\n⊙'
+export ZEESH_THEME_VISUAL_CHAR='\n⊡'
+export ZEESH_THEME_INSERT_CHAR='\n›'
+export ZEESH_THEME_PROMPT_CHAR=
+
+alias utc='date -u'
+alias v=vim
+
+if [ -e ~/.private/zsh ]; then
+    source ~/.private/zsh
+fi
