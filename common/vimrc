@@ -3,6 +3,7 @@ let options = {
         \ 'github:zeekay/vice-beautify',
         \ 'github:zeekay/vice-colorful',
         \ 'github:zeekay/vice-ctrlp',
+        \ 'github:zeekay/vice-delimitmate',
         \ 'github:zeekay/vice-git',
         \ 'github:zeekay/vice-neocompletion',
         \ 'github:zeekay/vice-nerdtree',
