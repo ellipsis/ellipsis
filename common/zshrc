@@ -32,6 +32,8 @@ alias v=vim
 export PATH=~/.bin:~/.ellipsis/bin:/usr/local/share/npm/bin:$PATH
 export NODE_PATH=/usr/local/share/npm/lib/node_modules
 
+compctl -k "(push pull status)" ellipsis
+
 if [ -e ~/.private/zsh ]; then
     source ~/.private/zsh
 fi
