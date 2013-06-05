@@ -19,6 +19,9 @@ let options = {
     \ 'ft_addons': {
         \ 'haskell': ['github:bitc/vim-hdevtools'],
     \ },
+    \ 'commands': {
+        \ 'Sum': ['github:zeekay/visSum.vim'],
+    \ },
     \ 'neocompletion': {'enable_jscomplete': 1, 'enable_necoghc': 0},
 \ }
 
