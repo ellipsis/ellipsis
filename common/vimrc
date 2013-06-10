@@ -1,3 +1,6 @@
+set nocompatible
+filetype indent plugin on | syn on
+
 let options = {
     \ 'addons': [
         \ 'github:zeekay/vice-beautify',
@@ -68,6 +71,10 @@ if has('gui_running')
 else
     " color Tomorrow-Night-Eighties
     color hybrid
+
+    let g:indent_guides_auto_colors = 0
+    hi IndentGuidesOdd  ctermbg=236
+    hi IndentGuidesEven ctermbg=236
     hi Normal ctermbg=235
 endif
 

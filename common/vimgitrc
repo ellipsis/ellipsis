@@ -1,17 +1,30 @@
 set nocompatible
-filetype plugin on | syn on
+filetype indent plugin on | syn on
 
 let &rtp.=','.expand('~/.vim/addons/vice')
 call vice#Initialize({
     \ 'addons': [
         \ 'github:zeekay/vice-colorful',
+        \ 'github:zeekay/vice-git',
+        \ 'github:zeekay/vice-polyglot',
+        \ 'github:zeekay/vice-powerline',
         \ 'github:zeekay/vice-standard-issue',
     \ ]
 \ })
 
-let vimpager_disable_x11 = 1
-let vimpager_scrolloff = 0
-let loaded_matchparen = 1
+nnoremap ; :
+vnoremap ; :
+
+" Prevent cursor from moving when leavng insert mode
+inoremap <Esc> <Esc>`^
+
+map <leader>q :q<cr>
+nnoremap J <c-d>
+nnoremap K <c-u>
+vnoremap J <c-d>
+vnoremap K <c-u>
+nnoremap Q ZQ
+inoremap <c-u> <c-o>dd
 
 func! s:Escape()
     set laststatus=0
@@ -33,45 +46,13 @@ func! s:JumpToFirstDiff()
     if &ft == 'diff'
         normal gg]]
         echo
+    else
+        normal gg
     endif
 endf
 
 au BufReadPost * call s:Escape()
 au VimEnter * call s:JumpToFirstDiff()
-
-nnoremap ; :
-vnoremap ; :
-inoremap <Esc> <Esc>`^
-
-map <leader>q :q<cr>
-nnoremap J <c-d>
-nnoremap K <c-u>
-vnoremap J <c-d>
-vnoremap K <c-u>
-nnoremap Q ZQ
-inoremap <c-u> <c-o>dd
-
-map <cr> <cr>
-map <c-d> <c-d>
-map <c-u> <c-u>
-map j <cr>
-map k k
-map h h
-map l l
-map g g
-map gg gg
-map A $
-map w w
-map W W
-map b b
-map B B
-map <c-f> <c-f>
-map <c-b> <c-b>
-map { {
-map } }
-map y y
-map z z
-vmap G G
 
 color hybrid
 hi Normal ctermbg=235
