@@ -5,6 +5,7 @@ let options = {
     \ 'addons': [
         \ 'github:zeekay/vice-colorful',
         \ 'github:zeekay/vice-ctrlp',
+        \ 'github:zeekay/vice-delimitmate',
         \ 'github:zeekay/vice-git',
         \ 'github:zeekay/vice-neocompletion',
         \ 'github:zeekay/vice-nerdtree',
@@ -12,12 +13,11 @@ let options = {
         \ 'github:zeekay/vice-powerline',
         \ 'github:zeekay/vice-standard-issue',
         \ 'github:zeekay/vice-syntastic',
+        \ 'github:zeekay/vice-tagbar',
         \ 'github:zeekay/vice-undo',
-        \ 'github:zeekay/vim-cake',
-        \ 'github:nathanaelkane/vim-indent-guides',
     \ ],
-    \ 'ft_addons': {
-        \ 'haskell': ['github:bitc/vim-hdevtools'],
+    \ 'commands': {
+        \ 'Sum': ['github:zeekay/visSum.vim'],
     \ },
     \ 'neocompletion': {'enable_jscomplete': 1, 'enable_necoghc': 0},
 \ }
@@ -45,19 +45,15 @@ cabbrev ack <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Ack' : 'ack')<CR>
 cabbrev shell <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShell' : 'shell')<CR>
 cabbrev shelli <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShellInteractive' : 'shell')<CR>
 
-au FileType javascript command! Uglify silent! :%!uglifyjs
-au FileType coffee nnoremap <buffer><leader>t :!cake test<cr>
-
-let g:indent_guides_guide_size = 1
-let g:indent_guides_start_level = 2
-
 if has('gui_running')
     color minimal
     hi Normal guifg=#fcffe0 guibg=#3b3933
 else
     " color Tomorrow-Night-Eighties
     color hybrid
-    hi Normal ctermbg=235
+
+    let g:indent_guides_auto_colors = 0
+    hi IndentGuidesOdd  ctermbg=236
     hi IndentGuidesEven ctermbg=236
     hi Normal ctermbg=235
 endif
