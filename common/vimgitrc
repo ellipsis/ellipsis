@@ -6,11 +6,16 @@ call vice#Initialize({
     \ 'addons': [
         \ 'github:zeekay/vice-colorful',
         \ 'github:zeekay/vice-git',
-        \ 'github:zeekay/vice-polyglot',
-        \ 'github:zeekay/vice-powerline',
         \ 'github:zeekay/vice-standard-issue',
     \ ]
 \ })
+
+" Don't remember session
+set viminfo=
+set nows
+set ttyfast
+set nolazyredraw
+set laststatus=0
 
 nnoremap ; :
 vnoremap ; :
@@ -26,22 +31,6 @@ vnoremap K <c-u>
 nnoremap Q ZQ
 inoremap <c-u> <c-o>dd
 
-func! s:Escape()
-    set laststatus=0
-
-    " Use AnsiEsc for highlighting if ft is not detected.
-    if &ft == ''
-        so ~/.vim/addons/AnsiEsc.vim/plugin/cecutil.vim
-        so ~/.vim/addons/AnsiEsc.vim/plugin/AnsiEscPlugin.vim
-        so ~/.vim/addons/AnsiEsc.vim/autoload/AnsiEsc.vim
-
-        " Initialize highlighting
-        AnsiEsc
-        " Change default for ansiWhite
-        hi ansiWhite ctermfg=245
-    endif
-endf
-
 func! s:JumpToFirstDiff()
     if &ft == 'diff'
         normal gg]]
@@ -51,7 +40,6 @@ func! s:JumpToFirstDiff()
     endif
 endf
 
-au BufReadPost * call s:Escape()
 au VimEnter * call s:JumpToFirstDiff()
 
 color hybrid
