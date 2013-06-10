@@ -60,7 +60,6 @@ cabbrev shell <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShell' : 'shell')
 cabbrev shelli <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShellInteractive' : 'shell')<CR>
 
 au FileType javascript command! Uglify silent! :%!uglifyjs
-au FileType coffee nnoremap <buffer><leader>t :!cake test<cr>
 
 let g:indent_guides_guide_size = 1
 let g:indent_guides_start_level = 2
@@ -81,3 +80,7 @@ endif
 hi link coffeeFunction Function
 hi link coffeeMethod Function
 hi link coffeeObjAssign Statement
+
+" au FileType * nnoremap <buffer><leader>t :!cake test<cr>
+set nolazyredraw
+set ttyfast
