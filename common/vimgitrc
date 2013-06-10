@@ -1,5 +1,5 @@
 set nocompatible
-filetype indent plugin on | syn on
+filetype indent plugin on | syntax on
 
 let &rtp.=','.expand('~/.vim/addons/vice')
 call vice#Initialize({

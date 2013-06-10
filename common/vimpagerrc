@@ -1,5 +1,4 @@
 set nocompatible
-" syn on
 
 let &rtp.=','.expand('~/.vim/addons/vice')
 call vice#Initialize({
