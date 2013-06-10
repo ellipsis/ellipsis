@@ -4,6 +4,7 @@ filetype plugin on | syn on
 let &rtp.=','.expand('~/.vim/addons/vice')
 call vice#Initialize({
     \ 'addons': [
+        \ 'github:zeekay/AnsiEsc.vim',
         \ 'github:zeekay/vice-colorful',
         \ 'github:zeekay/vice-standard-issue',
     \ ]
