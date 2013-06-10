@@ -1,3 +1,6 @@
+set nocompatible
+filetype indent plugin on | syn on
+
 let options = {
     \ 'addons': [
         \ 'github:zeekay/vice-colorful',
@@ -54,6 +57,8 @@ if has('gui_running')
 else
     " color Tomorrow-Night-Eighties
     color hybrid
+    hi Normal ctermbg=235
+    hi IndentGuidesEven ctermbg=236
     hi Normal ctermbg=235
 endif
 
