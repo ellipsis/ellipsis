@@ -40,3 +40,4 @@ fi
 
 alias sl=ls
 export GIT=/usr/local/bin/git
+zstyle ':vcs_info:git:*:-all-' command $GIT

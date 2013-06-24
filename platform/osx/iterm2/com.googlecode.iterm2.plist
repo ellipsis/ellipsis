@@ -4357,58 +4357,35 @@
 	<false/>
 	<key>MinimumContrast</key>
 	<real>0.0</real>
-	<key>NSFontPanelAttributes</key>
-	<string>1, 4</string>
-	<key>NSFontPanelPreviewHeight</key>
-	<real>0.0</real>
 	<key>NSNavLastRootDirectory</key>
-	<string>~/Desktop</string>
+	<string>~/.ellipsis/platform/osx/iterm2</string>
+	<key>NSNavPanelExpandedSizeForOpenMode</key>
+	<string>{712, 448}</string>
 	<key>NSQuotedKeystrokeBinding</key>
 	<string></string>
 	<key>NSRepeatCountBinding</key>
 	<string></string>
 	<key>NSScrollAnimationEnabled</key>
 	<false/>
-	<key>NSTableView Columns KeyBingingTable</key>
-	<array>
-		<data>
-		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
-		hAErATCG
-		</data>
-		<string>198</string>
-		<data>
-		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
-		hAErATGG
-		</data>
-		<string>302</string>
-	</array>
-	<key>NSTableView Hidden Columns KeyBingingTable</key>
-	<array/>
-	<key>NSTableView Sort Ordering KeyBingingTable</key>
-	<array/>
-	<key>NSWindow Frame NSFontPanel</key>
-	<string>1180 62 445 270 0 0 1680 1028 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>610 895 924 485 0 0 2560 1418 </string>
+	<string>267 359 924 485 0 0 2560 1418 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>14 3 998 669 0 0 1680 1028 </string>
+	<string>21 10 727 369 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>1 420 817 608 0 0 1680 1028 </string>
+	<string>1226 918 570 346 0 0 2560 1418 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>52 1038 570 346 0 0 2560 1418 </string>
+	<string>1490 733 817 516 0 0 2560 1418 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>82 445 570 346 0 0 1920 1178 </string>
+	<string>67 185 1126 693 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
-	<string>652 276 570 346 0 0 1920 1178 </string>
-	<key>NSWindow Frame iTerm Window 5</key>
-	<string>809 102 570 346 0 0 1920 1178 </string>
-	<key>NSWindow Frame iTerm Window 6</key>
-	<string>848 533 570 346 0 0 2560 1418 </string>
+	<string>419 144 570 346 0 0 1680 1028 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
 			<key>ASCII Anti Aliased</key>
 			<true/>
+			<key>Allow Title Reporting</key>
+			<false/>
 			<key>Ambiguous Double Width</key>
 			<false/>
 			<key>Ansi 0 Color</key>
@@ -4568,6 +4545,8 @@
 				<key>Red Component</key>
 				<real>0.0539093017578125</real>
 			</dict>
+			<key>Background Image Is Tiled</key>
+			<false/>
 			<key>Background Image Location</key>
 			<string></string>
 			<key>Blend</key>
@@ -5211,6 +5190,10 @@
 			<key>Use Bold Font</key>
 			<true/>
 			<key>Use Bright Bold</key>
+			<false/>
+			<key>Use Canonical Parser</key>
+			<false/>
+			<key>Use Italic Font</key>
 			<false/>
 			<key>Vertical Spacing</key>
 			<real>0.9286845326423645</real>
@@ -6037,8 +6020,6 @@
 			<string>/Volumes/Data/zk</string>
 		</dict>
 	</array>
-	<key>NoSyncNeverRemindPrefsChangesLost</key>
-	<true/>
 	<key>NotFirstRun</key>
 	<true/>
 	<key>OnlyWhenMoreTabs</key>
@@ -6091,7 +6072,7 @@
 		</dict>
 	</dict>
 	<key>PrefsCustomFolder</key>
-	<string>/Users/zk/.iterm2</string>
+	<string>/Users/zk/.ellipsis/platform/osx/iterm2</string>
 	<key>PromptOnClose</key>
 	<false/>
 	<key>PromptOnQuit</key>
@@ -6105,13 +6086,11 @@
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedURL</key>
-	<string>http://iterm2.googlecode.com/svn/trunk/appcasts/testing.xml</string>
+	<string>http://iterm2.com/appcasts/testing.xml</string>
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2013-02-13T09:40:39Z</date>
-	<key>SUSkippedVersion</key>
-	<string>1.0.0.20120203</string>
+	<date>2013-06-18T03:21:05Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>
@@ -6143,7 +6122,7 @@
 	<key>UseCompactLabel</key>
 	<true/>
 	<key>UseLionStyleFullscreen</key>
-	<false/>
+	<true/>
 	<key>WebKitDefaultFontSize</key>
 	<integer>11</integer>
 	<key>WebKitStandardFont</key>
@@ -6161,6 +6140,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>1.0.0.20121224</string>
+	<string>1.0.0.20130602</string>
 </dict>
 </plist>

@@ -25,7 +25,7 @@ let options = {
     \ 'commands': {
         \ 'Sum': ['github:zeekay/visSum.vim'],
     \ },
-    \ 'neocompletion': {'enable_jscomplete': 1, 'enable_necoghc': 0},
+    \ 'neocompletion': {'enable_jscomplete': 1, 'enable_necoghc': 0, 'enable_clang_complete': 1},
 \ }
 
 if has('mac') && version > 702
@@ -75,6 +75,8 @@ else
     hi IndentGuidesOdd  ctermbg=236
     hi IndentGuidesEven ctermbg=236
     hi Normal ctermbg=235
+    set nolazyredraw
+    set ttyfast
 endif
 
 hi link coffeeFunction Function
@@ -82,5 +84,5 @@ hi link coffeeMethod Function
 hi link coffeeObjAssign Statement
 
 " au FileType * nnoremap <buffer><leader>t :!cake test<cr>
-set nolazyredraw
-set ttyfast
+au FileType haskell nnoremap <buffer> <F1> :HdevtoolsType<CR>
+au FileType haskell nnoremap <buffer> <silent> <F2> :HdevtoolsClear<CR>
