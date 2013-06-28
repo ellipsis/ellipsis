@@ -1,0 +1,14 @@
+# -*- ruby -*-
+
+require 'autotest/restart'
+
+# Include plugins
+require 'autotest/fsevent'
+require 'autotest/growl'
+
+Autotest.add_hook :initialize do |at|
+  %w{.git .DS_Store ._* vendor}.each { |exception| at.add_exception(exception) }
+
+  at.add_exception %r{^./tmp}  # ignore temp files, lest autotest will run again, and again...
+  false
+end
