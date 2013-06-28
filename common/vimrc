@@ -20,12 +20,11 @@ let options = {
         \ 'github:nathanaelkane/vim-indent-guides',
     \ ],
     \ 'ft_addons': {
-        \ 'haskell': ['github:bitc/vim-hdevtools'],
     \ },
     \ 'commands': {
         \ 'Sum': ['github:zeekay/visSum.vim'],
     \ },
-    \ 'neocompletion': {'enable_jscomplete': 1, 'enable_necoghc': 0, 'enable_clang_complete': 1},
+    \ 'neocompletion': {'enable_jscomplete': 1, 'enable_necoghc': 1, 'enable_clang_complete': 1},
 \ }
 
 if has('mac') && version > 702
