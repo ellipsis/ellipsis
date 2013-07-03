@@ -41,3 +41,4 @@ fi
 alias sl=ls
 export GIT=/usr/local/bin/git
 zstyle ':vcs_info:git:*:-all-' command $GIT
+alias ag="ag -a -S --color-match='30;31' --color-line-number='31;35' --color-path='31;34'"
