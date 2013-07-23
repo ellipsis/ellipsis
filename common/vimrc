@@ -86,6 +86,22 @@ hi link coffeeObjAssign Statement
 au FileType haskell nnoremap <buffer> <F1> :HdevtoolsType<CR>
 au FileType haskell nnoremap <buffer> <silent> <F2> :HdevtoolsClear<CR>
 
+function! AddSubtract(char, back)
+  let pattern = &nrformats =~ 'alpha' ? '[[:alpha:][:digit:]]' : '[[:digit:]]'
+  call search(pattern, 'cw' . a:back)
+  execute 'normal! ' . v:count1 . a:char
+  silent! call repeat#set(":\<C-u>call AddSubtract('" .a:char. "', '" .a:back. "')\<CR>")
+  execute 'w'
+endfunction
+
+func! s:BebopReload()
+    nnoremap <silent> <C-a> :<C-u>call AddSubtract("\<C-a>", '')<CR>
+    nnoremap <silent> <C-x> :<C-u>call AddSubtract("\<C-x>", '')<CR>
+    au InsertLeave * :w!
+endf
+
+au FileType stylus call s:BebopReload()
+
 " au VimEnter * RainbowParenthesesToggle
 " au Syntax * RainbowParenthesesLoadRound
 " au Syntax * RainbowParenthesesLoadSquare

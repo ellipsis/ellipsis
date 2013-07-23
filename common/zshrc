@@ -28,7 +28,7 @@ alias http='noglob http'
 alias utc='date -u'
 alias v=vim
 
-export PATH=~/.bin:~/.ellipsis/bin
+export PATH=~/.bin:~/.ellipsis/bin:$PATH
 
 compctl -k "(push pull status)" ellipsis
 
@@ -39,3 +39,9 @@ fi
 alias sl=ls
 zstyle ':vcs_info:git:*:-all-' command git
 alias ag="ag -a -S --color-match='30;31' --color-line-number='31;35' --color-path='31;34'"
+
+export ANDROID_HOME=/usr/local/opt/android-sdk
+
+res() {
+    screenresolution set $1x32@0
+}
