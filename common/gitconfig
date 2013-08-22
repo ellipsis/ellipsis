@@ -70,7 +70,7 @@
     autocrlf        = false
     excludesfile    = ~/.cvsignore
     whitespace      = trailing-space,space-before-tab
-    editor          = vim -u ~/.vimgitrc
+    editor          = git-editor
 
 [diff]
     mnemonicprefix  = true
