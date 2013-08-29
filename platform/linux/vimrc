@@ -3,6 +3,7 @@ filetype indent plugin on | syntax on
 
 let options = {
     \ 'addons': [
+        \ 'github:zeekay/vice-beautify',
         \ 'github:zeekay/vice-colorful',
         \ 'github:zeekay/vice-ctrlp',
         \ 'github:zeekay/vice-delimitmate',
