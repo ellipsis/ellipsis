@@ -5197,6 +5197,10 @@
 	<false/>
 	<key>MinimumContrast</key>
 	<real>0.0</real>
+	<key>NSFontPanelAttributes</key>
+	<string>1, 4</string>
+	<key>NSFontPanelPreviewHeight</key>
+	<real>0.0</real>
 	<key>NSNavLastRootDirectory</key>
 	<string>~/.ellipsis/platform/osx/iterm2</string>
 	<key>NSNavPanelExpandedSizeForOpenMode</key>
@@ -5220,18 +5224,20 @@
 	</dict>
 	<key>NSWindow Frame NSColorPanel</key>
 	<string>586 129 201 309 0 0 1680 1028 </string>
+	<key>NSWindow Frame NSFontPanel</key>
+	<string>1169 467 445 270 0 0 2560 1418 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>756 197 924 485 0 0 1680 1028 </string>
+	<string>756 119 924 485 0 0 1680 1028 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>2568 554 850 330 2560 540 1440 878 </string>
+	<string>1586 85 869 563 0 0 2560 1418 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>4 68 1676 960 0 0 1680 1028 </string>
+	<string>240 682 570 346 0 0 1680 1028 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>1085 366 895 615 0 0 2560 1418 </string>
+	<string>415 2 1025 874 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>67 185 1126 693 0 0 1440 878 </string>
+	<string>1058 109 985 932 0 0 2560 1418 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
-	<string>419 144 570 346 0 0 1680 1028 </string>
+	<string>167 85 570 346 0 0 2560 1418 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -5889,7 +5895,7 @@
 			<key>Prompt Before Closing 2</key>
 			<integer>0</integer>
 			<key>Right Option Key Sends</key>
-			<integer>0</integer>
+			<integer>2</integer>
 			<key>Rows</key>
 			<integer>20</integer>
 			<key>Screen</key>
@@ -6945,7 +6951,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2013-06-26T06:55:13Z</date>
+	<date>2013-09-02T20:05:30Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>

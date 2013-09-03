@@ -23,7 +23,7 @@
 	<key>description</key>
 	<string>Shortcut for TotalMix</string>
 	<key>disabled</key>
-	<false/>
+	<true/>
 	<key>name</key>
 	<string>Mixer</string>
 	<key>objects</key>
@@ -42,6 +42,8 @@
 			<string>alfred.workflow.action.launchfiles</string>
 			<key>uid</key>
 			<string>7207CF52-90AE-4F8E-A76D-29F892C2FC24</string>
+			<key>version</key>
+			<integer>0</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -61,6 +63,8 @@
 			<string>alfred.workflow.input.keyword</string>
 			<key>uid</key>
 			<string>19F6388D-7F91-4332-8D87-62F6DB695118</string>
+			<key>version</key>
+			<integer>0</integer>
 		</dict>
 	</array>
 	<key>readme</key>

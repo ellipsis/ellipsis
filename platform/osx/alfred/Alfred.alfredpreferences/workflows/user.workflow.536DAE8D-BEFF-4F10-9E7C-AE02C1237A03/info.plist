@@ -25,7 +25,7 @@
 	<key>description</key>
 	<string>Turns Airpot on/off</string>
 	<key>disabled</key>
-	<false/>
+	<true/>
 	<key>name</key>
 	<string>Toggler Wifi</string>
 	<key>objects</key>
