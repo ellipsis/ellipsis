@@ -3,3 +3,4 @@ common/ipython/profile_default/history.sqlite
 common/ipython/profile_default/startup/
 pip
 *.pyc
+platform/osx/alfred/Alfred.alfredpreferences/workflows/alfred-github-workflow
