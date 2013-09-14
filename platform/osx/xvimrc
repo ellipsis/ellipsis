@@ -9,6 +9,8 @@ set laststatus=2
 set guioptions=br
 set nonumber
 
+nmap ; :
 nmap J <c-d>
 nmap K <c-u>
-nmap ; :
+vmap J <c-d>
+vmap K <c-u>
