@@ -1,5 +1,6 @@
 from __future__ import print_function
-import os, sys
+import os
+import sys
 
 # version check
 version = 'pypy' if 'PyPy' in sys.version else 'py2' if sys.version_info[0] == 2 else 'py3'
@@ -14,7 +15,8 @@ if version != 'pypy':
             print('IPython not usable in non-standard Python shell.')
         else:
             ipython = True
-    except ImportError: pass
+    except ImportError:
+        pass
 
 # django check
 if os.path.isfile('settings.py') and os.path.isfile('manage.py'):
@@ -59,12 +61,16 @@ if ipython:
     if IPython.__version__ < '0.11':
         shell = IPython.Shell.IPShell(user_ns=user_ns)
         sys.exit(shell.mainloop())
-    else:
+    if IPython.__version__ < '1.0':
         from IPython.frontend.terminal.ipapp import TerminalIPythonApp
         app = TerminalIPythonApp.instance()
         app.initialize()
         app.shell.user_ns.update(user_ns)
         sys.exit(app.start())
+    if IPython.__version__ > '1.0':
+        del os.environ['PYTHONSTARTUP']
+        from IPython import start_ipython
+        sys.exit(start_ipython())
 else:
     if django:
         django_setup()
@@ -73,16 +79,18 @@ else:
     except ImportError:
         print("Module readline not available.")
     else:
-        import rlcompleter
         readline.parse_and_bind("tab: complete")
         histfile = os.path.join(os.environ["HOME"], ".python_history")
         try:
-            try: readline.read_history_file(histfile)
-            except IOError: pass
+            try:
+                readline.read_history_file(histfile)
+            except IOError:
+                pass
             import atexit
             atexit.register(readline.write_history_file, histfile)
             del atexit
-        except AttributeError: pass
+        except AttributeError:
+            pass
         del histfile
         del readline
 
