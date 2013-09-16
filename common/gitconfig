@@ -112,3 +112,5 @@
 [user]
     email           = zk@monoid.io
     name            = zeekay
+[credential]
+	helper = cache
