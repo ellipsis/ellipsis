@@ -1,0 +1,55 @@
+#!/bin/sh
+
+# Native notifications for remote irssi on OSX 10.8+.
+#
+# Requires:
+#   fnotify.pl (https://github.com/rndstr/fnotify/blob/master/fnotify.pl)
+#   terminal-notifier (https://github.com/alloy/terminal-notifier)
+#
+# Usage:
+#   Load fnotify.pl in irssi (`script load fnotify`). Run `irssi-notify
+#   install` to install this as a Launchagent. Specify remote host running
+#   irssi as well as ssh public key to use for connecting. irssi-notify will
+#   ssh run in the background, remotely `tail -f ~/.irssi/fnotify` for changes,
+#   displaying notifications with `terminal-notifier`.
+#
+# To launch agent:
+#   launchctl load -F ~/Library/LaunchAgents/io.monoid.irssi-notify.plist
+
+export PATH=/usr/local/bin:/usr/local/opt/ruby/bin:$PATH
+
+if [ "$1" == 'install' ]; then
+    echo Enter host to ssh to:
+    read host </dev/tty
+
+    echo Enter full path to identify file to use:
+    read ssh_key </dev/tty
+
+    cat << EOF > $HOME/Library/LaunchAgents/io.monoid.irssi-notify.plist
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>io.monoid.irssi-notify</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>`pwd`/irssi-notify</string>
+        <string>$host</string>
+        <string>$ssh_key</string>
+    </array>
+    <key>KeepAlive</key>
+    <true/>
+</dict>
+</plist>
+EOF
+    exit 0
+fi
+
+ssh "$1" -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "$2" 'tail -f ~/.irssi/fnotify' | while read source user time message; do
+    if [ "$source[1]" == "#" ]; then
+        terminal-notifier -sender org.zk.Irssi -title "$source/$user" -message "$message"
+    else
+        terminal-notifier -sender org.zk.irssi -title "$source" -message "$user $time $message"
+    fi
+done
