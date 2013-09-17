@@ -1,0 +1,9 @@
+#!/bin/sh
+
+ssh irssi -o ControlMaster=no 'tail -f ~/.irssi/fnotify' | while read source user time message; do
+    if [ "$source[1]" == "#" ]; then
+        terminal-notifier -title irssi -subtitle "mention in $source by $user" -message "$message";
+    else
+        terminal-notifier -title irssi -subtitle "message from $source" -message "$user $time $message";
+    fi
+done
