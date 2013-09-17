@@ -48,8 +48,8 @@ fi
 
 ssh "$1" -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "$2" 'tail -f ~/.irssi/fnotify' | while read source user time message; do
     if [ "$source[1]" == "#" ]; then
-        terminal-notifier -sender org.zk.Irssi -title "$source/$user" -message "$message"
+        echo $message | terminal-notifier -sender org.zk.Irssi -title "$source/$user"
     else
-        terminal-notifier -sender org.zk.irssi -title "$source" -message "$user $time $message"
+        echo $user $time $message | terminal-notifier -sender org.zk.Irssi -title "$source"
     fi
 done
