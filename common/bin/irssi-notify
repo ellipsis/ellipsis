@@ -1,5 +1,5 @@
 #!/bin/sh
-#
+
 # Native notifications for remote irssi on OSX 10.8+.
 #
 # Requires:
@@ -12,6 +12,9 @@
 #   irssi as well as ssh public key to use for connecting. irssi-notify will
 #   ssh run in the background, remotely `tail -f ~/.irssi/fnotify` for changes,
 #   displaying notifications with `terminal-notifier`.
+#
+# To launch agent:
+#   launchctl load -F ~/Library/LaunchAgents/io.monoid.irssi-notify.plist
 
 export PATH=/usr/local/bin:/usr/local/opt/ruby/bin:$PATH
 
@@ -40,12 +43,13 @@ if [ "$1" == 'install' ]; then
 </dict>
 </plist>
 EOF
-else
-    ssh "$1" -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "$2" 'tail -f ~/.irssi/fnotify' | while read source user time message; do
-        if [ "$source[1]" == "#" ]; then
-            terminal-notifier -title irssi -subtitle "mention in $source by $user" -message "$message"
-        else
-            terminal-notifier -title irssi -subtitle "message from $source" -message "$user $time $message"
-        fi
-    done
+    exit 0
 fi
+
+ssh "$1" -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "$2" 'tail -f ~/.irssi/fnotify' | while read source user time message; do
+    if [ "$source[1]" == "#" ]; then
+        terminal-notifier -sender org.zk.Irssi -title "$source/$user" -message "$message"
+    else
+        terminal-notifier -sender org.zk.irssi -title "$source" -message "$user $time $message"
+    fi
+done
