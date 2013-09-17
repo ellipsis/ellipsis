@@ -1,4 +1,17 @@
 #!/bin/sh
+#
+# Native notifications for remote irssi on OSX 10.8+.
+#
+# Requires:
+#   fnotify.pl (https://github.com/rndstr/fnotify/blob/master/fnotify.pl)
+#   terminal-notifier (https://github.com/alloy/terminal-notifier)
+#
+# Usage:
+#   Load fnotify.pl in irssi (`script load fnotify`). Run `irssi-notify
+#   install` to install this as a Launchagent. Specify remote host running
+#   irssi as well as ssh public key to use for connecting. irssi-notify will
+#   ssh run in the background, remotely `tail -f ~/.irssi/fnotify` for changes,
+#   displaying notifications with `terminal-notifier`.
 
 export PATH=/usr/local/bin:/usr/local/opt/ruby/bin:$PATH
 
