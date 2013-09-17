@@ -1,9 +1,38 @@
 #!/bin/sh
 
-ssh irssi -o ControlMaster=no 'tail -f ~/.irssi/fnotify' | while read source user time message; do
-    if [ "$source[1]" == "#" ]; then
-        terminal-notifier -title irssi -subtitle "mention in $source by $user" -message "$message";
-    else
-        terminal-notifier -title irssi -subtitle "message from $source" -message "$user $time $message";
-    fi
-done
+export PATH=/usr/local/bin:/usr/local/opt/ruby/bin:$PATH
+
+if [ "$1" == 'install' ]; then
+    echo Enter host to ssh to:
+    read host </dev/tty
+
+    echo Enter full path to identify file to use:
+    read ssh_key </dev/tty
+
+    cat << EOF > $HOME/Library/LaunchAgents/io.monoid.irssi-notify.plist
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>io.monoid.irssi-notify</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>`pwd`/irssi-notify</string>
+        <string>$host</string>
+        <string>$ssh_key</string>
+    </array>
+    <key>KeepAlive</key>
+    <true/>
+</dict>
+</plist>
+EOF
+else
+    ssh "$1" -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -i "$2" 'tail -f ~/.irssi/fnotify' | while read source user time message; do
+        if [ "$source[1]" == "#" ]; then
+            terminal-notifier -title irssi -subtitle "mention in $source by $user" -message "$message"
+        else
+            terminal-notifier -title irssi -subtitle "message from $source" -message "$user $time $message"
+        fi
+    done
+fi
