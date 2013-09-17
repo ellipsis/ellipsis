@@ -15,7 +15,12 @@
 #
 # To launch agent:
 #   launchctl load -F ~/Library/LaunchAgents/io.monoid.irssi-notify.plist
+#
+# Customize sender:
+#   Pass new identifier if you want notifications to come from something other
+#   than Terminal.
 
+# gems for homebrew ruby are going to weird places these days...
 export PATH=/usr/local/bin:/usr/local/opt/ruby/bin:$PATH
 
 if [ "$1" == 'install' ]; then
