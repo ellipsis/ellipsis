@@ -1,8 +1,7 @@
 term                screen-256color
-attrcolor           b ".I"
-defbce              "on"
+# attrcolor           b ".I"
+# defbce              "on"
 shelltitle          ''
-shell               zsh
 defscrollback       10000
 vbell               off
 startup_message     off
