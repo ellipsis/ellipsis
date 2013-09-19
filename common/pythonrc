@@ -19,8 +19,8 @@ if version != 'pypy':
         pass
 
 # django check
-if os.path.isfile('settings.py') and os.path.isfile('manage.py'):
-    django = True
+# if os.path.isfile('settings.py') and os.path.isfile('manage.py'):
+#     django = True
 
 def django_setup():
     import traceback
