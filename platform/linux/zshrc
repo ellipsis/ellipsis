@@ -21,6 +21,11 @@ export ZEESH_THEME_PROMPT_CHAR=
 alias utc='date -u'
 alias v=vim
 
+export PATH=~/.bin:~/.ellipsis/bin:$PATH
+compctl -k "(push pull status)" ellipsis
+
 if [ -e ~/.private/zsh ]; then
     source ~/.private/zsh
 fi
+
+alias sl=ls
