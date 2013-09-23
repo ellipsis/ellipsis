@@ -24,7 +24,3 @@ alias v=vim
 if [ -e ~/.private/zsh ]; then
     source ~/.private/zsh
 fi
-
-export NODE_PATH=/usr/lib/node_modules
-alias pmta='noglob pmta'
-export GIT=/usr/local/bin/git
