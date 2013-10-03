@@ -2,6 +2,7 @@
 
 status() {
     name=$(echo "${1##*/}" | sed 's/^\.//')
+    cd "$1"
 
     ahead=$(git status -sb --porcelain | grep --color=no -o '\[.*\]')
     has_changes=$(git status --untracked-files=no --porcelain 2> /dev/null | tail -n1)
@@ -14,17 +15,19 @@ status() {
 
 pull() {
     name=$(echo "${1##*/}" | sed 's/^\.//')
+    cd "$1"
+
     echo -e "\033[1mupdating $name\033[0m" | sed 's/\-e //'
 
-    cd "$1"
     git pull
 }
 
 push() {
     name=$(echo "${1##*/}" | sed 's/^\.//')
+    cd "$1"
+
     echo -e "\033[1mpushing $name\033[0m" | sed 's/\-e //'
 
-    cd "$1"
     git push
 }
 
