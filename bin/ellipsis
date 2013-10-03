@@ -29,7 +29,7 @@ push() {
 }
 
 _do() {
-    $1 $HOME/.ellipsis
+    eval ${1} $HOME/.ellipsis
 
     for module in $HOME/.ellipsis/modules/*; do
         if [ -e $module/.ellipsis-module/$1 ]; then
