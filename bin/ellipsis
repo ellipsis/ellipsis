@@ -1,41 +1,41 @@
 #!/bin/sh
 
 status() {
-    cd $1
-    ahead=`git status -sb --porcelain | grep --color=no -o '\[.*\]'`
-    has_changes=`git status --untracked-files=no --porcelain 2> /dev/null | tail -n1`
+    name=$(echo "${1##*/}" | sed 's/^\.//')
+
+    ahead=$(git status -sb --porcelain | grep --color=no -o '\[.*\]')
+    has_changes=$(git status --untracked-files=no --porcelain 2> /dev/null | tail -n1)
     [[ "$ahead" = "" ]] && [[ "$has_changes" = "" ]] && return
 
-    name=`basename $1 | sed 's/^\.//'`
-    echo -e "\033[1m$name\033[0m `git --no-pager log --pretty=format:'%h %ad' --abbrev-commit --date=relative -1` $ahead" | sed 's/\-e //'
+    echo -e "\033[1m$name\033[0m $(git --no-pager log --pretty=format:'%h %ad' --abbrev-commit --date=relative -1) $ahead" | sed 's/\-e //'
 
     git --no-pager diff --stat --color=always
 }
 
 pull() {
-    name=`basename $1 | sed 's/^\.//'`
+    name=$(echo "${1##*/}" | sed 's/^\.//')
     echo -e "\033[1mupdating $name\033[0m" | sed 's/\-e //'
 
-    cd $1
+    cd "$1"
     git pull
 }
 
 push() {
-    name=`basename $1 | sed 's/^\.//'`
+    name=$(echo "${1##*/}" | sed 's/^\.//')
     echo -e "\033[1mpushing $name\033[0m" | sed 's/\-e //'
 
-    cd $1
+    cd "$1"
     git push
 }
 
 _do() {
-    eval ${1} $HOME/.ellipsis
+    eval "${1}" $HOME/.ellipsis
 
     for module in $HOME/.ellipsis/modules/*; do
-        if [ -e $module/.ellipsis-module/$1 ]; then
+        if [ -e "$module/.ellipsis-module/$1" ]; then
             module_path=$module
-            module=`basename $module`
-            . $module_path/.ellipsis-module/$1
+            module=${module##*/}
+            . "$module_path/.ellipsis-module/$1"
         fi
     done
 }
@@ -51,6 +51,6 @@ case $1 in
         _do push
     ;;
     *)
-        echo Usage: ellipsis {push|pull|status}
+        echo "Usage: ellipsis {push|pull|status}"
     ;;
 esac
