@@ -1,15 +1,32 @@
 #!/bin/sh
 
+UNAME="$(uname | tr '[:upper:]' '[:lower:]')"
+
+install_deps() {
+    case "$(head -n 1 /etc/issue | tr '[:upper:]' '[:lower:]')" in
+        ubuntu*)
+            sudo apt-get update
+            sudo apt-get upgrade
+            sudo apt-get install -y git ruby python zsh
+            ;;
+        centos*)
+            sudo yum update
+            sudo yum upgrade
+            sudo yum install -y git ruby python zsh
+            ;;
+    esac
+}
+
 backup() {
     original="$1"
     backup="$original.bak"
-    name="`basename $original`"
+    name="${original##*/}"
 
     # check for broken symlinks
-    if [ "`find -L $original -maxdepth 0 -type l 2>/dev/null`" != "" ]; then
-        broken="`readlink $original`"
+    if [ "$(find -L "$original" -maxdepth 0 -type l 2>/dev/null)" != "" ]; then
+        broken=$(readlink "$original")
 
-        if [ "`echo $broken | grep .ellipsis`" != "" ]; then
+        if [ "$(echo "$broken" | grep .ellipsis)" != "" ]; then
             # silently remove old broken ellipsis symlinks
             rm "$original"
         else
@@ -23,7 +40,7 @@ backup() {
 
     if [ -e "$original" ]; then
         # remove, not backup old ellipsis symlinked files
-        if [ "`readlink $original | grep .ellipsis`" != "" ]; then
+        if [ "$(readlink "$original" | grep .ellipsis)" != "" ]; then
             rm "$original"
             return
         fi
@@ -46,16 +63,16 @@ git_clone() {
 }
 
 run_installer() {
-    curl -s "https://raw.github.com/zeekay/$1/master/scripts/install.sh" > $1-install-$$.sh
-    ELLIPSIS_INSTALL=1 sh $1-install-$$.sh
-    rm $1-install-$$.sh
+    curl -s "https://raw.github.com/zeekay/$1/master/scripts/install.sh" > "$1-install-$$.sh"
+    ELLIPSIS_INSTALL=1 sh "$1-install-$$.sh"
+    rm "$1-install-$$.sh"
 }
 
 link_files() {
-    for dotfile in `find "$1" -maxdepth 1 -name '*' ! -name '.*' | sort`; do
+    for dotfile in $(find "$1" -maxdepth 1 -name '*' ! -name '.*' | sort); do
 	# ignore containing directory
 	if [ "$1" != "$dotfile" ]; then
-		name="`basename $dotfile`"
+		name="${dotfile##*/}"
 		dest="$HOME/.$name"
 
 		backup "$dest"
@@ -67,7 +84,7 @@ link_files() {
 }
 
 link_file() {
-    name="`basename $1`"
+	name="${dotfile##*/}"
 
     if [ -z "$2" ]; then
         dest="$HOME/.$name"
@@ -81,26 +98,28 @@ link_file() {
     ln -s "$1" "$dest"
 }
 
-backup $HOME/.ellipsis
+
+backup "$HOME/.ellipsis"
 git_clone "https://github.com/zeekay/ellipsis" "$HOME/.ellipsis"
 
 trap "exit 0" SIGINT
 
 link_files "$HOME/.ellipsis/common"
 
-case `uname | tr '[:upper:]' '[:lower:]'` in
+case "$UNAME" in
     darwin)
         link_files "$HOME/.ellipsis/platform/osx"
-    ;;
+        ;;
     freebsd)
         link_files "$HOME/.ellipsis/platform/freebsd"
-    ;;
+        ;;
     linux)
+        install_deps
         link_files "$HOME/.ellipsis/platform/linux"
-    ;;
+        ;;
     cygwin*)
         link_files "$HOME/.ellipsis/platform/cygwin"
-    ;;
+        ;;
 esac
 
 echo
@@ -121,16 +140,16 @@ for module in $modules; do
 
     case $module in
         github:*)
-            user=`echo $module cut -d ':' -f 2 | cut -d '/' -f 1`
-            module=`echo $module cut -d ':' -f 2 | cut -d '/' -f 2`
-            module_path=$HOME/.ellipsis/modules/$module
-            git_clone "https://github.com/$user/$module" $module_path
+            user=$(echo "$module" | cut -d ':' -f 2 | cut -d '/' -f 1)
+            module=$(echo "$module" | cut -d ':' -f 2 | cut -d '/' -f 2)
+            module_path="$HOME/.ellipsis/modules/$module"
+            git_clone "https://github.com/$user/$module" "$module_path"
         ;;
         *)
-            module_path=$HOME/.ellipsis/modules/$module
-            git_clone "https://github.com/zeekay/dot-$module" $module_path
+            module_path="$HOME/.ellipsis/modules/$module"
+            git_clone "https://github.com/zeekay/dot-$module" "$module_path"
         ;;
     esac
 
-    . $module_path/.ellipsis-module/install
+    . "$module_path/.ellipsis-module/install"
 done

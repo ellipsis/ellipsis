@@ -7,7 +7,6 @@ zeesh_plugins=(
     python
     django
     virtualenv
-    clojure
     haskell
     mercurial
     git
