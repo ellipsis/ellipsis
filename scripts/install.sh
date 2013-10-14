@@ -10,8 +10,7 @@ install_deps() {
             sudo apt-get install -y git ruby python zsh
             ;;
         centos*)
-            sudo yum update
-            sudo yum upgrade
+            sudo yum update -y
             sudo yum install -y git ruby python zsh
             ;;
     esac
