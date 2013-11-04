@@ -18,6 +18,7 @@ let options = {
         \ 'github:zeekay/vice-undo',
         \ 'github:zeekay/vim-cake',
         \ 'github:nathanaelkane/vim-indent-guides',
+        \ 'github:terryma/vim-multiple-cursors',
     \ ],
     \ 'ft_addons': {
     \ },
@@ -81,6 +82,7 @@ hi link coffeeObjAssign Statement
 " au FileType * nnoremap <buffer><leader>t :!cake test<cr>
 au FileType haskell nnoremap <buffer> <F1> :HdevtoolsType<CR>
 au FileType haskell nnoremap <buffer> <silent> <F2> :HdevtoolsClear<CR>
+au FileType coffee nnoremap <leader>r :CoffeeRun<cr><c-w>w
 
 function! AddSubtract(char, back)
   let pattern = &nrformats =~ 'alpha' ? '[[:alpha:][:digit:]]' : '[[:digit:]]'
@@ -121,3 +123,5 @@ au FileType stylus call s:BebopReload()
 "     \ ['darkred',     'DarkOrchid3'],
 "     \ ['red',         'firebrick3'],
 "     \ ]
+
+color dracula
