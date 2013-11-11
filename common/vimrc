@@ -124,4 +124,4 @@ au FileType stylus call s:BebopReload()
 "     \ ['red',         'firebrick3'],
 "     \ ]
 
-color dracula
+hi Normal ctermfg=254

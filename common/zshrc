@@ -1,9 +1,8 @@
 zeesh_plugins=(
-    upstart
+    osx
     autocomplete
     vi-mode
     vi-visual-mode
-    osx
     python
     django
     virtualenv
@@ -14,6 +13,7 @@ zeesh_plugins=(
     syntax-highlighting
     history-substring-search
     theme
+    upstart
 )
 source ~/.zsh/zeesh.zsh
 
@@ -37,3 +37,4 @@ fi
 
 alias sl=ls
 zstyle ':vcs_info:git:*:-all-' command git
+alias clj='lein repl'
