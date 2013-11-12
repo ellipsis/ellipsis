@@ -35,28 +35,6 @@ endif
 let &rtp.=','.expand('~/.vim/addons/vice')
 call vice#Initialize(options)
 
-nnoremap ; :
-vnoremap ; :
-
-" Prevent cursor from moving when leavng insert mode
-inoremap <Esc> <Esc>`^
-
-map <leader>q :q<cr>
-nnoremap J <c-d>
-nnoremap K <c-u>
-vnoremap J <c-d>
-vnoremap K <c-u>
-nnoremap Q ZQ
-inoremap <c-u> <c-o>dd
-nnoremap <F1> :ColorNext<cr>
-nnoremap <F2> :ColorPrev<cr>
-
-cabbrev ack <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Ack' : 'ack')<CR>
-cabbrev shell <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShell' : 'shell')<CR>
-cabbrev shelli <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShellInteractive' : 'shell')<CR>
-
-au FileType javascript command! Uglify silent! :%!uglifyjs
-
 let g:indent_guides_guide_size = 1
 let g:indent_guides_start_level = 2
 
@@ -64,64 +42,52 @@ if has('gui_running')
     color minimal
     hi Normal guifg=#fcffe0 guibg=#3b3933
 else
+    set nolazyredraw
+    set ttyfast
+
     " color Tomorrow-Night-Eighties
     color hybrid
+    hi Normal ctermbg=234 ctermfg=254
 
     let g:indent_guides_auto_colors = 0
     hi IndentGuidesOdd  ctermbg=236
     hi IndentGuidesEven ctermbg=236
-    hi Normal ctermbg=235
-    set nolazyredraw
-    set ttyfast
 endif
 
 hi link coffeeFunction Function
 hi link coffeeMethod Function
 hi link coffeeObjAssign Statement
 
-" au FileType * nnoremap <buffer><leader>t :!cake test<cr>
-au FileType haskell nnoremap <buffer> <F1> :HdevtoolsType<CR>
-au FileType haskell nnoremap <buffer> <silent> <F2> :HdevtoolsClear<CR>
-au FileType coffee nnoremap <leader>r :CoffeeRun<cr><c-w>w
+" abbreviations
+cabbrev ack <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Ack' : 'ack')<CR>
+cabbrev shell <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShell' : 'shell')<CR>
+cabbrev shelli <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'VimShellInteractive' : 'shell')<CR>
 
-function! AddSubtract(char, back)
-  let pattern = &nrformats =~ 'alpha' ? '[[:alpha:][:digit:]]' : '[[:digit:]]'
-  call search(pattern, 'cw' . a:back)
-  execute 'normal! ' . v:count1 . a:char
-  silent! call repeat#set(":\<C-u>call AddSubtract('" .a:char. "', '" .a:back. "')\<CR>")
-  execute 'w'
-endfunction
+" mappings
+nnoremap ; :
+vnoremap ; :
 
+" prevent cursor from moving when leaving insert mode
+inoremap <Esc> <Esc>`^
+
+map <leader>q :q<cr>
+nnoremap Q ZQ
+inoremap <c-u> <c-o>dd
+nnoremap <F1> :ColorNext<cr>
+nnoremap <F2> :ColorPrev<cr>
+
+" filetype specific mappings
 func! s:BebopReload()
-    nnoremap <silent> <C-a> :<C-u>call AddSubtract("\<C-a>", '')<CR>
-    nnoremap <silent> <C-x> :<C-u>call AddSubtract("\<C-x>", '')<CR>
     au InsertLeave * :w!
 endf
 
 au FileType stylus call s:BebopReload()
 
-" au VimEnter * RainbowParenthesesToggle
-" au Syntax * RainbowParenthesesLoadRound
-" au Syntax * RainbowParenthesesLoadSquare
-" au Syntax * RainbowParenthesesLoadBraces
+au FileType haskell nnoremap <buffer> <F1> :HdevtoolsType<CR>
+au FileType haskell nnoremap <buffer> <silent> <F2> :HdevtoolsClear<CR>
 
-" let g:rbpt_colorpairs = [
-"     \ ['brown',       'RoyalBlue3'],
-"     \ ['Darkblue',    'SeaGreen3'],
-"     \ ['darkgray',    'DarkOrchid3'],
-"     \ ['darkgreen',   'firebrick3'],
-"     \ ['darkcyan',    'RoyalBlue3'],
-"     \ ['darkred',     'SeaGreen3'],
-"     \ ['darkmagenta', 'DarkOrchid3'],
-"     \ ['brown',       'firebrick3'],
-"     \ ['gray',        'RoyalBlue3'],
-"     \ ['black',       'SeaGreen3'],
-"     \ ['darkmagenta', 'DarkOrchid3'],
-"     \ ['Darkblue',    'firebrick3'],
-"     \ ['darkgreen',   'RoyalBlue3'],
-"     \ ['darkcyan',    'SeaGreen3'],
-"     \ ['darkred',     'DarkOrchid3'],
-"     \ ['red',         'firebrick3'],
-"     \ ]
+au FileType javascript command! Uglify silent! :%!uglifyjs
 
-hi Normal ctermfg=254
+au FileType coffee nnoremap <leader>r :CoffeeRun<cr><c-w>w
+au FileType coffee nnoremap <leader>c :CoffeeCompile vert<cr>
+au FileType coffee nnoremap <leader>t :!cake test<cr>

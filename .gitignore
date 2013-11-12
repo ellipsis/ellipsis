@@ -5,3 +5,4 @@ common/ipython/profile_default/db/
 pip
 *.pyc
 platform/osx/alfred/Alfred.alfredpreferences/workflows/alfred-github-workflow
+common/matplotlib/fontList.cache

@@ -25,7 +25,7 @@
 	<key>CloseBookmarksWindowAfterOpening</key>
 	<true/>
 	<key>ClosingHotkeySwitchesSpaces</key>
-	<true/>
+	<false/>
 	<key>ColorInvertedCursor</key>
 	<true/>
 	<key>CommandSelection</key>
@@ -3948,7 +3948,7 @@
 	<key>NSScrollAnimationEnabled</key>
 	<false/>
 	<key>NSWindow Frame Preferences</key>
-	<string>266 71 924 485 0 0 1440 878 </string>
+	<string>1123 465 924 485 0 0 2560 1418 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
 	<string>0 1062 2560 356 0 0 2560 1418 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
@@ -4196,7 +4196,7 @@
 			<key>Guid</key>
 			<string>E90E04DF-C1A6-4DED-9242-81DF6973364C</string>
 			<key>Hide After Opening</key>
-			<true/>
+			<false/>
 			<key>Horizontal Spacing</key>
 			<real>1</real>
 			<key>Idle Code</key>
@@ -4883,7 +4883,7 @@
 	<key>UseCompactLabel</key>
 	<true/>
 	<key>UseLionStyleFullscreen</key>
-	<false/>
+	<true/>
 	<key>WebKitDefaultFontSize</key>
 	<integer>11</integer>
 	<key>WebKitStandardFont</key>
