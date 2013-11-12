@@ -47,7 +47,7 @@ else
 
     " color Tomorrow-Night-Eighties
     color hybrid
-    hi Normal ctermbg=234 ctermfg=254
+    hi Normal ctermbg=235 ctermfg=254
 
     let g:indent_guides_auto_colors = 0
     hi IndentGuidesOdd  ctermbg=236
@@ -72,6 +72,10 @@ inoremap <Esc> <Esc>`^
 
 map <leader>q :q<cr>
 nnoremap Q ZQ
+nnoremap J <c-d>
+nnoremap K <c-u>
+vnoremap J <c-d>
+vnoremap K <c-u>
 inoremap <c-u> <c-o>dd
 nnoremap <F1> :ColorNext<cr>
 nnoremap <F2> :ColorPrev<cr>
