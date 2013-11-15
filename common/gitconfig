@@ -114,3 +114,5 @@
     name            = zeekay
 [credential]
 	helper = cache
+[hub]
+	protocol = https
