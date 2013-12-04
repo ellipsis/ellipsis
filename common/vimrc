@@ -8,8 +8,8 @@ let options = {
         \ 'github:zeekay/vice-ctrlp',
         \ 'github:zeekay/vice-delimitmate',
         \ 'github:zeekay/vice-git',
-        \ 'github:zeekay/vice-neocompletion',
         \ 'github:zeekay/vice-nerdtree',
+        \ 'github:zeekay/vice-neocompletion',
         \ 'github:zeekay/vice-polyglot',
         \ 'github:zeekay/vice-powerline',
         \ 'github:zeekay/vice-standard-issue',
@@ -20,16 +20,16 @@ let options = {
         \ 'github:nathanaelkane/vim-indent-guides',
         \ 'github:terryma/vim-multiple-cursors',
     \ ],
-    \ 'ft_addons': {
-    \ },
     \ 'commands': {
         \ 'Sum': ['github:zeekay/visSum.vim'],
-    \ },
-    \ 'neocompletion': {'enable_necoghc': 1, 'enable_clang_complete': 1},
+    \ }
 \ }
 
 if has('mac') && version > 702
-   let options.addons += ['github:Shougo/vimproc', 'github:Shougo/vimshell']
+    let options.addons += ['github:Shougo/vimproc', 'github:Shougo/vimshell']
+    let options.neocompletion = {
+        \ 'enable_tern': 1
+    \ }
 endif
 
 let &rtp.=','.expand('~/.vim/addons/vice')
