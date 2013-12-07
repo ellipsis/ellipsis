@@ -1,6 +1,15 @@
 #!/usr/bin/env node
+path = require('path');
 
 // Treat first argument to cake as task name, push it to the end so cake agrees
 if (process.argv[2] && process.argv[2].charAt(0) !== '-') process.argv.push(process.argv.splice(2, 1)[0])
 
-require('coffee-script/lib/coffee-script/cake').run();
+var cakeModule = 'coffee-script/lib/coffee-script/cake';
+
+try {
+    require.resolve(cakeModule);
+} catch (err) {
+    cakeModule = path.join('/usr/local/lib/node_modules', cakeModule)
+}
+
+require(cakeModule).run();
