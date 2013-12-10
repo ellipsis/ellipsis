@@ -121,17 +121,21 @@ case "$UNAME" in
         ;;
 esac
 
-echo
-echo "Available modules: "
-curl --silent https://api.github.com/users/zeekay/repos \
-    | grep '"name":' \
-    | cut -d '"' -f 4 \
-    | grep dot- \
-    | sed -e 's/dot-//'
+if [ -z "$MODULES" ]; then
+    echo
+    echo "Available modules: "
+    curl --silent https://api.github.com/users/zeekay/repos \
+        | grep '"name":' \
+        | cut -d '"' -f 4 \
+        | grep dot- \
+        | sed -e 's/dot-//'
 
-echo
-echo "List modules to install (by name or 'github:repo/user') or enter to exit"
-read modules </dev/tty
+    echo
+    echo "List modules to install (by name or 'github:repo/user') or enter to exit"
+    read modules </dev/tty
+else
+    modules="$MODULES"
+fi
 
 mkdir -p "$HOME/.ellipsis/modules"
 for module in $modules; do
