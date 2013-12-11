@@ -12,4 +12,13 @@ try {
     cakeModule = path.join('/usr/local/lib/node_modules', cakeModule)
 }
 
-require(cakeModule).run();
+try {
+    require(cakeModule).run();
+} catch (err) {
+  if (/Cakefile not found in/.test(err.message))
+    console.log(err.message)
+  else
+    throw err
+}
+
+// vim: ft=javascript:
