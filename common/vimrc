@@ -95,3 +95,6 @@ au FileType javascript command! Uglify silent! :%!uglifyjs
 au FileType coffee nnoremap <leader>r :CoffeeRun<cr><c-w>w
 au FileType coffee nnoremap <leader>c :CoffeeCompile vert<cr>
 au FileType coffee nnoremap <leader>t :!cake test<cr>
+
+cabbrev su SudoWrite
+cabbrev sudo SudoWrite
