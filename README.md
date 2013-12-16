@@ -20,10 +20,8 @@ with your dotfiles.
 
 - `ellipsis status`
     - Get current commit of every dotfile module.
-
 - `ellipsis update`
     - Update each dotfile module.
-
 - `ellipsis push`
     - Push updates to all dotfile modules back to github.
 
