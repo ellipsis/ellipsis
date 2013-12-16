@@ -6,11 +6,9 @@ install_deps() {
     case "$(head -n 1 /etc/issue | tr '[:upper:]' '[:lower:]')" in
         ubuntu*)
             sudo apt-get update
-            sudo apt-get upgrade
             sudo apt-get install -y git ruby python zsh
             ;;
         centos*)
-            sudo yum update -y
             sudo yum install -y git ruby python zsh
             ;;
     esac
