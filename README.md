@@ -1,11 +1,11 @@
-# …
+## …
      _    _    _
     /\_\ /\_\ /\_\
     \/_/ \/_/ \/_/
 
 A framework for managing dotfiles.
 
-## Install
+### Install
 Clone and symlink or use handy-dandy installer:
 
     curl https://raw.github.com/zeekay/ellipsis/master/scripts/install.sh | sh
@@ -14,18 +14,18 @@ You can specify which modules to install by setting `MODULES` variable, i.e.:
 
     curl https://raw.github.com/zeekay/ellipsis/master/scripts/install.sh | MODULES='vim zsh' sh
 
-## Usage
+### Usage
 The `ellipsis` executable provides a number of useful commands for interacting
 with your dotfiles.
 
-#### `ellipsis status`
-Get current commit of every dotfile module.
+- `ellipsis status`
+    - Get current commit of every dotfile module.
 
-#### `ellipsis update`
-Update each dotfile module.
+- `ellipsis update`
+    - Update each dotfile module.
 
-#### `ellipsis push`
-Push updates to all dotfile modules back to github.
+- `ellipsis push`
+    - Push updates to all dotfile modules back to github.
 
 ## Configuration
 You can fork this repository and customize or use modules to extend your
