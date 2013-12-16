@@ -25,16 +25,16 @@ with your dotfiles.
 - `ellipsis push`
     - Push updates to all dotfile modules back to github.
 
-## Configuration
+### Configuration
 You can fork this repository and customize or use modules to extend your
 ellipsis installation. You can list additional modules, i.e.:
 `github:user/repo github:user/repo2`, etc.
 
-## Modules
+### Modules
 A module is any github repo which has a `.ellipsis` dir in the root.
 Hooks are just shell scripts which customize how the module behaves.
 
-### Available hooks
+#### Available hooks
 - `.ellipsis/install`
     - Controls how module is installed, what files are symlinked into `$HOME`.
 - `.ellipsis/push`
