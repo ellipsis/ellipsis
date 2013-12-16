@@ -124,14 +124,14 @@ esac
 if [ -z "$MODULES" ]; then
     echo
     echo "Available modules: "
-    curl --silent https://api.github.com/users/zeekay/repos \
-        | grep '"name":' \
-        | cut -d '"' -f 4 \
-        | grep dot- \
-        | sed -e 's/dot-//'
+    echo "    emacs"
+    echo "    irssi"
+    echo "    vim"
+    echo "    xmonad"
+    echo "    zsh"
 
     echo
-    echo "List modules to install (by name or 'github:repo/user') or enter to exit"
+    echo "List modules to install (by name or 'github:repo/user') or enter to exit:"
     read modules </dev/tty
 else
     modules="$MODULES"
@@ -154,5 +154,5 @@ for module in $modules; do
         ;;
     esac
 
-    . "$module_path/.ellipsis-module/install"
+    . "$module_path/.ellipsis/install"
 done

@@ -35,10 +35,10 @@ _do() {
     eval "${1}" $HOME/.ellipsis
 
     for module in $HOME/.ellipsis/modules/*; do
-        if [ -e "$module/.ellipsis-module/$1" ]; then
+        if [ -e "$module/.ellipsis/$1" ]; then
             module_path=$module
             module=${module##*/}
-            . "$module_path/.ellipsis-module/$1"
+            . "$module_path/.ellipsis/$1"
         fi
     done
 }
