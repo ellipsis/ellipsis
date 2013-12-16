@@ -82,22 +82,6 @@ link_files() {
     done
 }
 
-link_file() {
-	name="${dotfile##*/}"
-
-    if [ -z "$2" ]; then
-        dest="$HOME/.$name"
-    else
-        dest="$2"
-    fi
-
-    backup "$dest"
-
-	echo linking "$dest"
-    ln -s "$1" "$dest"
-}
-
-
 backup "$HOME/.ellipsis"
 git_clone "https://github.com/zeekay/ellipsis" "$HOME/.ellipsis"
 
