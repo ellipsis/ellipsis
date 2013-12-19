@@ -13,6 +13,12 @@ try {
 }
 
 try {
+    require.resolve(cakeModule);
+} catch (err) {
+    cakeModule = cakeModule.replace('/usr/local/lib', '/usr/lib')
+}
+
+try {
     require(cakeModule).run();
 } catch (err) {
   if (/Cakefile not found in/.test(err.message))
