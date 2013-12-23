@@ -1,6 +1,5 @@
 zeesh_plugins=(
     osx
-    autocomplete
     vi-mode
     vi-visual-mode
     python
@@ -14,6 +13,7 @@ zeesh_plugins=(
     history-substring-search
     theme
     upstart
+    autocomplete
 )
 source ~/.zsh/zeesh.zsh
 

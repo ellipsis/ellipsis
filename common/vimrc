@@ -80,21 +80,5 @@ inoremap <c-u> <c-o>dd
 nnoremap <F1> :ColorNext<cr>
 nnoremap <F2> :ColorPrev<cr>
 
-" filetype specific mappings
-func! s:BebopReload()
-    au InsertLeave * :w!
-endf
-
-au FileType stylus call s:BebopReload()
-
-au FileType haskell nnoremap <buffer> <F1> :HdevtoolsType<CR>
-au FileType haskell nnoremap <buffer> <silent> <F2> :HdevtoolsClear<CR>
-
-au FileType javascript command! Uglify silent! :%!uglifyjs
-
-au FileType coffee nnoremap <leader>r :CoffeeRun<cr><c-w>w
-au FileType coffee nnoremap <leader>c :CoffeeCompile vert<cr>
-au FileType coffee nnoremap <leader>t :!cake test<cr>
-
 cabbrev su SudoWrite
 cabbrev sudo SudoWrite

@@ -4,6 +4,15 @@
 <dict>
 	<key>hideStore</key>
 	<true/>
+	<key>hotkey</key>
+	<dict>
+		<key>key</key>
+		<integer>36</integer>
+		<key>mod</key>
+		<integer>1310720</integer>
+		<key>string</key>
+		<string>↩</string>
+	</dict>
 	<key>showPlaylists</key>
 	<false/>
 </dict>
