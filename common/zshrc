@@ -90,3 +90,4 @@ elif type compctl &>/dev/null; then
   compctl -K _npm_completion npm
 fi
 ###-end-npm-completion-###
+zstyle ':vcs_info:git:*:-all-' command /usr/local/bin/git
