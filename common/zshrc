@@ -35,7 +35,6 @@ if [ -e ~/.private/zsh ]; then
 fi
 
 alias sl=ls
-zstyle ':vcs_info:git:*:-all-' command git
 alias clj='lein repl'
 ###-begin-npm-completion-###
 #
@@ -90,4 +89,5 @@ elif type compctl &>/dev/null; then
   compctl -K _npm_completion npm
 fi
 ###-end-npm-completion-###
+
 zstyle ':vcs_info:git:*:-all-' command /usr/local/bin/git
