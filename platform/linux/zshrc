@@ -1,7 +1,5 @@
 zeesh_plugins=(
-    autocomplete
     vi-mode
-    vi-visual-mode
     linux
     git
     python
@@ -10,6 +8,7 @@ zeesh_plugins=(
     syntax-highlighting
     history-substring-search
     theme
+    autocomplete
 )
 source ~/.zsh/zeesh.zsh
 
@@ -21,11 +20,13 @@ export ZEESH_THEME_PROMPT_CHAR=
 alias utc='date -u'
 alias v=vim
 
-export PATH=~/.bin:~/.ellipsis/bin:$PATH
-compctl -k "(push pull status)" ellipsis
-
 if [ -e ~/.private/zsh ]; then
     source ~/.private/zsh
 fi
 
+export NODE_PATH=/usr/lib/node_modules
+export PATH=~/.ellipsis/bin:$PATH
+compctl -k "(push pull status)" ellipsis
 alias sl=ls
+alias clj='lein repl'
+zstyle ':vcs_info:git:*:-all-' command /usr/bin/git

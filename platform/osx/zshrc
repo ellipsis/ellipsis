@@ -36,6 +36,7 @@ fi
 
 alias sl=ls
 alias clj='lein repl'
+
 ###-begin-npm-completion-###
 #
 # npm command completion script
