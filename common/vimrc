@@ -22,6 +22,9 @@ let options = {
     \ ],
     \ 'commands': {
         \ 'Sum': ['github:zeekay/visSum.vim'],
+    \ },
+    \ 'standard_issue': {
+        \ 'transparency': 1
     \ }
 \ }
 
@@ -39,8 +42,10 @@ let g:indent_guides_guide_size = 1
 let g:indent_guides_start_level = 2
 
 if has('gui_running')
-    color minimal
-    hi Normal guifg=#fcffe0 guibg=#3b3933
+    color base16-mocha
+    set background=dark
+    " color minimal
+    " hi Normal guifg=#fcffe0 guibg=#3b3933
 else
     set nolazyredraw
     set ttyfast
