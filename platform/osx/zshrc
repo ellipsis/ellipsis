@@ -92,3 +92,5 @@ fi
 ###-end-npm-completion-###
 
 zstyle ':vcs_info:git:*:-all-' command /usr/local/bin/git
+export PATH=$PATH:/usr/local/Cellar/go/1.2/libexec/bin
+export GOPATH=$HOME/.go
