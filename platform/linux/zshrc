@@ -29,4 +29,3 @@ export PATH=~/.ellipsis/bin:$PATH
 compctl -k "(push pull status)" ellipsis
 alias sl=ls
 alias clj='lein repl'
-zstyle ':vcs_info:git:*:-all-' command /usr/bin/git
