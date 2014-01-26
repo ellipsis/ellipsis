@@ -31,7 +31,7 @@ let options = {
 if has('mac') && version > 702
     let options.addons += ['github:Shougo/vimproc', 'github:Shougo/vimshell']
     let options.neocompletion = {
-        \ 'enable_tern': 1
+        \ 'enable_tern': 0
     \ }
 endif
 
