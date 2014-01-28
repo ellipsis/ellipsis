@@ -3967,9 +3967,9 @@
 	<key>NSTableView Sort Ordering KeyBingingTable</key>
 	<array/>
 	<key>NSWindow Frame Preferences</key>
-	<string>51 914 924 485 0 0 2560 1418 </string>
+	<string>335 158 924 485 0 0 2560 1418 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 1062 2560 356 0 0 2560 1418 </string>
+	<string>0 672 1680 356 0 0 1680 1028 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>398 167 570 451 0 0 2560 1418 </string>
 	<key>New Bookmarks</key>
@@ -4777,7 +4777,7 @@
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
 			<key>Transparency</key>
-			<real>0.062770597636699677</real>
+			<real>0.042</real>
 			<key>Triggers</key>
 			<array/>
 			<key>Unlimited Scrollback</key>
@@ -4923,6 +4923,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>1.0.0.20131124</string>
+	<string>1.0.0.20140112</string>
 </dict>
 </plist>

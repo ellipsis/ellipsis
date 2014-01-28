@@ -5200,7 +5200,7 @@
 	<key>MinimumContrast</key>
 	<real>0.0</real>
 	<key>NSNavLastRootDirectory</key>
-	<string>~/.ellipsis/platform/osx/iterm2</string>
+	<string>~</string>
 	<key>NSQuotedKeystrokeBinding</key>
 	<string></string>
 	<key>NSRepeatCountBinding</key>
@@ -5225,21 +5225,33 @@
 	<key>NSTableView Sort Ordering KeyBingingTable</key>
 	<array/>
 	<key>NSWindow Frame Preferences</key>
-	<string>983 510 605 485 0 0 2560 1418 </string>
+	<string>161 886 924 485 0 0 2560 1418 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>902 413 966 872 0 0 2560 1418 </string>
+	<string>612 831 570 346 0 0 2560 1418 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>17 92 766 714 0 0 1440 878 </string>
+	<string>822 195 1667 1223 0 0 2560 1418 </string>
+	<key>NSWindow Frame iTerm Window 10</key>
+	<string>1049 71 570 346 0 0 1680 1028 </string>
+	<key>NSWindow Frame iTerm Window 11</key>
+	<string>362 436 570 346 0 0 1680 1028 </string>
+	<key>NSWindow Frame iTerm Window 12</key>
+	<string>817 289 570 346 0 0 1680 1028 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>127 68 852 421 0 0 2560 1418 </string>
+	<string>5 570 1188 452 0 0 1680 1028 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>65 955 570 346 0 0 2560 1418 </string>
+	<string>20 57 1059 959 0 0 1680 1028 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
-	<string>135 427 570 346 0 0 1440 878 </string>
+	<string>384 404 967 594 0 0 1680 1028 </string>
 	<key>NSWindow Frame iTerm Window 5</key>
-	<string>582 315 570 346 0 0 1440 878 </string>
+	<string>187 678 570 346 0 0 1680 1028 </string>
 	<key>NSWindow Frame iTerm Window 6</key>
-	<string>395 200 620 327 0 0 1440 878 </string>
+	<string>24 583 877 429 0 0 1680 1028 </string>
+	<key>NSWindow Frame iTerm Window 7</key>
+	<string>796 246 570 346 0 0 1680 1028 </string>
+	<key>NSWindow Frame iTerm Window 8</key>
+	<string>770 21 570 346 0 0 1680 1028 </string>
+	<key>NSWindow Frame iTerm Window 9</key>
+	<string>655 355 570 346 0 0 1680 1028 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -6043,7 +6055,7 @@
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
 			<key>Transparency</key>
-			<real>0.070882067084312439</real>
+			<real>0.041999999433755875</real>
 			<key>Triggers</key>
 			<array/>
 			<key>Unlimited Scrollback</key>
@@ -6955,7 +6967,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2013-12-04T09:31:33Z</date>
+	<date>2014-01-27T04:58:01Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>
@@ -7005,6 +7017,6 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>1.0.0.20131124</string>
+	<string>1.0.0.20140112</string>
 </dict>
 </plist>
