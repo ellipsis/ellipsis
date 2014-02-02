@@ -5224,12 +5224,14 @@
 	<array/>
 	<key>NSTableView Sort Ordering KeyBingingTable</key>
 	<array/>
+	<key>NSWindow Frame NSColorPanel</key>
+	<string>367 192 201 309 0 0 1440 878 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>161 886 924 485 0 0 2560 1418 </string>
+	<string>74 366 924 485 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>612 831 570 346 0 0 2560 1418 </string>
+	<string>536 306 894 474 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>822 195 1667 1223 0 0 2560 1418 </string>
+	<string>579 14 843 426 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 10</key>
 	<string>1049 71 570 346 0 0 1680 1028 </string>
 	<key>NSWindow Frame iTerm Window 11</key>
@@ -5237,15 +5239,15 @@
 	<key>NSWindow Frame iTerm Window 12</key>
 	<string>817 289 570 346 0 0 1680 1028 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
-	<string>5 570 1188 452 0 0 1680 1028 </string>
+	<string>46 295 986 583 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 3</key>
-	<string>20 57 1059 959 0 0 1680 1028 </string>
+	<string>732 4 570 346 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 4</key>
-	<string>384 404 967 594 0 0 1680 1028 </string>
+	<string>546 190 891 668 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 5</key>
-	<string>187 678 570 346 0 0 1680 1028 </string>
+	<string>146 529 570 346 0 0 1440 878 </string>
 	<key>NSWindow Frame iTerm Window 6</key>
-	<string>24 583 877 429 0 0 1680 1028 </string>
+	<string>2079 493 570 346 0 0 2560 1418 </string>
 	<key>NSWindow Frame iTerm Window 7</key>
 	<string>796 246 570 346 0 0 1680 1028 </string>
 	<key>NSWindow Frame iTerm Window 8</key>
@@ -5412,11 +5414,11 @@
 			<key>Background Color</key>
 			<dict>
 				<key>Blue Component</key>
-				<real>0.080599546432495117</real>
+				<real>0.0539093017578125</real>
 				<key>Green Component</key>
-				<real>0.080599546432495117</real>
+				<real>0.0539093017578125</real>
 				<key>Red Component</key>
-				<real>0.080599546432495117</real>
+				<real>0.0539093017578125</real>
 			</dict>
 			<key>Background Image Is Tiled</key>
 			<false/>
@@ -5431,7 +5433,7 @@
 			<key>Blur</key>
 			<true/>
 			<key>Blur Radius</key>
-			<real>7.3118429183959961</real>
+			<real>15</real>
 			<key>Bold Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -6055,7 +6057,7 @@
 			<key>Terminal Type</key>
 			<string>xterm-256color</string>
 			<key>Transparency</key>
-			<real>0.041999999433755875</real>
+			<real>0.047138497233390808</real>
 			<key>Triggers</key>
 			<array/>
 			<key>Unlimited Scrollback</key>
@@ -6967,7 +6969,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2014-01-27T04:58:01Z</date>
+	<date>2014-01-31T02:40:43Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Show Toolbelt</key>

@@ -76,6 +76,7 @@ vnoremap ; :
 " prevent cursor from moving when leaving insert mode
 inoremap <Esc> <Esc>`^
 
+nnoremap <leader>q :q<cr>
 nnoremap Q ZQ
 nnoremap J <c-d>
 nnoremap K <c-u>
