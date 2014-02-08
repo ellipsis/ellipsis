@@ -18,6 +18,8 @@ You can also specify which modules to install by setting `MODULES` variable, i.e
 The `ellipsis` executable provides a number of useful commands for interacting
 with your dotfiles.
 
+- `ellipsis install`
+    - Install a new ellipsis module.
 - `ellipsis status`
     - Get current commit of every dotfile module.
 - `ellipsis update`
