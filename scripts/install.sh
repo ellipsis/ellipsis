@@ -1,18 +1,8 @@
 #!/bin/sh
 
-UNAME="$(uname | tr '[:upper:]' '[:lower:]')"
+hash git 2>/dev/null || { echo >&2 "sorry bub, ellipsis requires git installed."; exit 1; }
 
-install_deps() {
-    case "$(head -n 1 /etc/issue | tr '[:upper:]' '[:lower:]')" in
-        ubuntu*)
-            sudo apt-get update
-            sudo apt-get install -y git ruby python zsh
-            ;;
-        centos*)
-            sudo yum install -y git ruby python zsh
-            ;;
-    esac
-}
+UNAME="$(uname | tr '[:upper:]' '[:lower:]')"
 
 backup() {
     original="$1"
@@ -95,7 +85,6 @@ case "$UNAME" in
         link_files "$HOME/.ellipsis/platform/freebsd"
         ;;
     linux)
-        install_deps
         link_files "$HOME/.ellipsis/platform/linux"
         ;;
     cygwin*)
