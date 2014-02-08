@@ -1,5 +1,48 @@
 #!/bin/sh
 
+run_installer() {
+    curl -s "https://raw.github.com/zeekay/$1/master/scripts/install.sh" > "$1-install-$$.sh"
+    ELLIPSIS_INSTALL=1 sh "$1-install-$$.sh"
+    rm "$1-install-$$.sh"
+}
+
+link_files() {
+    for dotfile in $(find "$1" -maxdepth 1 -name '*' ! -name '.*' | sort); do
+	# ignore containing directory
+	if [ "$1" != "$dotfile" ]; then
+		name="${dotfile##*/}"
+		dest="$HOME/.$name"
+
+		backup "$dest"
+
+		echo linking "$dest"
+		ln -s "$dotfile" "$dest"
+	fi
+    done
+}
+git_clone() {
+    git clone --depth 1 "$1" "$2" 2>&1 | grep 'Cloning into'
+}
+
+install() {
+    module=$1
+
+    case $module in
+        github:*)
+            user=$(echo "$module" | cut -d ':' -f 2 | cut -d '/' -f 1)
+            module=$(echo "$module" | cut -d ':' -f 2 | cut -d '/' -f 2)
+            module_path="$HOME/.ellipsis/modules/$module"
+            git_clone "https://github.com/$user/$module" "$module_path"
+        ;;
+        *)
+            module_path="$HOME/.ellipsis/modules/$module"
+            git_clone "https://github.com/zeekay/dot-$module" "$module_path"
+        ;;
+    esac
+
+    . "$module_path/.ellipsis/install"
+}
+
 status() {
     name=$(echo "${1##*/}" | sed 's/^\.//')
     cd "$1"
@@ -44,6 +87,9 @@ _do() {
 }
 
 case $1 in
+    install|add|in|+)
+        install $2
+    ;;
     status|st)
         _do status
     ;;
@@ -54,6 +100,6 @@ case $1 in
         _do push
     ;;
     *)
-        echo "Usage: ellipsis {push|pull|status}"
+        echo "Usage: ellipsis {install|push|pull|status}"
     ;;
 esac
