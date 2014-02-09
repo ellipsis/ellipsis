@@ -8,11 +8,11 @@ A framework for managing dotfiles.
 ### Install
 Clone and symlink or use handy-dandy installer:
 
-    curl ellipsis.sh | sh
+    curl -sL ellipsis.sh | sh
 
 You can also specify which modules to install by setting `MODULES` variable, i.e.:
 
-    curl ellipsis.sh | MODULES='vim zsh' sh
+    curl -sL ellipsis.sh | MODULES='vim zsh' sh
 
 ### Usage
 The `ellipsis` executable provides a number of useful commands for interacting
