@@ -1,0 +1,149 @@
+0.7.20
+
+* Adapters::LRUHash: add option :max_value
+* Moneta.new(:Couch, :Riak, :RestClient): use urlencode instead of base64 for key encoding)
+* Transformer: Add :hex encoder
+* Transformer: Don't wrap object in array for JSON serialization
+* Transformer: Add :php serializer
+* Moneta.new(:Sequel) - Don't encode blob data using base64
+* Moneta::Adapters::LMDB added (Symas Lightning Memory-Mapped Database)
+* Moneta::Adapters::Sequel - Fix for https://github.com/jeremyevans/sequel/issues/715
+
+0.7.19
+
+* ActionDispatch::Session::MonetaStore fixed for Rails 4
+* Moneta::Server: Tries now to remove stale unix socket
+* Moneta::Server: More robust and better performance
+
+0.7.18
+
+* Adapters::File#increment and #create fixed on JRuby
+* Adapters::Couch and Adapters::Mongo can store hashes directly as documents.
+  It is not necessary to serialize values as strings anymore.
+* Adapters::Couch#create added
+* Pool thread safety improved
+* Transformer: Add CityHash
+
+0.7.17
+
+* Transformer: LZ4 compression added
+
+0.7.16
+
+* Better builder validation
+* Adapters::Sequel: check for correct exceptions
+
+0.7.15
+
+* CONTRIBUTORS file added
+* Adapters::File#increment fixed
+
+0.7.14
+
+* Adapters::ActiveRecord, Adapters::Sequel: store values as blobs
+* Adapters::ActiveRecord fixed and improved
+
+0.7.13
+
+* Adapters::ActiveRecord: Use connection_pool
+* Adapters::File: Race condition in #increment fixed
+
+0.7.12
+
+* Concurrency tests added
+* Bugfixes for File, Sqlite, Sequel and Datamapper, ActiveRecord
+
+0.7.11
+
+* Logger: Add option :file
+* Adapters::TokyoTyrant supports both native (ruby-tokyotyrant) and pure-ruby tokyotyrant gems
+* Adapters::Couch use Faraday directly instead of buggy CouchRest
+* Adapters::RestClient use Faraday
+* Transformer: add quoted printable encoding (:qp)
+
+0.7.10
+
+* Adapters::TokyoTyrant added
+* Add attr_reader :backend and option :backend to some adapters
+* Cache rename #backend to #adapter
+
+0.7.9
+
+* Adapters::KyotoCabinet added
+* Feature detection methods #features and #supports? added
+* Validity checks added which check features
+
+0.7.8
+
+* Adapters::Memcached: switched to Dalli by default
+* Adapters::Daybreak: add option :sync to load and store
+* Adapters::LRUHash: add option :max_count
+* Adapters::Mongo: add options :user and :password
+* Adapters::Mongo: Correctly close connection
+* Adapters::Redis: Correctly close connection
+* Transformer: add inspect key transformer
+* Added #create method to atomically create entries
+* Added WeakCreate and WeakIncrement proxies
+* Added Mutex and Semaphore synchronization primitives for
+  shared/distributed database locks
+* Rename unix socket options from :file to :socket
+
+0.7.6
+
+* Adapters::Daybreak: api changed
+* Adapters::File: flock fix for jruby
+* Transformer: add to_s key transformer
+
+0.7.5
+
+* OptionsSupport#with: Add support to insert additional proxies
+* Builder#adapter: Accepts Moneta store instance now
+
+0.7.4
+
+* Transformer: fix truncate
+* Adapters::RestClient: raise error if store fails
+* Adapters::TDB added
+* Adapters::Daybreak added
+* Adapters::Mongo - Expiration and increment support added
+* Pool proxy added
+* Mixin ExpiresSupport added
+  * Expiration value handling unified
+  * 0 and false are interpreted as persist value
+* Adapters::RestClient uses net/http now
+
+0.7.3
+
+* Added Adapters::RestClient
+* Added Rack::MonetaRest
+* Added Rack::MonetaStore
+
+0.7.2
+
+* Renamed WithOptions to OptionSupport
+* Refactored Base in Defaults mixin
+* Removed Transformer option :quiet
+* Transformer might raise an exception if an invalid value is transformed
+* Expires middleware only wraps Arrays and nils in an Array if
+  no expiration time is given (backward compatible change)
+* Moneta middlewares are not allowed to modify option hash given to functions
+  like #load and #store
+
+0.7.1
+
+* Memcached: Use binary protocol and no base64 encoding of the keys
+* Transformer: Remove newlines from base64 encodes values
+* Server: Add method #run which will block and #running? to allow forking
+* SDBM: #store might raise errors (Don't use SDBM, it is unstable!)
+* Add #decrement method
+* Fix #fetch to handle false correctly
+* Fix Expires middleware to handle boolean and nil values correctly
+* Base64 encode Riak keys since Riak needs valid UTF-8 for the REST interface
+
+0.7.0
+
+* Major rewrite by Daniel Mendler
+
+0.6.0
+
+* First public release by Yehuda Katz

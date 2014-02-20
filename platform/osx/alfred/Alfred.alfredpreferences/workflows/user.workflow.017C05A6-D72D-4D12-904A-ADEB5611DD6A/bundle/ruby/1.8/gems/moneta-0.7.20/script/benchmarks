@@ -1,0 +1,393 @@
+#!/usr/bin/env ruby
+
+$: << File.join(File.dirname(__FILE__), '..', 'lib')
+require 'benchmark'
+require 'moneta'
+require 'fileutils'
+
+class String
+  def random(n)
+    (1..n).map { self[rand(size),1] }.join
+  end
+end
+
+class Array
+  def sum
+    inject(0, &:+)
+  end
+
+  def mean
+    sum / size
+  end
+
+  def stddev
+    m = mean
+    Math.sqrt(map {|s| (s - m) ** 2 }.mean)
+  end
+end
+
+class MonetaBenchmarks
+  DIR = __FILE__ + '.tmp'
+
+  STORES = {
+    # SDBM accepts only very short key/value pairs (1k for both)
+    # :SDBM => { :file => "#{DIR}/sdbm" },
+    # YAML is too slow
+    # :YAML => { :file => "#{DIR}/yaml" },
+    :ActiveRecord => { :table => 'activerecord', :connection => { :adapter => (defined?(JRUBY_VERSION) ? 'jdbcmysql' : 'mysql2'), :username => 'root', :database => 'moneta' } },
+    :Cassandra => {},
+    :Client => {},
+    :Couch => {},
+    :DBM => { :file => "#{DIR}/dbm" },
+    :DataMapper => { :setup => 'mysql://root:@localhost/moneta', :table => 'datamapper' },
+    :Daybreak => { :file => "#{DIR}/daybreak" },
+    :File => { :dir => "#{DIR}/file" },
+    :GDBM => { :file => "#{DIR}/gdbm" },
+    :HBase => {},
+    :HashFile => { :dir => "#{DIR}/hashfile" },
+    :KyotoCabinet => { :file => "#{DIR}/kyotocabinet.kch" },
+    :LRUHash => {},
+    :LevelDB => { :dir => "#{DIR}/leveldb" },
+    :LocalMemCache => { :file => "#{DIR}/lmc" },
+    :LMDB => { :dir => "#{DIR}/lmdb" },
+    :MemcachedDalli => {},
+    :MemcachedNative => {},
+    :Memory => {},
+    :Mongo => {},
+    :PStore => { :file => "#{DIR}/pstore" },
+    :Redis => {},
+    :RestClient => { :url => 'http://localhost:8808/' },
+    :Riak => {},
+    :Sequel => { :table => 'sequel',
+      :db => (defined?(JRUBY_VERSION) ?
+              'jdbc:mysql://localhost/moneta?user=root' :
+              'mysql2://root:@localhost/moneta') },
+    :Sqlite => { :file => ':memory:' },
+    :TDB => { :file => "#{DIR}/tdb" },
+    :TokyoCabinet => { :file => "#{DIR}/tokyocabinet" },
+    :TokyoTyrant => {},
+  }
+
+  CONFIGS = {
+    :uniform_small => {
+      :runs => 3,
+      :keys => 1000,
+      :min_key_len => 1,
+      :max_key_len => 32,
+      :key_dist => :uniform,
+      :min_val_len => 0,
+      :max_val_len => 256,
+      :val_dist => :uniform
+    },
+    :uniform_medium => {
+      :runs => 3,
+      :keys => 1000,
+      :min_key_len => 3,
+      :max_key_len => 128,
+      :key_dist => :uniform,
+      :min_val_len => 0,
+      :max_val_len => 1024,
+      :val_dist => :uniform
+    },
+    :uniform_large => {
+      :runs => 3,
+      :keys => 100,
+      :min_key_len => 3,
+      :max_key_len => 128,
+      :key_dist => :uniform,
+      :min_val_len => 0,
+      :max_val_len => 10240,
+      :val_dist => :uniform
+    },
+    :normal_small => {
+      :runs => 3,
+      :keys => 1000,
+      :min_key_len => 1,
+      :max_key_len => 32,
+      :key_dist => :normal,
+      :min_val_len => 0,
+      :max_val_len => 256,
+      :val_dist => :normal
+    },
+    :normal_medium => {
+      :runs => 3,
+      :keys => 1000,
+      :min_key_len => 3,
+      :max_key_len => 128,
+      :key_dist => :normal,
+      :min_val_len => 0,
+      :max_val_len => 1024,
+      :val_dist => :normal
+    },
+    :normal_large => {
+      :runs => 3,
+      :keys => 100,
+      :min_key_len => 3,
+      :max_key_len => 128,
+      :key_dist => :normal,
+      :min_val_len => 0,
+      :max_val_len => 10240,
+      :val_dist => :normal
+    },
+  }
+
+  DICT = 'ABCDEFGHIJKLNOPQRSTUVWXYZabcdefghijklnopqrstuvwxyz123456789'.freeze
+  HEADER = "\n                         Minimum  Maximum    Total     Mean   Stddev    Ops/s"
+  SEPARATOR = '=' * 77
+
+  module Rand
+    extend self
+
+    def normal_rand(mean, stddev)
+      # Box-Muller transform
+      theta = 2 * Math::PI * (rand(1e10) / 1e10)
+      scale = stddev * Math.sqrt(-2 * Math.log(1 - (rand(1e10) / 1e10)))
+      [mean + scale * Math.cos(theta),
+       mean + scale * Math.sin(theta)]
+    end
+
+    def uniform(min, max)
+      rand(max - min) + min
+    end
+
+    def normal(min, max)
+      mean = (min + max) / 2
+      stddev = (max - min) / 4
+      loop do
+        val = normal_rand(mean, stddev)
+        return val.first if val.first >= min && val.first <= max
+        return val.last if val.last >= min && val.last <= max
+      end
+    end
+  end
+
+  def parallel(&block)
+    if defined?(JRUBY_VERSION)
+      Thread.new(&block)
+    else
+      Process.fork(&block)
+    end
+  end
+
+  def write_histogram(file, sizes)
+    min = sizes.min
+    delta = sizes.max - min
+    histogram = []
+    sizes.each do |s|
+      s = 10 * (s - min) / delta
+      histogram[s] ||= 0
+      histogram[s] += 1
+    end
+    File.open(file, 'w') do |f|
+      histogram.each_with_index { |n,i| f.puts "#{i*delta/10+min} #{n}" }
+    end
+  end
+
+  def start_servers
+    parallel do
+      begin
+        Moneta::Server.new(Moneta.new(:Memory)).run
+      rescue Exception => ex
+        puts "\e[31mFailed to start Moneta server - #{ex.message}\e[0m"
+      end
+    end
+
+    parallel do
+      begin
+        require 'rack'
+        require 'webrick'
+        require 'rack/moneta_rest'
+
+        # Keep webrick quiet
+        ::WEBrick::HTTPServer.class_eval do
+          def access_log(config, req, res); end
+        end
+        ::WEBrick::BasicLog.class_eval do
+          def log(level, data); end
+        end
+
+        Rack::Server.start(:app => Rack::Builder.app do
+                             use Rack::Lint
+                             run Rack::MonetaRest.new(:store => :Memory)
+                           end,
+                           :environment => :none,
+                           :server => :webrick,
+                           :Port => 8808)
+      rescue Exception => ex
+        puts "\e[31mFailed to start Rack server - #{ex.message}\e[0m"
+      end
+    end
+
+    sleep 1 # Wait for servers
+  end
+
+  def test_stores
+    STORES.each do |name, options|
+      begin
+        if name == :DataMapper
+          begin
+            require 'dm-core'
+            DataMapper.setup(:default, :adapter => :in_memory)
+          rescue LoadError => ex
+            puts "\e[31mFailed to load DataMapper - #{ex.message}\e[0m"
+          end
+        elsif name == :Riak
+          require 'riak'
+          Riak.disable_list_keys_warnings = true
+        end
+
+        cache = Moneta.new(name, options.dup)
+        cache['test'] = 'test'
+      rescue Exception => ex
+        puts "\e[31m#{name} not benchmarked - #{ex.message}\e[0m"
+        STORES.delete(name)
+      ensure
+        (cache.close rescue nil) if cache
+      end
+    end
+  end
+
+  def generate_data
+    until @data.size == @config[:keys]
+      key = DICT.random(Rand.send(@config[:key_dist], @config[:min_key_len], @config[:max_key_len]))
+      @data[key] = DICT.random(Rand.send(@config[:val_dist], @config[:min_val_len], @config[:max_val_len]))
+    end
+
+    key_lens, val_lens = @data.keys.map(&:size), @data.values.map(&:size)
+    @data = @data.to_a
+
+    write_histogram("#{DIR}/key.histogram", key_lens)
+    write_histogram("#{DIR}/value.histogram", val_lens)
+
+    puts "\n\e[1m\e[34m#{SEPARATOR}\n\e[34mComputing keys and values...\n\e[34m#{SEPARATOR}\e[0m"
+    puts %{                         Minimum  Maximum    Total     Mean   Stddev}
+    puts 'Key Length              % 8d % 8d % 8d % 8d % 8d' % [key_lens.min, key_lens.max, key_lens.sum, key_lens.mean, key_lens.stddev]
+    puts 'Value Length            % 8d % 8d % 8d % 8d % 8d' % [val_lens.min, val_lens.max, val_lens.sum, val_lens.mean, val_lens.stddev]
+  end
+
+  def print_config
+    puts "\e[1m\e[36m#{SEPARATOR}\n\e[36mConfig #{@config_name}\n\e[36m#{SEPARATOR}\e[0m"
+    @config.each do |k,v|
+      puts '%-16s = %-10s' % [k,v]
+    end
+  end
+
+  def print_store_stats(name)
+    puts HEADER
+    [:write, :read, :sum].each do |i|
+      ops = (1000 * @config[:runs] * @data.size) / @stats[name][i].sum
+      line = '%-17.17s %-5s % 8d % 8d % 8d % 8d % 8d % 8d' %
+        [name, i, @stats[name][i].min, @stats[name][i].max, @stats[name][i].sum,
+         @stats[name][i].mean, @stats[name][i].stddev, ops]
+      @summary << [-ops, line << "\n"] if i == :sum
+      puts line
+    end
+
+    errors = @stats[name][:error].sum
+    if errors > 0
+      puts "\e[31m%-23.23s % 8d % 8d % 8d % 8d\e[0m" %
+        ['Read errors', @stats[name][:error].min, @stats[name][:error].max, errors, errors / @config[:runs]]
+    else
+      puts "\e[32mNo read errors"
+    end
+  end
+
+  def benchmark_store(name, options)
+    puts "\n\e[1m\e[34m#{SEPARATOR}\n\e[34m#{name}\n\e[34m#{SEPARATOR}\e[0m"
+
+    store = Moneta.new(name, options.dup)
+
+    @stats[name] = {
+      :write => [],
+      :read => [],
+      :sum => [],
+      :error => []
+    }
+
+    %w(Rehearse Measure).each do |type|
+      state = ''
+      print "%s [%#{2 * @config[:runs]}s] " % [type, state]
+
+      @config[:runs].times do |run|
+        store.clear
+
+        @data.shuffle!
+        m1 = Benchmark.measure do
+          @data.each {|k,v| store[k] = v }
+        end
+
+        print "%s[%-#{2 * @config[:runs]}s] " % ["\b" * (2 * @config[:runs] + 3), state << 'W']
+
+        @data.shuffle!
+        error = 0
+        m2 = Benchmark.measure do
+          @data.each do |k, v|
+            error += 1 if v != store[k]
+          end
+        end
+
+        print "%s[%-#{2 * @config[:runs]}s] " % ["\b" * (2 * @config[:runs] + 3), state << 'R']
+
+        if type == 'Measure'
+          @stats[name][:write] << m1.real * 1000
+          @stats[name][:error] << error
+          @stats[name][:read] << m2.real * 1000
+          @stats[name][:sum] << (m1.real + m2.real) * 1000
+        end
+      end
+    end
+
+    print_store_stats(name)
+  rescue StandardError => ex
+    puts "\n\e[31mFailed to benchmark #{name} - #{ex.message}\e[0m\n"
+  ensure
+    store.close if store
+  end
+
+  def run_benchmarks
+    STORES.each do |name, options|
+      benchmark_store(name, options)
+      sleep 1
+    end
+  end
+
+  def print_summary
+    puts "\n\e[1m\e[36m#{SEPARATOR}\n\e[36mSummary #{@config_name}: #{@config[:runs]} runs, #{@data.size} keys\n\e[36m#{SEPARATOR}\e[0m#{HEADER}\n"
+    @summary.sort_by(&:first).each do |entry|
+      puts entry.last
+    end
+  end
+
+  def initialize(args)
+    @config_name = args.size == 1 ? args.first.to_sym : :uniform_medium
+    unless @config = CONFIGS[@config_name]
+      puts "Configuration #{@config_name} not found"
+      exit
+    end
+
+    # Disable jruby stdout pollution by memcached
+    if defined?(JRUBY_VERSION)
+      require 'java'
+      properties = java.lang.System.getProperties();
+      properties.put('net.spy.log.LoggerImpl', 'net.spy.memcached.compat.log.SunLogger');
+      java.lang.System.setProperties(properties);
+      java.util.logging.Logger.getLogger('').setLevel(java.util.logging.Level::OFF)
+    end
+
+    @stats, @data, @summary = {}, {}, []
+  end
+
+  def run
+    FileUtils.rm_rf(DIR)
+    FileUtils.mkpath(DIR)
+    start_servers
+    test_stores
+    print_config
+    generate_data
+    run_benchmarks
+    print_summary
+    FileUtils.rm_rf(DIR)
+  end
+end
+
+MonetaBenchmarks.new(ARGV).run

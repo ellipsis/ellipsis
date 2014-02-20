@@ -1,4 +1,4 @@
-#!/usr/local/opt/ruby/bin/ruby
+#!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
 # ============== = ===========================================================
 # Description    : Alfred 2 Top Processes Workflow
@@ -19,7 +19,8 @@ require "bundle/bundler/setup"
 require "alfred"
 require 'open3'
 
-
+ 
+# OPTIMIZE: use pgrep for name based search
 def valid_pid?(pid)
   return false if pid.nil?
   !pid.match(/[^0-9]/)
@@ -42,7 +43,7 @@ def generate_feedback(alfred, pid, with_query)
   end
 
   if lines.empty?
-    puts alfred.rescue_feedback(:title => "Is #{pid} a valid PID?")
+    puts alfred.rescue_feedback(:title => "Is #{pid} a valid PID? Or the process has been terminated.")
     return false
   end
 

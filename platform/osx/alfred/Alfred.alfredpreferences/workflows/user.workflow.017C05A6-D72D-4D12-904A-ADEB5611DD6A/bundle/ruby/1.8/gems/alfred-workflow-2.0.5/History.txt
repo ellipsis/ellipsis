@@ -1,0 +1,174 @@
+=== 2.0.0 / 2013-10-02
+
+Changes:
+
+* 5 Major Enhancements
+
+    * add callback handler
+    * add osx_version module
+    * add autocomplete handler
+    * get help handler to work
+    * alfred handler framework ( *WIP* )
+
+* 15 Minor Enhancements
+
+    * config handler template
+    * user constant for handler and help item order
+    * add yaml and marshal serializatio support for feedback class
+    * add timestamp to callback entry
+    * auto-save user settings
+    * flexible autocomplete items (list of mixed string or hash)
+    * use fuzzy match for autocomplete handler
+    * sort help feedback items
+    * default cached feedback reload option
+    * add rescue feedback for query parser exception
+    * merge handler help to Help class
+    * add on_help for handler help message
+    * Inherit Setting class from Hash
+      
+      remove plist as backend for Setting serialization
+    * update setting class
+    * display "right" name for contacts
+
+* 2 Bug Fixes
+
+    * handle feedback yaml serialization based on ruby version
+    * help handler for empty item
+
+=== 1.11.3 / 2013-10-02
+
+prefer opts for file_item title (Zhao Cai <caizhaoff@gmail.com>)
+
+Changes:
+
+* 1 Bug Fixes
+
+    * prefer opts for file_item title
+      
+      Bump version to 1.11.2
+
+
+=== 1.11.2 / 2013-10-02
+
+Changes:
+
+* 1 Minor Enhancements
+
+    * allow opts to be passed to file item feedback
+
+
+=== 1.11.1 / 2013-09-27
+
+optimize feedback serialization (Zhao Cai <caizhaoff@gmail.com>)
+
+Changes:
+
+* 1 Minor Enhancements
+
+    * only need to serialize feedback items but self
+
+* 1 Bug Fixes
+
+    * fix travis build error
+      
+      "~/Library/Logs" does not exist in non-Mac machine
+
+
+=== 1.11.0 / 2013-09-26
+
+Changes:
+
+* 1 Major Enhancements
+
+    * add custom item matcher
+
+
+=== 1.10.1 / 2013-09-24
+
+Hash arg for feedback item should not handled here (Zhao Cai <caizhaoff@gmail.com>)
+
+
+=== 1.10.0 / 2013-09-24
+
+support Hash arg for feedback item, prepare for flexible matcher and handler (Zhao Cai <caizhaoff@gmail.com>)
+
+Changes:
+
+* 1 Minor Enhancements
+
+    * support Hash arg for feedback item
+
+=== 1.9.2 / 2013-09-24
+
+* 1 Minor Enhancements
+
+    * add #front_appid
+
+* 3 Bug Fixes
+
+    * travis.yml
+    * rake travis tasks
+    * with_rescue_feedback
+
+
+=== 1.9.1 / 2013-09-14
+
+Changes:
+
+* 1 Minor Enhancements
+
+    * uid (optional in Alfred 2.0.3+)
+
+
+=== 1.9.0 / 2013-09-14
+
+update for Alfred feedback spec changes (Zhao Cai <caizhaoff@gmail.com>)
+
+Changes:
+
+* 2 Minor Enhancements
+
+    * prefer <arg></arg> to <item arg="">
+    * generic help feedback
+
+
+=== 1.8.0 / 2013-05-02
+
+Changes:
+
+* 1 Minor Enhancements
+
+    * use default `logger` instead of `logging` gem
+
+=== 1.5.2 / 2013-03-29
+
+  * [New]( Travis CI Status Image )
+  * [New]( Automate cached feedback save and load! )
+  * [New]( Setting class to save and load user configures )
+  * [New]( add load and dump for feedback )
+  * [New]( Alfred.search(query) to launch alfred with query )
+
+=== 1.2.6 / 2013-03-27
+
+  ! automate rescue feedback
+  * save @bundle_id for reaccess
+
+=== 1.2.3 / 2013-03-25
+
+  * add function to output rescue feedback xml items
+  * add a few query regexp builders
+  ! refactor feedback items
+  ! add autotest support
+  ! add rspec test
+
+=== 1.1.0 / 2013-03-24
+
+  * reorganize Alfred module to multiple files
+  * use FileItem < Item classes to manage feedback item
+  * add default query match for Item and FileItem
+
+
+=== 1.0.0 / 2013-03-21
+
+  * Birthday!
+
