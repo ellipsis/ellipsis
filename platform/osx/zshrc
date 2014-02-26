@@ -96,5 +96,8 @@ export GOPATH=$HOME/go
 export PATH=$PATH:/usr/local/Cellar/go/1.2/libexec/bin:/usr/local/cuda/bin:$GOPATH/bin
 alias hd='noglob hoodoo'
 alias ack=ag
-source /usr/local/opt/autoenv/activate.sh
 alias cask='brew cask'
+
+if [ -f /usr/loca/opt/autoenv/activate.sh ]; then
+    source /usr/local/opt/autoenv/activate.sh
+fi
