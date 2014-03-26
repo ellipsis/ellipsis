@@ -1,5 +1,19 @@
 #!/bin/sh
 
+usage() {
+	local prog=${0##*/}
+	cat <<-EOF
+	Usage: $prog <command>
+
+	Commands
+	  install     install new modules
+	  push        push updates to local modules back to upstream repositories
+	  pull        pull updates from upstream repositories
+	  status      report status of local modules
+	  help        print this message and exit
+	EOF
+}
+
 backup() {
     original="$1"
     backup="$original.bak"
@@ -140,7 +154,12 @@ case $1 in
     push)
         _do push
     ;;
+    help)
+        usage
+        exit 0
+    ;;
     *)
-        echo "Usage: ellipsis {install|push|pull|status}"
+	    usage >&2
+	    exit 1
     ;;
 esac
