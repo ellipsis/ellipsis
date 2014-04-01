@@ -41,7 +41,6 @@
     fetch-all       = fetch --depth=999999999
     forget          = rm --cached
     lost            = !"git fsck | awk '/dangling commit/ {print $3}' | git show --format='SHA1: %C(yellow)%h%Cblue%d%Creset %s %C(white)%an, %ar%Creset' --stdin | awk '/SHA1/ {sub(\"SHA1: \", \"\"); print}'"
-    pom             = push --set-upstream origin master
     pop             = stash pop
     record          = !sh -c '(git add -p -- $@ && git commit) || git reset' --
     reset-origin    = !git fetch && git reset --hard "origin/`git rev-parse --abbrev-ref HEAD`"
@@ -56,6 +55,8 @@
     track           = checkout -t
     unstage         = reset HEAD
     unstaged        = diff
+    push-new        = !git push -u origin `git rev-parse --abbrev-ref HEAD`
+
 
 [branch]
     autosetupmerge  = true

@@ -107,3 +107,5 @@ inoremap <F2> :ColorNext<cr>
 
 nnoremap <F3> :ColorPrev<cr>
 inoremap <F3> :ColorPrev<cr>
+
+let g:python_highlight_all = 1
