@@ -54,6 +54,7 @@
     tags            = tag -l
     track           = checkout -t
     unstage         = reset HEAD
+    undo            = reset --soft HEAD^
     unstaged        = diff
     push-new        = !git push -u origin `git rev-parse --abbrev-ref HEAD`
 
