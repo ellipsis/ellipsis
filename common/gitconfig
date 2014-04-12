@@ -53,7 +53,7 @@
     svn-up          = svn rebase
     tags            = tag -l
     track           = checkout -t
-    unstage         = reset HEAD
+    unstage         = rm --cached
     undo            = reset --soft HEAD^
     unstaged        = diff
     push-new        = !git push -u origin `git rev-parse --abbrev-ref HEAD`
