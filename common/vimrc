@@ -19,6 +19,7 @@ let options = {
         \ 'github:zeekay/vim-cake',
         \ 'github:nathanaelkane/vim-indent-guides',
         \ 'github:terryma/vim-multiple-cursors',
+        \ 'github:airblade/vim-gitgutter',
         \ 'github:godlygeek/tabular',
     \ ],
     \ 'commands': {
@@ -109,3 +110,6 @@ nnoremap <F3> :ColorPrev<cr>
 inoremap <F3> :ColorPrev<cr>
 
 let g:python_highlight_all = 1
+let g:gitgutter_enabled = 0
+
+nnoremap <leader>gg :GitGutterToggle<cr>
