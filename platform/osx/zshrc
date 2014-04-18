@@ -101,3 +101,5 @@ alias cask='brew cask'
 if [ -f /usr/loca/opt/autoenv/activate.sh ]; then
     source /usr/local/opt/autoenv/activate.sh
 fi
+
+alias cake=shortcake

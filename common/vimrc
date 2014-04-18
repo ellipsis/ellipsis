@@ -9,8 +9,8 @@ let options = {
         \ 'github:zeekay/vice-delimitmate',
         \ 'github:zeekay/vice-git',
         \ 'github:zeekay/vice-nerdtree',
-        \ 'github:zeekay/vice-neocompletion',
         \ 'github:zeekay/vice-polyglot',
+        \ 'github:zeekay/vice-neocompletion',
         \ 'github:zeekay/vice-powerline',
         \ 'github:zeekay/vice-standard-issue',
         \ 'github:zeekay/vice-syntastic',
@@ -32,9 +32,7 @@ let options = {
 
 if has('mac') && version > 702
     let options.addons += ['github:Shougo/vimproc', 'github:Shougo/vimshell']
-    let options.neocompletion = {
-        \ 'enable_tern': 0
-    \ }
+    let options.neocompletion = {'enable_tern': 1}
 endif
 
 let &rtp.=','.expand('~/.vim/addons/vice')
