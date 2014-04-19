@@ -14,8 +14,7 @@ for dep in deps; do
 done
 
 # Create temp directory
-dir=$(mktemp -d)
-cd $dir
+tmp_dir=$(mktemp -d) && cd $tmp_dir
 
 # Download lib components
 curl -s "$ELLIPSIS_URL/src/git.sh" > git.sh

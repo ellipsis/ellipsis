@@ -54,30 +54,47 @@ ellipsis.backup() {
     fi
 }
 
-# run installer scripts/install.sh in github repo
+# run web-based installers in github repo
 ellipsis.run_installer() {
-    # case $mod in
-    #     http:*|https:*|git:*|ssh:*)
-    # esac
-    url="https://raw.githubusercontent.com/$1/master/scripts/install.sh"
-    curl -s "$url" > "$1-install-$$.sh"
-    ELLIPSIS=1 sh "$1-install-$$.sh"
-    rm "$1-install-$$.sh"
+    # save reference to current dir
+    cwd=$(pwd)
+    # create temp dir and cd to it
+    tmp_dir=$(mktemp -d) && cd $tmp_dir
+
+    # download installer
+    curl -s "$url" > "tmp-$$.sh"
+    # run with ELLIPSIS env var set
+    ELLIPSIS=1 sh "tmp-$$.sh"
+
+    # change back to original dir and clean up
+    cd $cwd
+    rm -rf $tmp_dir
 }
 
-# links files in module repo into home folder
+# symlink a single file into $HOME
+ellipsis.link_file() {
+    name="${$1##*/}"
+    dest="~/.$name"
+
+    backup "$dest"
+
+    echo linking "$dest"
+    ln -s "$1" "$dest"
+}
+
+# find all files in dir excluding the dir itself, hidden files, README,
+# LICENSE, *.rst, *.md, and *.txt and symlink into $HOME.
 ellipsis.link_files() {
-    for dotfile in $(find "$1" -maxdepth 1 -name '*' ! -name '.*' | sort); do
-        # ignore containing directory, ellipsis.sh and any *.md or *.rst files
-        if [ "$dotfile" != "$1" && ellipsis.sh ]; then
-            name="${dotfile##*/}"
-            dest="~/.$name"
-
-            backup "$dest"
-
-            echo linking "$dest"
-            ln -s "$dotfile" "$dest"
-        fi
+    for file in $(find "$1" -maxdepth 1 -name '*' \
+                                      ! -name '.*' \
+                                      ! -name 'README' \
+                                      ! -name 'LICENSE' \
+                                      ! -name '*.md' \
+                                      ! -name '*.rst' \
+                                      ! -name '*.txt' \
+                                      ! -name "$1" \
+                                      ! -name "ellipsis.sh" | sort); do
+        ellipsis.link_file $file
     done
 }
 
@@ -123,15 +140,31 @@ ellipsis.list() {
     curl -s $ELLIPSIS_MODULES_URL
 }
 
-# Run command across all modules.
+# Run commands across all modules.
 ellipsis.do() {
+    # execute command for ellipsis first
     eval "${1}" ~/.ellipsis
 
+    # loop over modules, excecuting command
     for module in ~/.ellipsis/modules/*; do
         if [ -e "$module/.ellipsis/$1" ]; then
-            module_path=$module
-            module=${module##*/}
-            . "$module_path/.ellipsis/$1"
+            mod_path=$module
+            mod_name=${module##*/}
+            original_cwd=$(pwd)
+
+            # change to mod_path and source module
+            cd $mod_path
+            source "ellipsis.sh"
+
+            # run module hook if available
+            if hash mod.$1 2>/dev/null; then
+                mod.$1
+            else
+                $1
+            fi
+
+            # return to original cwd
+            cd $original_cwd
         fi
     done
 }
