@@ -118,6 +118,7 @@ ellipsis.install() {
     fi
 }
 
+# List available modules using $ELLIPSIS_MODULES_URL
 ellipsis.list() {
     curl -s $ELLIPSIS_MODULES_URL
 }
