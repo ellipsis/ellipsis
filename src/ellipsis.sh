@@ -141,5 +141,7 @@ ellipsis.usage() {
 }
 
 ellipsis.version() {
-    git describe --tags --abbrev=0
+    tag=$(git describe --tags --abbrev=0)
+    sha=$(git rev-parse --short HEAD)
+    echo "$tag ($sha)"
 }
