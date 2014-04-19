@@ -147,24 +147,32 @@ ellipsis.do() {
 
     # loop over modules, excecuting command
     for module in ~/.ellipsis/modules/*; do
-        if [ -e "$module/.ellipsis/$1" ]; then
-            mod_path=$module
-            mod_name=${module##*/}
-            original_cwd=$(pwd)
+        mod_path=$module
+        mod_name=${module##*/}
+        original_cwd=$(pwd)
 
-            # change to mod_path and source module
-            cd $mod_path
+        # change to mod_path and source module
+        cd $mod_path
+
+        # modules are not required to have an ellipsis.sh file
+        if [ -f ellipsis.sh ]; then
             source "ellipsis.sh"
-
-            # run module hook if available
-            if hash mod.$1 2>/dev/null; then
-                mod.$1
-            else
-                $1
-            fi
-
-            # return to original cwd
-            cd $original_cwd
         fi
+
+        # use module hooks if it exists
+        if hash mod.$1 2>/dev/null; then
+            mod.$1
+        else
+            $1
+        fi
+
+        # unset any hooks that might be defined
+        unset -f mod.install
+        unset -f mod.pull
+        unset -f mod.push
+        unset -f mod.status
+
+        # return to original cwd
+        cd $original_cwd
     done
 }
