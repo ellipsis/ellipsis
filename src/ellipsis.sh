@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+SCRIPT_PATH="$(dirname $0)"
+
+source "$SCRIPT_PATH/git.sh"
+
 # platform detection
 ellipsis.platform() {
     uname | tr '[:upper:]' '[:lower:]'
@@ -121,4 +125,21 @@ ellipsis.do() {
             . "$module_path/.ellipsis/$1"
         fi
     done
+}
+
+ellipsis.usage() {
+	cat <<-EOF
+	Usage: ellipsis <command>
+
+	Commands
+	  install     install new modules
+	  push        push updates to local modules back to upstream repositories
+	  pull        pull updates from upstream repositories
+	  status      report status of local modules
+	  help        print this message and exit
+	EOF
+}
+
+ellipsis.version() {
+    1.0.0
 }

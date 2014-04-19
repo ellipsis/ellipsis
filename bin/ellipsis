@@ -3,24 +3,6 @@
 SCRIPT_PATH="$(dirname $0)"
 
 source "$SCRIPT_PATH/../src/ellipsis.sh"
-source "$SCRIPT_PATH/../src/git.sh"
-
-usage() {
-	cat <<-EOF
-	Usage: ellipsis <command>
-
-	Commands
-	  install     install new modules
-	  push        push updates to local modules back to upstream repositories
-	  pull        pull updates from upstream repositories
-	  status      report status of local modules
-	  help        print this message and exit
-	EOF
-}
-
-version() {
-
-}
 
 case $1 in
     install|add|in|+)
@@ -36,13 +18,13 @@ case $1 in
         ellipsis.do git.push
     ;;
     help)
-        usage
+        ellipsis.usage
     ;;
     version)
-
+        ellipsis.version
     ;;
     *)
-	    usage >&2
+	    ellips.usage >&2
 	    exit 1
     ;;
 esac
