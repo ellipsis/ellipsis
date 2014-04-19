@@ -2,29 +2,8 @@
 
 SCRIPT_PATH="$(dirname $0)"
 
+source "$SCRIPT_PATH/../src/cli.sh"
+source "$SCRIPT_PATH/../src/git.sh"
 source "$SCRIPT_PATH/../src/ellipsis.sh"
 
-case $1 in
-    install|add|in|+)
-        ellipsis.install $2
-    ;;
-    status|st)
-        ellipsis.do git.status
-    ;;
-    pull|update|up)
-        ellipsis.do git.pull
-    ;;
-    push)
-        ellipsis.do git.push
-    ;;
-    help)
-        ellipsis.usage
-    ;;
-    version)
-        ellipsis.version
-    ;;
-    *)
-	    ellips.usage >&2
-	    exit 1
-    ;;
-esac
+cli.run $@
