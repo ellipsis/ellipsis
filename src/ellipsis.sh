@@ -141,5 +141,5 @@ ellipsis.usage() {
 }
 
 ellipsis.version() {
-    1.0.0
+    git describe --tags --abbrev=0
 }
