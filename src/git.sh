@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+#
+# assorted git utility functions
 
 # git wrappers
 git.clone() {

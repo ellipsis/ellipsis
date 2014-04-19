@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+#
+# core ellipsis functions
 
 # platform detection
 ellipsis.platform() {
@@ -110,7 +112,7 @@ ellipsis.install() {
     fi
 }
 
-# run command across all modules
+# Run command across all modules.
 ellipsis.do() {
     eval "${1}" ~/.ellipsis
 

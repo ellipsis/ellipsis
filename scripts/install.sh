@@ -75,26 +75,10 @@ git_clone "https://github.com/zeekay/ellipsis" "$HOME/.ellipsis"
 
 trap "exit 0" SIGINT
 
-link_files "$HOME/.ellipsis/common"
-
-case "$UNAME" in
-    darwin)
-        link_files "$HOME/.ellipsis/platform/osx"
-        ;;
-    freebsd)
-        link_files "$HOME/.ellipsis/platform/freebsd"
-        ;;
-    linux)
-        link_files "$HOME/.ellipsis/platform/linux"
-        ;;
-    cygwin*)
-        link_files "$HOME/.ellipsis/platform/cygwin"
-        ;;
-esac
-
 if [ -z "$MODULES" ]; then
     echo
     echo "Available modules: "
+    echo "    files"
     echo "    emacs"
     echo "    irssi"
     echo "    vim"
