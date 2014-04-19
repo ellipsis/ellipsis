@@ -143,6 +143,8 @@ ellipsis.list() {
 # Run commands across all modules.
 ellipsis.do() {
     # execute command for ellipsis first
+    mod_name=ellipsis
+    mod_path=~/.ellipsis
     eval "${1}" ~/.ellipsis
 
     # loop over modules, excecuting command
@@ -163,7 +165,7 @@ ellipsis.do() {
         if hash mod.$1 2>/dev/null; then
             mod.$1
         else
-            $1
+            $1 $mod_name
         fi
 
         # unset any hooks that might be defined
