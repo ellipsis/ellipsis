@@ -33,12 +33,23 @@ ellipsis.backup ~/.ellipsis
 # Download latest copy of ellipsis
 git.clone "$ELLIPSIS_REPO" ~/.ellipsis
 
-trap "exit 0" SIGINT
-
 if [ -z "$ELLIPSIS_MODULES" ]; then
+    # list available modules
     ellipsis.list
+
+    # list default modules
+    if [ "$(ellipsis.platform)" = "darwin" ]; then
+        default_modules="files vim zsh alfred iterm2"
+    else
+        default_modules="files vim zsh"
+    fi
+    echo "Default: $default_modules"
+
+    # allow user to override defaults
     read modules </dev/tty
+    modules="${modules:-$default_modules}"
 else
+    # user already provided modules list to install
     modules="$ELLIPSIS_MODULES"
 fi
 
