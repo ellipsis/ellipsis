@@ -2,6 +2,11 @@
 #
 # core ellipsis functions
 
+# These globals can be set by a user to use a custom ellipsis fork/set of modules
+ELLIPSIS_USER="${ELLIPSIS_USER:-zeekay}"
+ELLIPSIS_REPO="${ELLIPSIS_REPO:-https://github.com/$ELLIPSIS_USER/ellipsis}"
+ELLIPSIS_MODULES_URL="${ELLIPSIS_MODULES_URL:-https://raw.githubusercontent.com/$ELLIPSIS_USER/ellipsis/master/available-modules.txt}"
+
 # platform detection
 ellipsis.platform() {
     uname | tr '[:upper:]' '[:lower:]'
@@ -76,11 +81,12 @@ ellipsis.link_files() {
     done
 }
 
-# Install a new ellipsis module, running install hook if defined.
+# Installs new ellipsis module, using install hook if one exists. If no hook is
+# defined, all files are symlinked into $HOME using `ellipsis.link_files`.
+#
 # Following variables are available from your hook:
-#   $mod_name - name of your module
-#   $mod_path - path to your module
-# If no hook is defined, all files are symlinked into $HOME using ellipsis.link_files
+#   $mod_name Name of your module
+#   $mod_path Path to your module
 ellipsis.install() {
     case $mod in
         http:*|https:*|git:*|ssh:*)
@@ -97,7 +103,7 @@ ellipsis.install() {
         *)
             mod_name="$1"
             mod_path="~/.ellipsis/modules/$mod_name"
-            git.clone "https://github.com/zeekay/dot-$mod_name" "$mod_path"
+            git.clone "https://github.com/$ELLIPSIS_USER/dot-$mod_name" "$mod_path"
         ;;
     esac
 
@@ -110,6 +116,10 @@ ellipsis.install() {
     else
         ellipsis.link_files $mod_path
     fi
+}
+
+ellipsis.list() {
+    curl -s $ELLIPSIS_MODULES_URL
 }
 
 # Run command across all modules.
