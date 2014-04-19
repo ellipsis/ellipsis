@@ -10,22 +10,24 @@ Clone and symlink or use handy-dandy installer:
 
     curl -sL ellipsis.sh | sh
 
-You can also specify which modules to install by setting `MODULES` variable, i.e.:
+You can also specify which modules to install by setting the `MODULES` variable, i.e.:
 
     curl -sL ellipsis.sh | MODULES='vim zsh' sh
 
 ### Usage
-The `ellipsis` executable provides a number of useful commands for interacting
-with your dotfiles.
+```
+Usage: ellipsis <command>
 
-- `ellipsis install`
-    - Install a new ellipsis module.
-- `ellipsis status`
-    - Get current commit of every dotfile module.
-- `ellipsis update`
-    - Update each dotfile module.
-- `ellipsis push`
-    - Push updates to all dotfile modules back to github.
+Commands
+  new         create a new ellipsis module
+  install     install a new ellipsis module
+  list        list available modules
+  push        push updates to local modules back to upstream repositories
+  pull        pull updates from upstream repositories
+  status      report status of local modules
+  help        print this message and exit
+  version     print ellipsis version
+```
 
 ### Configuration
 You can fork this repository and customize or use modules to extend your

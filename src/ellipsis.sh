@@ -140,6 +140,15 @@ ellipsis.list() {
     curl -s $ELLIPSIS_MODULES_URL
 }
 
+ellipsis.new() {
+    mod_name="$1"
+    if [ -z "$1" ]; then
+        echo ""
+
+    fi
+    mkdir ~/.ellipsis/modules/$1
+}
+
 # Run commands across all modules.
 ellipsis.do() {
     # execute command for ellipsis first

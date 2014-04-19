@@ -34,6 +34,9 @@ cli.run() {
         list)
             ellipsis.list
             ;;
+        new)
+            ellipsis.new $2
+            ;;
         status|st)
             ellipsis.do git.status
             ;;

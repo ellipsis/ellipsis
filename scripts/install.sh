@@ -32,7 +32,7 @@ ellipsis.backup ~/.ellipsis
 # Download latest copy of ellipsis
 git.clone "$ELLIPSIS_REPO" ~/.ellipsis
 
-if [ -z "$ELLIPSIS_MODULES" ]; then
+if [ -z "$MODULES" ]; then
     # list available modules
     ellipsis.list
 
@@ -49,7 +49,7 @@ if [ -z "$ELLIPSIS_MODULES" ]; then
     modules="${modules:-$default_modules}"
 else
     # user already provided modules list to install
-    modules="$ELLIPSIS_MODULES"
+    modules="$MODULES"
 fi
 
 for module in $modules; do
