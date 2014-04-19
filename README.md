@@ -39,35 +39,35 @@ ellipsis installs/uses your module.
 
 Behavior of a module can be customized using several hooks.
 
-#### Hooks
+### Hooks
 
-##### mod.install
+#### mod.install
 Customize how module is installed. By default all files are symlinked into `$HOME`.
 
-##### mod.push
+#### mod.push
 Customize how how changes are pushed `ellipsis push` is used.
 
-##### mod.pull
+#### mod.pull
 Customize how how changes are pulled in when `ellipsis pull` is used.
 
-##### mod.status
+#### mod.status
 Customize output of `ellipsis status`.
 
-#### API
+### API
 Ellipsis exposes a number of variables to modules during install/execution as
 well as a collection of useful utility functions.
 
-##### ellipsis.platform
+#### ellipsis.platform
 Platform detection, returns lowercase result of `uname`.
 
-##### ellipsis.backup
+#### ellipsis.backup
 Moves existing file `$1` to `$1.bak`, taking care not to overwrite any existing
 backups.
 
-##### ellipsis.run_installer
+#### ellipsis.run_installer
 Download an installation script with `curl` and execute it.
 
-##### ellipsis.link_files
+#### ellipsis.link_files
 Links files in `$1` into `$HOME`.
 
 There are also several wrappers around common git operations which can be used
