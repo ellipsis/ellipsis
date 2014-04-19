@@ -1,9 +1,0 @@
-term                screen-256color
-# attrcolor           b ".I"
-# defbce              "on"
-shelltitle          ''
-defscrollback       10000
-vbell               off
-startup_message     off
-maptimeout          0
-defc1               off

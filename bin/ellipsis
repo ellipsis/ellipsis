@@ -1,9 +1,13 @@
-#!/bin/sh
+#!/usr/bin/env bash
+
+SCRIPT_PATH="$(dirname $0)"
+
+source "$SCRIPT_PATH/../src/ellipsis.sh"
+source "$SCRIPT_PATH/../src/git.sh"
 
 usage() {
-	local prog=${0##*/}
 	cat <<-EOF
-	Usage: $prog <command>
+	Usage: ellipsis <command>
 
 	Commands
 	  install     install new modules
@@ -14,149 +18,28 @@ usage() {
 	EOF
 }
 
-backup() {
-    original="$1"
-    backup="$original.bak"
-    name="${original##*/}"
+version() {
 
-    # check for broken symlinks
-    if [ "$(find -L "$original" -maxdepth 0 -type l 2>/dev/null)" != "" ]; then
-        broken=$(readlink "$original")
-
-        if [ "$(echo "$broken" | grep .ellipsis)" != "" ]; then
-            # silently remove old broken ellipsis symlinks
-            rm "$original"
-        else
-            # notify user we're removing a broken link
-            echo "rm ~/$name (broken link to $broken)"
-            rm "$original"
-        fi
-
-        return
-    fi
-
-    if [ -e "$original" ]; then
-        # remove, not backup old ellipsis symlinked files
-        if [ "$(readlink "$original" | grep .ellipsis)" != "" ]; then
-            rm "$original"
-            return
-        fi
-
-        if [ -e "$backup" ]; then
-            n=1
-            while [ -e "$backup.$n" ]; do
-                n=$((n+1))
-            done
-            backup="$backup.$n"
-        fi
-
-        echo "mv ~/$name $backup"
-        mv "$original" "$backup"
-    fi
-}
-
-run_installer() {
-    curl -s "https://raw.github.com/zeekay/$1/master/scripts/install.sh" > "$1-install-$$.sh"
-    ELLIPSIS_INSTALL=1 sh "$1-install-$$.sh"
-    rm "$1-install-$$.sh"
-}
-
-link_files() {
-    for dotfile in $(find "$1" -maxdepth 1 -name '*' ! -name '.*' | sort); do
-	# ignore containing directory
-	if [ "$1" != "$dotfile" ]; then
-		name="${dotfile##*/}"
-		dest="$HOME/.$name"
-
-		backup "$dest"
-
-		echo linking "$dest"
-		ln -s "$dotfile" "$dest"
-	fi
-    done
-}
-git_clone() {
-    git clone --depth 1 "$1" "$2" 2>&1 | grep 'Cloning into'
-}
-
-install() {
-    module=$1
-
-    case $module in
-        github:*)
-            user=$(echo "$module" | cut -d ':' -f 2 | cut -d '/' -f 1)
-            module=$(echo "$module" | cut -d ':' -f 2 | cut -d '/' -f 2)
-            module_path="$HOME/.ellipsis/modules/$module"
-            git_clone "https://github.com/$user/$module" "$module_path"
-        ;;
-        *)
-            module_path="$HOME/.ellipsis/modules/$module"
-            git_clone "https://github.com/zeekay/dot-$module" "$module_path"
-        ;;
-    esac
-
-    . "$module_path/.ellipsis/install"
-}
-
-status() {
-    name=$(echo "${1##*/}" | sed 's/^\.//')
-    cd "$1"
-
-    ahead=$(git status -sb --porcelain | grep --color=no -o '\[.*\]')
-    has_changes=$(git status --untracked-files=no --porcelain 2> /dev/null | tail -n1)
-    [[ "$ahead" = "" ]] && [[ "$has_changes" = "" ]] && return
-
-    echo -e "\033[1m$name\033[0m $(git --no-pager log --pretty=format:'%h %ad' --abbrev-commit --date=relative -1) $ahead" | sed 's/\-e //'
-
-    git --no-pager diff --stat --color=always
-}
-
-pull() {
-    name=$(echo "${1##*/}" | sed 's/^\.//')
-    cd "$1"
-
-    echo -e "\033[1mupdating $name\033[0m" | sed 's/\-e //'
-
-    git pull
-}
-
-push() {
-    name=$(echo "${1##*/}" | sed 's/^\.//')
-    cd "$1"
-
-    echo -e "\033[1mpushing $name\033[0m" | sed 's/\-e //'
-
-    git push
-}
-
-_do() {
-    eval "${1}" $HOME/.ellipsis
-
-    for module in $HOME/.ellipsis/modules/*; do
-        if [ -e "$module/.ellipsis/$1" ]; then
-            module_path=$module
-            module=${module##*/}
-            . "$module_path/.ellipsis/$1"
-        fi
-    done
 }
 
 case $1 in
     install|add|in|+)
-        install $2
+        ellipsis.install $2
     ;;
     status|st)
-        _do status
+        ellipsis.do git.status
     ;;
     pull|update|up)
-        _do pull
+        ellipsis.do git.pull
     ;;
     push)
-        _do push
+        ellipsis.do git.push
     ;;
     help)
         usage
-        exit 0
+    ;;
+    version)
+
     ;;
     *)
 	    usage >&2

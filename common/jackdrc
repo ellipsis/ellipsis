@@ -1,1 +1,0 @@
-jackd -dfirewire -r48000 -p1024 -n3
