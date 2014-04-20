@@ -73,7 +73,7 @@ ellipsis.run_installer() {
 
 # symlink a single file into $HOME
 ellipsis.link_file() {
-    name="${$1##*/}"
+    name="${1##*/}"
     dest="~/.$name"
 
     backup "$dest"
