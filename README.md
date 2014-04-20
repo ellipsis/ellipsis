@@ -2,17 +2,17 @@
     /\_\ /\_\ /\_\
     \/_/ \/_/ \/_/
 
-Ellipsis is a modular framework for managing dotfiles. It makes managing the
-most complex configurations a breeze.
+Ellipsis is a framework for managing dotfiles.
 
 ### Features
 - Creating new modules is trivial (any git repository is already a module).
-- Easy to share parts of your dotfiles config, i.e., your vim setup or zsh
-  configuration, etc.
-- Ability to see status across all modules at once, perform complex updates
-  across all modules.
-- Cross platform, tested and known to work on Mac OS X, Linux, FreeBSD and even
-  Cygwin.
+- Ellipsis modules make it easy to share specific bits of your dotfiles. Say a
+  friend wants to test out your ZSH setup but doesn't want to adopt the madness
+  that is your Vim config? No problem, he can just `ellipsis install
+  github-user/dot-zsh`
+- Quickly see which dotfiles have been modified, and keep them updated and in
+  sync across systems.
+- Cross platform, known to work on Mac OS X, Linux, FreeBSD and even Cygwin.
 - Completely customizable.
 
 ### Install
@@ -107,10 +107,44 @@ There are also several wrappers around common git operations which can be used
 for consistency with the rest of ellipsis: **git.clone**, **git.pull**,
 **git.push**, and **git.status**.
 
+### Available modules
+
+#### [zeekay/dot-alfred](alfred)
+Alfred configuration files.
+
+#### [zeekay/dot-emacs](emacs)
+Emacs configuration files.
+
+#### [zeekay/dot-files](files)
+Default dotfiles for ellipsis.
+
+#### [zeekay/dot-irssi](irssi)
+Irssi configuration.
+
+#### [zeekay/dot-iterm2](iterm2)
+iTerm2 configuration files.
+
+#### [zeekay/dot-vim](vim)
+Vim configuration based on vice framework.
+
+#### [zeekay/dot-xmonad](xmonad)
+Xmonad configuration.
+
+#### [zeekay/dot-zsh](zsh)
+Zsh configuration using zeesh! framework.
+
 ### Development
 Pull requests welcome! To suggest a feature or report a bug:
 http://github.com/zeekay/ellipsis/issues.
 
 New code should follow [Google's style guide][style-guide].
 
+[alfred]:      https://github.com/zeekay/dot-alfred
+[emacs]:       https://github.com/zeekay/dot-emacs
+[files]:       https://github.com/zeekay/dot-files
+[irssi]:       https://github.com/zeekay/dot-irssi
+[iterm2]:      https://github.com/zeekay/dot-iterm2
+[vim]:         https://github.com/zeekay/dot-vim
+[xmonad]:      https://github.com/zeekay/dot-xmonad
+[zsh]:         https://github.com/zeekay/dot-zsh
 [style-guide]: https://google-styleguide.googlecode.com/svn/trunk/shell.xml
