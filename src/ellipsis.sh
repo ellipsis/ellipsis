@@ -135,8 +135,15 @@ ellipsis.install() {
         ;;
     esac
 
+    original_cwd="$(pwd)"
+
+    # change to mod_path and source module
+    cd $mod_path
+
     # source ellipsis module
-    source "$mod_path/ellipsis.sh"
+    if [ -f ellipsis.sh ]; then
+        source "ellipsis.sh"
+    fi
 
     # run install hook if available, otherwise link files in place
     if hash mod.install 2>/dev/null; then
@@ -144,6 +151,15 @@ ellipsis.install() {
     else
         ellipsis.link_files $mod_path
     fi
+
+    # unset any hooks that might be defined
+    unset -f mod.install
+    unset -f mod.pull
+    unset -f mod.push
+    unset -f mod.status
+
+    # return to original cwd
+    cd $original_cwd
 }
 
 # Uninstall ellipsis module, using uninstall hook if one exists. If no hook is
