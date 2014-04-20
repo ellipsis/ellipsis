@@ -27,17 +27,19 @@ You can also specify which modules to install by setting the `MODULES` variable,
 ### Usage
 ```
 Usage: ellipsis <command>
+  Options:
+    -h, --help     show help
+    -v, --version  show version
 
-Commands
-  install     install new ellipsis module
-  list        list available modules for install
-  new         create a new ellipsis module
-  pull        pull updates from upstream repositories
-  push        push updates to local modules back to upstream repositories
-  status      show status of local modules
-  uninstall   uninstall ellipsis module
-  help        show ellipsis help
-  version     show ellipsis version
+  Commands:
+    install        install new module
+    uninstall      uninstall module
+    new            create a new module
+    list           list installed modules
+    available      list modules available for install
+    pull           git pull all modules
+    push           git push all modules
+    status         show status of all modules
 ```
 
 ### Configuration
