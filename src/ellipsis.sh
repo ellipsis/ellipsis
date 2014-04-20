@@ -192,13 +192,77 @@ ellipsis.available() {
 }
 
 ellipsis.new() {
-    mod_name="$1"
-    if [ -z "$1" ]; then
-        echo "No name provided"
-        exit 1
+    if [ $# -eq 1 ]; then
+        mod_path="$HOME/.ellipsis/modules/$1"
+    else
+        mod_path="$(pwd)"
     fi
 
-    mkdir $HOME/.ellipsis/modules/$1
+    mod_name="${mod_path##*/}"
+
+    # create module dir
+    mkdir -p $mod_path
+
+    # check if dir is empty
+    if [ -z $(find $mod_path -prune -empty) ]; then
+        echo -e "destination is not empty, continue? \c"
+        read answer
+        case "$answer" in
+            y*|Y*)
+                # continue. better way to do this?
+            ;;
+            *)
+                exit 0
+            ;;
+        esac
+    fi
+
+    local escaped_pwd='$(pwd)'
+
+    cat > $mod_path/ellipsis.sh <<EOF
+#!/usr/bin/env bash
+#
+# $mod_name ellipsis module
+
+# The following hooks can be defined to customize behavior of your module:
+# mod.install() {
+#     ellipsis.link_files $escaped_pwd
+# }
+
+# mod.push() {
+#     git.push
+# }
+
+# mod.pull() {
+#     git.pull
+# }
+
+# mod.status() {
+#     git.status
+# }
+EOF
+
+    local prompt=$
+    local fence=\`\`\`
+    cat > $mod_path/README.md <<EOF
+# $mod_name
+Just a bunch of dotfiles.
+
+## Install
+Clone and symlink or install with [ellipsis][ellipsis]:
+
+$fence
+$prompt ellipsis install $mod_name
+$fence
+
+[ellipsis]: http://ellipsis.sh
+EOF
+
+    cd $mod_path
+    git init
+    git add README.md ellipsis.sh
+    git commit -m "Initial commit"
+    echo new module created at ${mod_path/$HOME/\~}
 }
 
 # Run commands across all modules.
