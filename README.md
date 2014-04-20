@@ -60,7 +60,7 @@ Customize how module is installed. By default all files are symlinked into
 `$HOME`.
 
 #### mod.uninstall
-Customize how module is uninstalled. By default all files are unsymlinked from
+Customize how module is uninstalled. By default all symlinks are removed from
 `$HOME`.
 
 #### mod.push
