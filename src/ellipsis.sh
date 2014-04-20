@@ -194,8 +194,10 @@ ellipsis.available() {
 ellipsis.new() {
     mod_name="$1"
     if [ -z "$1" ]; then
-        echo ""
+        echo "No name provided"
+        exit 1
     fi
+
     mkdir $HOME/.ellipsis/modules/$1
 }
 
