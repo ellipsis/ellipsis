@@ -1,6 +1,6 @@
      _    _    _
     /\_\ /\_\ /\_\
-    \/_/ \/_/ \/_/
+    \/_/ \/_/ \/_/              …because $HOME is where the <3 is!
 
 Ellipsis is a framework for managing dotfiles.
 
