@@ -1,9 +1,19 @@
-## …
      _    _    _
     /\_\ /\_\ /\_\
     \/_/ \/_/ \/_/
 
-A framework for managing dotfiles.
+Ellipsis is a modular framework for managing dotfiles. It makes managing the
+most complex configurations a breeze.
+
+### Features
+- Creating new modules is trivial (any git repository is already a module).
+- Easy to share parts of your dotfiles config, i.e., your vim setup or zsh
+  configuration, etc.
+- Ability to see status across all modules at once, perform complex updates
+  across all modules.
+- Cross platform, tested and known to work on Mac OS X, Linux, FreeBSD and even
+  Cygwin.
+- Completely customizable.
 
 ### Install
 Clone and symlink or use handy-dandy installer:
