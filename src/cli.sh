@@ -27,7 +27,7 @@ cli.version() {
     local cwd="$(pwd)"
     cd $HOME/.ellipsis
 
-    local version=1.0.3
+    local version=1.0.4
     local sha1=$(git rev-parse --short HEAD)
     echo -e "\033[1mv$version\033[0m ($sha1)"
 
