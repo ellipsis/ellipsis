@@ -109,28 +109,28 @@ for consistency with the rest of ellipsis: **git.clone**, **git.pull**,
 
 ### Available modules
 
-#### [zeekay/dot-alfred](alfred)
+#### [zeekay/dot-alfred][alfred]
 Alfred configuration files.
 
-#### [zeekay/dot-emacs](emacs)
+#### [zeekay/dot-emacs][emacs]
 Emacs configuration files.
 
-#### [zeekay/dot-files](files)
+#### [zeekay/dot-files][files]
 Default dotfiles for ellipsis.
 
-#### [zeekay/dot-irssi](irssi)
+#### [zeekay/dot-irssi][irssi]
 Irssi configuration.
 
-#### [zeekay/dot-iterm2](iterm2)
+#### [zeekay/dot-iterm2][iterm2]
 iTerm2 configuration files.
 
-#### [zeekay/dot-vim](vim)
+#### [zeekay/dot-vim][vim]
 Vim configuration based on vice framework.
 
-#### [zeekay/dot-xmonad](xmonad)
+#### [zeekay/dot-xmonad][xmonad]
 Xmonad configuration.
 
-#### [zeekay/dot-zsh](zsh)
+#### [zeekay/dot-zsh][zsh]
 Zsh configuration using zeesh! framework.
 
 ### Development
