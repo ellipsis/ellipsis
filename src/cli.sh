@@ -23,9 +23,8 @@ Usage: ellipsis <command>
 
 # prints ellipsis version
 cli.version() {
-    tag=$(git describe --tags --abbrev=0)
     sha=$(git rev-parse --short HEAD)
-    echo "$tag ($sha)"
+    echo "v1.0.2 ($sha)"
 }
 
 # run ellipsis
