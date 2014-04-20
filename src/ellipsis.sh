@@ -76,7 +76,7 @@ ellipsis.link_file() {
     name="${1##*/}"
     dest="~/.$name"
 
-    backup "$dest"
+    ellipsis.backup "$dest"
 
     echo linking "$dest"
     ln -s "$1" "$dest"
