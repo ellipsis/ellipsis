@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 #
 # Installer for ellipsis (http://ellipsis.sh)
 
@@ -15,13 +15,11 @@ done
 
 # Create temp directory
 tmp_dir=$(mktemp -d) && cd $tmp_dir
+echo in $tmp_dir
 
 # Download lib components
-curl -s "$ELLIPSIS_URL/src/git.sh" > git.sh
-curl -s "$ELLIPSIS_URL/src/ellipsis.sh" > ellipsis.sh
-
-# Switch to bash
-bash
+curl -L "$ELLIPSIS_URL/src/git.sh" > git.sh
+curl -L "$ELLIPSIS_URL/src/ellipsis.sh" > ellipsis.sh
 
 # source lib files
 source git.sh
@@ -38,21 +36,21 @@ if [ -z "$MODULES" ]; then
 
     # list default modules
     if [ "$(ellipsis.platform)" = "darwin" ]; then
-        default_modules="files vim zsh alfred iterm2"
+        default="files vim zsh alfred iterm2"
     else
-        default_modules="files vim zsh"
+        default="files vim zsh"
     fi
-    echo "Default: $default_modules"
+
+    echo "default: $default"
 
     # allow user to override defaults
-    read modules </dev/tty
-    modules="${modules:-$default_modules}"
+    read modules
+    modules="${modules:-$default}"
 else
     # user already provided modules list to install
     modules="$MODULES"
 fi
 
 for module in ${modules[*]}; do
-    echo
     ellipsis.install $module
 done
