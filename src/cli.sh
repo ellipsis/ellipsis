@@ -8,13 +8,14 @@ cli.usage() {
 	Usage: ellipsis <command>
 
 	Commands
-	  install     install a new ellipsis module
-	  list        list available modules
-	  push        push updates to local modules back to upstream repositories
-	  pull        pull updates from upstream repositories
-	  status      report status of local modules
-	  help        print this message and exit
-	  version     print ellipsis version
+      new         create a new ellipsis module
+      install     install a new ellipsis module
+      list        list available modules
+      push        push updates to local modules back to upstream repositories
+      pull        pull updates from upstream repositories
+      status      report status of local modules
+      help        print this message and exit
+      version     print ellipsis version
 	EOF
 }
 

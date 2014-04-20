@@ -72,13 +72,10 @@ Download an installation script with `curl` and execute it.
 #### ellipsis.link_files
 Links files in `$1` into `$HOME`.
 
+#### git.<command\>
 There are also several wrappers around common git operations which can be used
-for consistency with the rest of ellipsis.
-
-- `git.clone`
-- `git.pull`
-- `git.push`
-- `git.status`
+for consistency with the rest of ellipsis: **git.clone**, **git.pull**,
+**git.push**, and **git.status**.
 
 ### Development
 Pull requests welcome! To suggest a feature or report a bug:
