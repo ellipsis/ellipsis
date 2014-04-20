@@ -23,8 +23,14 @@ Usage: ellipsis <command>
 
 # prints ellipsis version
 cli.version() {
-    sha=$(git rev-parse --short HEAD)
-    echo "v1.0.2 ($sha)"
+    local cwd="$(pwd)"
+    cd $HOME/.ellipsis
+
+    local version=1.0.2
+    local sha1=$(git rev-parse --short HEAD)
+    echo -e "\033[1mv$version\033[0m ($sha1)"
+
+    cd $cwd
 }
 
 # run ellipsis
