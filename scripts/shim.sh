@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# shim for ellipsis installer
+
+# wait for curl output to finish
+sleep 0.5
+
+# Ensure dependencies are installed.
+deps=(bash curl git)
+
+for dep in ${deps[*]}; do
+    hash $dep 2>/dev/null || { echo >&2 "ellipsis requires $dep to be installed."; exit 1; }
+done
+
+# Download full installer and execute with bash
+curl -sL http://ellipsis.sh/scripts/install.sh > install-$$.sh
+bash install-$$.sh
+
+# Clean up
+rm install-$$.sh
