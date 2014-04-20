@@ -112,6 +112,9 @@ for consistency with the rest of ellipsis: **git.clone**, **git.pull**,
 #### [zeekay/dot-alfred][alfred]
 Alfred configuration files.
 
+#### [zeekay/dot-atom][atom]
+Atom configuration files.
+
 #### [zeekay/dot-emacs][emacs]
 Emacs configuration files.
 
@@ -140,6 +143,7 @@ http://github.com/zeekay/ellipsis/issues.
 New code should follow [Google's style guide][style-guide].
 
 [alfred]:      https://github.com/zeekay/dot-alfred
+[atom]:        https://github.com/zeekay/dot-atom
 [emacs]:       https://github.com/zeekay/dot-emacs
 [files]:       https://github.com/zeekay/dot-files
 [irssi]:       https://github.com/zeekay/dot-irssi
