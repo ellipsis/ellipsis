@@ -59,9 +59,13 @@ cli.run() {
             cli.version
             ;;
         *)
-            echo ellipsis: invalid command -- $1
-            cli.usage >&2
-            exit 1
+            if [ "$1" ]; then
+                echo ellipsis: invalid command -- $1
+                cli.usage >&2
+                exit 1
+            else
+                cli.usage
+            fi
             ;;
     esac
 }
