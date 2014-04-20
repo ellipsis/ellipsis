@@ -44,7 +44,11 @@ cli.run() {
             ellipsis.uninstall $2
             ;;
         list|ls|installed)
-            ellipsis.list | column -t -s $'\t'
+            if hash column 2>/dev/null; then
+                ellipsis.list | column -t -s $'\t'
+            else
+                ellipsis.list
+            fi
             ;;
         available)
             ellipsis.available
