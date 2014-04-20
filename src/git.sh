@@ -20,8 +20,8 @@ git.push() {
 }
 
 git.status() {
-    ahead=$(git status -sb --porcelain | grep --color=no -o '\[.*\]')
-    has_changes=$(git status --untracked-files=no --porcelain 2> /dev/null | tail -n1)
+    local ahead=$(git status -sb --porcelain | grep --color=no -o '\[.*\]')
+    local has_changes=$(git status --untracked-files=no --porcelain 2> /dev/null | tail -n1)
     [[ "$ahead" = "" ]] && [[ "$has_changes" = "" ]] && return
 
     echo -e "\033[1m$mod_name\033[0m $(git --no-pager log --pretty=format:'%h %ad' --abbrev-commit --date=relative -1) $ahead" | sed 's/\-e //'
