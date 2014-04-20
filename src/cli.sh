@@ -13,7 +13,8 @@ Usage: ellipsis <command>
   Commands:
     install        install new module
     uninstall      uninstall module
-    list           list available modules for install
+    list           list installed modules
+    available      list modules available for install
     new            create a new module
     pull           git pull all modules
     push           git push all modules
@@ -42,8 +43,11 @@ cli.run() {
         uninstall|remove|rm|-)
             ellipsis.uninstall $2
             ;;
-        list)
-            ellipsis.list
+        list|ls|installed)
+            ellipsis.list | column -t -s $'\t'
+            ;;
+        available)
+            ellipsis.available
             ;;
         new)
             ellipsis.new $2

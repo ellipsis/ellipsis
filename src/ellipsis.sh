@@ -181,8 +181,13 @@ ellipsis.uninstall() {
     fi
 }
 
-# List available modules using $ELLIPSIS_MODULES_URL
+# List installed modules
 ellipsis.list() {
+    ellipsis.do list
+}
+
+# List available modules using $ELLIPSIS_MODULES_URL
+ellipsis.available() {
     curl -s $ELLIPSIS_MODULES_URL
 }
 
