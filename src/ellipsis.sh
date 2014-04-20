@@ -14,13 +14,13 @@ ellipsis.platform() {
 
 # backup existing file, ensuring you don't overwrite existing backups
 ellipsis.backup() {
-    original="$1"
-    backup="$original.bak"
-    name="${original##*/}"
+    local original="$1"
+    local backup="$original.bak"
+    local name="${original##*/}"
 
     # check for broken symlinks
     if [ "$(find -L "$original" -maxdepth 0 -type l 2>/dev/null)" != "" ]; then
-        broken=$(readlink "$original")
+        local broken=$(readlink "$original")
 
         if [ "$(echo "$broken" | grep .ellipsis)" != "" ]; then
             # silently remove old broken ellipsis symlinks
@@ -73,8 +73,8 @@ ellipsis.run_installer() {
 
 # symlink a single file into $HOME
 ellipsis.link_file() {
-    name="${1##*/}"
-    dest="$HOME/.$name"
+    local name="${1##*/}"
+    local dest="$HOME/.$name"
 
     ellipsis.backup "$dest"
 
@@ -116,7 +116,7 @@ ellipsis.unlink_files() {
 # Installs new ellipsis module, using install hook if one exists. If no hook is
 # defined, all files are symlinked into $HOME using `ellipsis.link_files`.
 ellipsis.install() {
-    case $mod in
+    case "$1" in
         http:*|https:*|git:*|ssh:*)
             mod_name=$(echo "$1" | rev | cut -d '/' -f 1 | rev)
             mod_path="$HOME/.ellipsis/modules/$mod_name"
@@ -135,7 +135,7 @@ ellipsis.install() {
         ;;
     esac
 
-    original_cwd="$(pwd)"
+    local original_cwd="$(pwd)"
 
     # change to mod_path and source module
     cd $mod_path
@@ -190,24 +190,25 @@ ellipsis.new() {
     mod_name="$1"
     if [ -z "$1" ]; then
         echo ""
-
     fi
     mkdir $HOME/.ellipsis/modules/$1
 }
 
 # Run commands across all modules.
 ellipsis.do() {
+    local original_cwd=$(pwd)
+
     # execute command for ellipsis first
     mod_name=ellipsis
     mod_path=$HOME/.ellipsis
     cd $HOME/.ellipsis
     eval "${1}" $mod_name
+    cd $original_cwd
 
     # loop over modules, excecuting command
     for module in "$HOME/.ellipsis/modules/"*; do
         mod_path=$module
         mod_name=${module##*/}
-        original_cwd=$(pwd)
 
         # change to mod_path and source module
         cd $mod_path
