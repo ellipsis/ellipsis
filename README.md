@@ -59,18 +59,21 @@ Customize output of `ellipsis status`.
 Ellipsis exposes a number of variables to modules during install/execution as
 well as a collection of useful utility functions.
 
-#### ellipsis.platform
-Platform detection, returns lowercase result of `uname`.
-
 #### ellipsis.backup
 Moves existing file `$1` to `$1.bak`, taking care not to overwrite any existing
 backups.
 
-#### ellipsis.run_installer
-Download an installation script with `curl` and execute it.
+#### ellipsis.link_file
+Link a single file `$1` into `$HOME`.
 
 #### ellipsis.link_files
 Links files in `$1` into `$HOME`.
+
+#### ellipsis.platform
+Platform detection, returns lowercase result of `uname`.
+
+#### ellipsis.run_installer
+Download an installation script from url `$1` with `curl` and execute it.
 
 #### git.[command]
 There are also several wrappers around common git operations which can be used
