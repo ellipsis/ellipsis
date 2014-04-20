@@ -74,7 +74,7 @@ ellipsis.run_installer() {
 # symlink a single file into $HOME
 ellipsis.link_file() {
     name="${1##*/}"
-    dest="~/.$name"
+    dest="$HOME/.$name"
 
     ellipsis.backup "$dest"
 
@@ -100,15 +100,15 @@ ellipsis.link_files() {
 
 # Find any files that originate from this path and rm symlinks to them in $HOME.
 ellipsis.unlink_files() {
-    for file in $(find "~/.home" -maxdepth 1 -name '*' \
-                                      ! -name '.*' \
-                                      ! -name 'README' \
-                                      ! -name 'LICENSE' \
-                                      ! -name '*.md' \
-                                      ! -name '*.rst' \
-                                      ! -name '*.txt' \
-                                      ! -name "$1" \
-                                      ! -name "ellipsis.sh" | sort); do
+    for file in $(find "$HOME" -maxdepth 1 -name '*' \
+                                         ! -name '.*' \
+                                         ! -name 'README' \
+                                         ! -name 'LICENSE' \
+                                         ! -name '*.md' \
+                                         ! -name '*.rst' \
+                                         ! -name '*.txt' \
+                                         ! -name "$1" \
+                                         ! -name "ellipsis.sh" | sort); do
         rm $file
     done
 }
@@ -119,18 +119,18 @@ ellipsis.install() {
     case $mod in
         http:*|https:*|git:*|ssh:*)
             mod_name=$(echo "$1" | rev | cut -d '/' -f 1 | rev)
-            mod_path="~/.ellipsis/modules/$mod_name"
+            mod_path="$HOME/.ellipsis/modules/$mod_name"
             git.clone "$1" "$mod_path"
         ;;
         github:*)
             user=$(echo "$1" | cut -d ':' -f 2 | cut -d '/' -f 1)
             mod_name=$(echo "$1" | cut -d ':' -f 2 | cut -d '/' -f 2)
-            mod_path="~/.ellipsis/modules/$mod_name"
+            mod_path="$HOME/.ellipsis/modules/$mod_name"
             git.clone "https://github.com/$user/$mod_name" "$mod_path"
         ;;
         *)
             mod_name="$1"
-            mod_path="~/.ellipsis/modules/$mod_name"
+            mod_path="$HOME/.ellipsis/modules/$mod_name"
             git.clone "https://github.com/$ELLIPSIS_USER/dot-$mod_name" "$mod_path"
         ;;
     esac
@@ -166,9 +166,9 @@ ellipsis.install() {
 # defined, all symlinked files in $HOME are removed.
 ellipsis.uninstall() {
     mod_name="$1"
-    mod_path="~/.ellipsis/modules/$mod_name"
+    mod_path="$HOME/.ellipsis/modules/$mod_name"
 
-    find ~ -type l -name '.*' -maxdepth 1 | xargs readlink | grep ellipsis/modules/$name
+    find $HOME -type l -name '.*' -maxdepth 1 | xargs readlink | grep ellipsis/modules/$name
 
     # source ellipsis module
     source "$mod_path/ellipsis.sh"
@@ -192,19 +192,19 @@ ellipsis.new() {
         echo ""
 
     fi
-    mkdir ~/.ellipsis/modules/$1
+    mkdir $HOME/.ellipsis/modules/$1
 }
 
 # Run commands across all modules.
 ellipsis.do() {
     # execute command for ellipsis first
     mod_name=ellipsis
-    mod_path=~/.ellipsis
-    cd ~/.ellipsis
+    mod_path=$HOME/.ellipsis
+    cd $HOME/.ellipsis
     eval "${1}" $mod_name
 
     # loop over modules, excecuting command
-    for module in ~/.ellipsis/modules/*; do
+    for module in "$HOME/.ellipsis/modules/"*; do
         mod_path=$module
         mod_name=${module##*/}
         original_cwd=$(pwd)
@@ -213,7 +213,7 @@ ellipsis.do() {
         cd $mod_path
 
         # modules are not required to have an ellipsis.sh file
-        if [ -f ellipsis.sh ]; then
+        if [ -f "ellipsis.sh" ]; then
             source "ellipsis.sh"
         fi
 
