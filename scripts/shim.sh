@@ -1,6 +1,9 @@
 #!/bin/sh
 #
-# shim for ellipsis installer
+# shim for ellipsis installer.sh
+#
+# This is used on ellipsis.sh to bootstrap the full installer, which you
+# otherwise can't curl and pipe to sh (as it requires bash)
 
 # wait for curl output to finish
 sleep 0.5
