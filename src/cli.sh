@@ -10,7 +10,7 @@ Usage: ellipsis <command>
     -h, --help     show help
     -v, --version  show version
 
-  Commands
+  Commands:
     install        install new module
     uninstall      uninstall module
     list           list available modules for install
