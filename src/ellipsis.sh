@@ -98,12 +98,23 @@ ellipsis.link_files() {
     done
 }
 
+# Find any files that originate from this path and rm symlinks to them in $HOME.
+ellipsis.unlink_files() {
+    for file in $(find "~/.home" -maxdepth 1 -name '*' \
+                                      ! -name '.*' \
+                                      ! -name 'README' \
+                                      ! -name 'LICENSE' \
+                                      ! -name '*.md' \
+                                      ! -name '*.rst' \
+                                      ! -name '*.txt' \
+                                      ! -name "$1" \
+                                      ! -name "ellipsis.sh" | sort); do
+        rm $file
+    done
+}
+
 # Installs new ellipsis module, using install hook if one exists. If no hook is
 # defined, all files are symlinked into $HOME using `ellipsis.link_files`.
-#
-# Following variables are available from your hook:
-#   $mod_name Name of your module
-#   $mod_path Path to your module
 ellipsis.install() {
     case $mod in
         http:*|https:*|git:*|ssh:*)
@@ -132,6 +143,25 @@ ellipsis.install() {
         mod.install
     else
         ellipsis.link_files $mod_path
+    fi
+}
+
+# Uninstall ellipsis module, using uninstall hook if one exists. If no hook is
+# defined, all symlinked files in $HOME are removed.
+ellipsis.uninstall() {
+    mod_name="$1"
+    mod_path="~/.ellipsis/modules/$mod_name"
+
+    find ~ -type l -name '.*' -maxdepth 1 | xargs readlink | grep ellipsis/modules/$name
+
+    # source ellipsis module
+    source "$mod_path/ellipsis.sh"
+
+    # run install hook if available, otherwise link files in place
+    if hash mod.uninstall 2>/dev/null; then
+        mod.uninstall
+    else
+        ellipsis.unlink_files $mod_path
     fi
 }
 

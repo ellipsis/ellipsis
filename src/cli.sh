@@ -8,14 +8,15 @@ cli.usage() {
 	Usage: ellipsis <command>
 
 	Commands
+      install     install new ellipsis module
+      list        list available modules for install
       new         create a new ellipsis module
-      install     install a new ellipsis module
-      list        list available modules
-      push        push updates to local modules back to upstream repositories
       pull        pull updates from upstream repositories
-      status      report status of local modules
-      help        print this message and exit
-      version     print ellipsis version
+      push        push updates to local modules back to upstream repositories
+      status      show status of local modules
+      uninstall   uninstall ellipsis module
+      help        show ellipsis help
+      version     show ellipsis version
 	EOF
 }
 
@@ -31,6 +32,9 @@ cli.run() {
     case "$1" in
         install|add|in|+)
             ellipsis.install $2
+            ;;
+        uninstall|remove|rm|-)
+            ellipsis.uninstall $2
             ;;
         list)
             ellipsis.list

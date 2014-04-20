@@ -19,32 +19,49 @@ You can also specify which modules to install by setting the `MODULES` variable,
 Usage: ellipsis <command>
 
 Commands
+  install     install new ellipsis module
+  list        list available modules for install
   new         create a new ellipsis module
-  install     install a new ellipsis module
-  list        list available modules
-  push        push updates to local modules back to upstream repositories
   pull        pull updates from upstream repositories
-  status      report status of local modules
-  help        print this message and exit
-  version     print ellipsis version
+  push        push updates to local modules back to upstream repositories
+  status      show status of local modules
+  uninstall   uninstall ellipsis module
+  help        show ellipsis help
+  version     show ellipsis version
 ```
 
 ### Configuration
-You can fork this repository and customize or use modules to extend your
-ellipsis installation. You can list additional modules, i.e.:
-`github:user/repo github:user/repo2`, etc.
+Ellipsis is just a framework, it comes with no predefined dot files. You can
+install modules during installation of ellipsis or at anytime afterwards using
+`ellipsis install`.
 
 ### Modules
-A module is any github repo with files you want to symlink into `$HOME`. You can
-add an `ellipsis.sh` file which will be sourced and used to customize how
-ellipsis installs/uses your module.
-
-Behavior of a module can be customized using several hooks.
+A module is any repo with files you want to symlink into `$HOME`. By default a
+given repo's non-hidden files (read: not beginning with a `.`) will naively be
+linked into `$HOME`. Of course this isn't sufficient for a lot of cases, so you
+can customize how ellipsis treats your module by defining hooks in an
+`ellipsis.sh` file at the root of your repository.
 
 ### Hooks
+Behavior of a module can be customized using several hooks.
+
+Following variables are available from your hook:
+
+#### $mod_name
+Name of your module.
+
+#### $mod_path
+Path to your module.
+
+The follow hooks may be defined:
 
 #### mod.install
-Customize how module is installed. By default all files are symlinked into `$HOME`.
+Customize how module is installed. By default all files are symlinked into
+`$HOME`.
+
+#### mod.uninstall
+Customize how module is uninstalled. By default all files are unsymlinked from
+`$HOME`.
 
 #### mod.push
 Customize how how changes are pushed `ellipsis push` is used.
