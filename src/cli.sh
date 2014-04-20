@@ -4,19 +4,20 @@
 
 # prints usage for ellipsis
 cli.usage() {
-	cat <<-EOF
-	Usage: ellipsis <command>
+    cat <<-EOF
+Usage: ellipsis <command>
+  Options:
+    -h, --help     show help
+    -v, --version  show version
 
-	Commands
-      install     install new ellipsis module
-      list        list available modules for install
-      new         create a new ellipsis module
-      pull        pull updates from upstream repositories
-      push        push updates to local modules back to upstream repositories
-      status      show status of local modules
-      uninstall   uninstall ellipsis module
-      help        show ellipsis help
-      version     show ellipsis version
+  Commands
+    install        install new module
+    uninstall      uninstall module
+    list           list available modules for install
+    new            create a new module
+    pull           git pull all modules
+    push           git push all modules
+    status         show status of all modules
 	EOF
 }
 
