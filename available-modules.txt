@@ -1,6 +1,9 @@
 alfred  https://github.com/zeekay/dot-alfred
         Alfred configuration files.
 
+atom    https://github.com/zeekay/dot-atom
+        Atom configuration files.
+
 emacs   https://github.com/zeekay/dot-emacs
         Emacs configuration files.
 
