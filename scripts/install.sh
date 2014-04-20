@@ -54,3 +54,8 @@ fi
 for module in ${modules[*]}; do
     ellipsis.install $module
 done
+
+# welcome to ellipsis ;)
+echo '   _    _    _                                                             '
+echo '  /\_\ /\_\ /\_\                                                           '
+echo '  \/_/ \/_/ \/_/                         …because $HOME is where the <3 is!'
