@@ -81,10 +81,10 @@ Moves existing file `$1` to `$1.bak`, taking care not to overwrite any existing
 backups.
 
 #### ellipsis.link_file
-Link a single file `$1` into `$HOME`.
+Link a single file `$1` into `$HOME`, taking care to backup an existing file.
 
 #### ellipsis.link_files
-Links files in `$1` into `$HOME`.
+Links files in `$1` into `$HOME`, taking care to backup any existing files.
 
 #### ellipsis.platform
 Platform detection, returns lowercase result of `uname`.
