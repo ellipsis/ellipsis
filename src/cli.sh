@@ -49,13 +49,13 @@ cli.run() {
             ellipsis.new $2
             ;;
         status|st)
-            ellipsis.do git.status
+            ellipsis.do status
             ;;
         pull|update|up)
-            ellipsis.do git.pull
+            ellipsis.do pull
             ;;
         push)
-            ellipsis.do git.push
+            ellipsis.do push
             ;;
         help|--help|-h)
             cli.usage

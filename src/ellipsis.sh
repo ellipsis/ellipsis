@@ -201,9 +201,9 @@ ellipsis.do() {
     # execute command for ellipsis first
     mod_name=ellipsis
     mod_path=$HOME/.ellipsis
-    cd $HOME/.ellipsis
-    eval "${1}" $mod_name
-    cd $cwd
+    cd $mod_path
+    eval "git.${1}"
+    cd "$cwd"
 
     # loop over modules, excecuting command
     for module in "$HOME/.ellipsis/modules/"*; do
@@ -222,7 +222,7 @@ ellipsis.do() {
         if hash mod.$1 2>/dev/null; then
             mod.$1
         else
-            $1 $mod_name
+            git.$1 $mod_path
         fi
 
         # unset any hooks that might be defined
