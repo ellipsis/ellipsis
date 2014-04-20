@@ -9,7 +9,7 @@ ELLIPSIS_URL="${ELLIPSIS_URL:-https://raw.githubusercontent.com/$ELLIPSIS_USER/e
 # Ensure dependencies are installed.
 deps=(bash curl git)
 
-for dep in deps; do
+for dep in ${deps[*]}; do
     hash $dep 2>/dev/null || { echo >&2 "ellipsis requires $dep to be installed."; exit 1; }
 done
 
@@ -52,7 +52,7 @@ else
     modules="$MODULES"
 fi
 
-for module in $modules; do
+for module in ${modules[*]}; do
     echo
     ellipsis.install $module
 done
