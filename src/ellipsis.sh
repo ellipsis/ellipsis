@@ -92,7 +92,7 @@ ellipsis.link_files() {
                                       ! -name '*.md' \
                                       ! -name '*.rst' \
                                       ! -name '*.txt' \
-                                      ! -name "$1" \
+                                      ! -wholename "$1" \
                                       ! -name "ellipsis.sh" | sort); do
         ellipsis.link_file $file
     done
