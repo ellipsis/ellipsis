@@ -57,9 +57,9 @@ ellipsis.backup() {
 # run web-based installers in github repo
 ellipsis.run_installer() {
     # save reference to current dir
-    cwd=$(pwd)
+    local cwd=$(pwd)
     # create temp dir and cd to it
-    tmp_dir=$(mktemp -d $TMPDIR.XXXXXX) && cd $tmp_dir
+    local tmp_dir=$(mktemp -d $TMPDIR.XXXXXX) && cd $tmp_dir
 
     # download installer
     curl -s "$url" > "tmp-$$.sh"
