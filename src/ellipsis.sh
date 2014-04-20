@@ -135,7 +135,7 @@ ellipsis.install() {
         ;;
     esac
 
-    local original_cwd="$(pwd)"
+    local cwd="$(pwd)"
 
     # change to mod_path and source module
     cd $mod_path
@@ -159,7 +159,7 @@ ellipsis.install() {
     unset -f mod.status
 
     # return to original cwd
-    cd $original_cwd
+    cd $cwd
 }
 
 # Uninstall ellipsis module, using uninstall hook if one exists. If no hook is
@@ -196,14 +196,14 @@ ellipsis.new() {
 
 # Run commands across all modules.
 ellipsis.do() {
-    local original_cwd=$(pwd)
+    local cwd=$(pwd)
 
     # execute command for ellipsis first
     mod_name=ellipsis
     mod_path=$HOME/.ellipsis
     cd $HOME/.ellipsis
     eval "${1}" $mod_name
-    cd $original_cwd
+    cd $cwd
 
     # loop over modules, excecuting command
     for module in "$HOME/.ellipsis/modules/"*; do
@@ -232,6 +232,6 @@ ellipsis.do() {
         unset -f mod.status
 
         # return to original cwd
-        cd $original_cwd
+        cd $cwd
     done
 }
