@@ -154,7 +154,8 @@ ellipsis.do() {
     # execute command for ellipsis first
     mod_name=ellipsis
     mod_path=~/.ellipsis
-    eval "${1}" ~/.ellipsis
+    cd ~/.ellipsis
+    eval "${1}" $mod_name
 
     # loop over modules, excecuting command
     for module in ~/.ellipsis/modules/*; do
