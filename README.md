@@ -74,10 +74,11 @@ Links files in `$1` into `$HOME`.
 
 There are also several wrappers around common git operations which can be used
 for consistency with the rest of ellipsis.
-    - `git.clone`
-    - `git.pull`
-    - `git.push`
-    - `git.status`
+
+- `git.clone`
+- `git.pull`
+- `git.push`
+- `git.status`
 
 ### Development
 Pull requests welcome! To suggest a feature or report a bug:
