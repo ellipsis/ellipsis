@@ -15,5 +15,6 @@ if [ -t 1 ]; then
     exit $?
 else
     # strip ansi colors
-    cli.run $@ | sed -e 's/\[[^m]*m//g'; exit $PIPESTATUS
+    cli.run $@ | sed -e 's/\[[^m]*m//g'
+    exit $PIPESTATUS # exit with result of first command in pipe, i.e., cli.run
 fi
