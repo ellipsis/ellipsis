@@ -1,5 +1,7 @@
 #!/usr/bin/env bats
 
+load _helper
+
 @test "cli.run without arguments prints usage" {
   run ellipsis
   [ "$status" -eq 1 ]
