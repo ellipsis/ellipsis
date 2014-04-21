@@ -4,7 +4,7 @@
 \/_/ \/_/ \/_/   …because $HOME is where the <3 is!
 ```
 
-Ellipsis is a framework for managing dotfiles.
+Ellipsis is a package manager for dotfiles.
 
 ### Features
 - Creating new modules is trivial (any git repository is already a module).
