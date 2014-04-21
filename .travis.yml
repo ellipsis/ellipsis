@@ -1,2 +1,5 @@
 language: c
-script: make test
+script: make test_travis
+notifications:
+  email:
+    on_success: never
