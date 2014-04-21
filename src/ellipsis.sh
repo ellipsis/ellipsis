@@ -53,24 +53,6 @@ ellipsis.backup() {
         mv "$original" "$backup"
     fi
 }
-
-# run web-based installers in github repo
-ellipsis.run_installer() {
-    # save reference to current dir
-    local cwd=$(pwd)
-    # create temp dir and cd to it
-    local tmp_dir=$(mktemp -d $TMPDIR.XXXXXX) && cd $tmp_dir
-
-    # download installer
-    curl -s "$url" > "tmp-$$.sh"
-    # run with ELLIPSIS env var set
-    ELLIPSIS=1 sh "tmp-$$.sh"
-
-    # change back to original dir and clean up
-    cd $cwd
-    rm -rf $tmp_dir
-}
-
 # symlink a single file into $HOME
 ellipsis.link_file() {
     local name="${1##*/}"
@@ -113,6 +95,23 @@ ellipsis.unlink_files() {
     done
 }
 
+# run web-based installers in github repo
+ellipsis.run_installer() {
+    # save reference to current dir
+    local cwd=$(pwd)
+    # create temp dir and cd to it
+    local tmp_dir=$(mktemp -d $TMPDIR.XXXXXX) && cd $tmp_dir
+
+    # download installer
+    curl -s "$url" > "tmp-$$.sh"
+    # run with ELLIPSIS env var set
+    ELLIPSIS=1 sh "tmp-$$.sh"
+
+    # change back to original dir and clean up
+    cd $cwd
+    rm -rf $tmp_dir
+}
+
 # Installs new ellipsis module, using install hook if one exists. If no hook is
 # defined, all files are symlinked into $HOME using `ellipsis.link_files`.
 ellipsis.install() {
@@ -135,55 +134,28 @@ ellipsis.install() {
         ;;
     esac
 
-    local cwd="$(pwd)"
-
-    # change to mod_path and source module
-    cd $mod_path
-
-    # source ellipsis module
-    if [ -f ellipsis.sh ]; then
-        source "ellipsis.sh"
-    fi
-
-    # run install hook if available, otherwise link files in place
-    if utils.cmd_exists mod.install; then
-        mod.install
-    else
-        ellipsis.link_files $mod_path
-    fi
-
-    # unset any hooks that might be defined
-    unset -f mod.install
-    unset -f mod.pull
-    unset -f mod.push
-    unset -f mod.status
-
-    # return to original cwd
-    cd $cwd
+    mod.init
+    mod.run mod.install
+    mod.del
 }
 
 # Uninstall ellipsis module, using uninstall hook if one exists. If no hook is
 # defined, all symlinked files in $HOME are removed.
 ellipsis.uninstall() {
-    mod_name="$1"
-    mod_path="$HOME/.ellipsis/modules/$mod_name"
+    mod_path="$HOME/.ellipsis/modules/$1"
 
-    find $HOME -type l -name '.*' -maxdepth 1 | xargs readlink | grep ellipsis/modules/$name
-
-    # source ellipsis module
-    source "$mod_path/ellipsis.sh"
-
-    # run install hook if available, otherwise link files in place
-    if utils.cmd_exists mod.uninstall; then
-        mod.uninstall
-    else
-        ellipsis.unlink_files $mod_path
-    fi
+    mod.init $mod_path
+    mod.run mod.uninstall
+    mod.del
 }
 
 # List installed modules
 ellipsis.list() {
-    ellipsis.do list
+    if utils.cmd_exists column; then
+        ellipsis.each mod.list | column -t -s $'\t'
+    else
+        ellipsis.each mod.list
+    fi
 }
 
 # List available modules using $ELLIPSIS_MODULES_URL
@@ -257,43 +229,24 @@ EOF
 }
 
 # Run commands across all modules.
-ellipsis.do() {
+ellipsis.each() {
     local cwd=$(pwd)
+    local cmd="$1"
 
     # execute command for ellipsis first
-    mod_name=ellipsis
-    mod_path=$HOME/.ellipsis
-    cd $mod_path
-    eval "git.${1}"
-    cd "$cwd"
+    mod.init $HOME/.ellipsis ellipsis
+    mod.run $cmd
+    mod.del
 
     # loop over modules, excecuting command
-    for module in "$HOME/.ellipsis/modules/"*; do
-        mod_path=$module
-        mod_name=${module##*/}
-
-        # change to mod_path and source module
-        cd $mod_path
-
-        # modules are not required to have an ellipsis.sh file
-        if [ -f "ellipsis.sh" ]; then
-            source "ellipsis.sh"
-        fi
-
-        # use module hooks if it exists
-        if utils.cmd_exists mod.$1; then
-            mod.$1
-        else
-            git.$1 $mod_path
-        fi
-
-        # unset any hooks that might be defined
-        unset -f mod.install
-        unset -f mod.pull
-        unset -f mod.push
-        unset -f mod.status
-
-        # return to original cwd
-        cd $cwd
+    for module in $(ellipsis.list_modules); do
+        mod.init $module
+        mod.run $cmd
+        mod.del
     done
+}
+
+# list all installed modules
+ellipsis.list_modules() {
+    echo $HOME/.ellipsis/modules/*
 }

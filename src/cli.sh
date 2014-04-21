@@ -44,11 +44,7 @@ cli.run() {
             ellipsis.uninstall $2
             ;;
         list|ls|installed)
-            if hash column 2>/dev/null; then
-                ellipsis.list | column -t -s $'\t'
-            else
-                ellipsis.list
-            fi
+            ellipsis.list
             ;;
         available)
             ellipsis.available
@@ -57,13 +53,13 @@ cli.run() {
             ellipsis.new $2
             ;;
         status|st)
-            ellipsis.do status
+            ellipsis.each git.status
             ;;
         pull|update|up)
-            ellipsis.do pull
+            ellipsis.each git.pull
             ;;
         push)
-            ellipsis.do push
+            ellipsis.each git.push
             ;;
         help|--help|-h)
             cli.usage

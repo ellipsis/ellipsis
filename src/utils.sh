@@ -30,3 +30,8 @@ utils.prompt() {
             ;;
     esac
 }
+
+# find symlinks in $HOME
+utils.find_symlinks() {
+    find ${1:-$HOME} -type l -maxdepth 1 | xargs readlink
+}
