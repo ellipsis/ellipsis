@@ -43,6 +43,10 @@ utils.relative_path() {
     echo ${1/$HOME/\~}
 }
 
+utils.strip_leading_dot() {
+    echo "${1#.}"
+}
+
 # detects slash in string
 utils.hash_slash() {
     case $1 in

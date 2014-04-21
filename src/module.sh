@@ -6,24 +6,30 @@ mod_hooks=(install uninstall symlinks pull push status list)
 
 # mod_name -> mod_path
 mod.name_to_path() {
-    echo "$HOME/.ellipsis/modules/$1"
+    local name="$1"
+
+    echo "$HOME/.ellipsis/modules/$name"
 }
 
 # mod path -> name
 mod.path_to_name() {
-    echo "${1##*/}"
+    local path="$1"
+
+    echo $(utils.strip_leading_dot "${path##*/}")
 }
 
 # initialize a module and it's hooks
 mod.init() {
+    local name_or_path="$1"
+
     # we can be passed either a name or path, paths are assumed to be absolute,
     # and should have a slash in them.
-    if utils.hash_slash $1; then
-        mod_path="$1"
-        mod_name="$(mod.path_to_name $1)"
+    if utils.hash_slash $name_or_path; then
+        mod_path="$name_or_path"
+        mod_name="$(mod.path_to_name $mod_path)"
     else
-        mod_name="$1"
-        mod_path="$(mod.name_to_path $1)"
+        mod_name="$name_or_path"
+        mod_path="$(mod.name_to_path $mod_name)"
     fi
 
     # source ellipsis.sh if it exists to initialize module hooks
@@ -34,6 +40,9 @@ mod.init() {
 
 # find module's symlinks
 mod.find_symlinks() {
+    local mod_name=${1:-$mod_name}
+
+    echo -e "\033[1m$mod_name symlinks\033[0m" | sed 's/\-e //'
     utils.find_symlinks | grep ellipsis/modules/$mod_name
 }
 
@@ -41,7 +50,6 @@ mod.find_symlinks() {
 mod.run() {
     local cmd="$1"
     local cwd="$(pwd)"
-    local module_path=${2:-$module_path}
 
     # change to module dir
     cd "$mod_path"
@@ -63,6 +71,7 @@ mod.run() {
 # run hook if it's defined, otherwise use default implementation
 mod.run_hook() {
     local hook=$1
+
     if utils.cmd_exists $hook; then
         $hook
     else
@@ -94,6 +103,12 @@ mod.run_hook() {
     fi
 }
 
+# clear globals, hooks
+mod.del() {
+    mod._unset_vars
+    mod._unset_hooks
+}
+
 # unset global modules
 mod._unset_vars() {
     unset mod_name
@@ -105,10 +120,4 @@ mod._unset_hooks() {
     for hook in ${mod_hooks[@]}; do
         unset -f mod.$hook
     done
-}
-
-# clear globals, hooks
-mod.del() {
-    mod._unset_vars
-    mod._unset_hooks
 }
