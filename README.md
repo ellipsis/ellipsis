@@ -180,8 +180,9 @@ Zsh configuration using zeesh! framework.
 
 ### Development
 Pull requests welcome! New code should follow [Google's style
-guide][style-guide]. To suggest a feature or report a bug:
-http://github.com/zeekay/ellipsis/issues.
+guide][style-guide]. To run tests you need to install [bats][bats].
+
+To suggest a feature or report a bug: http://github.com/zeekay/ellipsis/issues.
 
 [alfred]:      https://github.com/zeekay/dot-alfred
 [atom]:        https://github.com/zeekay/dot-atom
@@ -193,3 +194,4 @@ http://github.com/zeekay/ellipsis/issues.
 [xmonad]:      https://github.com/zeekay/dot-xmonad
 [zsh]:         https://github.com/zeekay/dot-zsh
 [style-guide]: https://google-styleguide.googlecode.com/svn/trunk/shell.xml
+[bats]:        https://github.com/sstephenson/bats
