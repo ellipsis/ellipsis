@@ -7,5 +7,6 @@ source "$SCRIPT_PATH/../src/ellipsis.sh"
 source "$SCRIPT_PATH/../src/git.sh"
 source "$SCRIPT_PATH/../src/module.sh"
 source "$SCRIPT_PATH/../src/utils.sh"
+source "$SCRIPT_PATH/../src/version.sh"
 
 cli.run $@
