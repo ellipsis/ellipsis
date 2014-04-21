@@ -1,12 +1,12 @@
+### ellipsis [![Build Status](https://travis-ci.org/zeekay/ellipsis.svg?branch=master)](https://travis-ci.org/zeekay/ellipsis)
+
 ```
  _    _    _
 /\_\ /\_\ /\_\
 \/_/ \/_/ \/_/   …because $HOME is where the <3 is!
 ```
 
-Ellipsis is a package manager for dotfiles.
-
-[![Build Status](https://travis-ci.org/zeekay/ellipsis.svg?branch=master)](https://travis-ci.org/zeekay/ellipsis)
+ellipsis is a package manager for dotfiles.
 
 ### Features
 - Creating new modules is trivial (any git repository is already a module).
