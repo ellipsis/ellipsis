@@ -68,10 +68,10 @@ cli.run() {
         push)
             ellipsis.each git.push
             ;;
-        help|--help|-h)
+        --help|-h)
             cli.usage
             ;;
-        version|--version|-v)
+        --version|-v)
             cli.version
             ;;
         *)
@@ -79,7 +79,7 @@ cli.run() {
                 echo ellipsis: invalid command -- $1
             fi
             cli.usage
-            exit 1
+            return 1
             ;;
     esac
 }

@@ -9,4 +9,11 @@ source "$SCRIPT_PATH/../src/module.sh"
 source "$SCRIPT_PATH/../src/utils.sh"
 source "$SCRIPT_PATH/../src/version.sh"
 
-cli.run $@
+# check for controlling terminal
+if [ -t 1 ]; then
+    cli.run $@
+    exit $?
+else
+    # strip ansi colors
+    cli.run $@ | sed -e 's/\[[^m]*m//g'; exit $PIPESTATUS
+fi
