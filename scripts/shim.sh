@@ -18,7 +18,7 @@ for dep in ${deps[*]}; do
 done
 
 # Download full installer and execute with bash
-curl -sL http://ellipsis.sh/scripts/install.sh > install-$$.sh
+curl -sL https://raw.githubusercontent.com/zeekay/ellipsis/master/scripts/install.sh > install-$$.sh
 bash install-$$.sh
 
 # Clean up
