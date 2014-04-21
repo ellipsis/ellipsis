@@ -2,12 +2,12 @@
 #
 # utils ellipsis functions
 
-# returns success if folder is empty
-utils.folder_is_empty() {
+# return true if folder is empty
+utils.folder_empty() {
     if [ $(find $1 -prune -empty) ]; then
-        return 1
+        return 0
     fi
-    return 0
+    return 1
 }
 
 # prompt with message and return true if yes/YES, otherwise false

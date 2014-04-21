@@ -204,7 +204,7 @@ ellipsis.new() {
     mkdir -p $mod_path
 
     # check if dir is empty
-    if ! utils.folder_is_empty $mod_path; then
+    if ! utils.folder_empty $mod_path; then
         utils.prompt "destination is not empty, continue? [y/n]" || exit 1
     fi
 
