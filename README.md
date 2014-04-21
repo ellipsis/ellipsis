@@ -178,10 +178,9 @@ Xmonad configuration.
 Zsh configuration using zeesh! framework.
 
 ### Development
-Pull requests welcome! To suggest a feature or report a bug:
+Pull requests welcome! New code should follow [Google's style
+guide][style-guide]. To suggest a feature or report a bug:
 http://github.com/zeekay/ellipsis/issues.
-
-New code should follow [Google's style guide][style-guide].
 
 [alfred]:      https://github.com/zeekay/dot-alfred
 [atom]:        https://github.com/zeekay/dot-atom
