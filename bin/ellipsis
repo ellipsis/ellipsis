@@ -3,7 +3,8 @@
 SCRIPT_PATH="$(dirname $0)"
 
 source "$SCRIPT_PATH/../src/cli.sh"
-source "$SCRIPT_PATH/../src/git.sh"
 source "$SCRIPT_PATH/../src/ellipsis.sh"
+source "$SCRIPT_PATH/../src/git.sh"
+source "$SCRIPT_PATH/../src/utils.sh"
 
 cli.run $@

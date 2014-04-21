@@ -146,7 +146,7 @@ ellipsis.install() {
     fi
 
     # run install hook if available, otherwise link files in place
-    if hash mod.install 2>/dev/null; then
+    if utils.cmd_exists mod.install; then
         mod.install
     else
         ellipsis.link_files $mod_path
@@ -174,7 +174,7 @@ ellipsis.uninstall() {
     source "$mod_path/ellipsis.sh"
 
     # run install hook if available, otherwise link files in place
-    if hash mod.uninstall 2>/dev/null; then
+    if utils.cmd_exists mod.uninstall; then
         mod.uninstall
     else
         ellipsis.unlink_files $mod_path
@@ -204,17 +204,8 @@ ellipsis.new() {
     mkdir -p $mod_path
 
     # check if dir is empty
-    if [ -z $(find $mod_path -prune -empty) ]; then
-        echo -e "destination is not empty, continue? \c"
-        read answer
-        case "$answer" in
-            y*|Y*)
-                # continue. better way to do this?
-            ;;
-            *)
-                exit 0
-            ;;
-        esac
+    if ! utils.folder_is_empty $mod_path; then
+        utils.prompt "destination is not empty, continue? [y/n]" || exit 1
     fi
 
     local escaped_pwd='$(pwd)'
@@ -290,7 +281,7 @@ ellipsis.do() {
         fi
 
         # use module hooks if it exists
-        if hash mod.$1 2>/dev/null; then
+        if utils.cmd_exists mod.$1; then
             mod.$1
         else
             git.$1 $mod_path
