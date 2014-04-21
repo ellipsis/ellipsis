@@ -58,3 +58,8 @@ utils.has_slash() {
             ;;
     esac
 }
+
+# dunno how this isn't part of POSIX
+utils.abs_path() {
+    echo $(cd $(dirname $1); pwd)/$(basename $1)
+}

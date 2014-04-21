@@ -78,9 +78,9 @@ cli.run() {
         *)
             if [ $# -gt 0 ]; then
                 echo ellipsis: invalid command -- $1
-                exit 1
             fi
             cli.usage
+            exit 1
             ;;
     esac
 }

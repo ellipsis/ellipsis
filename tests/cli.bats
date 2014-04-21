@@ -2,7 +2,7 @@
 
 @test "invoking ellipsis without arguments prints usage" {
   run ellipsis
-  [ "$status" -eq 0 ]
+  [ "$status" -eq 1 ]
   [ "${lines[0]}" = "Usage: ellipsis <command>" ]
 }
 
