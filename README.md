@@ -6,6 +6,8 @@
 
 Ellipsis is a package manager for dotfiles.
 
+[![Build Status](https://travis-ci.org/zeekay/ellipsis.svg?branch=master)](https://travis-ci.org/zeekay/ellipsis)
+
 ### Features
 - Creating new modules is trivial (any git repository is already a module).
 - Ellipsis modules make it easy to share specific bits of your dotfiles. Say a
