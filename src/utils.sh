@@ -38,6 +38,11 @@ utils.find_symlinks() {
     done
 }
 
+# dunno how this isn't part of POSIX
+utils.abs_path() {
+    echo $(cd $(dirname $1); pwd)/$(basename $1)
+}
+
 # return path to file relative to $HOME (if possible)
 utils.relative_path() {
     echo ${1/$HOME/\~}
@@ -57,9 +62,4 @@ utils.has_slash() {
             return 1
             ;;
     esac
-}
-
-# dunno how this isn't part of POSIX
-utils.abs_path() {
-    echo $(cd $(dirname $1); pwd)/$(basename $1)
 }
