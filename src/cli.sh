@@ -14,6 +14,7 @@ Usage: ellipsis <command>
     install        install new module
     uninstall      uninstall module
     list           list installed modules
+    links          list symlinks installed globally or for a module
     available      list modules available for install
     new            create a new module
     pull           git pull all modules

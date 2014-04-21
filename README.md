@@ -60,6 +60,7 @@ Usage: ellipsis <command>
     uninstall      uninstall module
     new            create a new module
     list           list installed modules
+    links          list symlinks installed globally or for a module
     available      list modules available for install
     pull           git pull all modules
     push           git push all modules
