@@ -21,7 +21,7 @@ Ellipsis is a framework for managing dotfiles.
 Clone and symlink or use handy-dandy installer:
 
 ```shell
-curl -sL ellipsis.sh | sh
+$ curl -sL ellipsis.sh | sh
 ```
 
 You can also specify which modules to install by setting the `MODULES` variable, i.e.:
@@ -30,10 +30,13 @@ You can also specify which modules to install by setting the `MODULES` variable,
 $ curl -sL ellipsis.sh | MODULES='vim zsh' sh
 ```
 
+I recommend adding `~/.ellipsis/bin` to your `$PATH`, but you can also just
+symlink `~/.ellipsis/bin/ellipsis` somewhere convenient.
+
 ### Usage
-Clone and symlink into `~/.ellipsis` or curl installer and export
-`PATH=~/.ellipsis/bin:$PATH`. Modules to install can be specified by
-github-user/repo or full ssh/git/http(s) urls:
+Ellipsis comes with no dotfiles out of the box. To add a dotfiles modules, use
+`ellipsis install`. Modules to install can be specified by github-user/repo or
+full ssh/git/http(s) urls:
 
 shell
 ```
@@ -44,9 +47,10 @@ $ ellipsis install zsh
 
 ...all work.
 
-Full usage available via `ellipsis --help`:
+Full usage available via `ellipsis` executable:
 
 ```
+$ ellipsis -h
 Usage: ellipsis <command>
   Options:
     -h, --help     show help
@@ -64,13 +68,7 @@ Usage: ellipsis <command>
 ```
 
 ### Configuration
-You can customize ellipsis by exporting a few different variables:
-
-```shell
-export ELLIPSIS_USER="zeekay"
-export ELLIPSIS_REPO="https://github.com/zeekay/ellipsis"
-export ELLIPSIS_MODULES_URL="https://raw.githubusercontent.com/zeekay/ellipsis/master/available-modules.txt"
-```
+You can customize ellipsis by exporting a few different variables.
 
 #### ELLIPSIS_USER
 Customize whose dotfiles are installed when you `ellipsis install` without
@@ -82,6 +80,12 @@ Customize location of ellipsis repo cloned during a curl-based install.
 #### ELLIPSIS_MODULES_URL
 Customizes which url is used to display available modules.
 
+```shell
+export ELLIPSIS_USER="zeekay"
+export ELLIPSIS_REPO="https://github.com/zeekay/ellipsis"
+export ELLIPSIS_MODULES_URL="https://raw.githubusercontent.com/zeekay/ellipsis/master/available-modules.txt"
+```
+
 ### Modules
 A module is any repo with files you want to symlink into `$HOME`. By default a
 given repo's non-hidden files (read: not beginning with a `.`) will naively be
@@ -90,10 +94,10 @@ can customize how ellipsis treats your module by defining hooks in an
 `ellipsis.sh` file at the root of your repository.
 
 ### Hooks
-The behavior of a module can be customized using hooks. For instance if you want
-to change how your module is installed you can define `mod.install` in your
-module's `ellipsis.sh` and specifiy exactly which files are symlinked into
-`$HOME`, compile any libraries, etc.
+Hooks allow you to customize how ellipsis interacts with your module.  For
+instance if you want to change how your module is installed you can define
+`mod.install` and specifiy exactly which files are symlinked into `$HOME`,
+compile any libraries, etc.
 
 The follow hooks/variables are available in your `ellipsis.sh`:
 
@@ -121,8 +125,8 @@ Name of your module.
 Path to your module.
 
 ### API
-Ellipsis exposes a number of variables to modules during install/execution as
-well as a collection of useful utility functions.
+There are a number of functions ellipsis exposes which can be useful in your
+module's hooks:
 
 #### ellipsis.backup
 Moves existing file `$1` to `$1.bak`, taking care not to overwrite any existing
