@@ -20,13 +20,13 @@ Ellipsis is a framework for managing dotfiles.
 ### Install
 Clone and symlink or use handy-dandy installer:
 
-```shell
+```bash
 $ curl -sL ellipsis.sh | sh
 ```
 
 You can also specify which modules to install by setting the `MODULES` variable, i.e.:
 
-```shell
+```bash
 $ curl -sL ellipsis.sh | MODULES='vim zsh' sh
 ```
 
@@ -38,8 +38,7 @@ Ellipsis comes with no dotfiles out of the box. To add a dotfiles modules, use
 `ellipsis install`. Modules to install can be specified by github-user/repo or
 full ssh/git/http(s) urls:
 
-shell
-```
+```bash
 $ ellipsis install ssh://github.com/zeekay/private.git
 $ ellipsis install zeekay/vim
 $ ellipsis install zsh
@@ -80,7 +79,7 @@ Customize location of ellipsis repo cloned during a curl-based install.
 #### ELLIPSIS_MODULES_URL
 Customizes which url is used to display available modules.
 
-```shell
+```bash
 export ELLIPSIS_USER="zeekay"
 export ELLIPSIS_REPO="https://github.com/zeekay/ellipsis"
 export ELLIPSIS_MODULES_URL="https://raw.githubusercontent.com/zeekay/ellipsis/master/available-modules.txt"
