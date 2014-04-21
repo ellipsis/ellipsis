@@ -24,7 +24,7 @@ mod.init() {
 
     # we can be passed either a name or path, paths are assumed to be absolute,
     # and should have a slash in them.
-    if utils.hash_slash $name_or_path; then
+    if utils.has_slash $name_or_path; then
         mod_path="$name_or_path"
         mod_name="$(mod.path_to_name $mod_path)"
     else

@@ -48,7 +48,7 @@ utils.strip_leading_dot() {
 }
 
 # detects slash in string
-utils.hash_slash() {
+utils.has_slash() {
     case $1 in
         */*)
             return 0
