@@ -14,15 +14,17 @@ for dep in ${deps[*]}; do
 done
 
 # Create temp directory
-tmp_dir=$(mktemp -d $TMPDIR.XXXXXX) && cd $tmp_dir
+tmp_dir=$(mktemp -d ${TMPDIR:-tmp}-XXXXXX)
 
 # Download lib components
-curl -sL "$ELLIPSIS_URL/src/git.sh" > git.sh
-curl -sL "$ELLIPSIS_URL/src/ellipsis.sh" > ellipsis.sh
+curl -sL "$ELLIPSIS_URL/src/git.sh" > $tmp_dir/git.sh
+curl -sL "$ELLIPSIS_URL/src/utils.sh" > $tmp_dir/utils.sh
+curl -sL "$ELLIPSIS_URL/src/ellipsis.sh" > $tmp_dir/ellipsis.sh
 
-# source lib files
-source git.sh
-source ellipsis.sh
+# source ellipsis lib files
+source $tmp_dir/git.sh
+source $tmp_dir/utils.sh
+source $tmp_dir/ellipsis.sh
 
 ellipsis.backup ~/.ellipsis
 
@@ -31,7 +33,7 @@ git.clone "$ELLIPSIS_REPO" ~/.ellipsis
 
 if [ -z "$MODULES" ]; then
     # list available modules
-    ellipsis.list
+    ellipsis.available
 
     # list default modules
     if [ "$(ellipsis.platform)" = "darwin" ]; then
