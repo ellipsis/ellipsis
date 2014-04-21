@@ -6,17 +6,17 @@ ELLIPSIS_USER="${ELLIPSIS_USER:-zeekay}"
 ELLIPSIS_REPO="${ELLIPSIS_REPO:-https://github.com/$ELLIPSIS_USER/ellipsis}"
 ELLIPSIS_URL="${ELLIPSIS_URL:-https://raw.githubusercontent.com/$ELLIPSIS_USER/ellipsis/master}"
 
-# Ensure dependencies are installed.
+# ensure dependencies are installed
 deps=(bash curl git)
 
 for dep in ${deps[*]}; do
     hash $dep 2>/dev/null || { echo >&2 "ellipsis requires $dep to be installed."; exit 1; }
 done
 
-# Create temp directory
+# create temp dir
 tmp_dir=$(mktemp -d ${TMPDIR:-tmp}-XXXXXX)
 
-# Download lib components
+# download necessary bits
 curl -sL "$ELLIPSIS_URL/src/git.sh" > $tmp_dir/git.sh
 curl -sL "$ELLIPSIS_URL/src/utils.sh" > $tmp_dir/utils.sh
 curl -sL "$ELLIPSIS_URL/src/ellipsis.sh" > $tmp_dir/ellipsis.sh
@@ -26,6 +26,10 @@ source $tmp_dir/git.sh
 source $tmp_dir/utils.sh
 source $tmp_dir/ellipsis.sh
 
+# clean up (only necessary on cygwin, really)
+rm -rf $tmp_dir
+
+# backup existing copy
 ellipsis.backup ~/.ellipsis
 
 # Download latest copy of ellipsis
@@ -52,6 +56,7 @@ else
     modules="$MODULES"
 fi
 
+# install selected modules.
 for module in ${modules[*]}; do
     ellipsis.install $module
 done
