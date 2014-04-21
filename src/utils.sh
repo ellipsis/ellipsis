@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 #
-# utils ellipsis functions
+# ellipsis utility functions
+
+# check if a command or function exists
+utils.cmd_exists() {
+    if hash $1 2>/dev/null; then
+        return 0
+    fi
+    return 1
+}
 
 # return true if folder is empty
 utils.folder_empty() {
@@ -21,13 +29,4 @@ utils.prompt() {
             return 1
             ;;
     esac
-}
-
-# check if a command or function exists
-utils.cmd_exists() {
-    if hash $1 2>/dev/null; then
-        return 0
-    else
-        return 1
-    fi
 }

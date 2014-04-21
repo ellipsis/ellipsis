@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# cli utilities
+# ellipsis cli
 
 # prints usage for ellipsis
 cli.usage() {
