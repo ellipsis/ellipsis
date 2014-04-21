@@ -5,9 +5,9 @@
 # check if a command or function exists
 utils.cmd_exists() {
     if hash $1 2>/dev/null; then
-        return 1
+        return 0
     fi
-    return 0
+    return 1
 }
 
 # return true if folder is empty
