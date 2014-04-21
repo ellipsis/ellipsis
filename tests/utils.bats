@@ -1,12 +1,34 @@
 #!/usr/bin/env bats
 
 load _helper
-load ../src/utils
+load utils
 
-@test "utils.cmd_exists should be able to tell if a command is in PATH" {
-  utils.cmd_exists bats
+setup() {
+    mkdir -p tmp/empty
+    mkdir -p tmp/not_empty
+    touch tmp/not_empty/file
 }
 
-@test "utils.cmd_exists should return 1 if executable not in PATH" {
-  ! utils.cmd_exists gobbledygook
+teardown() {
+    rm -rf tmp
+}
+
+@test "utils.cmd_exists should find command in PATH" {
+  run utils.cmd_exists bats
+  [ $status -eq 0 ]
+}
+
+@test "utils.cmd_exists should not find commands not in PATH" {
+  run utils.cmd_exists gobbledygook
+  [ $status -eq 1 ]
+}
+
+@test "utils.folder_empty should detect an empty folder" {
+  run utils.folder_empty tmp/empty
+  [ $status -eq 0 ]
+}
+
+@test "utils.folder_empty should not detect non-empty folder" {
+  run utils.folder_empty tmp/not_empty
+  [ $status -eq 1 ]
 }

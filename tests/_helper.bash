@@ -6,5 +6,5 @@ TESTS_DIR=$(cd `dirname "${BASH_SOURCE[0]}"` && pwd)
 
 # Replace bat's load with one that sources sh files.
 load() {
-    source $TESTS_DIR/$1.sh
+    source $TESTS_DIR/../src/$1.sh
 }
