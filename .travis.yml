@@ -1,2 +1,2 @@
-language: bash
+language: c
 script: make test
