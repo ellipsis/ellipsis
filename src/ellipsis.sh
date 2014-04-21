@@ -118,7 +118,7 @@ ellipsis.install() {
     case "$1" in
         http:*|https:*|git:*|ssh:*)
             mod_name=$(echo "$1" | rev | cut -d '/' -f 1 | rev)
-            mod_path="$HOME/.ellipsis/modules/$mod_name"
+            mod_path="$(mod.name_to_path $mod_name)"
             git.clone "$1" "$mod_path"
         ;;
         github:*)
@@ -249,4 +249,15 @@ ellipsis.each() {
 # list all installed modules
 ellipsis.list_modules() {
     echo $HOME/.ellipsis/modules/*
+}
+
+# list all symlinks, or just symlinks for a given module
+ellipsis.symlinks() {
+    if [ $# -eq 1 ]; then
+        mod.init $1
+        mod.run mod.symlinks
+        mod.del
+    else
+        ellipsis.each mod.symlinks
+    fi
 }

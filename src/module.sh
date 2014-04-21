@@ -2,16 +2,31 @@
 #
 # ellipsis module interface
 
-## public functions
+mod_hooks=(install uninstall symlinks pull push status list)
 
-mod_hooks=(install uninstall pull push status list)
+# mod_name -> mod_path
+mod.name_to_path() {
+    echo "$HOME/.ellipsis/modules/$1"
+}
+
+# mod path -> name
+mod.path_to_name() {
+    echo "${1##*/}"
+}
 
 # initialize a module and it's hooks
 mod.init() {
-    mod_path=${1:-$mod_path}
-    mod_name=${2:-${module##*/}}
+    # we can be passed either a name or path, paths are assumed to be absolute,
+    # and should have a slash in them.
+    if utils.hash_slash $1; then
+        mod_path="$1"
+        mod_name="$(mod.path_to_name $1)"
+    else
+        mod_name="$1"
+        mod_path="$(mod.name_to_path $1)"
+    fi
 
-    # if ellipsis.sh exists, source it
+    # source ellipsis.sh if it exists to initialize module hooks
     if [ -f "$mod_path/ellipsis.sh" ]; then
         source "$mod_path/ellipsis.sh"
     fi
@@ -19,7 +34,6 @@ mod.init() {
 
 # find module's symlinks
 mod.find_symlinks() {
-    local mod_name=${1:-$mod_name}
     utils.find_symlinks | grep ellipsis/modules/$mod_name
 }
 
@@ -57,11 +71,12 @@ mod.run_hook() {
                 ellipsis.link_files $mod_path
                 ;;
             mod.uninstall)
-                local symlinks=(mod.find_symlinks)
-
-                for symlink in ${symlinks[@]}; do
+                for symlink in $(mod.find_symlinks); do
                     rm $symlink
                 done
+                ;;
+            mod.symlinks)
+                mod.find_symlinks
                 ;;
             mod.pull)
                 mod.run git.pull

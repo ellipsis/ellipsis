@@ -46,6 +46,13 @@ cli.run() {
         list|ls|installed)
             ellipsis.list
             ;;
+        links|symlinks)
+            if [ "$2" ]; then
+                ellipsis.symlinks $2
+            else
+                ellipsis.symlinks
+            fi
+            ;;
         available)
             ellipsis.available
             ;;

@@ -33,5 +33,24 @@ utils.prompt() {
 
 # find symlinks in $HOME
 utils.find_symlinks() {
-    find ${1:-$HOME} -type l -maxdepth 1 | xargs readlink
+    for symlink in $(find ${1:-$HOME} -type l -maxdepth 1 | xargs readlink); do
+        utils.relative_path $symlink
+    done
+}
+
+# return path to file relative to $HOME (if possible)
+utils.relative_path() {
+    echo ${1/$HOME/\~}
+}
+
+# detects slash in string
+utils.hash_slash() {
+    case $1 in
+        */*)
+            return 0
+            ;;
+        *)
+            return 1
+            ;;
+    esac
 }
