@@ -33,7 +33,7 @@ teardown() {
 
 @test "utils.folder_empty should not detect non-empty folder" {
     run utils.folder_empty tmp/not_empty
-    [ $status -eq 0 ]
+    [ $status -eq 1 ]
 }
 
 @test "utils.find_symlinks should find symlinks in folder" {
