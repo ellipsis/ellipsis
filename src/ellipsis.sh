@@ -48,6 +48,7 @@ ellipsis.backup() {
         mv "$original" "$backup"
     fi
 }
+
 # symlink a single file into $HOME
 ellipsis.link_file() {
     local name="${1##*/}"
