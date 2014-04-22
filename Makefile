@@ -1,10 +1,10 @@
 all: test
 
 test: scripts/bats/bin/bats
-	scripts/bats/bin/bats tests
+	scripts/bats/bin/bats $(BATS_OPTS) tests
 
 scripts/bats/bin/bats:
-	git clone https://github.com/sstephenson/bats $(BATS_OPTS) scripts/bats
+	git clone https://github.com/sstephenson/bats scripts/bats
 
 tag:
 	@echo ELLIPSIS_VERSION=$(version) > src/version.sh
