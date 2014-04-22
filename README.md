@@ -140,11 +140,11 @@ Link a single file `$1` into `$HOME`, taking care to backup an existing file.
 #### ellipsis.link_files
 Links files in `$1` into `$HOME`, taking care to backup any existing files.
 
-#### ellipsis.platform
-Platform detection, returns lowercase result of `uname`.
-
 #### ellipsis.run_installer
 Download an installation script from url `$1` with `curl` and execute it.
+
+#### utils.platform
+Platform detection, returns lowercase result of `uname`.
 
 #### git.[command]
 There are also several wrappers around common git operations which can be used

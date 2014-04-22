@@ -2,6 +2,11 @@
 #
 # ellipsis utility functions
 
+# platform detection
+utils.platform() {
+    uname | tr '[:upper:]' '[:lower:]'
+}
+
 # check if a command or function exists
 utils.cmd_exists() {
     if hash $1 2>/dev/null; then

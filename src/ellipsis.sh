@@ -7,11 +7,6 @@ ELLIPSIS_USER="${ELLIPSIS_USER:-zeekay}"
 ELLIPSIS_REPO="${ELLIPSIS_REPO:-https://github.com/$ELLIPSIS_USER/ellipsis}"
 ELLIPSIS_MODULES_URL="${ELLIPSIS_MODULES_URL:-https://raw.githubusercontent.com/$ELLIPSIS_USER/ellipsis/master/available-modules.txt}"
 
-# platform detection
-ellipsis.platform() {
-    uname | tr '[:upper:]' '[:lower:]'
-}
-
 # backup existing file, ensuring you don't overwrite existing backups
 ellipsis.backup() {
     local original="$1"

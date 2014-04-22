@@ -40,7 +40,7 @@ if [ -z "$MODULES" ]; then
     ellipsis.available
 
     # list default modules
-    if [ "$(ellipsis.platform)" = "darwin" ]; then
+    if [ "$(utils.platform)" = "darwin" ]; then
         default="files vim zsh alfred iterm2"
     else
         default="files vim zsh"
