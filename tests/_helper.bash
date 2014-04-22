@@ -11,6 +11,6 @@ load() {
 }
 
 # Install ourselves for Travis CI
-if [ "$TRAVIS" && ! -e "/home/travis/.ellipsis" ]; then
+if [ "$TRAVIS" ] && [ ! -e "/home/travis/.ellipsis" ]; then
     ln -s /home/travis/build/zeekay/ellipsis /home/travis/.ellipsis
 fi
