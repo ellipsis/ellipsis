@@ -2,6 +2,18 @@
 #
 # ellipsis utility functions
 
+# cross-platform xargs which ignores empty stdin (on linux)
+# utils.xargs() {
+#     case $(ellipsis.platform) in
+#         linux)
+#             cat - | xargs --no-run-if-empty $@
+#             ;;
+#         *)
+#             cat - | xargs $@
+#             ;;
+#     esac
+# }
+
 # check if a command or function exists
 utils.cmd_exists() {
     if hash $1 2>/dev/null; then
@@ -33,9 +45,18 @@ utils.prompt() {
 
 # find symlinks in $HOME
 utils.find_symlinks() {
-    for symlink in $(find ${1:-$HOME} -type l -maxdepth 1 | xargs readlink); do
-        utils.relative_path $symlink
-    done
+    case $(ellipsis.platform) in
+        linux|cygwin*)
+            for symlink in $(find ${1:-$HOME} -maxdepth 1 -type l | xargs -I{} readlink '{}'); do
+                utils.relative_path $symlink
+            done
+            ;;
+        *)
+            for symlink in $(find ${1:-$HOME} -maxdepth 1 -type l | xargs readlink); do
+                utils.relative_path $symlink
+            done
+        ;;
+    esac
 }
 
 # dunno how this isn't part of POSIX

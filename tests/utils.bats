@@ -1,6 +1,7 @@
 #!/usr/bin/env bats
 
 load _helper
+load ellipsis
 load utils
 
 setup() {
@@ -37,7 +38,7 @@ teardown() {
 
 @test "utils.find_symlinks should find symlinks in folder" {
     run utils.find_symlinks tmp/symlinks
-    [ $output = "../not_empty/file" ]
+    [ "$output" = "../not_empty/file" ]
 }
 
 @test "utils.find_symlinks should not find symlinks in folder without them" {
