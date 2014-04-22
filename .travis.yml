@@ -1,15 +1,15 @@
 language: node_js
 node_js:
-    - "0.10"
+  - "0.10"
 script: make test
 env:
-    - BATS_OPTS="--tap"
+  - BATS_OPTS="--tap"
 cache:
-    directories:
-        - scripts/bats
+  directories:
+    - scripts/bats
 notifications:
-    email:
-        on_success: change
-        on_failure: always
+  email:
+    on_success: change
+    on_failure: always
 after_sucess:
-    - npm install brief && node_modules/.bin/brief
+  - npm install brief && node_modules/.bin/brief
