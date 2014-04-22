@@ -1,5 +1,12 @@
-language: c
-script: make test_travis
+language: node_js
+node_js:
+    - "0.10"
+script: make test
+env:
+    - BATS_OPTS="--tap"
+cache:
+	directories:
+	- scripts/bats
 notifications:
   email:
     on_success: change

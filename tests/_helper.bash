@@ -9,3 +9,8 @@ export PATH="$TESTS_DIR/../bin:$PATH"
 load() {
     source $TESTS_DIR/../src/$1.sh
 }
+
+# Install ourselves for Travis CI
+if [ "$TRAVIS" ]; then
+    ln -s /home/travis/build/zeekay/ellipsis /home/travis/.ellipsis
+fi
