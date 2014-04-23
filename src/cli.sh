@@ -2,6 +2,9 @@
 #
 # ellipsis cli
 
+# globals
+ELLIPSIS_PATH=${ELLIPSIS_PATH:-$HOME/.ellipsis}
+
 # prints usage for ellipsis
 cli.usage() {
     cat <<-EOF
