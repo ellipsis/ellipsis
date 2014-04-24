@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-SCRIPT_PATH="$(dirname $0)"
+source "$(dirname "${BASH_SOURCE[0]}")"/../src/init.sh
 
-source "$SCRIPT_PATH/../src/cli.sh"
+load cli
 
 # check for controlling terminal
 if [ -t 1 ]; then

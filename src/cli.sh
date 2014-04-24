@@ -3,10 +3,18 @@
 # cli.sh
 # Command line interface for ellipsis.
 
-# Source globals if they haven't been yet
-if [[ $ELLIPSIS_GLOBALS -ne 1 ]]; then
-    source $(dirname "${BASH_SOURCE[0]}")/globals.sh
+# Initialize ourselves if we haven't yet.
+if [[ $ELLIPSIS_INIT -ne 1 ]]; then
+    source "$(dirname "${BASH_SOURCE[0]}")"/init.sh
 fi
+
+# Source deps.
+load ellipsis
+load epmi
+load git
+load github
+load package
+load utils
 
 # prints usage for ellipsis
 cli.usage() {
@@ -60,7 +68,10 @@ cli.run() {
             fi
             ;;
         available)
-            ellipsis.available
+            epmi.list_packages
+            ;;
+        search)
+            epmi.search_packages $1
             ;;
         new)
             ellipsis.new $2

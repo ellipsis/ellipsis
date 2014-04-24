@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
-# globals.sh
-# Globals used across various bits of Ellipsis.
+# init.sh
+# Setup initial globals and load function used to source other modules.
 
 # These globals can be set by a user to use a custom ellipsis fork/set of packages/etc
 ELLIPSIS_USER="${ELLIPSIS_USER:-$(git config github.user)}"
@@ -13,8 +13,16 @@ ELLIPSIS_PATH=${ELLIPSIS_PATH:-$HOME/.ellipsis}
 PKG_PATH=${PKG_PATH:-$ELLIPSIS_PATH}
 PKG_NAME=${PKG_NAME:-${PKG_PATH##*/.}}
 
-# Source version from version.sh, this makes it easy to update version.
-source $(dirname "${BASH_SOURCE[0]}")/version.sh
+# Determine where we are
+ELLIPSIS_SRC="${ELLIPSIS_SRC:-$(dirname "${BASH_SOURCE[0]}")}"
+
+# Source other src files easily, and only once!
+load() {
+    source $ELLIPSIS_SRC/$1.sh
+}
+
+# Load version info.
+load version
 
 # Set flag that we've been sourced already.
-ELLIPSIS_GLOBALS=1
+ELLIPSIS_INIT=1

@@ -4,9 +4,9 @@
 # Ellipsis package interface. Encapsulates various useful functions for working
 # with packages.
 
-# Source globals if they haven't been yet
-if [[ $ELLIPSIS_GLOBALS -ne 1 ]]; then
-    source $(dirname "${BASH_SOURCE[0]}")/globals.sh
+# Initialize ourselves if we haven't yet.
+if [[ $ELLIPSIS_INIT -ne 1 ]]; then
+    source "$(dirname "${BASH_SOURCE[0]}")"/init.sh
 fi
 
 # List of hooks available to package authors.

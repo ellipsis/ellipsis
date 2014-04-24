@@ -6,9 +6,9 @@
 # reasons, i.e., pretty output in the various ellipsis commands and can be used
 # by package authors for consistency with them.
 
-# Source globals if they haven't been yet
-if [[ $ELLIPSIS_GLOBALS -ne 1 ]]; then
-    source $(dirname "${BASH_SOURCE[0]}")/globals.sh
+# Initialize ourselves if we haven't yet.
+if [[ $ELLIPSIS_INIT -ne 1 ]]; then
+    source "$(dirname "${BASH_SOURCE[0]}")"/init.sh
 fi
 
 # Clone a Git repo.

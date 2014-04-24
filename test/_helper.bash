@@ -5,10 +5,8 @@
 export TESTS_DIR="$(cd `dirname "${BASH_SOURCE[0]}"` && pwd)"
 export PATH="$TESTS_DIR/../bin:$PATH"
 
-# Replace bat's load with one that sources sh files.
-load() {
-    source $TESTS_DIR/../src/$1.sh
-}
+# Replace bat's load with one that sources our sh files.
+source $TESTS_DIR/../src/globals.sh
 
 # Install ourselves for Travis CI
 if [ "$TRAVIS" ] && [ ! -e "/home/travis/.ellipsis" ]; then
