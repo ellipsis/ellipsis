@@ -77,52 +77,64 @@ pkg.run() {
 
 # run hook if it's defined, otherwise use default implementation
 pkg.run_hook() {
-    local hook=$1
-
-    if utils.cmd_exists $hook; then
-        $hook
+    # Run packages's hook.
+    if utils.cmd_exists $1; then
+        $1
     else
-        case $hook in
+        # Run default hook.
+        case $1 in
             pkg.install)
+                # Symlink files in $PKG_PATH into $HOME
                 ellipsis.link_files $PKG_PATH
                 ;;
-            pkg.uninstall)
+            pkg.unlink)
+                # Remove package's symlinks in $HOME.
                 for symlink in $(pkg.find_symlinks); do
                     rm $symlink
                 done
                 ;;
+            pkg.uninstall)
+                # Remove package's symlinks then remove package.
+                pkg.run_hook pkg.unlink
+                rm -rf $PKG_PATH
+                ;;
             pkg.symlinks)
+                # List packages symlinks in $HOME.
                 pkg.find_symlinks
                 ;;
             pkg.pull)
+                # Do git pull from package
                 pkg.run git.pull
                 ;;
             pkg.push)
+                # Do git push from package
                 pkg.run git.push
                 ;;
             pkg.list)
+                # List repo status.
                 pkg.run git.list
                 ;;
             pkg.status)
+                # List repo status if it's changed and show git diffstat.
                 pkg.run git.status
                 ;;
         esac
     fi
 }
 
-# clear globals, hooks
+# Clear globals, hooks.
 pkg.del() {
     pkg._unset_vars
     pkg._unset_hooks
 }
 
-# unset global packages
+# Unset global packages.
 pkg._unset_vars() {
     unset PKG_NAME
     unset PKG_PATH
 }
 
-# unset any hooks that might have been defined by package
+# Unset any hooks that might have been defined by package.
 pkg._unset_hooks() {
     for hook in ${PKG_HOOKS[@]}; do
         unset -f pkg.$hook
