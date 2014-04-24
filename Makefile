@@ -2,14 +2,14 @@
 
 all: test
 
-test: deps/bats
-	deps/bats/bin/bats $(BATS_OPTS) test
-
 tag:
 	@echo ELLIPSIS_VERSION=$(version) > src/version.sh
 	@git add src/version.sh
 	@git commit -m v$(version)
 	@git tag v$(version)
+
+test: deps/bats
+	deps/bats/bin/bats $(TEST_OPTS) test
 
 deps/bats:
 	@mkdir -p deps
