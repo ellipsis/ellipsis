@@ -9,8 +9,8 @@
 ellipsis is a package manager for dotfiles.
 
 ### Features
-- Creating new modules is trivial (any git repository is already a module).
-- Ellipsis modules make it easy to share specific bits of your dotfiles. Say a
+- Creating new packages is trivial (any git repository is already a package).
+- Ellipsis packages make it easy to share specific bits of your dotfiles. Say a
   friend wants to test out your ZSH setup but doesn't want to adopt the madness
   that is your Vim config? No problem, he can just `ellipsis install
   github-user/dot-zsh`
@@ -26,18 +26,18 @@ Clone and symlink or use handy-dandy installer:
 $ curl -sL ellipsis.sh | sh
 ```
 
-You can also specify which modules to install by setting the `MODULES` variable, i.e.:
+You can also specify which packages to install by setting the `PACKAGES` variable, i.e.:
 
 ```bash
-$ curl -sL ellipsis.sh | MODULES='vim zsh' sh
+$ curl -sL ellipsis.sh | PACKAGES='vim zsh' sh
 ```
 
 I recommend adding `~/.ellipsis/bin` to your `$PATH`, but you can also just
 symlink `~/.ellipsis/bin/ellipsis` somewhere convenient.
 
 ### Usage
-Ellipsis comes with no dotfiles out of the box. To add a dotfiles modules, use
-`ellipsis install`. Modules to install can be specified by github-user/repo or
+Ellipsis comes with no dotfiles out of the box. To add a dotfiles packages, use
+`ellipsis install`. Packages to install can be specified by github-user/repo or
 full ssh/git/http(s) urls:
 
 ```bash
@@ -58,15 +58,15 @@ Usage: ellipsis <command>
     -v, --version  show version
 
   Commands:
-    install        install new module
-    uninstall      uninstall module
-    new            create a new module
-    list           list installed modules
-    links          list symlinks installed globally or for a module
-    available      list modules available for install
-    pull           git pull all modules
-    push           git push all modules
-    status         show status of all modules
+    install        install new package
+    uninstall      uninstall package
+    new            create a new package
+    list           list installed packages
+    links          list symlinks installed globally or for a package
+    available      list packages available for install
+    pull           git pull all packages
+    push           git push all packages
+    status         show status of all packages
 ```
 
 ### Configuration
@@ -79,36 +79,36 @@ specifiying user or a full repo url.
 #### ELLIPSIS_REPO
 Customize location of ellipsis repo cloned during a curl-based install.
 
-#### ELLIPSIS_MODULES_URL
-Customizes which url is used to display available modules.
+#### ELLIPSIS_PACKAGES_URL
+Customizes which url is used to display available packages.
 
 ```bash
 export ELLIPSIS_USER="zeekay"
 export ELLIPSIS_REPO="https://github.com/zeekay/ellipsis"
-export ELLIPSIS_MODULES_URL="https://raw.githubusercontent.com/zeekay/ellipsis/master/available-modules.txt"
+export ELLIPSIS_PACKAGES_URL="https://raw.githubusercontent.com/zeekay/ellipsis/master/available-packages.txt"
 ```
 
-### Modules
-A module is any repo with files you want to symlink into `$HOME`. By default a
+### Packages
+A package is any repo with files you want to symlink into `$HOME`. By default a
 given repo's non-hidden files (read: not beginning with a `.`) will naively be
 linked into `$HOME`. Of course this isn't sufficient for a lot of cases, so you
-can customize how ellipsis treats your module by defining hooks in an
+can customize how ellipsis treats your package by defining hooks in an
 `ellipsis.sh` file at the root of your repository.
 
 ### Hooks
-Hooks allow you to customize how ellipsis interacts with your module.  For
-instance if you want to change how your module is installed you can define
+Hooks allow you to customize how ellipsis interacts with your package.  For
+instance if you want to change how your package is installed you can define
 `mod.install` and specifiy exactly which files are symlinked into `$HOME`,
 compile any libraries, etc.
 
 The follow hooks/variables are available in your `ellipsis.sh`:
 
 #### mod.install
-Customize how module is installed. By default all files are symlinked into
+Customize how package is installed. By default all files are symlinked into
 `$HOME`.
 
 #### mod.uninstall
-Customize how module is uninstalled. By default all symlinks are removed from
+Customize how package is uninstalled. By default all symlinks are removed from
 `$HOME`.
 
 #### mod.push
@@ -121,14 +121,14 @@ Customize how how changes are pulled in when `ellipsis pull` is used.
 Customize output of `ellipsis status`.
 
 #### $mod_name
-Name of your module.
+Name of your package.
 
 #### $mod_path
-Path to your module.
+Path to your package.
 
 ### API
 There are a number of functions ellipsis exposes which can be useful in your
-module's hooks:
+package's hooks:
 
 #### ellipsis.backup
 Moves existing file `$1` to `$1.bak`, taking care not to overwrite any existing
@@ -151,7 +151,7 @@ There are also several wrappers around common git operations which can be used
 for consistency with the rest of ellipsis: **git.clone**, **git.pull**,
 **git.push**, and **git.status**.
 
-### Available modules
+### Available packages
 
 #### [zeekay/dot-alfred][alfred]
 Alfred configuration files.

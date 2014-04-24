@@ -17,15 +17,15 @@ Usage: ellipsis <command>
     -v, --version  show version
 
   Commands:
-    install        install new module
-    uninstall      uninstall module
-    list           list installed modules
-    links          list symlinks installed globally or for a module
-    available      list modules available for install
-    new            create a new module
-    pull           git pull all modules
-    push           git push all modules
-    status         show status of all modules
+    install        install new package
+    uninstall      uninstall package
+    list           list installed packages
+    links          list symlinks installed globally or for a package
+    available      list packages available for install
+    new            create a new package
+    pull           git pull all packages
+    push           git push all packages
+    status         show status of all packages
 	EOF
 }
 

@@ -109,7 +109,7 @@ ellipsis.run_installer() {
     rm -rf $tmp_dir
 }
 
-# Installs new ellipsis module, using install hook if one exists. If no hook is
+# Installs new ellipsis package, using install hook if one exists. If no hook is
 # defined, all files are symlinked into $HOME using `ellipsis.link_files`.
 ellipsis.install() {
     case "$1" in
@@ -121,12 +121,12 @@ ellipsis.install() {
         github:*)
             user=$(echo "$1" | cut -d ':' -f 2 | cut -d '/' -f 1)
             mod_name=$(echo "$1" | cut -d ':' -f 2 | cut -d '/' -f 2)
-            mod_path="$HOME/.ellipsis/modules/$mod_name"
+            mod_path="$HOME/.ellipsis/packages/$mod_name"
             git.clone "https://github.com/$user/$mod_name" "$mod_path"
         ;;
         *)
             mod_name="$1"
-            mod_path="$HOME/.ellipsis/modules/$mod_name"
+            mod_path="$HOME/.ellipsis/packages/$mod_name"
             git.clone "https://github.com/$ELLIPSIS_USER/dot-$mod_name" "$mod_path"
         ;;
     esac
@@ -136,17 +136,17 @@ ellipsis.install() {
     mod.del
 }
 
-# Uninstall ellipsis module, using uninstall hook if one exists. If no hook is
+# Uninstall ellipsis package, using uninstall hook if one exists. If no hook is
 # defined, all symlinked files in $HOME are removed.
 ellipsis.uninstall() {
-    mod_path="$HOME/.ellipsis/modules/$1"
+    mod_path="$HOME/.ellipsis/packages/$1"
 
     mod.init $mod_path
     mod.run mod.uninstall
     mod.del
 }
 
-# List installed modules
+# List installed packages
 ellipsis.list() {
     if utils.cmd_exists column; then
         ellipsis.each mod.list | column -t -s $'\t'
@@ -155,21 +155,21 @@ ellipsis.list() {
     fi
 }
 
-# List available modules using $ELLIPSIS_MODULES_URL
+# List available packages using $ELLIPSIS_packageS_URL
 ellipsis.available() {
-    curl -s $ELLIPSIS_MODULES_URL
+    curl -s $ELLIPSIS_packageS_URL
 }
 
 ellipsis.new() {
     if [ $# -eq 1 ]; then
-        mod_path="$HOME/.ellipsis/modules/$1"
+        mod_path="$HOME/.ellipsis/packages/$1"
     else
         mod_path="$(pwd)"
     fi
 
     mod_name="${mod_path##*/}"
 
-    # create module dir
+    # create package dir
     mkdir -p $mod_path
 
     # check if dir is empty
@@ -182,9 +182,9 @@ ellipsis.new() {
     cat > $mod_path/ellipsis.sh <<EOF
 #!/usr/bin/env bash
 #
-# $mod_name ellipsis module
+# $mod_name ellipsis package
 
-# The following hooks can be defined to customize behavior of your module:
+# The following hooks can be defined to customize behavior of your package:
 # mod.install() {
 #     ellipsis.link_files $escaped_pwd
 # }
@@ -222,10 +222,10 @@ EOF
     git init
     git add README.md ellipsis.sh
     git commit -m "Initial commit"
-    echo new module created at ${mod_path/$HOME/\~}
+    echo new package created at ${mod_path/$HOME/\~}
 }
 
-# Run commands across all modules.
+# Run commands across all packages.
 ellipsis.each() {
     local cwd=$(pwd)
     local cmd="$1"
@@ -235,20 +235,20 @@ ellipsis.each() {
     mod.run $cmd
     mod.del
 
-    # loop over modules, excecuting command
-    for module in $(ellipsis.list_modules); do
-        mod.init $module
+    # loop over packages, excecuting command
+    for package in $(ellipsis.list_packages); do
+        mod.init $package
         mod.run $cmd
         mod.del
     done
 }
 
-# list all installed modules
-ellipsis.list_modules() {
-    echo $HOME/.ellipsis/modules/*
+# list all installed packages
+ellipsis.list_packages() {
+    echo $HOME/.ellipsis/packages/*
 }
 
-# list all symlinks, or just symlinks for a given module
+# list all symlinks, or just symlinks for a given package
 ellipsis.symlinks() {
     if [ $# -eq 1 ]; then
         mod.init $1
