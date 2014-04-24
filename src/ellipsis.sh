@@ -159,24 +159,27 @@ ellipsis.list() {
 
 # Scaffold a new package.
 ellipsis.new() {
+    # If no-argument is passed, use cwd as package path.
     if [ $# -eq 1 ]; then
-        PKG_PATH="$HOME/.ellipsis/packages/$1"
+        pkg.set_name_and_path "$1"
     else
-        PKG_PATH="$(pwd)"
+        pkg.set_name_and_path "$(pwd)"
     fi
 
-    PKG_NAME="${PKG_PATH##*/}"
-
-    # create package dir
+    # Create package dir if necessary.
     mkdir -p $PKG_PATH
 
-    # check if dir is empty
+    # If path is not empty, ensure they are serious.
     if ! utils.folder_empty $PKG_PATH; then
         utils.prompt "destination is not empty, continue? [y/n]" || exit 1
     fi
 
-    local escaped_pwd='$(pwd)'
+    # Template variables.
+    local _PKG_PATH='$PKG_PATH'
+    local _PROMPT='$'
+    local _FENCE=\`\`\`
 
+    # Generate ellipsis.sh for package.
     cat > $PKG_PATH/ellipsis.sh <<EOF
 #!/usr/bin/env bash
 #
@@ -184,7 +187,7 @@ ellipsis.new() {
 
 # The following hooks can be defined to customize behavior of your package:
 # pkg.install() {
-#     ellipsis.link_files $escaped_pwd
+#     ellipsis.link_files $_PKG_PATH
 # }
 
 # pkg.push() {
@@ -200,8 +203,7 @@ ellipsis.new() {
 # }
 EOF
 
-    local prompt=$
-    local fence=\`\`\`
+    # Generate README.md for package.
     cat > $PKG_PATH/README.md <<EOF
 # $PKG_NAME
 Just a bunch of dotfiles.
@@ -209,9 +211,9 @@ Just a bunch of dotfiles.
 ## Install
 Clone and symlink or install with [ellipsis][ellipsis]:
 
-$fence
-$prompt ellipsis install $PKG_NAME
-$fence
+$_FENCE
+$_PROMPT ellipsis install $PKG_NAME
+$_FENCE
 
 [ellipsis]: http://ellipsis.sh
 EOF
@@ -220,23 +222,20 @@ EOF
     git init
     git add README.md ellipsis.sh
     git commit -m "Initial commit"
-    echo new package created at ${PKG_PATH/$HOME/\~}
+    echo new package created at ${utils.relative_path $PKG_PATH}
 }
 
 # Run commands across all packages.
 ellipsis.each() {
-    local cwd=$(pwd)
-    local cmd="$1"
-
     # execute command for ellipsis first
     pkg.init $ELLIPSIS_PATH
-    pkg.run $cmd
+    pkg.run "$@"
     pkg.del
 
     # loop over packages, excecuting command
-    for package in $(ellipsis.list_packages); do
-        pkg.init $package
-        pkg.run $cmd
+    for pkg in $(ellipsis.list_packages); do
+        pkg.init "$pkg"
+        pkg.run "$@"
         pkg.del
     done
 }

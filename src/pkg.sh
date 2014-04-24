@@ -14,7 +14,7 @@ PKG_HOOKS=(install uninstall symlinks pull push status list)
 
 # Convert package name to path.
 pkg.name_to_path() {
-    echo "$HOME/.ellipsis/packages/$1"
+    echo "$ELLIPSIS_PATH/packages/$1"
 }
 
 # Convert package path to name.
@@ -22,22 +22,24 @@ pkg.path_to_name() {
     # basename
     local basename=${1##*/}
     # strip any leading dots
-    echo ${basename##*/.}
+    echo ${basename##*.}
+}
+
+# Set name/path appropriately. If $1 has a slash it's assumed to be PKG_PATH we
+# should use and not PKG_NAME.
+pkg.set_name_and_path() {
+    if utils.has_slash "$1"; then
+        PKG_PATH="$1"
+        PKG_NAME="$(pkg.path_to_name $PKG_PATH)"
+    else
+        PKG_NAME="$1"
+        PKG_PATH="$(pkg.name_to_path $PKG_NAME)"
+    fi
 }
 
 # Initialize a package and it's hooks.
 pkg.init() {
-    local name_or_path="${1:-$PKG_PATH}"
-
-    # we can be passed either a name or path, paths are assumed to be absolute,
-    # and should have a slash in them.
-    if utils.has_slash $name_or_path; then
-        PKG_PATH="$name_or_path"
-        PKG_NAME="$(pkg.path_to_name $PKG_PATH)"
-    else
-        PKG_NAME="$name_or_path"
-        PKG_PATH="$(pkg.name_to_path $PKG_NAME)"
-    fi
+    pkg.set_name_and_path ${1:-$PKG_PATH}
 
     # source ellipsis.sh if it exists to initialize package hooks
     if [ -f "$PKG_PATH/ellipsis.sh" ]; then

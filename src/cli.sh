@@ -13,7 +13,7 @@ load ellipsis
 load epmi
 load git
 load github
-load package
+load pkg
 load utils
 
 # prints usage for ellipsis
