@@ -22,6 +22,7 @@ source $tmp_dir/ellipsis/src/init.sh
 # Load modules.
 load ellipsis
 load epmi
+load git
 load package
 load utils
 
