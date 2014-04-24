@@ -18,5 +18,4 @@ deps/bats:
 	@mkdir -p deps
 	git clone --depth 1 git://github.com/sstephenson/bats.git deps/bats
 
-
 .PHONY: all tag test
