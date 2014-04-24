@@ -15,9 +15,5 @@ deps/bats:
 	@mkdir -p deps
 	git clone --depth 1 git://github.com/sstephenson/bats.git deps/bats
 
-deps/jshon:
-	@mkdir -p deps
-	git clone --depth 1 git://github.com/keenerd/jshon deps/jshon
-	cd deps/jshon; make
 
 .PHONY: all tag test
