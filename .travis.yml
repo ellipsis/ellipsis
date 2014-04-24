@@ -1,7 +1,9 @@
 language: node_js
 node_js:
-  - "0.10"
-script: deps/bats/bin/bats test --tap
+  - 0.10
+script: make test
+env:
+  - TEST_OPTS=--tap
 cache:
   directories:
     - deps
