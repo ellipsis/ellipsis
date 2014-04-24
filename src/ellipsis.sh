@@ -119,8 +119,8 @@ ellipsis.install() {
             PKG_URL="$1"
         ;;
         */*)
-    	    PKG_USER=$(echo $1 | cut -d '/' -f1)
-	        PKG_NAME=$(echo $1 | cut -d '/' -f2)
+            PKG_USER=$(echo $1 | cut -d '/' -f1)
+            PKG_NAME=$(echo $1 | cut -d '/' -f2)
             PKG_PATH="$(pkg.name_to_path $PKG_NAME)"
             PKG_URL="https://github.com/$PKG_USER/$PKG_NAME"
         ;;
