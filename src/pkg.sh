@@ -26,9 +26,9 @@ pkg.path_to_name() {
     echo ${basename##*.}
 }
 
-# Set name/path appropriately. If $1 has a slash it's assumed to be PKG_PATH we
-# should use and not PKG_NAME.
-pkg.set_name_and_path() {
+# Set PKG_NAME, PKG_PATH. If $1 has a slash it's assumed to be
+# PKG_PATH and not PKG_NAME, otherwise assume PKG_NAME.
+pkg.init_globals() {
     if utils.has_slash "$1"; then
         PKG_PATH="$1"
         PKG_NAME="$(pkg.path_to_name $PKG_PATH)"
@@ -40,7 +40,7 @@ pkg.set_name_and_path() {
 
 # Initialize a package and it's hooks.
 pkg.init() {
-    pkg.set_name_and_path ${1:-$PKG_PATH}
+    pkg.init_globals ${1:-$PKG_PATH}
 
     # source ellipsis.sh if it exists to initialize package hooks
     if [ -f "$PKG_PATH/ellipsis.sh" ]; then
@@ -58,11 +58,12 @@ pkg.list_symlinks() {
     done
 }
 
+# List symlinks in HOME from package.
 pkg.symlinks() {
     pkg.list_symlinks | sort | column -t
 }
 
-# Run hook or command inside $PKG_PATH.
+# Run hook or command inside PKG_PATH.
 pkg.run() {
     local cwd="$(pwd)"
 

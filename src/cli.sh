@@ -10,10 +10,10 @@ fi
 
 # Source deps.
 load ellipsis
-load registry
 load git
 load github
 load pkg
+load registry
 load utils
 
 # prints usage for ellipsis

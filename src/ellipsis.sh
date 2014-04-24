@@ -167,9 +167,9 @@ ellipsis.list() {
 ellipsis.new() {
     # If no-argument is passed, use cwd as package path.
     if [ $# -eq 1 ]; then
-        pkg.set_name_and_path "$1"
+        pkg.init_globals "$1"
     else
-        pkg.set_name_and_path "$(pwd)"
+        pkg.init_globals "$(pwd)"
     fi
 
     # Create package dir if necessary.
