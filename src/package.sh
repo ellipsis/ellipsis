@@ -19,7 +19,10 @@ pkg.name_to_path() {
 
 # Convert package path to name.
 pkg.path_to_name() {
-    echo ${1##*/.}
+    # basename
+    local basename=${1##*/}
+    # strip any leading dots
+    echo ${basename##*/.}
 }
 
 # Initialize a package and it's hooks.
@@ -44,10 +47,8 @@ pkg.init() {
 
 # Find package's symlinks.
 pkg.find_symlinks() {
-    local pkg_name=${1:-$PKG_NAME}
-
-    echo -e "\033[1m$pkg_name symlinks\033[0m" | sed 's/\-e //'
-    utils.find_symlinks | grep ellipsis/packages/$pkg_name
+    echo -e "\033[1m$PKG_NAME symlinks\033[0m" | sed 's/\-e //'
+    utils.find_symlinks | grep ellipsis/packages/$PKG_NAME
 }
 
 # Run hook or command inside $PKG_PATH.

@@ -5,7 +5,7 @@
 
 # Initialize ourselves if we haven't yet.
 if [[ $ELLIPSIS_INIT -ne 1 ]]; then
-    source "$(dirname "${BASH_SOURCE[0]}")"/init.sh
+    source "$(dirname "${BASH_SOURCE[0]}")/init.sh"
 fi
 
 # backup existing file, ensuring you don't overwrite existing backups
@@ -114,22 +114,24 @@ ellipsis.run_installer() {
 ellipsis.install() {
     case "$1" in
         http:*|https:*|git:*|ssh:*)
-            PKG_NAME=$(echo "$1" | rev | cut -d '/' -f 1 | rev)
+            PKG_NAME="$(echo $1 | rev | cut -d '/' -f 1 | rev)"
             PKG_PATH="$(pkg.name_to_path $PKG_NAME)"
-            git.clone "$1" "$PKG_PATH"
+            PKG_URL="$1"
         ;;
         */*)
-	    local user=$(echo $pkg | cut -d '/' -f1)
-	    PKG_NAME=$(echo $pkg | cut -d '/' -f2)
-            PKG_PATH="$HOME/.ellipsis/packages/$PKG_NAME"
-            git.clone "https://github.com/$user/$PKG_NAME" "$PKG_PATH"
+    	    PKG_USER=$(echo $1 | cut -d '/' -f1)
+	        PKG_NAME=$(echo $1 | cut -d '/' -f2)
+            PKG_PATH="$(pkg.name_to_path $PKG_NAME)"
+            PKG_URL="https://github.com/$PKG_USER/$PKG_NAME"
         ;;
         *)
             PKG_NAME="$1"
-            PKG_PATH="$HOME/.ellipsis/packages/$PKG_NAME"
-            git.clone "https://github.com/$ELLIPSIS_USER/$PKG_NAME" "$PKG_PATH"
+            PKG_PATH="$(pkg.name_to_path $PKG_NAME)"
+            PKG_URL="https://github.com/$ELLIPSIS_USER/$PKG_NAME"
         ;;
     esac
+
+    git.clone "$PKG_URL" "$PKG_PATH"
 
     pkg.init $PKG_PATH
     pkg.run pkg.install
@@ -227,7 +229,7 @@ ellipsis.each() {
     local cmd="$1"
 
     # execute command for ellipsis first
-    pkg.init $HOME/.ellipsis ellipsis
+    pkg.init $ELLIPSIS_PATH
     pkg.run $cmd
     pkg.del
 
@@ -241,7 +243,9 @@ ellipsis.each() {
 
 # list all installed packages
 ellipsis.list_packages() {
-    echo $HOME/.ellipsis/packages/*
+    if ! utils.folder_empty $ELLIPSIS_PATH/packages; then
+        echo $ELLIPSIS_PATH/packages/*
+    fi
 }
 
 # list all symlinks, or just symlinks for a given package
