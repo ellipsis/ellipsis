@@ -58,6 +58,10 @@ pkg.list_symlinks() {
     done
 }
 
+pkg.symlinks() {
+    pkg.list_symlinks | sort | column -t
+}
+
 # Run hook or command inside $PKG_PATH.
 pkg.run() {
     local cwd="$(pwd)"

@@ -253,6 +253,15 @@ ellipsis.list_packages() {
     fi
 }
 
+ellipsis.list_symlinks() {
+    for file in $(utils.list_symlinks); do
+        local link="$(readlink $file)"
+        if [[ "$link" == $ELLIPSIS_PATH* ]]; then
+            echo "$(utils.strip_packages_dir $link) -> $(utils.relative_path $file)";
+        fi
+    done
+}
+
 # list all symlinks, or just symlinks for a given package
 ellipsis.symlinks() {
     if [ $# -eq 1 ]; then
@@ -260,6 +269,6 @@ ellipsis.symlinks() {
         pkg.run pkg.symlinks
         pkg.del
     else
-        ellipsis.each pkg.symlinks
+        ellipsis.list_symlinks | sort | column -t
     fi
 }
