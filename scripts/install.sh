@@ -21,8 +21,9 @@ source $tmp_dir/ellipsis/src/init.sh
 
 # Load modules.
 load ellipsis
-load utils
 load epmi
+load package
+load utils
 
 # Backup existing ~/.ellipsis if necessary and  move project into place.
 ellipsis.backup $HOME/.ellipsis
