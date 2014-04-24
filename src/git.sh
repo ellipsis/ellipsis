@@ -40,7 +40,9 @@ git.list() {
 git.status() {
     local ahead="$(git.ahead)"
 
-    [ "$ahead" = "" ] && ! git.has_changes && return
+    if ! git.has_changes || [ ! -z "$ahead" ]; then
+        return
+    fi
 
     local sha1="$(git.sha1)"
     local last_updated=$(git.last_updated)
@@ -51,15 +53,11 @@ git.status() {
 
 # Print last commit's sha1 hash.
 git.sha1() {
-    local work_tree="${1:-$PKG_PATH}"
-
     git rev-parse --short HEAD
 }
 
 # Print last commit's relative update time.
 git.last_updated() {
-    local work_tree="${1:-$PKG_PATH}"
-
     git --no-pager log --pretty="format:%ad" --date=relative -1
 }
 
@@ -70,7 +68,7 @@ git.ahead() {
 
 # Check whether get repo has changes.
 git.has_changes() {
-    if  [ "$(git --untracked-files=no --porcelain 2> /dev/null | tail -n 1)" = "" ]; then
+    if  [ -z "$(git --untracked-files=no --porcelain 2> /dev/null | tail -n 1)" ]; then
 	    return 0
     fi
     return 1

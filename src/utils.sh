@@ -42,11 +42,9 @@ utils.prompt() {
     esac
 }
 
-# find symlinks in $HOME
-utils.find_symlinks() {
-    for symlink in $(find ${1:-$HOME} -maxdepth 1 -type l | xargs -I{} readlink '{}'); do
-        utils.relative_path $symlink
-    done
+# List symlinks in a folder, defaulting to $HOME.
+utils.list_symlinks() {
+    find ${1:-$HOME} -maxdepth 1 -type l
 }
 
 # dunno how this isn't part of POSIX
@@ -57,6 +55,11 @@ utils.abs_path() {
 # return path to file relative to $HOME (if possible)
 utils.relative_path() {
     echo ${1/$HOME/\~}
+}
+
+# return path to file in packages dir
+utils.strip_packages_dir() {
+    echo ${1/$ELLIPSIS_PATH\/packages\//}
 }
 
 # detects slash in string

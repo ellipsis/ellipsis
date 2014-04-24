@@ -10,7 +10,7 @@ if [[ $ELLIPSIS_INIT -ne 1 ]]; then
 fi
 
 # List of hooks available to package authors.
-PKG_HOOKS=(install uninstall symlinks pull push status list)
+PKG_HOOKS=(install uninstall unlink symlinks pull push status list)
 
 # Convert package name to path.
 pkg.name_to_path() {
@@ -48,9 +48,13 @@ pkg.init() {
 }
 
 # Find package's symlinks.
-pkg.find_symlinks() {
-    echo -e "\033[1m$PKG_NAME symlinks\033[0m" | sed 's/\-e //'
-    utils.find_symlinks | grep ellipsis/packages/$PKG_NAME
+pkg.list_symlinks() {
+    for file in $(utils.list_symlinks); do
+        local link="$(readlink $file)"
+        if [[ "$link" == *packages/$PKG_NAME* ]]; then
+            echo "$(utils.strip_packages_dir $link) -> $(utils.relative_path $file)";
+        fi
+    done
 }
 
 # Run hook or command inside $PKG_PATH.
@@ -88,7 +92,7 @@ pkg.run_hook() {
                 ;;
             pkg.unlink)
                 # Remove package's symlinks in $HOME.
-                for symlink in $(pkg.find_symlinks); do
+                for symlink in $(pkg.list_symlinks); do
                     rm $symlink
                 done
                 ;;
@@ -99,7 +103,8 @@ pkg.run_hook() {
                 ;;
             pkg.symlinks)
                 # List packages symlinks in $HOME.
-                pkg.find_symlinks
+                echo -e "\033[1m$PKG_NAME\033[0m"
+                pkg.list_symlinks | sort
                 ;;
             pkg.pull)
                 # Do git pull from package

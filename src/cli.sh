@@ -51,15 +51,22 @@ cli.version() {
 # run ellipsis
 cli.run() {
     case "$1" in
-        install|add|in|+)
+        install|in|add)
             ellipsis.install $2
             ;;
-        uninstall|remove|rm|-)
+
+        uninstall|remove|rm)
             ellipsis.uninstall $2
             ;;
+
+        unlink)
+            ellipsis.uninstall $2
+            ;;
+
         list|ls|installed)
             ellipsis.list
             ;;
+
         links|symlinks)
             if [ "$2" ]; then
                 ellipsis.symlinks $2
@@ -67,27 +74,35 @@ cli.run() {
                 ellipsis.symlinks
             fi
             ;;
+
         available)
             epmi.list_packages
             ;;
+
         search)
             epmi.search_packages $2
             ;;
+
         new)
             ellipsis.new $2
             ;;
+
         status|st)
             ellipsis.each git.status
             ;;
+
         pull|update|up)
             ellipsis.each git.pull
             ;;
+
         push)
             ellipsis.each git.push
             ;;
+
         --help|-h)
             cli.usage
             ;;
+
         --version|-v)
             cli.version
             ;;

@@ -138,15 +138,23 @@ ellipsis.install() {
     pkg.del
 }
 
-# Uninstall ellipsis package, using uninstall hook if one exists. If no hook is
-# defined, all symlinked files in $HOME are removed.
+# Uninstall package, using uninstall hook if one exists. If no hook is
+# defined, all symlinked files in $HOME are removed and package is rm -rf'd.
 ellipsis.uninstall() {
     pkg.init "$1"
     pkg.run pkg.uninstall
     pkg.del
 }
 
-# List installed packages
+# Unlink package, using unlink hooks, using unlink hook if one exists. If no
+# hook is defined, all symlinked files in $HOME are removed.
+ellipsis.unlink() {
+    pkg.init "$1"
+    pkg.run pkg.unlink
+    pkg.del
+}
+
+# List installed packages.
 ellipsis.list() {
     if utils.cmd_exists column; then
         ellipsis.each pkg.list | column -t -s $'\t'
