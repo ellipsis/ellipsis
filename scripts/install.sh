@@ -1,49 +1,48 @@
 #!/usr/bin/env bash
 #
-# Installer for ellipsis (http://ellipsis.sh)
+# scripts/install.sh
+# Installer for ellipsis (http://ellipsis.sh).
 
-ELLIPSIS_USER="${ELLIPSIS_USER:-zeekay}"
-ELLIPSIS_REPO="${ELLIPSIS_REPO:-https://github.com/$ELLIPSIS_USER/ellipsis}"
-ELLIPSIS_URL="${ELLIPSIS_URL:-https://raw.githubusercontent.com/$ELLIPSIS_USER/ellipsis/master}"
-
-# ensure dependencies are installed
+# Ensure dependencies are installed.
 deps=(bash curl git)
 
 for dep in ${deps[*]}; do
     hash $dep 2>/dev/null || { echo >&2 "ellipsis requires $dep to be installed."; exit 1; }
 done
 
-# create temp dir
+# Create temp dir.
 tmp_dir=$(mktemp -d ${TMPDIR:-tmp}-XXXXXX)
 
-# download necessary bits
-curl -sL "$ELLIPSIS_URL/src/git.sh" > $tmp_dir/git.sh
-curl -sL "$ELLIPSIS_URL/src/utils.sh" > $tmp_dir/utils.sh
-curl -sL "$ELLIPSIS_URL/src/ellipsis.sh" > $tmp_dir/ellipsis.sh
+# Clone ellipsis into $tmp_dir.
+git clone git://github.com/zeekay/ellipsis.git $tmp_dir/ellipsis
 
-# source ellipsis lib files
-source $tmp_dir/git.sh
-source $tmp_dir/utils.sh
-source $tmp_dir/ellipsis.sh
+# Initialize ellipsis.
+source $tmp_dir/ellipsis/src/init.sh
 
-# clean up (only necessary on cygwin, really)
+# Load modules.
+load ellipsis
+load utils
+load epmi
+
+# Backup existing ~/.ellipsis if necessary and  move project into place.
+ellipsis.backup $HOME/.ellipsis
+mv $tmp_dir/ellipsis $HOME/.ellipsis
+
+# Clean up (only necessary on cygwin, really).
 rm -rf $tmp_dir
 
-# backup existing copy
-ellipsis.backup ~/.ellipsis
-
-# Download latest copy of ellipsis
-git.clone "$ELLIPSIS_REPO" ~/.ellipsis
+# Backwards compatability, originally referred to packages as modules.
+PACKAGES="${PACKAGES:-$MODULES}"
 
 if [ -z "$PACKAGES" ]; then
-    # list available packages
-    ellipsis.available
+    # List available packages.
+    epmi.list_packages
 
-    # list default packages
+    # List default packages for this platform.
     if [ "$(utils.platform)" = "darwin" ]; then
-        default="files vim zsh alfred iterm2"
+        default="zeekay/dot-files zeekay/dot-vim zeekay/dot-zsh zeekay/dot-alfred zeekay/dot-iterm2"
     else
-        default="files vim zsh"
+        default="zeekay/dot-files zeekay/dot-vim zeekay/dot-zsh"
     fi
 
     echo "default: $default"
