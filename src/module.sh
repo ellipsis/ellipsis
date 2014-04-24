@@ -1,24 +1,32 @@
 #!/usr/bin/env bash
 #
-# ellipsis module interface
+# ellipsis.sh
+# Ellipsis module interface. Encapsulates various useful functions for working
+# with modules.
 
+# Source globals if they haven't been yet
+if [[ $ELLIPSIS_GLOBALS -ne 1 ]]; then
+    source $(dirname "${BASH_SOURCE[0]}")/globals.sh
+fi
+
+# List of hooks available to module authors.
 mod_hooks=(install uninstall symlinks pull push status list)
 
-# mod_name -> mod_path
+# Convert module name to path.
 mod.name_to_path() {
     local name="$1"
 
     echo "$HOME/.ellipsis/modules/$name"
 }
 
-# mod path -> name
+# Convert module path to name.
 mod.path_to_name() {
     local path="$1"
 
     echo $(utils.strip_leading_dot "${path##*/}")
 }
 
-# initialize a module and it's hooks
+# Initialize a module and it's hooks.
 mod.init() {
     local name_or_path="$1"
 
@@ -38,7 +46,7 @@ mod.init() {
     fi
 }
 
-# find module's symlinks
+# Find module's symlinks.
 mod.find_symlinks() {
     local mod_name=${1:-$mod_name}
 
@@ -46,7 +54,7 @@ mod.find_symlinks() {
     utils.find_symlinks | grep ellipsis/modules/$mod_name
 }
 
-# run hook or command inside mod_path
+# Run hook or command inside $mod_path.
 mod.run() {
     local cmd="$1"
     local cwd="$(pwd)"

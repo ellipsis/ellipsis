@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 #
-# ellipsis utility functions
+# utils.sh
+# Various file/folder/utility functions used by Ellipsis.
+
+# Source globals if they haven't been yet
+if [[ $ELLIPSIS_GLOBALS -ne 1 ]]; then
+    source $(dirname "${BASH_SOURCE[0]}")/globals.sh
+fi
 
 # platform detection
 utils.platform() {

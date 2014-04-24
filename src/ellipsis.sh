@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 #
-# core ellipsis functions
+# ellipsis.sh
+# Core ellipsis interface.
 
-# These globals can be set by a user to use a custom ellipsis fork/set of modules
-ELLIPSIS_USER="${ELLIPSIS_USER:-zeekay}"
-ELLIPSIS_REPO="${ELLIPSIS_REPO:-https://github.com/$ELLIPSIS_USER/ellipsis}"
-ELLIPSIS_MODULES_URL="${ELLIPSIS_MODULES_URL:-https://raw.githubusercontent.com/$ELLIPSIS_USER/ellipsis/master/available-modules.txt}"
+# Source globals if they haven't been yet
+if [[ $ELLIPSIS_GLOBALS -ne 1 ]]; then
+    source $(dirname "${BASH_SOURCE[0]}")/globals.sh
+fi
 
 # backup existing file, ensuring you don't overwrite existing backups
 ellipsis.backup() {
