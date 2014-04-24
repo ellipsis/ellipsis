@@ -98,32 +98,32 @@ can customize how ellipsis treats your package by defining hooks in an
 ### Hooks
 Hooks allow you to customize how ellipsis interacts with your package.  For
 instance if you want to change how your package is installed you can define
-`mod.install` and specifiy exactly which files are symlinked into `$HOME`,
+`pkg.install` and specifiy exactly which files are symlinked into `$HOME`,
 compile any libraries, etc.
 
 The follow hooks/variables are available in your `ellipsis.sh`:
 
-#### mod.install
+#### pkg.install
 Customize how package is installed. By default all files are symlinked into
 `$HOME`.
 
-#### mod.uninstall
+#### pkg.uninstall
 Customize how package is uninstalled. By default all symlinks are removed from
 `$HOME`.
 
-#### mod.push
+#### pkg.push
 Customize how how changes are pushed `ellipsis push` is used.
 
-#### mod.pull
+#### pkg.pull
 Customize how how changes are pulled in when `ellipsis pull` is used.
 
-#### mod.status
+#### pkg.status
 Customize output of `ellipsis status`.
 
-#### $mod_name
+#### $PKG_NAME
 Name of your package.
 
-#### $mod_path
+#### $PKG_PATH
 Path to your package.
 
 ### API
