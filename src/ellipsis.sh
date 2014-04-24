@@ -133,7 +133,7 @@ ellipsis.install() {
 
     git.clone "$PKG_URL" "$PKG_PATH"
 
-    pkg.init $PKG_PATH
+    pkg.init "$PKG_PATH"
     pkg.run pkg.install
     pkg.del
 }
@@ -141,9 +141,7 @@ ellipsis.install() {
 # Uninstall ellipsis package, using uninstall hook if one exists. If no hook is
 # defined, all symlinked files in $HOME are removed.
 ellipsis.uninstall() {
-    PKG_PATH="$HOME/.ellipsis/packages/$1"
-
-    pkg.init $PKG_PATH
+    pkg.init "$1"
     pkg.run pkg.uninstall
     pkg.del
 }
@@ -250,7 +248,7 @@ ellipsis.list_packages() {
 # list all symlinks, or just symlinks for a given package
 ellipsis.symlinks() {
     if [ $# -eq 1 ]; then
-        pkg.init $1
+        pkg.init "$1"
         pkg.run pkg.symlinks
         pkg.del
     else
