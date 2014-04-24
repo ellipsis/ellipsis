@@ -4,6 +4,7 @@
 # Ellipsis package interface. Encapsulates various useful functions for working
 # with packages.
 
+
 # Initialize ourselves if we haven't yet.
 if [[ $ELLIPSIS_INIT -ne 1 ]]; then
     source "$(dirname "${BASH_SOURCE[0]}")"/init.sh

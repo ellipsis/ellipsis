@@ -40,9 +40,8 @@ git.list() {
 git.status() {
     local ahead="$(git.ahead)"
 
-    if ! git.has_changes || [ ! -z "$ahead" ]; then
-        return
-    fi
+    # Return unless there are changes or we are behind.
+    git.has_changes && [ ! -z "$ahead" ] || return
 
     local sha1="$(git.sha1)"
     local last_updated=$(git.last_updated)
@@ -68,10 +67,10 @@ git.ahead() {
 
 # Check whether get repo has changes.
 git.has_changes() {
-    if  [ -z "$(git --untracked-files=no --porcelain 2> /dev/null | tail -n 1)" ]; then
-	    return 0
+    if git diff-index --quiet HEAD --; then
+        return 1
     fi
-    return 1
+    return 0
 }
 
 # Print diffstat for git repo
