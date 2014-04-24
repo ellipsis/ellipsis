@@ -71,7 +71,7 @@ cli.run() {
             epmi.list_packages
             ;;
         search)
-            epmi.search_packages $1
+            epmi.search_packages $2
             ;;
         new)
             ellipsis.new $2
