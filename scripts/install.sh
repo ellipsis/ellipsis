@@ -23,7 +23,7 @@ source $tmp_dir/ellipsis/src/init.sh
 load ellipsis
 load epmi
 load git
-load package
+load pkg
 load utils
 
 # Backup existing ~/.ellipsis if necessary and  move project into place.
