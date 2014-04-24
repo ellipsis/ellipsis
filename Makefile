@@ -2,6 +2,9 @@
 
 all: test
 
+gh-pages:
+	brief
+
 tag:
 	@echo ELLIPSIS_VERSION=$(version) > src/version.sh
 	@git add src/version.sh
