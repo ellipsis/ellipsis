@@ -8,12 +8,15 @@ if [[ $ELLIPSIS_INIT -ne 1 ]]; then
     source "$(dirname "${BASH_SOURCE[0]}")"/init.sh
 fi
 
+# Load deps.
+load github
+
 # Search epmi org for ellipsis packages.
 epmi.search_packages() {
-    github.search $1 | gitub.format_json
+    github.search $1 | github.format_json
 }
 
 # Lis epmi org ellipsis packages.
 epmi.list_packages() {
-    github.list_repos | gitub.format_json
+    github.list_repos | github.format_json
 }

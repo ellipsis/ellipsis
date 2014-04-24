@@ -37,10 +37,9 @@ github.format_json() {
    | sed -e 's/name": "/name      \'$'\033[1m/'          \
          -e 's/-/\//'                                    \
          -e 's/description": "/\'$'\033[0mdesc      /'   \
-         -e 's/homepage": "\s*/url     /'                \
+         -e 's/homepage": "/url       /'                 \
          -e 's/watchers": /watchers  /'                  \
          -e 's/forks": /forks     /'                     \
-         -e 's/url\s+/  /'                               \
          -e 's/,$//'                                     \
          -e 's/"$//'
 }
