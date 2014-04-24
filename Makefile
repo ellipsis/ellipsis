@@ -12,7 +12,7 @@ tag:
 	@git tag v$(version)
 
 test: deps/bats
-	deps/bats/bin/bats $(TEST_OPTS) test
+	deps/bats/bin/bats test
 
 deps/bats:
 	@mkdir -p deps
