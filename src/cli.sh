@@ -10,7 +10,7 @@ fi
 
 # Source deps.
 load ellipsis
-load epmi
+load registry
 load git
 load github
 load pkg
@@ -76,11 +76,11 @@ cli.run() {
             ;;
 
         available)
-            epmi.list_packages
+            registry.list_packages
             ;;
 
         search)
-            epmi.search_packages $2
+            registry.search_packages $2
             ;;
 
         new)

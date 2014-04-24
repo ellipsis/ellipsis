@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# epmi.sh
+# registry.sh
 # Interface to ellipsis package manager index. Uses github under the covers.
 
 # Initialize ourselves if we haven't yet.
@@ -11,12 +11,12 @@ fi
 # Load deps.
 load github
 
-# Search epmi org for ellipsis packages.
-epmi.search_packages() {
+# Search registry for ellipsis packages.
+registry.search_packages() {
     github.search $1 | github.format_json
 }
 
-# Lis epmi org ellipsis packages.
-epmi.list_packages() {
+# List ellipsis packages in registry.
+registry.list_packages() {
     github.list_repos | github.format_json
 }
