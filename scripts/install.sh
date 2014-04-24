@@ -3,6 +3,8 @@
 # scripts/install.sh
 # Installer for ellipsis (http://ellipsis.sh).
 
+ELLIPSIS_PATH=${ELLIPSIS_PATH:-$HOME/.ellipsis}
+
 # Ensure dependencies are installed.
 deps=(bash curl git)
 
@@ -27,8 +29,8 @@ load pkg
 load utils
 
 # Backup existing ~/.ellipsis if necessary and  move project into place.
-ellipsis.backup $HOME/.ellipsis
-mv $tmp_dir/ellipsis $HOME/.ellipsis
+ellipsis.backup $ELLIPSIS_PATH
+mv $tmp_dir/ellipsis $ELLIPSIS_PATH
 
 # Clean up (only necessary on cygwin, really).
 rm -rf $tmp_dir
@@ -58,8 +60,8 @@ else
 fi
 
 # install selected packages.
-for package in ${packages[*]}; do
-    ellipsis.install $package
+for pkg in ${packages[*]}; do
+    ellipsis.install "$pkg"
 done
 
 echo
