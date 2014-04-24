@@ -38,7 +38,6 @@ teardown() {
 
 @test "utils.list_symlinks should find symlinks in folder" {
     run utils.list_symlinks tmp/symlinks
-    echo $output > out.txt
     [ "$output" = "tmp/symlinks/symlink" ]
 }
 
