@@ -131,7 +131,7 @@ ellipsis.install() {
         ;;
     esac
 
-    pkg.init
+    pkg.init $PKG_PATH
     pkg.run pkg.install
     pkg.del
 }
@@ -155,11 +155,7 @@ ellipsis.list() {
     fi
 }
 
-# List available packages using $ELLIPSIS_packageS_URL
-ellipsis.available() {
-    curl -s $ELLIPSIS_packageS_URL
-}
-
+# Scaffold a new package.
 ellipsis.new() {
     if [ $# -eq 1 ]; then
         PKG_PATH="$HOME/.ellipsis/packages/$1"

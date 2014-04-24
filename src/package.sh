@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# ellipsis.sh
+# package.sh
 # Ellipsis package interface. Encapsulates various useful functions for working
 # with packages.
 
@@ -24,16 +24,16 @@ pkg.path_to_name() {
 
 # Initialize a package and it's hooks.
 pkg.init() {
-    local name_or_path="$1"
+    local name_or_path="${1:-$PKG_PATH}"
 
     # we can be passed either a name or path, paths are assumed to be absolute,
     # and should have a slash in them.
     if utils.has_slash $name_or_path; then
-        pkg_path="$name_or_path"
-        pkg_name="$(pkg.path_to_name $pkg_path)"
+        PKG_PATH="$name_or_path"
+        PKG_NAME="$(pkg.path_to_name $PKG_PATH)"
     else
-        pkg_name="$name_or_path"
-        pkg_path="$(pkg.name_to_path $pkg_name)"
+        PKG_NAME="$name_or_path"
+        PKG_PATH="$(pkg.name_to_path $PKG_NAME)"
     fi
 
     # source ellipsis.sh if it exists to initialize package hooks
@@ -44,7 +44,7 @@ pkg.init() {
 
 # Find package's symlinks.
 pkg.find_symlinks() {
-    local pkg_name=${1:-$pkg_name}
+    local pkg_name=${1:-$PKG_NAME}
 
     echo -e "\033[1m$pkg_name symlinks\033[0m" | sed 's/\-e //'
     utils.find_symlinks | grep ellipsis/packages/$pkg_name
@@ -56,7 +56,7 @@ pkg.run() {
     local cwd="$(pwd)"
 
     # change to package dir
-    cd "$pkg_path"
+    cd "$PKG_PATH"
 
     # run hook or command
     case $cmd in
@@ -81,7 +81,7 @@ pkg.run_hook() {
     else
         case $hook in
             pkg.install)
-                ellipsis.link_files $pkg_path
+                ellipsis.link_files $PKG_PATH
                 ;;
             pkg.uninstall)
                 for symlink in $(pkg.find_symlinks); do
@@ -115,8 +115,8 @@ pkg.del() {
 
 # unset global packages
 pkg._unset_vars() {
-    unset pkg_name
-    unset pkg_path
+    unset PKG_NAME
+    unset PKG_PATH
 }
 
 # unset any hooks that might have been defined by package
