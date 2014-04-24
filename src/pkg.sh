@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# package.sh
+# pkg.sh
 # Ellipsis package interface. Encapsulates various useful functions for working
 # with packages.
 
