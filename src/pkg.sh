@@ -92,40 +92,31 @@ pkg.run_hook() {
         # Run default hook.
         case $1 in
             pkg.install)
-                # Symlink files in $PKG_PATH into $HOME
-                ellipsis.link_files $PKG_PATH
+                pkg.hooks.install
                 ;;
             pkg.unlink)
-                # Remove package's symlinks in $HOME.
-                for symlink in $(pkg.list_symlinks); do
-                    rm $symlink
-                done
+                pkg.hooks.unlink
                 ;;
             pkg.uninstall)
-                # Remove package's symlinks then remove package.
-                pkg.run_hook pkg.unlink
-                rm -rf $PKG_PATH
+                pkg.hooks.uninstall
                 ;;
             pkg.symlinks)
-                # List packages symlinks in $HOME.
-                echo -e "\033[1m$PKG_NAME\033[0m"
-                pkg.list_symlinks | sort
+                pkg.hooks.symlinks
                 ;;
             pkg.pull)
-                # Do git pull from package
-                pkg.run git.pull
+                pkg.hooks.pull
                 ;;
             pkg.push)
-                # Do git push from package
-                pkg.run git.push
+                pkg.hooks.push
                 ;;
             pkg.list)
-                # List repo status.
-                pkg.run git.list
+                pkg.hooks.list
                 ;;
             pkg.status)
-                # List repo status if it's changed and show git diffstat.
-                pkg.run git.status
+                pkg.hooks.status
+                ;;
+            *)
+                echo Unknown hook!
                 ;;
         esac
     fi
@@ -148,4 +139,51 @@ pkg._unset_hooks() {
     for hook in ${PKG_HOOKS[@]}; do
         unset -f pkg.$hook
     done
+}
+
+# Hooks
+
+
+# Symlink files in $PKG_PATH into $HOME
+pkg.hooks.install() {
+    ellipsis.link_files $PKG_PATH
+}
+
+# Remove package's symlinks in $HOME.
+pkg.hooks.unlink() {
+    for symlink in $(pkg.list_symlinks); do
+        rm $symlink
+    done
+}
+
+# Remove package's symlinks then remove package.
+pkg.hooks.uninstall() {
+    pkg.run_hook pkg.unlink
+    rm -rf $PKG_PATH
+}
+
+# List packages symlinks in $HOME.
+pkg.hooks.symlinks() {
+    echo -e "\033[1m$PKG_NAME\033[0m"
+    pkg.list_symlinks | sort
+}
+
+# Do git pull from package
+pkg.hooks.pull() {
+    pkg.run git.pull
+}
+
+# Do git push from package
+pkg.hooks.push() {
+    pkg.run git.push
+}
+
+# List repo status.
+pkg.hooks.list() {
+    pkg.run git.list
+}
+
+# List repo status if it's changed and show git diffstat.
+pkg.hooks.status() {
+    pkg.run git.status
 }
