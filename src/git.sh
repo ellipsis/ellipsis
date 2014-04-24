@@ -13,7 +13,7 @@ fi
 
 # Clone a Git repo.
 git.clone() {
-    git clone --depth 1 "$1" "$2" 2>&1 | grep 'Cloning into'
+    git clone --depth 1 "$@" 2>&1 | grep 'Cloning into'
 }
 
 # Pull git repo.

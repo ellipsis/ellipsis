@@ -10,7 +10,7 @@ if [[ $ELLIPSIS_INIT -ne 1 ]]; then
 fi
 
 # List of hooks available to package authors.
-pkg_hooks=(install uninstall symlinks pull push status list)
+PKG_HOOKS=(install uninstall symlinks pull push status list)
 
 # Convert package name to path.
 pkg.name_to_path() {
@@ -37,8 +37,8 @@ pkg.init() {
     fi
 
     # source ellipsis.sh if it exists to initialize package hooks
-    if [ -f "$pkg_path/ellipsis.sh" ]; then
-        source "$pkg_path/ellipsis.sh"
+    if [ -f "$PKG_PATH/ellipsis.sh" ]; then
+        source "$PKG_PATH/ellipsis.sh"
     fi
 }
 
@@ -50,7 +50,7 @@ pkg.find_symlinks() {
     utils.find_symlinks | grep ellipsis/packages/$pkg_name
 }
 
-# Run hook or command inside $pkg_path.
+# Run hook or command inside $PKG_PATH.
 pkg.run() {
     local cmd="$1"
     local cwd="$(pwd)"
@@ -121,7 +121,7 @@ pkg._unset_vars() {
 
 # unset any hooks that might have been defined by package
 pkg._unset_hooks() {
-    for hook in ${pkg_hooks[@]}; do
+    for hook in ${PKG_HOOKS[@]}; do
         unset -f pkg.$hook
     done
 }
