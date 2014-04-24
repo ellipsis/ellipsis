@@ -55,19 +55,18 @@ pkg.find_symlinks() {
 
 # Run hook or command inside $PKG_PATH.
 pkg.run() {
-    local cmd="$1"
     local cwd="$(pwd)"
 
     # change to package dir
     cd "$PKG_PATH"
 
     # run hook or command
-    case $cmd in
+    case $1 in
         pkg.*)
-            pkg.run_hook $cmd
+            pkg.run_hook $1
             ;;
         *)
-            $cmd
+            $1
             ;;
     esac
 
