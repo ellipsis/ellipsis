@@ -23,9 +23,9 @@ source $tmp_dir/ellipsis/src/init.sh
 
 # Load modules.
 load ellipsis
-load epmi
 load git
 load pkg
+load registry
 load utils
 
 # Backup existing ~/.ellipsis if necessary and  move project into place.
@@ -40,7 +40,7 @@ PACKAGES="${PACKAGES:-$MODULES}"
 
 if [ -z "$PACKAGES" ]; then
     # List available packages.
-    epmi.list_packages
+    registry.list_packages
 
     # List default packages for this platform.
     if [ "$(utils.platform)" = "darwin" ]; then
