@@ -1,13 +1,8 @@
 #!/usr/bin/env bash
 
-SCRIPT_PATH="$(dirname $0)"
+source "$(dirname "${BASH_SOURCE[0]}")/../src/init.sh"
 
-source "$SCRIPT_PATH/../src/cli.sh"
-source "$SCRIPT_PATH/../src/ellipsis.sh"
-source "$SCRIPT_PATH/../src/git.sh"
-source "$SCRIPT_PATH/../src/module.sh"
-source "$SCRIPT_PATH/../src/utils.sh"
-source "$SCRIPT_PATH/../src/version.sh"
+load cli
 
 # check for controlling terminal
 if [ -t 1 ]; then

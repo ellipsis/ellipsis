@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 #
-# ellipsis utility functions
+# utils.sh
+# Various file/folder/utility functions used by Ellipsis.
+
+# Initialize ourselves if we haven't yet.
+if [[ $ELLIPSIS_INIT -ne 1 ]]; then
+    source "$(dirname "${BASH_SOURCE[0]}")"/init.sh
+fi
 
 # platform detection
 utils.platform() {
@@ -36,11 +42,9 @@ utils.prompt() {
     esac
 }
 
-# find symlinks in $HOME
-utils.find_symlinks() {
-    for symlink in $(find ${1:-$HOME} -maxdepth 1 -type l | xargs -I{} readlink '{}'); do
-        utils.relative_path $symlink
-    done
+# List symlinks in a folder, defaulting to $HOME.
+utils.list_symlinks() {
+    find ${1:-$HOME} -maxdepth 1 -type l
 }
 
 # dunno how this isn't part of POSIX
@@ -53,8 +57,9 @@ utils.relative_path() {
     echo ${1/$HOME/\~}
 }
 
-utils.strip_leading_dot() {
-    echo "${1#.}"
+# return path to file in packages dir
+utils.strip_packages_dir() {
+    echo ${1/$ELLIPSIS_PATH\/packages\//}
 }
 
 # detects slash in string

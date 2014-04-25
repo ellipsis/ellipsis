@@ -1,64 +1,67 @@
 #!/usr/bin/env bash
 #
-# Installer for ellipsis (http://ellipsis.sh)
+# scripts/install.sh
+# Installer for ellipsis (http://ellipsis.sh).
 
-ELLIPSIS_USER="${ELLIPSIS_USER:-zeekay}"
-ELLIPSIS_REPO="${ELLIPSIS_REPO:-https://github.com/$ELLIPSIS_USER/ellipsis}"
-ELLIPSIS_URL="${ELLIPSIS_URL:-https://raw.githubusercontent.com/$ELLIPSIS_USER/ellipsis/master}"
+ELLIPSIS_PATH=${ELLIPSIS_PATH:-$HOME/.ellipsis}
 
-# ensure dependencies are installed
+# Ensure dependencies are installed.
 deps=(bash curl git)
 
 for dep in ${deps[*]}; do
     hash $dep 2>/dev/null || { echo >&2 "ellipsis requires $dep to be installed."; exit 1; }
 done
 
-# create temp dir
+# Create temp dir.
 tmp_dir=$(mktemp -d ${TMPDIR:-tmp}-XXXXXX)
 
-# download necessary bits
-curl -sL "$ELLIPSIS_URL/src/git.sh" > $tmp_dir/git.sh
-curl -sL "$ELLIPSIS_URL/src/utils.sh" > $tmp_dir/utils.sh
-curl -sL "$ELLIPSIS_URL/src/ellipsis.sh" > $tmp_dir/ellipsis.sh
+# Clone ellipsis into $tmp_dir.
+git clone --depth 1 git://github.com/zeekay/ellipsis.git $tmp_dir/ellipsis
 
-# source ellipsis lib files
-source $tmp_dir/git.sh
-source $tmp_dir/utils.sh
-source $tmp_dir/ellipsis.sh
+# Initialize ellipsis.
+source $tmp_dir/ellipsis/src/init.sh
 
-# clean up (only necessary on cygwin, really)
+# Load modules.
+load ellipsis
+load epmi
+load git
+load pkg
+load utils
+
+# Backup existing ~/.ellipsis if necessary and  move project into place.
+ellipsis.backup $ELLIPSIS_PATH
+mv $tmp_dir/ellipsis $ELLIPSIS_PATH
+
+# Clean up (only necessary on cygwin, really).
 rm -rf $tmp_dir
 
-# backup existing copy
-ellipsis.backup ~/.ellipsis
+# Backwards compatability, originally referred to packages as modules.
+PACKAGES="${PACKAGES:-$MODULES}"
 
-# Download latest copy of ellipsis
-git.clone "$ELLIPSIS_REPO" ~/.ellipsis
+if [ -z "$PACKAGES" ]; then
+    # List available packages.
+    epmi.list_packages
 
-if [ -z "$MODULES" ]; then
-    # list available modules
-    ellipsis.available
-
-    # list default modules
+    # List default packages for this platform.
     if [ "$(utils.platform)" = "darwin" ]; then
-        default="files vim zsh alfred iterm2"
+        default="zeekay/dot-files zeekay/dot-vim zeekay/dot-zsh zeekay/dot-alfred zeekay/dot-iterm2"
     else
-        default="files vim zsh"
+        default="zeekay/dot-files zeekay/dot-vim zeekay/dot-zsh"
     fi
 
     echo "default: $default"
 
     # allow user to override defaults
-    read modules < /dev/tty
-    modules="${modules:-$default}"
+    read packages < /dev/tty
+    packages="${packages:-$default}"
 else
-    # user already provided modules list to install
-    modules="$MODULES"
+    # user already provided packages list to install
+    packages="$PACKAGES"
 fi
 
-# install selected modules.
-for module in ${modules[*]}; do
-    ellipsis.install $module
+# install selected packages.
+for pkg in ${packages[*]}; do
+    ellipsis.install "$pkg"
 done
 
 echo

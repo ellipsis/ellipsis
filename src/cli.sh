@@ -1,6 +1,20 @@
 #!/usr/bin/env bash
 #
-# ellipsis cli
+# cli.sh
+# Command line interface for ellipsis.
+
+# Initialize ourselves if we haven't yet.
+if [[ $ELLIPSIS_INIT -ne 1 ]]; then
+    source "$(dirname "${BASH_SOURCE[0]}")"/init.sh
+fi
+
+# Source deps.
+load ellipsis
+load git
+load github
+load pkg
+load registry
+load utils
 
 # prints usage for ellipsis
 cli.usage() {
@@ -11,15 +25,15 @@ Usage: ellipsis <command>
     -v, --version  show version
 
   Commands:
-    install        install new module
-    uninstall      uninstall module
-    list           list installed modules
-    links          list symlinks installed globally or for a module
-    available      list modules available for install
-    new            create a new module
-    pull           git pull all modules
-    push           git push all modules
-    status         show status of all modules
+    install        install new package
+    uninstall      uninstall package
+    list           list installed packages
+    links          list symlinks installed globally or for a package
+    available      list packages available for install
+    new            create a new package
+    pull           git pull all packages
+    push           git push all packages
+    status         show status of all packages
 	EOF
 }
 
@@ -37,15 +51,22 @@ cli.version() {
 # run ellipsis
 cli.run() {
     case "$1" in
-        install|add|in|+)
+        install|in|add)
             ellipsis.install $2
             ;;
-        uninstall|remove|rm|-)
+
+        uninstall|remove|rm)
             ellipsis.uninstall $2
             ;;
+
+        unlink)
+            ellipsis.uninstall $2
+            ;;
+
         list|ls|installed)
             ellipsis.list
             ;;
+
         links|symlinks)
             if [ "$2" ]; then
                 ellipsis.symlinks $2
@@ -53,24 +74,35 @@ cli.run() {
                 ellipsis.symlinks
             fi
             ;;
+
         available)
-            ellipsis.available
+            registry.list_packages
             ;;
+
+        search)
+            registry.search_packages $2
+            ;;
+
         new)
             ellipsis.new $2
             ;;
+
         status|st)
             ellipsis.each git.status
             ;;
+
         pull|update|up)
             ellipsis.each git.pull
             ;;
+
         push)
             ellipsis.each git.push
             ;;
+
         --help|-h)
             cli.usage
             ;;
+
         --version|-v)
             cli.version
             ;;

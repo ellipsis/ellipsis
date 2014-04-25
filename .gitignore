@@ -1,2 +1,3 @@
-modules
-scripts/bats
+packages
+deps
+.DS_Store

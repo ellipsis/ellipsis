@@ -1,13 +1,21 @@
+# ellipsis - shell script package manager
+
 all: test
 
-test: scripts/bats/bin/bats
-	scripts/bats/bin/bats tests
-
-scripts/bats/bin/bats:
-	git clone https://github.com/sstephenson/bats scripts/bats
+gh-pages:
+	brief
 
 tag:
 	@echo ELLIPSIS_VERSION=$(version) > src/version.sh
 	@git add src/version.sh
 	@git commit -m v$(version)
 	@git tag v$(version)
+
+test: deps/bats
+	deps/bats/bin/bats test $(TEST_OPTS)
+
+deps/bats:
+	@mkdir -p deps
+	git clone --depth 1 git://github.com/sstephenson/bats.git deps/bats
+
+.PHONY: all tag test

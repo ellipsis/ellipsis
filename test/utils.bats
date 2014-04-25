@@ -36,15 +36,15 @@ teardown() {
     [ $status -eq 1 ]
 }
 
-@test "utils.find_symlinks should find symlinks in folder" {
-    run utils.find_symlinks tmp/symlinks
-    [ "$output" = "../not_empty/file" ]
+@test "utils.list_symlinks should find symlinks in folder" {
+    run utils.list_symlinks tmp/symlinks
+    [ "$output" = "tmp/symlinks/symlink" ]
 }
 
-@test "utils.find_symlinks should not find symlinks in folder without them" {
-    run utils.find_symlinks tmp/empty
+@test "utils.list_symlinks should not find symlinks in folder without them" {
+    run utils.list_symlinks tmp/empty
     [ "$output" = "" ]
-    run utils.find_symlinks tmp/not_empty
+    run utils.list_symlinks tmp/not_empty
     [ "$output" = "" ]
 }
 
@@ -55,4 +55,16 @@ teardown() {
     [ "$output" = "~/.ellipsis" ]
     run utils.relative_path tmp
     [ "$output" = "tmp" ]
+}
+
+@test "utils.prompt should return true if yes otherwise no" {
+    skip
+    run echo y | utils.prompt "select yes"
+    [ status -eq 0 ]
+}
+
+@test "utils.prompt should return true if yes otherwise no" {
+    skip
+    run echo n | utils.prompt "select yes"
+    [ status -eq 1 ]
 }
