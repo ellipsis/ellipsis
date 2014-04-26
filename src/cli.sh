@@ -99,11 +99,11 @@ cli.run() {
             ellipsis.each git.push
             ;;
 
-        --help|-h)
+        help|--help|-h)
             cli.usage
             ;;
 
-        --version|-v)
+        version|--version|-v)
             cli.version
             ;;
         *)
