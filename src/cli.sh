@@ -88,15 +88,15 @@ cli.run() {
             ;;
 
         status|st)
-            ellipsis.each git.status
+            ellipsis.each pkg.status
             ;;
 
         pull|update|up)
-            ellipsis.each git.pull
+            ellipsis.each pkg.pull
             ;;
 
         push)
-            ellipsis.each git.push
+            ellipsis.each pkg.push
             ;;
 
         help|--help|-h)

@@ -18,18 +18,21 @@ git.clone() {
 
 # Pull git repo.
 git.pull() {
+    pkg.init_globals ${1:-$PKG_NAME}
     echo -e "\033[1mupdating $PKG_NAME\033[0m"
     git pull
 }
 
 # Push git repo.
 git.push() {
+    pkg.init_globals ${1:-$PKG_NAME}
     echo -e "\033[1mpushing $PKG_NAME\033[0m"
     git push
 }
 
 # Tab delimited package listing with commit/last update time.
 git.list() {
+    pkg.init_globals ${1:-$PKG_NAME}
     local sha1=$(git.sha1)
     local last_updated=$(git.last_updated)
 
@@ -38,6 +41,7 @@ git.list() {
 
 # Pretty status with diff.
 git.status() {
+    pkg.init_globals ${1:-$PKG_NAME}
     local ahead="$(git.ahead)"
 
     # Return unless there are changes or we are behind.

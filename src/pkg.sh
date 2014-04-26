@@ -17,12 +17,9 @@ pkg.name_to_path() {
     echo "$ELLIPSIS_PATH/packages/$1"
 }
 
-# Convert package path to name.
+# Convert package path to name, stripping any leading dots.
 pkg.path_to_name() {
-    # basename
-    local basename=${1##*/}
-    # strip any leading dots
-    echo ${basename##*.}
+    echo ${1##*/} | sed -e "s/^\.//"
 }
 
 # Set PKG_NAME, PKG_PATH. If $1 has a slash it's assumed to be
