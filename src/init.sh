@@ -12,7 +12,7 @@ if [[ -z "$ELLIPSIS_USER" ]]; then
     ELLIPSIS_USER=${GITHUB_USER:-zeekay}
 fi
 ELLIPSIS_REPO=${ELLIPSIS_REPO:-https://github.com/$ELLIPSIS_USER/ellipsis}
-ELLIPSIS_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ELLIPSIS_PATH="${ELLIPSIS_PATH:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 
 # Default package operation act upon is ellipsis.
 # These are highly mutable.

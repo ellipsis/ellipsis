@@ -3,8 +3,6 @@
 # scripts/install.sh
 # Installer for ellipsis (http://ellipsis.sh).
 
-ELLIPSIS_PATH=${ELLIPSIS_PATH:-$HOME/.ellipsis}
-
 # Ensure dependencies are installed.
 deps=(bash curl git)
 
@@ -18,6 +16,13 @@ tmp_dir=$(mktemp -d ${TMPDIR:-tmp}-XXXXXX)
 # Clone ellipsis into $tmp_dir.
 git clone --depth 1 git://github.com/zeekay/ellipsis.git $tmp_dir/ellipsis
 
+# Save reference to specified ELLIPSIS_PATH (if any) otherwise final
+# destination: $HOME/.ellipsis.
+FINAL_ELLIPSIS_PATH=${ELLIPSIS_PATH:-$HOME/.ellipsis}
+
+# Temporarily set ellipsis PATH so we can load other files.
+ELLIPSIS_PATH="$tmp_dir/ellipsis"
+
 # Initialize ellipsis.
 source $tmp_dir/ellipsis/src/init.sh
 
@@ -27,6 +32,8 @@ load git
 load pkg
 load registry
 load utils
+
+ELLIPSIS_PATH="$FINAL_ELLIPSIS_PATH"
 
 # Backup existing ~/.ellipsis if necessary and  move project into place.
 ellipsis.backup $ELLIPSIS_PATH
@@ -67,7 +74,7 @@ done
 echo
 echo 'Note: export PATH=~/.ellipsis/bin:$PATH to add ellipsis to your $PATH      '
 echo
-echo '   _    _    _                                                             '
-echo '  /\_\ /\_\ /\_\                                                           '
+echo '   _    _    _'
+echo '  /\_\ /\_\ /\_\'
 echo '  \/_/ \/_/ \/_/                         …because $HOME is where the <3 is!'
 echo
