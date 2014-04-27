@@ -35,6 +35,7 @@ Usage: ellipsis <command>
     pull       git pull package(s)
     push       git push package(s)
     status     show status of package(s)
+    publish    publish package to repository
     search     search package repository
 	EOF
 }
@@ -82,6 +83,9 @@ cli.run() {
             ;;
         available)
             registry.available
+            ;;
+        publish)
+            registry.publish $2
             ;;
         search)
             registry.search $2

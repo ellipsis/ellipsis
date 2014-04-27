@@ -20,3 +20,8 @@ registry.search() {
 registry.available() {
     github.list_repos | github.format_json
 }
+
+# Publish packge to repository.
+registry.publish() {
+    echo TODO
+}
