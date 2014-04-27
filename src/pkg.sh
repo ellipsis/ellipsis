@@ -151,12 +151,12 @@ pkg._unset_hooks() {
 
 # Hooks
 
-# Symlink files in $PKG_PATH into $HOME
+# Symlink files in PKG_PATH into ELLIPSIS_HOME.
 pkg.hooks.install() {
     ellipsis.link_files $PKG_PATH
 }
 
-# Remove package's symlinks in $HOME.
+# Remove package's symlinks in ELLIPSIS_HOME.
 pkg.hooks.unlink() {
     for symlink in $(pkg.list_symlinks); do
         rm $symlink
