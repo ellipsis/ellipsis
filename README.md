@@ -67,6 +67,7 @@ Usage: ellipsis <command>
     pull       git pull package(s)
     push       git push package(s)
     status     show status of package(s)
+    publish    publish package to repository
     search     search package repository
 ```
 
