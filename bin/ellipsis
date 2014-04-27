@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+source "$(dirname "${BASH_SOURCE[0]}")/../src/init.sh"
+
+load cli
+
+# check for controlling terminal
+if [ -t 1 ]; then
+    cli.run $@
+    exit $?
+else
+    # strip ansi colors
+    cli.run $@ | sed -e 's/\[[^m]*m//g'
+    exit $PIPESTATUS # exit with result of first command in pipe, i.e., cli.run
+fi
