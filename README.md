@@ -185,6 +185,15 @@ Xmonad configuration.
 #### [zeekay/dot-zsh][zsh]
 Zsh configuration using zeesh! framework.
 
+### Completions
+Completion file for zsh is [included](zshcomp). To use it you need to add
+`_ellipsis` to your `fpath` and enable auto-completion.
+
+```bash
+fpath=($HOME/.ellipsis/comp $fpath)
+autoload -U compinit; compinit
+```
+
 ### Development
 Pull requests welcome! New code should follow [Google's style
 guide][style-guide]. To run tests you need to install [bats][bats].
