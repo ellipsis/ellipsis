@@ -38,14 +38,20 @@ pkg.init_globals() {
 pkg.init() {
     pkg.init_globals ${1:-$PKG_PATH}
 
-    # source ellipsis.sh if it exists to initialize package hooks
+    # Exit if we're asked to operate on an unknown package.
+    if [ ! -d "$PKG_PATH" ]; then
+        log.error "Unkown package $PKG_NAME, $(utils.relative_path $PKG_PATH) missing!"
+        exit 1
+    fi
+
+    # Source ellipsis.sh if it exists to initialize package's hooks.
     if [ -f "$PKG_PATH/ellipsis.sh" ]; then
         source "$PKG_PATH/ellipsis.sh"
     fi
 }
 
-# Find package's symlinks.
-pkg.list_symlinks() {
+# List package's symlinks.
+pkg._symlinks() {
     for file in $(utils.list_symlinks); do
         local link="$(readlink $file)"
         if [[ "$link" == *packages/$PKG_NAME* ]]; then
@@ -56,7 +62,7 @@ pkg.list_symlinks() {
 
 # List symlinks in HOME from package.
 pkg.symlinks() {
-    pkg.list_symlinks | sort | column -t
+    pkg._symlinks | sort | column -t
 }
 
 # Run hook or command inside PKG_PATH.

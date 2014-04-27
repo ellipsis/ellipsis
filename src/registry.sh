@@ -12,11 +12,11 @@ fi
 load github
 
 # Search registry for ellipsis packages.
-registry.search_packages() {
+registry.search() {
     github.search $1 | github.format_json
 }
 
 # List ellipsis packages in registry.
-registry.list_packages() {
+registry.available() {
     github.list_repos | github.format_json
 }

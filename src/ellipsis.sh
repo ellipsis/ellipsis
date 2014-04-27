@@ -246,14 +246,16 @@ ellipsis.each() {
     done
 }
 
-# list all installed packages
+# List all installed packages.
 ellipsis.list_packages() {
     if ! utils.folder_empty $ELLIPSIS_PATH/packages; then
         echo $ELLIPSIS_PATH/packages/*
     fi
 }
 
-ellipsis.list_symlinks() {
+# List all symlinks (slightly optimized over calling pkg.list_symlinks for each
+# package.
+ellipsis.list_all_symlinks() {
     for file in $(utils.list_symlinks); do
         local link="$(readlink $file)"
         if [[ "$link" == $ELLIPSIS_PATH* ]]; then
@@ -262,13 +264,46 @@ ellipsis.list_symlinks() {
     done
 }
 
-# list all symlinks, or just symlinks for a given package
+# List all symlinks, or just symlinks for a given package
 ellipsis.symlinks() {
     if [ $# -eq 1 ]; then
         pkg.init "$1"
         pkg.run pkg.symlinks
         pkg.del
     else
-        ellipsis.list_symlinks | sort | column -t
+        ellipsis.list_all_symlinks | sort | column -t
+    fi
+}
+
+# List(s) package git status.
+ellipsis.status() {
+    if [ $# -eq 1 ]; then
+        pkg.init "$1"
+        pkg.run pkg.status
+        pkg.del
+    else
+        ellipsis.each pkg.status
+    fi
+}
+
+# Updates package(s) with git pull.
+ellipsis.pull() {
+    if [ $# -eq 1 ]; then
+        pkg.init "$1"
+        pkg.run pkg.pull
+        pkg.del
+    else
+        ellipsis.each pkg.pull
+    fi
+}
+
+# Push updated package(s) with git push.
+ellipsis.push() {
+    if [ $# -eq 1 ]; then
+        pkg.init "$1"
+        pkg.run pkg.push
+        pkg.del
+    else
+        ellipsis.each pkg.push
     fi
 }

@@ -12,6 +12,7 @@ fi
 load ellipsis
 load git
 load github
+load log
 load pkg
 load registry
 load utils
@@ -51,58 +52,42 @@ cli.version() {
 # run ellipsis
 cli.run() {
     case "$1" in
-        install|in|add)
-            ellipsis.install $2
-            ;;
-
-        uninstall|remove|rm)
-            ellipsis.uninstall $2
-            ;;
-
-        unlink)
-            ellipsis.uninstall $2
-            ;;
-
-        list|ls|installed)
-            ellipsis.list
-            ;;
-
-        links|symlinks)
-            if [ "$2" ]; then
-                ellipsis.symlinks $2
-            else
-                ellipsis.symlinks
-            fi
-            ;;
-
-        available)
-            registry.list_packages
-            ;;
-
-        search)
-            registry.search_packages $2
-            ;;
-
         new)
             ellipsis.new $2
             ;;
-
+        install|in|add)
+            ellipsis.install $2
+            ;;
+        uninstall|remove|rm)
+            ellipsis.uninstall $2
+            ;;
+        unlink)
+            ellipsis.unlink $2
+            ;;
+        list|ls|installed)
+            ellipsis.list
+            ;;
+        links|symlinks)
+            ellipsis.symlinks $2
+            ;;
         status|st)
-            ellipsis.each pkg.status
+            ellipsis.status $2
             ;;
-
         pull|update|up)
-            ellipsis.each pkg.pull
+            ellipsis.pull $2
             ;;
-
         push)
-            ellipsis.each pkg.push
+            ellipsis.push $2
             ;;
-
+        available)
+            registry.available
+            ;;
+        search)
+            registry.search $2
+            ;;
         help|--help|-h)
             cli.usage
             ;;
-
         version|--version|-v)
             cli.version
             ;;
