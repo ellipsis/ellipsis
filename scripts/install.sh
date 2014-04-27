@@ -68,6 +68,7 @@ fi
 
 # install selected packages.
 for pkg in ${packages[*]}; do
+    echo -e "\033[1minstalling $pkg\033[0m"
     ellipsis.install "$pkg"
 done
 
