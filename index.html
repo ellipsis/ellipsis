@@ -1,0 +1,200 @@
+
+#!/bin/sh
+<<EOF
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <title>ellipsis</title>
+    <link rel="stylesheet" href="stylesheets/styles.css"/>
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--if lt IE 9script(src='//html5shiv.googlecode.com/svn/trunk/html5.js')
+    -->
+    <!--if lt IE 8link(rel='stylesheet', href='stylesheets/ie.css')
+    -->
+  </head>
+  <body>
+    <div id="header">
+      <nav>
+        <li class="fork"><a href="https://github.com/zeekay/ellipsis">View On GitHub</a></li>
+        <li class="downloads"><a href="https://github.com/zeekay/ellipsis/zipball/master">ZIP</a></li>
+        <li class="downloads"><a href="https://github.com/zeekay/ellipsis/tarball/master">TAR</a></li>
+        <li class="title">DOWNLOADS</li>
+      </nav>
+    </div>
+    <!-- end header-->
+    <div class="wrapper">
+      <section><h2 id="ellipsis-build-status-https-travis-ci-org-zeekay-ellipsis-svg-branch-master-https-travis-ci-org-zeekay-ellipsis-">ellipsis <a href="https://travis-ci.org/zeekay/ellipsis"><img src="https://travis-ci.org/zeekay/ellipsis.svg?branch=master" alt="Build Status"></a></h2>
+<pre><code><span class="hljs-tag"> <span class="hljs-title">_</span>    <span class="hljs-title">_</span>    <span class="hljs-title">_</span>
+</span><span class="hljs-tag">/\<span class="hljs-title">_</span>\ /\<span class="hljs-title">_</span>\ /\<span class="hljs-title">_</span>\
+</span><span class="hljs-tag">\/<span class="hljs-title">_</span>/ \/<span class="hljs-title">_</span>/ \/<span class="hljs-title">_</span>/   …<span class="hljs-title">because</span> $<span class="hljs-title">HOME</span> <span class="hljs-title">is</span> <span class="hljs-title">where</span> <span class="hljs-title">the</span> &lt;<span class="hljs-title">3</span> <span class="hljs-title">is</span>!</span>
+</code></pre><p>ellipsis is a package manager for dotfiles.</p>
+<h3 id="features">Features</h3>
+<ul>
+<li>Creating new packages is trivial (any git repository is already a package).</li>
+<li>Ellipsis packages make it easy to share specific bits of your dotfiles. Say a
+friend wants to test out your ZSH setup but doesn&#39;t want to adopt the madness
+that is your Vim config? No problem, he can just <code>ellipsis install
+github-user/dot-zsh</code></li>
+<li>Quickly see which dotfiles have been modified, and keep them updated and in
+sync across systems.</li>
+<li>Cross platform, known to work on Mac OS X, Linux, FreeBSD and even Cygwin.</li>
+<li>Completely customizable.</li>
+</ul>
+<h3 id="install">Install</h3>
+<p>Clone and symlink or use handy-dandy installer:</p>
+<pre><code class="lang-bash">$ curl <span class="hljs-operator">-s</span>L ellipsis.sh | sh
+</code></pre>
+<p>You can also specify which packages to install by setting the <code>PACKAGES</code> variable, i.e.:</p>
+<pre><code class="lang-bash">$ curl <span class="hljs-operator">-s</span>L ellipsis.sh | PACKAGES=<span class="hljs-string">'vim zsh'</span> sh
+</code></pre>
+<p>I recommend adding <code>~/.ellipsis/bin</code> to your <code>$PATH</code>, but you can also just
+symlink <code>~/.ellipsis/bin/ellipsis</code> somewhere convenient.</p>
+<h3 id="usage">Usage</h3>
+<p>Ellipsis comes with no dotfiles out of the box. To add a dotfiles packages, use
+<code>ellipsis install</code>. Packages to install can be specified by github-user/repo or
+full ssh/git/http(s) urls:</p>
+<pre><code class="lang-bash">$ ellipsis install ssh://github.com/zeekay/private.git
+$ ellipsis install zeekay/vim
+$ ellipsis install zsh
+</code></pre>
+<p>...all work.</p>
+<p>Full usage available via <code>ellipsis</code> executable:</p>
+<pre><code><span class="hljs-attribute keyword">$ </span>ellipsis -h
+<span class="hljs-attribute keyword">Usage: </span>ellipsis &lt;command&gt;
+<span class="hljs-tag">  <span class="hljs-title">Options</span>:
+</span>    -h, --help     show help
+    -v, --version  show version
+<span class="hljs-tag">
+  <span class="hljs-title">Commands</span>:
+</span><span class="hljs-tag">    <span class="hljs-title">new</span>        <span class="hljs-title">create</span> <span class="hljs-title">a</span> <span class="hljs-title">new</span> <span class="hljs-title">package</span>
+</span><span class="hljs-tag">    <span class="hljs-title">edit</span>       <span class="hljs-title">edit</span> <span class="hljs-title">an</span> <span class="hljs-title">installed</span> <span class="hljs-title">package</span>
+</span><span class="hljs-tag">    <span class="hljs-title">install</span>    <span class="hljs-title">install</span> <span class="hljs-title">new</span> <span class="hljs-title">package</span>
+</span><span class="hljs-tag">    <span class="hljs-title">uninstall</span>  <span class="hljs-title">uninstall</span> <span class="hljs-title">package</span>
+</span><span class="hljs-tag">    <span class="hljs-title">unlink</span>     <span class="hljs-title">unlink</span> <span class="hljs-title">package</span>
+</span><span class="hljs-tag">    <span class="hljs-title">broken</span>     <span class="hljs-title">list</span> <span class="hljs-title">any</span> <span class="hljs-title">broken</span> <span class="hljs-title">symlinks</span>
+</span><span class="hljs-tag">    <span class="hljs-title">clean</span>      <span class="hljs-title">rm</span> <span class="hljs-title">broken</span> <span class="hljs-title">symlinks</span>
+</span><span class="hljs-tag">    <span class="hljs-title">list</span>       <span class="hljs-title">list</span> <span class="hljs-title">installed</span> <span class="hljs-title">packages</span>
+</span><span class="hljs-tag">    <span class="hljs-title">links</span>      <span class="hljs-title">show</span> <span class="hljs-title">symlinks</span> <span class="hljs-title">installed</span> <span class="hljs-title">by</span> <span class="hljs-title">package</span><span class="hljs-attribute">(<span class="hljs-attribute"><span class="hljs-attribute">s</span>)</span></span>
+</span><span class="hljs-tag">    <span class="hljs-title">pull</span>       <span class="hljs-title">git</span> <span class="hljs-title">pull</span> <span class="hljs-title">package</span><span class="hljs-attribute">(<span class="hljs-attribute"><span class="hljs-attribute">s</span>)</span></span>
+</span><span class="hljs-tag">    <span class="hljs-title">push</span>       <span class="hljs-title">git</span> <span class="hljs-title">push</span> <span class="hljs-title">package</span><span class="hljs-attribute">(<span class="hljs-attribute"><span class="hljs-attribute">s</span>)</span></span>
+</span><span class="hljs-tag">    <span class="hljs-title">status</span>     <span class="hljs-title">show</span> <span class="hljs-title">status</span> <span class="hljs-title">of</span> <span class="hljs-title">package</span><span class="hljs-attribute">(<span class="hljs-attribute"><span class="hljs-attribute">s</span>)</span></span>
+</span><span class="hljs-tag">    <span class="hljs-title">publish</span>    <span class="hljs-title">publish</span> <span class="hljs-title">package</span> <span class="hljs-title">to</span> <span class="hljs-title">repository</span>
+</span><span class="hljs-tag">    <span class="hljs-title">search</span>     <span class="hljs-title">search</span> <span class="hljs-title">package</span> <span class="hljs-title">repository</span></span>
+</code></pre><h3 id="configuration">Configuration</h3>
+<p>You can customize ellipsis by exporting a few different variables.</p>
+<h4 id="ellipsis_user">ELLIPSIS_USER</h4>
+<p>Customize whose dotfiles are installed when you <code>ellipsis install</code> without
+specifiying user or a full repo url.</p>
+<h4 id="ellipsis_repo">ELLIPSIS_REPO</h4>
+<p>Customize location of ellipsis repo cloned during a curl-based install.</p>
+<h4 id="ellipsis_packages_url">ELLIPSIS_PACKAGES_URL</h4>
+<p>Customizes which url is used to display available packages.</p>
+<pre><code class="lang-bash"><span class="hljs-keyword">export</span> ELLIPSIS_USER=<span class="hljs-string">"zeekay"</span>
+<span class="hljs-keyword">export</span> ELLIPSIS_REPO=<span class="hljs-string">"https://github.com/zeekay/ellipsis"</span>
+<span class="hljs-keyword">export</span> ELLIPSIS_PACKAGES_URL=<span class="hljs-string">"https://raw.githubusercontent.com/zeekay/ellipsis/master/available-packages.txt"</span>
+</code></pre>
+<h3 id="packages">Packages</h3>
+<p>A package is any repo with files you want to symlink into <code>$HOME</code>. By default a
+given repo&#39;s non-hidden files (read: not beginning with a <code>.</code>) will naively be
+linked into <code>$HOME</code>. Of course this isn&#39;t sufficient for a lot of cases, so you
+can customize how ellipsis treats your package by defining hooks in an
+<code>ellipsis.sh</code> file at the root of your repository.</p>
+<h3 id="hooks">Hooks</h3>
+<p>Hooks allow you to customize how ellipsis interacts with your package.  For
+instance if you want to change how your package is installed you can define
+<code>pkg.install</code> and specifiy exactly which files are symlinked into <code>$HOME</code>,
+compile any libraries, etc.</p>
+<p>The follow hooks/variables are available in your <code>ellipsis.sh</code>:</p>
+<h4 id="pkg-install">pkg.install</h4>
+<p>Customize how package is installed. By default all files are symlinked into
+<code>$HOME</code>.</p>
+<h4 id="pkg-uninstall">pkg.uninstall</h4>
+<p>Customize how package is uninstalled. By default all symlinks are removed from
+<code>$HOME</code>.</p>
+<h4 id="pkg-push">pkg.push</h4>
+<p>Customize how how changes are pushed <code>ellipsis push</code> is used.</p>
+<h4 id="pkg-pull">pkg.pull</h4>
+<p>Customize how how changes are pulled in when <code>ellipsis pull</code> is used.</p>
+<h4 id="pkg-status">pkg.status</h4>
+<p>Customize output of <code>ellipsis status</code>.</p>
+<h4 id="-pkg_name">$PKG_NAME</h4>
+<p>Name of your package.</p>
+<h4 id="-pkg_path">$PKG_PATH</h4>
+<p>Path to your package.</p>
+<h3 id="api">API</h3>
+<p>There are a number of functions ellipsis exposes which can be useful in your
+package&#39;s hooks:</p>
+<h4 id="ellipsis-backup">ellipsis.backup</h4>
+<p>Moves existing file <code>$1</code> to <code>$1.bak</code>, taking care not to overwrite any existing
+backups.</p>
+<h4 id="ellipsis-link_file">ellipsis.link_file</h4>
+<p>Link a single file <code>$1</code> into <code>$HOME</code>, taking care to backup an existing file.</p>
+<h4 id="ellipsis-link_files">ellipsis.link_files</h4>
+<p>Links files in <code>$1</code> into <code>$HOME</code>, taking care to backup any existing files.</p>
+<h4 id="ellipsis-run_installer">ellipsis.run_installer</h4>
+<p>Download an installation script from url <code>$1</code> with <code>curl</code> and execute it.</p>
+<h4 id="utils-platform">utils.platform</h4>
+<p>Platform detection, returns lowercase result of <code>uname</code>.</p>
+<h4 id="git-command-">git.[command]</h4>
+<p>There are also several wrappers around common git operations which can be used
+for consistency with the rest of ellipsis: <strong>git.clone</strong>, <strong>git.pull</strong>,
+<strong>git.push</strong>, and <strong>git.status</strong>.</p>
+<h3 id="available-packages">Available packages</h3>
+<h4 id="-zeekay-dot-alfred-alfred-"><a href="https://github.com/zeekay/dot-alfred">zeekay/dot-alfred</a></h4>
+<p>Alfred configuration files.</p>
+<h4 id="-zeekay-dot-atom-atom-"><a href="https://github.com/zeekay/dot-atom">zeekay/dot-atom</a></h4>
+<p>Atom configuration files.</p>
+<h4 id="-zeekay-dot-emacs-emacs-"><a href="https://github.com/zeekay/dot-emacs">zeekay/dot-emacs</a></h4>
+<p>Emacs configuration files.</p>
+<h4 id="-zeekay-dot-files-files-"><a href="https://github.com/zeekay/dot-files">zeekay/dot-files</a></h4>
+<p>Default dotfiles for ellipsis.</p>
+<h4 id="-zeekay-dot-irssi-irssi-"><a href="https://github.com/zeekay/dot-irssi">zeekay/dot-irssi</a></h4>
+<p>Irssi configuration.</p>
+<h4 id="-zeekay-dot-iterm2-iterm2-"><a href="https://github.com/zeekay/dot-iterm2">zeekay/dot-iterm2</a></h4>
+<p>iTerm2 configuration files.</p>
+<h4 id="-zeekay-dot-vim-vim-"><a href="https://github.com/zeekay/dot-vim">zeekay/dot-vim</a></h4>
+<p>Vim configuration based on vice framework.</p>
+<h4 id="-zeekay-dot-xmonad-xmonad-"><a href="https://github.com/zeekay/dot-xmonad">zeekay/dot-xmonad</a></h4>
+<p>Xmonad configuration.</p>
+<h4 id="-zeekay-dot-zsh-zsh-"><a href="https://github.com/zeekay/dot-zsh">zeekay/dot-zsh</a></h4>
+<p>Zsh configuration using zeesh! framework.</p>
+<h3 id="development">Development</h3>
+<p>Pull requests welcome! New code should follow <a href="https://google-styleguide.googlecode.com/svn/trunk/shell.xml">Google&#39;s style
+guide</a>. To run tests you need to install <a href="https://github.com/sstephenson/bats">bats</a>.</p>
+<p>To suggest a feature or report a bug: <a href="http://github.com/zeekay/ellipsis/issues">http://github.com/zeekay/ellipsis/issues</a>.</p>
+</section>
+    </div>
+    <!--if !IE
+    script
+      fixScale(document);
+    -->
+  </body>
+</html><!-- 
+EOF
+
+# shim for ellipsis install.sh
+#
+# This is used on ellipsis.sh to bootstrap the full installer, which you
+# otherwise can't curl and pipe to sh (as it requires bash). Not meant to be
+# run standalone.
+
+# wait for curl output to finish
+sleep 0.5
+
+# Ensure dependencies are installed.
+deps=(bash curl git)
+
+for dep in ${deps[@]}; do
+    hash $dep 2>/dev/null || { echo >&2 "ellipsis requires $dep to be installed."; exit 1; }
+done
+
+# Download full installer and execute with bash
+curl -sL https://raw.githubusercontent.com/zeekay/ellipsis/master/scripts/install.sh > install-$$.sh
+bash install-$$.sh
+
+# Clean up
+rm install-$$.sh
