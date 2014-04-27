@@ -26,15 +26,16 @@ Usage: ellipsis <command>
     -v, --version  show version
 
   Commands:
-    install        install new package
-    uninstall      uninstall package
-    list           list installed packages
-    links          list symlinks installed globally or for a package
-    available      list packages available for install
-    new            create a new package
-    pull           git pull all packages
-    push           git push all packages
-    status         show status of all packages
+    new        create a new package
+    install    install new package
+    uninstall  uninstall package
+    unlink     unlink package
+    list       list installed packages
+    links      show symlinks installed by package(s)
+    pull       git pull package(s)
+    push       git push package(s)
+    status     show status of package(s)
+    search     search package repository
 	EOF
 }
 
