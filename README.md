@@ -187,7 +187,7 @@ Zsh configuration using zeesh! framework.
 
 ### Completions
 Completion file for zsh is [included](zshcomp). To use it you need to add
-`_ellipsis` to your `fpath` and enable auto-completion.
+`_ellipsis` to your `fpath` and enable auto-completion:
 
 ```bash
 fpath=($HOME/.ellipsis/comp $fpath)
