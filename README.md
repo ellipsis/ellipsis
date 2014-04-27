@@ -59,6 +59,7 @@ Usage: ellipsis <command>
 
   Commands:
     new        create a new package
+    edit       edit an installed package
     install    install new package
     uninstall  uninstall package
     unlink     unlink package

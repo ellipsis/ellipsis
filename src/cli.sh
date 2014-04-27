@@ -27,6 +27,7 @@ Usage: ellipsis <command>
 
   Commands:
     new        create a new package
+    edit       edit an installed package
     install    install new package
     uninstall  uninstall package
     unlink     unlink package
@@ -56,6 +57,9 @@ cli.run() {
     case "$1" in
         new)
             ellipsis.new $2
+            ;;
+        edit)
+            ellipsis.edit $2
             ;;
         install|in|add)
             ellipsis.install $2

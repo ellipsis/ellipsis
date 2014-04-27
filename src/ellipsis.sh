@@ -231,6 +231,18 @@ EOF
     echo new package created at ${utils.relative_path $PKG_PATH}
 }
 
+# Edit ellipsis.sh for package, or open ellipsis dir in $EDITOR.
+ellipsis.edit() {
+    if [ $# -eq 1 ]; then
+        # Edit package's ellipsis.sh file.
+        pkg.init "$1"
+        $EDITOR $PKG_PATH/ellipsis.sh
+    else
+        # Open ellipsis dir in editor.
+        $EDITOR $ELLIPSIS_PATH
+    fi
+}
+
 # Run commands across all packages.
 ellipsis.each() {
     # execute command for ellipsis first
