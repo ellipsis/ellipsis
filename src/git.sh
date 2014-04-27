@@ -45,7 +45,7 @@ git.status() {
     local ahead="$(git.ahead)"
 
     # Return unless there are changes or we are behind.
-    git.has_changes && [ ! -z "$ahead" ] || return
+    ! git.has_changes && [ -z "$ahead" ] || return
 
     local sha1="$(git.sha1)"
     local last_updated=$(git.last_updated)
@@ -71,10 +71,10 @@ git.ahead() {
 
 # Check whether get repo has changes.
 git.has_changes() {
-    if git diff-index --quiet HEAD --; then
-        return 1
+    if  git diff-index --quiet HEAD --; then
+        return 0
     fi
-    return 0
+    return 1
 }
 
 # Print diffstat for git repo
