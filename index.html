@@ -162,6 +162,12 @@ for consistency with the rest of ellipsis: <strong>git.clone</strong>, <strong>g
 <p>Xmonad configuration.</p>
 <h4 id="-zeekay-dot-zsh-zsh-"><a href="https://github.com/zeekay/dot-zsh">zeekay/dot-zsh</a></h4>
 <p>Zsh configuration using zeesh! framework.</p>
+<h3 id="completions">Completions</h3>
+<p>Completion file for zsh is <a href="zshcomp">included</a>. To use it you need to add
+<code>_ellipsis</code> to your <code>fpath</code> and enable auto-completion.</p>
+<pre><code class="lang-bash">fpath=(<span class="hljs-variable">$HOME</span>/.ellipsis/comp <span class="hljs-variable">$fpath</span>)
+autoload -U compinit; compinit
+</code></pre>
 <h3 id="development">Development</h3>
 <p>Pull requests welcome! New code should follow <a href="https://google-styleguide.googlecode.com/svn/trunk/shell.xml">Google&#39;s style
 guide</a>. To run tests you need to install <a href="https://github.com/sstephenson/bats">bats</a>.</p>
