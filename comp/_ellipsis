@@ -1,0 +1,31 @@
+#compdef ellipsis
+
+_ellipsis() {
+  local -a commands
+  commands=(
+    'broken:list any broken symlinks'
+    'clean:rm broken symlinks'
+    'edit:edit an installed package'
+    'help:show this usage'
+    'install:install new package'
+    'links:show symlinks installed by package(s)'
+    'list:list installed packages'
+    'new:create a new package'
+    'publish:publish package to repository'
+    'pull:git pull package(s)'
+    'push:git push package(s)'
+    'search:search package repository'
+    'status:show status of package(s)'
+    'uninstall:uninstall package'
+    'unlink:unlink package'
+    'version:show current version'
+  )
+
+  if (( CURRENT == 2 )); then
+    _describe -t commands 'commands' commands
+  fi
+
+  return 0
+}
+
+_ellipsis
