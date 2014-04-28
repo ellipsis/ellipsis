@@ -42,9 +42,9 @@ utils.prompt() {
     esac
 }
 
-# List symlinks in a folder, defaulting to $HOME.
+# List symlinks in a folder, defaulting to ELLIPSIS_HOME.
 utils.list_symlinks() {
-    find ${1:-$HOME} -maxdepth 1 -type l
+    find ${1:-$ELLIPSIS_HOME} -maxdepth 1 -type l
 }
 
 # dunno how this isn't part of POSIX
@@ -52,7 +52,7 @@ utils.abs_path() {
     echo $(cd $(dirname $1); pwd)/$(basename $1)
 }
 
-# return path to file relative to $HOME (if possible)
+# return path to file relative to HOME (if possible)
 utils.relative_path() {
     echo ${1/$HOME/\~}
 }
