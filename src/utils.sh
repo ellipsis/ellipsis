@@ -1,29 +1,16 @@
 #!/usr/bin/env bash
 #
 # utils.sh
-# Various file/folder/utility functions used by Ellipsis.
+# Utility functions used by ellipsis.
 
 # Initialize ourselves if we haven't yet.
 if [[ $ELLIPSIS_INIT -ne 1 ]]; then
     source "$(dirname "${BASH_SOURCE[0]}")"/init.sh
 fi
 
-# platform detection
-utils.platform() {
-    uname | tr '[:upper:]' '[:lower:]'
-}
-
 # check if a command or function exists
 utils.cmd_exists() {
     hash "$1" &> /dev/null
-}
-
-# return true if folder is empty
-utils.folder_empty() {
-    if [ "$(find $1 -prune -empty)" ]; then
-        return 0
-    fi
-    return 1
 }
 
 # prompt with message and return true if yes/YES, otherwise false
@@ -37,45 +24,6 @@ utils.prompt() {
             return 1
             ;;
     esac
-}
-
-# check whether file exists
-utils.file_exists() {
-    if [[ -e "$1" ]]; then
-        return 0
-    fi
-    return 1
-}
-
-# check whether file is a symlink
-utils.is_symlink() {
-    if [[ -L "$1" ]]; then
-        return 0
-    fi
-    return 1
-}
-
-# Check whether symlink is broken
-utils.is_broken_symlink() {
-    if [[ -L "$1" && ! -e "$1" ]]; then
-        return 0
-    fi
-    return 1
-}
-
-# List symlinks in a folder, defaulting to ELLIPSIS_HOME.
-utils.list_symlinks() {
-    find "${1:-$ELLIPSIS_HOME}" -maxdepth 1 -type l
-}
-
-# dunno how this isn't part of POSIX
-utils.abs_path() {
-    echo $(cd $(dirname "$1"); pwd)/$(basename "$1")
-}
-
-# return path to file relative to HOME (if possible)
-utils.relative_path() {
-    echo ${1/$HOME/\~}
 }
 
 # return path to file in packages dir
