@@ -11,9 +11,9 @@ EOF
 sleep 0.5
 
 # Ensure dependencies are installed.
-deps=(bash curl git)
+deps="bash curl git"
 
-for dep in ${deps[@]}; do
+for dep in $deps; do
     hash $dep 2>/dev/null || { echo >&2 "ellipsis requires $dep to be installed."; exit 1; }
 done
 
