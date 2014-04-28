@@ -173,7 +173,11 @@ pkg.hooks.uninstall() {
 pkg.hooks.symlinks() {
     echo -e "\033[1m$PKG_NAME\033[0m"
 
-    pkg.symlinks_mappings | sort | column -t
+    if utils.cmd_exists column; then
+        pkg.symlinks_mappings | sort | column -t
+    else
+        pkg.symlinks_mappings | sort
+    fi
 }
 
 # Do git pull from package
