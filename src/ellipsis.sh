@@ -43,40 +43,29 @@ ellipsis.backup() {
     local backup="$original.bak"
     local name="${original##*/}"
 
-    # check for broken symlinks
-    if [ "$(find -L "$original" -maxdepth 0 -type l 2>/dev/null)" != "" ]; then
-        local broken=$(readlink "$original")
-
-        if [ "$(echo "$broken" | grep .ellipsis)" != "" ]; then
-            # silently remove old broken ellipsis symlinks
-            rm "$original"
-        else
-            # notify user we're removing a broken link
-            echo "rm ~/$name (broken link to $broken)"
-            rm "$original"
-        fi
-
+    # remove broken symlink
+    if utils.is_broken_symlink "$original"; then
+        echo "rm ~/$name (broken link to $(readlink $original))"
+        rm $original
         return
     fi
 
-    if [ -e "$original" ]; then
-        # remove, not backup old ellipsis symlinked files
-        if [ "$(readlink "$original" | grep .ellipsis)" != "" ]; then
-            rm "$original"
-            return
-        fi
-
-        if [ -e "$backup" ]; then
-            n=1
-            while [ -e "$backup.$n" ]; do
-                n=$((n+1))
-            done
-            backup="$backup.$n"
-        fi
-
-        echo "mv ~/$name $backup"
-        mv "$original" "$backup"
+    # no file exists, simply ignore
+    if ! utils.file_exists "$original"; then
+        return
     fi
+
+    # backup file
+    if utils.file_exists "$backup"; then
+        n=1
+        while utils.file_exists "$backup.$n"; do
+            n=$((n+1))
+        done
+        backup="$backup.$n"
+    fi
+
+    echo "mv ~/$name $backup"
+    mv "$original" "$backup"
 }
 
 # Run web-based installers
@@ -274,14 +263,14 @@ ellipsis.symlinks() {
 
 # List broken symlinks in ELLIPSIS_HOME
 ellipsis.broken() {
-    for file in $(find -L $ELLIPSIS_HOME -type l -maxdepth 1); do
+    for file in $(find -L $ELLIPSIS_HOME -maxdepth 1 -type l); do
         echo "$(utils.strip_packages_dir $(readlink $file)) -> $(utils.relative_path $file)";
     done
 }
 
 # List broken symlinks in ELLIPSIS_HOME
 ellipsis.clean() {
-    find -L $ELLIPSIS_HOME -type l -maxdepth 1 | xargs rm
+    find -L $ELLIPSIS_HOME -maxdepth 1 -type l| xargs rm
 }
 
 # List(s) package git status.
