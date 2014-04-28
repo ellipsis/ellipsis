@@ -274,14 +274,14 @@ ellipsis.symlinks() {
 
 # List broken symlinks in ELLIPSIS_HOME
 ellipsis.broken() {
-    for file in $(find -L $ELLIPSIS_HOME -type l -maxdepth 1); do
+    for file in $(find -L $ELLIPSIS_HOME -maxdepth 1 -type l); do
         echo "$(utils.strip_packages_dir $(readlink $file)) -> $(utils.relative_path $file)";
     done
 }
 
 # List broken symlinks in ELLIPSIS_HOME
 ellipsis.clean() {
-    find -L $ELLIPSIS_HOME -type l -maxdepth 1 | xargs rm
+    find -L $ELLIPSIS_HOME -maxdepth 1 -type l| xargs rm
 }
 
 # List(s) package git status.
