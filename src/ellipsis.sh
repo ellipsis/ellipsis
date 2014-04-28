@@ -9,19 +9,20 @@ if [[ $ELLIPSIS_INIT -ne 1 ]]; then
 fi
 
 
-# symlink a single file into $HOME
+# symlink a single file into ELLIPSIS_HOME
 ellipsis.link_file() {
-    local name="${1##*/}"
-    local dest="$HOME/.$name"
+    local src="$1"
+    local name="${src##*/}"
+    local dest="${2:-$ELLIPSIS_HOME}/.$name"
 
     ellipsis.backup "$dest"
 
     echo linking "$dest"
-    ln -s "$1" "$dest"
+    ln -s "$src" "$dest"
 }
 
 # find all files in dir excluding the dir itself, hidden files, README,
-# LICENSE, *.rst, *.md, and *.txt and symlink into $HOME.
+# LICENSE, *.rst, *.md, and *.txt and symlink into ELLIPSIS_HOME.
 ellipsis.link_files() {
     for file in $(find "$1" -maxdepth 1 -name '*' \
                                       ! -name '.*' \
@@ -32,7 +33,7 @@ ellipsis.link_files() {
                                       ! -name '*.txt' \
                                       ! -wholename "$1" \
                                       ! -name "ellipsis.sh" | sort); do
-        ellipsis.link_file $file
+        ellipsis.link_file "$file"
     done
 }
 
@@ -94,7 +95,7 @@ ellipsis.run_installer() {
 }
 
 # Installs new ellipsis package, using install hook if one exists. If no hook is
-# defined, all files are symlinked into $HOME using `ellipsis.link_files`.
+# defined, all files are symlinked into ELLIPSIS_HOME using `ellipsis.link_files`.
 ellipsis.install() {
     case "$1" in
         http:*|https:*|git:*|ssh:*)
@@ -123,7 +124,7 @@ ellipsis.install() {
 }
 
 # Uninstall package, using uninstall hook if one exists. If no hook is
-# defined, all symlinked files in $HOME are removed and package is rm -rf'd.
+# defined, all symlinked files in ELLIPSIS_HOME are removed and package is rm -rf'd.
 ellipsis.uninstall() {
     pkg.init "$1"
     pkg.run pkg.uninstall
@@ -131,7 +132,7 @@ ellipsis.uninstall() {
 }
 
 # Unlink package, using unlink hooks, using unlink hook if one exists. If no
-# hook is defined, all symlinked files in $HOME are removed.
+# hook is defined, all symlinked files in ELLIPSIS_HOME are removed.
 ellipsis.unlink() {
     pkg.init "$1"
     pkg.run pkg.unlink
@@ -271,16 +272,16 @@ ellipsis.symlinks() {
     fi
 }
 
-# List broken symlinks in HOME
+# List broken symlinks in ELLIPSIS_HOME
 ellipsis.broken() {
-    for file in $(find -L ~ -type l -maxdepth 1); do
+    for file in $(find -L $ELLIPSIS_HOME -type l -maxdepth 1); do
         echo "$(utils.strip_packages_dir $(readlink $file)) -> $(utils.relative_path $file)";
     done
 }
 
-# List broken symlinks in HOME
+# List broken symlinks in ELLIPSIS_HOME
 ellipsis.clean() {
-    find -L ~ -type l -maxdepth 1 | xargs rm
+    find -L $ELLIPSIS_HOME -type l -maxdepth 1 | xargs rm
 }
 
 # List(s) package git status.
