@@ -5,68 +5,67 @@ load ellipsis
 load utils
 
 setup() {
-    mkdir ellipsis-tmp
-    mkdir ellipsis-test-home
-    touch ellipsis-tmp/backupfile.file
-    touch ellipsis-tmp/linkfile.file
-    ln -s backupfile.file ellipsis-tmp/.a-good-symlink
-    ln -s nothing ellipsis-tmp/.a-bad-symlink
-    export ELLIPSIS_HOME="ellipsis-test-home"
+    mkdir -p tmp/ellipsis_home
+    touch tmp/file_to_backup
+    touch tmp/file_to_link
+    ln -s file_to_backup tmp/symlink
+    ln -s nothing tmp/broken_symlink
+    export ELLIPSIS_HOME=tmp/ellipsis_home
 }
 
 teardown() {
-    rm -rf ellipsis-tmp
-    rm -rf ellipsis-test-home
+    rm -rf tmp
+    rm -rf $ELLIPSIS_HOME
 }
 
 @test "ellipsis.backup should make a backup of a file that exists" {
-    run ellipsis.backup ellipsis-tmp/backupfile.file
+    run ellipsis.backup tmp/file_to_backup
     [ $status -eq 0 ]
-    [ -f ellipsis-tmp/backupfile.file.bak ]
+    [ -f tmp/file_to_backup.bak ]
 }
 
 @test "ellipsis.backup should not make a backup of a file that does not exist" {
-    run ellipsis.backup ellipsis-tmp/doesnotexist.file
+    run ellipsis.backup tmp/doesnotexist.file
     [ $status -eq 0 ]
-    [ ! -f ellipsis-tmp/doesnotexist.file.bak ]
+    [ ! -f tmp/doesnotexist.file.bak ]
 }
 
 @test "ellipsis.backup should not overwrite existing backups" {
-    touch ellipsis-tmp/backupfile.file.bak
-    run ellipsis.backup ellipsis-tmp/backupfile.file
+    touch tmp/file_to_backup.bak
+    run ellipsis.backup tmp/file_to_backup
     [ $status -eq 0 ]
-    [ -f ellipsis-tmp/backupfile.file.bak ]
-    [ -f ellipsis-tmp/backupfile.file.bak.1 ]
+    [ -f tmp/file_to_backup.bak ]
+    [ -f tmp/file_to_backup.bak.1 ]
 }
 
 @test "ellipsis.backup move symlink if passed a valid symlink" {
-    run ellipsis.backup ellipsis-tmp/.a-good-symlink
+    run ellipsis.backup tmp/symlink
     [ $status -eq 0 ]
-    [ ! -L ellipsis-tmp/.a-good-symlink ]
-    [ -L ellipsis-tmp/.a-good-symlink.bak ]
+    [ ! -L tmp/symlink ]
+    [ -L tmp/symlink.bak ]
 }
 
 @test "ellipsis.backup should remove symlink if passed an invalid symlink" {
-    run ellipsis.backup ellipsis-tmp/.a-bad-symlink
+    run ellipsis.backup tmp/broken_symlink
     [ $status -eq 0 ]
-    [ ! -L ellipsis-tmp/.a-bad-symlink ]
-    [ ! -e ellipsis-tmp/.a-bad-symlink ]
+    [ ! -L tmp/broken_symlink ]
+    [ ! -e tmp/broken_symlink ]
 }
 
 @test "ellipsis.link_file should link a file into HOME" {
-    run ellipsis.link_file ellipsis-tmp/linkfile.file
+    run ellipsis.link_file tmp/file_to_link
     [ $status -eq 0 ]
-    [ -f $(readlink $ELLIPSIS_HOME/.linkfile.file) ]
-    [ -f ellipsis-tmp/linkfile.file ]
+    [ -f $(readlink $ELLIPSIS_HOME/.file_to_link) ]
+    [ -f tmp/file_to_link ]
     [[ "$output" == linking* ]]
 }
 
 @test "ellipsis.link_files should link all the files in folder into HOME" {
-    run ellipsis.link_files ellipsis-tmp
+    run ellipsis.link_files tmp
     [ $status -eq 0 ]
-    [ -f $(readlink $ELLIPSIS_HOME/.linkfile.file) ]
-    [ -f ellipsis-tmp/linkfile.file ]
-    [ -f $(readlink $ELLIPSIS_HOME/.backupfile.file) ]
-    [ -f ellipsis-tmp/backupfile.file ]
+    [ -f $(readlink $ELLIPSIS_HOME/.file_to_link) ]
+    [ -f tmp/file_to_link ]
+    [ -f $(readlink $ELLIPSIS_HOME/.file_to_backup) ]
+    [ -f tmp/file_to_backup ]
     [[ "$output" == linking* ]]
 }

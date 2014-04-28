@@ -15,15 +15,12 @@ utils.platform() {
 
 # check if a command or function exists
 utils.cmd_exists() {
-    if hash $1 2>/dev/null; then
-        return 0
-    fi
-    return 1
+    hash "$1" &> /dev/null
 }
 
 # return true if folder is empty
 utils.folder_empty() {
-    if [ $(find $1 -prune -empty) ]; then
+    if [ "$(find $1 -prune -empty)" ]; then
         return 0
     fi
     return 1
@@ -42,14 +39,38 @@ utils.prompt() {
     esac
 }
 
+# check whether file exists
+utils.file_exists() {
+    if [[ -e "$1" ]]; then
+        return 0
+    fi
+    return 1
+}
+
+# check whether file is a symlink
+utils.is_symlink() {
+    if [[ -L "$1" ]]; then
+        return 0
+    fi
+    return 1
+}
+
+# Check whether symlink is broken
+utils.is_broken_symlink() {
+    if [[ -L "$1" && ! -e "$1" ]]; then
+        return 0
+    fi
+    return 1
+}
+
 # List symlinks in a folder, defaulting to ELLIPSIS_HOME.
 utils.list_symlinks() {
-    find ${1:-$ELLIPSIS_HOME} -maxdepth 1 -type l
+    find "${1:-$ELLIPSIS_HOME}" -maxdepth 1 -type l
 }
 
 # dunno how this isn't part of POSIX
 utils.abs_path() {
-    echo $(cd $(dirname $1); pwd)/$(basename $1)
+    echo $(cd $(dirname "$1"); pwd)/$(basename "$1")
 }
 
 # return path to file relative to HOME (if possible)
@@ -64,7 +85,7 @@ utils.strip_packages_dir() {
 
 # detects slash in string
 utils.has_slash() {
-    case $1 in
+    case "$1" in
         */*)
             return 0
             ;;

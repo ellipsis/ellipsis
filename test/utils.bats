@@ -10,6 +10,7 @@ setup() {
     mkdir -p tmp/symlinks
     echo test > tmp/not_empty/file
     ln -s ../not_empty/file tmp/symlinks/symlink
+    ln -s does_not_exist tmp/symlinks/brokensymlink
 }
 
 teardown() {
@@ -26,6 +27,18 @@ teardown() {
     [ $status -eq 1 ]
 }
 
+@test "utils.file_exists should detect file that exists" {
+    run utils.file_exists tmp/not_empty
+    [ $status -eq 0 ]
+    run utils.file_exists tmp/not_empty/file
+    [ $status -eq 0 ]
+}
+
+@test "utils.file_exists should not detect files that don't exist" {
+    run utils.file_exists does_not_exist
+    [ $status -eq 1 ]
+}
+
 @test "utils.folder_empty should detect an empty folder" {
     run utils.folder_empty tmp/empty
     [ $status -eq 0 ]
@@ -36,9 +49,26 @@ teardown() {
     [ $status -eq 1 ]
 }
 
-@test "utils.list_symlinks should find symlinks in folder" {
-    run utils.list_symlinks tmp/symlinks
-    [ "$output" = "tmp/symlinks/symlink" ]
+@test "utils.is_symlink should identify symlink" {
+    run utils.is_symlink tmp/symlinks/symlink
+    [ $status -eq 0 ]
+    run utils.is_symlink tmp/symlinks/brokensymlink
+    [ $status -eq 0 ]
+    run utils.is_symlink tmp/not_empty
+    [ $status -eq 1 ]
+    run utils.is_symlink tmp/not_empty/file
+    [ $status -eq 1 ]
+}
+
+@test "utils.is_broken_symlink should identify broken symlink" {
+    run utils.is_broken_symlink tmp/symlinks/brokensymlink
+    [ $status -eq 0 ]
+    run utils.is_broken_symlink tmp/symlinks/symlink
+    [ $status -eq 1 ]
+    run utils.is_broken_symlink tmp/not_empty
+    [ $status -eq 1 ]
+    run utils.is_broken_symlink tmp/not_empty/file
+    [ $status -eq 1 ]
 }
 
 @test "utils.list_symlinks should not find symlinks in folder without them" {
