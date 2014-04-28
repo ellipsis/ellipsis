@@ -8,7 +8,6 @@ if [[ $ELLIPSIS_INIT -ne 1 ]]; then
     source "$(dirname "${BASH_SOURCE[0]}")/init.sh"
 fi
 
-
 # symlink a single file into ELLIPSIS_HOME
 ellipsis.link_file() {
     local src="$1"
