@@ -43,21 +43,21 @@ ellipsis.backup() {
     local name="${original##*/}"
 
     # remove broken symlink
-    if utils.is_broken_symlink "$original"; then
+    if fs.is_broken_symlink "$original"; then
         echo "rm ~/$name (broken link to $(readlink $original))"
         rm $original
         return
     fi
 
     # no file exists, simply ignore
-    if ! utils.file_exists "$original"; then
+    if ! fs.file_exists "$original"; then
         return
     fi
 
     # backup file
-    if utils.file_exists "$backup"; then
+    if fs.file_exists "$backup"; then
         n=1
-        while utils.file_exists "$backup.$n"; do
+        while fs.file_exists "$backup.$n"; do
             n=$((n+1))
         done
         backup="$backup.$n"
@@ -149,7 +149,7 @@ ellipsis.new() {
     mkdir -p $PKG_PATH
 
     # If path is not empty, ensure they are serious.
-    if ! utils.folder_empty $PKG_PATH; then
+    if ! fs.folder_empty $PKG_PATH; then
         utils.prompt "destination is not empty, continue? [y/n]" || exit 1
     fi
 
@@ -201,7 +201,7 @@ EOF
     git init
     git add README.md ellipsis.sh
     git commit -m "Initial commit"
-    echo new package created at ${utils.relative_path $PKG_PATH}
+    echo new package created at ${fs.relative_path $PKG_PATH}
 }
 
 # Edit ellipsis.sh for package, or open ellipsis dir in $EDITOR.
@@ -233,7 +233,7 @@ ellipsis.each() {
 
 # List all installed packages.
 ellipsis.list_packages() {
-    if ! utils.folder_empty $ELLIPSIS_PATH/packages; then
+    if ! fs.folder_empty $ELLIPSIS_PATH/packages; then
         echo $ELLIPSIS_PATH/packages/*
     fi
 }
@@ -241,10 +241,10 @@ ellipsis.list_packages() {
 # List all symlinks (slightly optimized over calling pkg.list_symlinks for each
 # package.
 ellipsis.list_symlinks() {
-    for file in $(utils.list_symlinks); do
+    for file in $(fs.list_symlinks); do
         local link="$(readlink $file)"
         if [[ "$link" == $ELLIPSIS_PATH* ]]; then
-            echo "$(utils.strip_packages_dir $link) -> $(utils.relative_path $file)";
+            echo "$(utils.strip_packages_dir $link) -> $(fs.relative_path $file)";
         fi
     done
 }
@@ -267,7 +267,7 @@ ellipsis.symlinks() {
 # List broken symlinks in ELLIPSIS_HOME
 ellipsis.broken() {
     for file in $(find -L $ELLIPSIS_HOME -maxdepth 1 -type l); do
-        echo "$(utils.strip_packages_dir $(readlink $file)) -> $(utils.relative_path $file)";
+        echo "$(utils.strip_packages_dir $(readlink $file)) -> $(fs.relative_path $file)";
     done
 }
 

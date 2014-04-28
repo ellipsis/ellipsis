@@ -28,7 +28,9 @@ source $tmp_dir/ellipsis/src/init.sh
 
 # Load modules.
 load ellipsis
+load fs
 load git
+load os
 load pkg
 load registry
 load utils
@@ -50,7 +52,7 @@ if [ -z "$PACKAGES" ]; then
     registry.available
 
     # List default packages for this platform.
-    if [ "$(utils.platform)" = "darwin" ]; then
+    if [ $(os.platform) = osx ]; then
         default="zeekay/dot-files zeekay/dot-vim zeekay/dot-zsh zeekay/dot-alfred zeekay/dot-iterm2"
     else
         default="zeekay/dot-files zeekay/dot-vim zeekay/dot-zsh"
