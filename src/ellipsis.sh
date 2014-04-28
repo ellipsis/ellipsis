@@ -256,7 +256,11 @@ ellipsis.symlinks() {
         pkg.run pkg.symlinks
         pkg.del
     else
-        ellipsis.list_symlinks | sort | column -t
+        if utils.cmd_exists column; then
+            ellipsis.list_symlinks | sort | column -t
+        else
+            ellipsis.list_symlinks | sort
+        fi
     fi
 }
 
