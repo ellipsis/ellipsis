@@ -2,8 +2,6 @@
 
 load _helper
 load ellipsis
-load fs
-load utils
 
 setup() {
     mkdir -p tmp/ellipsis_home

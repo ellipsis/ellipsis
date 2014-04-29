@@ -8,14 +8,8 @@ if [[ $ELLIPSIS_INIT -ne 1 ]]; then
     source "$(dirname "${BASH_SOURCE[0]}")"/init.sh
 fi
 
-# Source deps.
 load ellipsis
-load git
-load github
-load log
-load pkg
 load registry
-load utils
 
 # prints usage for ellipsis
 cli.usage() {
@@ -79,7 +73,7 @@ cli.run() {
             ellipsis.unlink $2
             ;;
         list|ls|installed)
-            ellipsis.list
+            ellipsis.installed
             ;;
         links|symlinks)
             ellipsis.symlinks $2
