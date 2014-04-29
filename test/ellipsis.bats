@@ -7,16 +7,11 @@ load utils
 
 setup() {
     mkdir -p tmp/ellipsis_home
-    touch tmp/file_to_backup
-    touch tmp/file_to_link
-    ln -s file_to_backup tmp/symlink
-    ln -s nothing tmp/broken_symlink
     export ELLIPSIS_HOME=tmp/ellipsis_home
 }
 
 teardown() {
     rm -rf tmp
-    rm -rf $ELLIPSIS_HOME
 }
 
 @test "ellipsis.install should install a new package" {
