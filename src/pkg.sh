@@ -66,22 +66,15 @@ pkg.symlinks_mappings() {
     done
 }
 
-# Run hook or command inside PKG_PATH.
+# Run command inside PKG_PATH.
 pkg.run() {
     local cwd="$(pwd)"
 
     # change to package dir
     cd "$PKG_PATH"
 
-    # run hook or command
-    case $1 in
-        pkg.*)
-            pkg.run_hook $1
-            ;;
-        *)
-            $1
-            ;;
-    esac
+    # run command
+    $@
 
     # return after running command
     cd "$cwd"
@@ -89,41 +82,16 @@ pkg.run() {
 
 # run hook if it's defined, otherwise use default implementation
 pkg.run_hook() {
+    if ! utils.cmd_exists hooks.$1; then
+        log.error "Unknown hook!"
+        exit 1
+    fi
+
     # Run packages's hook.
-    if utils.cmd_exists $1; then
-        $1
+    if utils.cmd_exists pkg.$1; then
+        run pkg.$1
     else
-        # Run default hook.
-        case $1 in
-            pkg.install)
-                pkg.hooks.install
-                ;;
-            pkg.unlink)
-                pkg.hooks.unlink
-                ;;
-            pkg.uninstall)
-                pkg.hooks.uninstall
-                ;;
-            pkg.symlinks)
-                pkg.hooks.symlinks
-                ;;
-            pkg.pull)
-                pkg.hooks.pull
-                ;;
-            pkg.push)
-                pkg.hooks.push
-                ;;
-            pkg.list)
-                pkg.hooks.list
-                ;;
-            pkg.status)
-                pkg.hooks.status
-                ;;
-            *)
-                echo Unknown hook!
-                exit 1
-                ;;
-        esac
+        run hooks.$1
     fi
 }
 
