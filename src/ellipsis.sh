@@ -24,13 +24,13 @@ ellipsis.list_packages() {
 ellipsis.each() {
     # execute command for ellipsis first
     pkg.init $ELLIPSIS_PATH
-    pkg.run "$@"
+    $@
     pkg.del
 
     # loop over packages, excecuting command
     for pkg in $(ellipsis.list_packages); do
         pkg.init "$pkg"
-        pkg.run "$@"
+        $@
         pkg.del
     done
 }
@@ -60,7 +60,7 @@ ellipsis.install() {
     git.clone "$PKG_URL" "$PKG_PATH"
 
     pkg.init "$PKG_PATH"
-    pkg.run pkg.install
+    pkg.run_hook install
     pkg.del
 }
 
@@ -68,7 +68,7 @@ ellipsis.install() {
 # defined, all symlinked files in ELLIPSIS_HOME are removed and package is rm -rf'd.
 ellipsis.uninstall() {
     pkg.init "$1"
-    pkg.run pkg.uninstall
+    pkg.run_hook uninstall
     pkg.del
 }
 
@@ -76,16 +76,16 @@ ellipsis.uninstall() {
 # hook is defined, all symlinked files in ELLIPSIS_HOME are removed.
 ellipsis.unlink() {
     pkg.init "$1"
-    pkg.run pkg.unlink
+    pkg.run_hook unlink
     pkg.del
 }
 
 # List installed packages.
 ellipsis.list() {
     if utils.cmd_exists column; then
-        ellipsis.each pkg.list | column -t -s $'\t'
+        ellipsis.each pkg.run_hook list | column -t -s $'\t'
     else
-        ellipsis.each pkg.list
+        ellipsis.each pkg.run_hook list
     fi
 }
 
@@ -93,10 +93,10 @@ ellipsis.list() {
 ellipsis.status() {
     if [ $# -eq 1 ]; then
         pkg.init "$1"
-        pkg.run pkg.status
+        pkg.run_hook status
         pkg.del
     else
-        ellipsis.each pkg.status
+        ellipsis.each pkg.run_hook status
     fi
 }
 
@@ -104,10 +104,10 @@ ellipsis.status() {
 ellipsis.pull() {
     if [ $# -eq 1 ]; then
         pkg.init "$1"
-        pkg.run pkg.pull
+        pkg.run_hook pull
         pkg.del
     else
-        ellipsis.each pkg.pull
+        ellipsis.each pkg.run_hook pull
     fi
 }
 
@@ -115,10 +115,10 @@ ellipsis.pull() {
 ellipsis.push() {
     if [ $# -eq 1 ]; then
         pkg.init "$1"
-        pkg.run pkg.push
+        pkg.run_hook push
         pkg.del
     else
-        ellipsis.each pkg.push
+        ellipsis.each pkg.run_hook push
     fi
 }
 
@@ -206,7 +206,7 @@ ellipsis.edit() {
 ellipsis.symlinks() {
     if [ $# -eq 1 ]; then
         pkg.init "$1"
-        pkg.run pkg.symlinks
+        pkg.run_hook symlinks
         pkg.del
     else
         if utils.cmd_exists column; then
@@ -228,4 +228,3 @@ ellipsis.broken() {
 ellipsis.clean() {
     find -L $ELLIPSIS_HOME -maxdepth 1 -type l| xargs rm
 }
-
