@@ -25,20 +25,3 @@ utils.prompt() {
             ;;
     esac
 }
-
-# return path to file in packages dir
-utils.strip_packages_dir() {
-    echo ${1/$ELLIPSIS_PATH\/packages\//}
-}
-
-# detects slash in string
-utils.has_slash() {
-    case "$1" in
-        */*)
-            return 0
-            ;;
-        *)
-            return 1
-            ;;
-    esac
-}

@@ -68,11 +68,54 @@ teardown() {
     [ "$output" = "" ]
 }
 
-@test "fs.relative_path should print relative path to file" {
-    run fs.relative_path $HOME/.ellipsis
-    [ "$output" = "~/.ellipsis" ]
-    run fs.relative_path ~/.ellipsis
-    [ "$output" = "~/.ellipsis" ]
-    run fs.relative_path tmp
-    [ "$output" = "tmp" ]
+@test "fs.backup should make a backup of a file that exists" {
+    run fs.backup tmp/file_to_backup
+    [ $status -eq 0 ]
+    [ -f tmp/file_to_backup.bak ]
+}
+
+@test "fs.backup should not make a backup of a file that does not exist" {
+    run fs.backup tmp/doesnotexist.file
+    [ $status -eq 0 ]
+    [ ! -f tmp/doesnotexist.file.bak ]
+}
+
+@test "fs.backup should not overwrite existing backups" {
+    touch tmp/file_to_backup.bak
+    run fs.backup tmp/file_to_backup
+    [ $status -eq 0 ]
+    [ -f tmp/file_to_backup.bak ]
+    [ -f tmp/file_to_backup.bak.1 ]
+}
+
+@test "fs.backup move symlink if passed a valid symlink" {
+    run fs.backup tmp/symlink
+    [ $status -eq 0 ]
+    [ ! -L tmp/symlink ]
+    [ -L tmp/symlink.bak ]
+}
+
+@test "fs.backup should remove symlink if passed an invalid symlink" {
+    run fs.backup tmp/broken_symlink
+    [ $status -eq 0 ]
+    [ ! -L tmp/broken_symlink ]
+    [ ! -e tmp/broken_symlink ]
+}
+
+@test "fs.link_file should link a file into HOME" {
+    run fs.link_file tmp/file_to_link
+    [ $status -eq 0 ]
+    [ -f $(readlink $ELLIPSIS_HOME/.file_to_link) ]
+    [ -f tmp/file_to_link ]
+    [[ "$output" == linking* ]]
+}
+
+@test "fs.link_files should link all the files in folder into HOME" {
+    run fs.link_files tmp
+    [ $status -eq 0 ]
+    [ -f $(readlink $ELLIPSIS_HOME/.file_to_link) ]
+    [ -f tmp/file_to_link ]
+    [ -f $(readlink $ELLIPSIS_HOME/.file_to_backup) ]
+    [ -f tmp/file_to_backup ]
+    [[ "$output" == linking* ]]
 }

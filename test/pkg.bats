@@ -12,14 +12,6 @@ teardown() {
     rm -rf $ELLIPSIS_HOME
 }
 
-@test "pkg.name_to_path should derive package name from package path" {
-    skip
-}
-
-@test "pkg.path_to_name should derive package path from package name" {
-    skip
-}
-
 @test "pkg.init_globals should setup PKG_PATH and PKG_NAME properly" {
     skip
 }
