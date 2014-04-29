@@ -28,3 +28,8 @@ path.relative_to_home() {
 path.relative_to_packages() {
     echo ${1/$ELLIPSIS_PATH\/packages\//}
 }
+
+# Strip dot from hidden file
+path.strip_dot() {
+    echo "$1" | sed -e "s/^\.//"
+}
