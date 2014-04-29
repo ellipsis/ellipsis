@@ -83,9 +83,9 @@ ellipsis.unlink() {
 # List installed packages.
 ellipsis.installed() {
     if utils.cmd_exists column; then
-        ellipsis.each pkg.run_hook list | column -t -s $'\t'
+        ellipsis.each pkg.run_hook installed | column -t -s $'\t'
     else
-        ellipsis.each pkg.run_hook list
+        ellipsis.each pkg.run_hook installed
     fi
 }
 
@@ -163,8 +163,12 @@ ellipsis.new() {
 #     git.pull
 # }
 
-# pkg.status() {
+# pkg.installed() {
 #     git.status
+# }
+#
+# pkg.status() {
+#     git.diffstat
 # }
 EOF
 

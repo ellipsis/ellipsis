@@ -26,30 +26,6 @@ git.push() {
     git push
 }
 
-# Tab delimited package listing with commit/last update time.
-git.list() {
-    pkg.init_globals ${1:-$PKG_NAME}
-    local sha1=$(git.sha1)
-    local last_updated=$(git.last_updated)
-
-    echo -e "\033[1m$PKG_NAME\033[0m\t$sha1\t(updated $last_updated)"
-}
-
-# Pretty status with diff.
-git.status() {
-    pkg.init_globals ${1:-$PKG_NAME}
-    local ahead="$(git.ahead)"
-
-    # Return unless there are changes or we are behind.
-    ! git.has_changes && [ -z "$ahead" ] || return
-
-    local sha1="$(git.sha1)"
-    local last_updated=$(git.last_updated)
-
-    echo -e "\033[1m$PKG_NAME\033[0m $sha1 (updated $last_updated) $ahead"
-    git.diffstat
-}
-
 # Print last commit's sha1 hash.
 git.sha1() {
     git rev-parse --short HEAD
