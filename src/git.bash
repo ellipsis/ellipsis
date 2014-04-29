@@ -1,15 +1,11 @@
-#!/usr/bin/env bash
+# git.bash
 #
-# git.sh
 # Assorted git utility functions. These functions all require us to cd into the
 # git repo we want to operate on first. These exist mostly for aesthetic
 # reasons, i.e., pretty output in the various ellipsis commands and can be used
 # by package authors for consistency with them.
 
-# Initialize ourselves if we haven't yet.
-if [[ $ELLIPSIS_INIT -ne 1 ]]; then
-    source "$(dirname "${BASH_SOURCE[0]}")"/init.sh
-fi
+load pkg
 
 # Clone a Git repo.
 git.clone() {

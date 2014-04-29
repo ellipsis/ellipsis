@@ -1,7 +1,7 @@
 
 EOF
 
-# shim for ellipsis install.sh
+# shim for ellipsis install.bash
 #
 # This is used on ellipsis.sh to bootstrap the full installer, which you
 # otherwise can't curl and pipe to sh (as it requires bash). Not meant to be
@@ -18,7 +18,7 @@ for dep in $deps; do
 done
 
 # Download full installer and execute with bash
-curl -sL https://raw.githubusercontent.com/zeekay/ellipsis/master/scripts/install.sh > install-$$.sh
+curl -sL https://raw.githubusercontent.com/zeekay/ellipsis/master/scripts/install.bash > install-$$.sh
 bash install-$$.sh
 
 # Clean up

@@ -1,12 +1,6 @@
-#!/usr/bin/env bash
+# ellipsis.bash
 #
-# ellipsis.sh
 # Core ellipsis interface.
-
-# Initialize ourselves if we haven't yet.
-if [[ $ELLIPSIS_INIT -ne 1 ]]; then
-    source "$(dirname "${BASH_SOURCE[0]}")/init.sh"
-fi
 
 load fs
 load git
@@ -41,18 +35,18 @@ ellipsis.install() {
     case "$1" in
         http:*|https:*|git:*|ssh:*)
             PKG_NAME="$(echo $1 | rev | cut -d '/' -f 1 | rev)"
-            PKG_PATH="$(pkg.name_to_path $PKG_NAME)"
+            PKG_PATH="$(pkg.path_from_name $PKG_NAME)"
             PKG_URL="$1"
         ;;
         */*)
             PKG_USER=$(echo $1 | cut -d '/' -f1)
             PKG_NAME=$(echo $1 | cut -d '/' -f2)
-            PKG_PATH="$(pkg.name_to_path $PKG_NAME)"
+            PKG_PATH="$(pkg.path_from_name $PKG_NAME)"
             PKG_URL="$ELLIPSIS_PROTO://github.com/$PKG_USER/$PKG_NAME"
         ;;
         *)
             PKG_NAME="$1"
-            PKG_PATH="$(pkg.name_to_path $PKG_NAME)"
+            PKG_PATH="$(pkg.path_from_name $PKG_NAME)"
             PKG_URL="$ELLIPSIS_PROTO://github.com/$ELLIPSIS_USER/$PKG_NAME"
         ;;
     esac
@@ -81,7 +75,7 @@ ellipsis.unlink() {
 }
 
 # List installed packages.
-ellipsis.list() {
+ellipsis.installed() {
     if utils.cmd_exists column; then
         ellipsis.each pkg.run_hook list | column -t -s $'\t'
     else
@@ -187,7 +181,7 @@ EOF
     git init
     git add README.md ellipsis.sh
     git commit -m "Initial commit"
-    echo new package created at ${path.relative_path $PKG_PATH}
+    echo new package created at ${path.relative_to_home $PKG_PATH}
 }
 
 # Edit ellipsis.sh for package, or open ellipsis dir in $EDITOR.
@@ -202,6 +196,17 @@ ellipsis.edit() {
     fi
 }
 
+# List all symlinks (slightly optimized over calling pkg.list_symlinks for each
+# package.
+ellipsis._list_symlink_mappings() {
+    for file in $(fs.list_symlinks); do
+        local link="$(readlink $file)"
+        if [[ "$link" == $ELLIPSIS_PATH* ]]; then
+            echo "$(path.relative_to_packages $link) -> $(path.relative_to_home $file)";
+        fi
+    done
+}
+
 # List all symlinks, or just symlinks for a given package
 ellipsis.symlinks() {
     if [ $# -eq 1 ]; then
@@ -210,9 +215,9 @@ ellipsis.symlinks() {
         pkg.del
     else
         if utils.cmd_exists column; then
-            ellipsis.list_symlink_mappings | sort | column -t
+            ellipsis._list_symlink_mappings | sort | column -t
         else
-            ellipsis.list_symlink_mappings | sort
+            ellipsis._list_symlink_mappings | sort
         fi
     fi
 }
@@ -220,7 +225,7 @@ ellipsis.symlinks() {
 # List broken symlinks in ELLIPSIS_HOME
 ellipsis.broken() {
     for file in $(find -L $ELLIPSIS_HOME -maxdepth 1 -type l); do
-        echo "$(utils.strip_packages_dir $(readlink $file)) -> $(path.relative_path $file)";
+        echo "$(path.relative_to_packages $(readlink $file)) -> $(path.relative_to_home $file)";
     done
 }
 

@@ -1,13 +1,7 @@
-#!/usr/bin/env bash
+# github.bash
 #
-# github.sh
 # Assorted functions for querying Github for package information and formatting
 # responses.
-
-# Initialize ourselves if we haven't yet.
-if [[ $ELLIPSIS_INIT -ne 1 ]]; then
-    source "$(dirname "${BASH_SOURCE[0]}")"/init.sh
-fi
 
 # Search epmi org on Github for a given package.
 github.search() {

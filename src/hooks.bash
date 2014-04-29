@@ -1,12 +1,6 @@
-#!/usr/bin/env bash
+# hooks.bash
 #
-# hooks.sh
 # Default hooks used by ellipsis when package hooks are undefined.
-
-# Initialize ourselves if we haven't yet.
-if [[ $ELLIPSIS_INIT -ne 1 ]]; then
-    source "$(dirname "${BASH_SOURCE[0]}")"/init.sh
-fi
 
 load fs
 load pkg
@@ -26,7 +20,7 @@ hooks.unlink() {
 
 # Remove package's symlinks then remove package.
 hooks.uninstall() {
-    pkg.run_hook pkg.unlink
+    pkg.run_hook unlink
     rm -rf $PKG_PATH
 }
 
@@ -35,28 +29,28 @@ hooks.symlinks() {
     echo -e "\033[1m$PKG_NAME\033[0m"
 
     if utils.cmd_exists column; then
-        pkg.symlinks_mappings | sort | column -t
+        pkg.list_symlink_mappings | sort | column -t
     else
-        pkg.symlinks_mappings | sort
+        pkg.list_symlink_mappings | sort
     fi
 }
 
 # Do git pull from package
 hooks.pull() {
-    pkg.run git.pull
+    git.pull
 }
 
 # Do git push from package
 hooks.push() {
-    pkg.run git.push
+    git.push
 }
 
 # List repo status.
 hooks.list() {
-    pkg.run git.list
+    git.list
 }
 
 # List repo status if it's changed and show git diffstat.
 hooks.status() {
-    pkg.run git.status
+    git.status
 }

@@ -1,6 +1,5 @@
-#!/usr/bin/env bash
+# log.bash
 #
-# log.sh
 # Logging utilities.
 
 log.info() {

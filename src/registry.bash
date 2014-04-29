@@ -1,14 +1,7 @@
-#!/usr/bin/env bash
+# registry.bash
 #
-# registry.sh
 # Interface to ellipsis package manager index. Uses github under the covers.
 
-# Initialize ourselves if we haven't yet.
-if [[ $ELLIPSIS_INIT -ne 1 ]]; then
-    source "$(dirname "${BASH_SOURCE[0]}")"/init.sh
-fi
-
-# Load deps.
 load github
 
 # Search registry for ellipsis packages.

@@ -1,13 +1,10 @@
-#!/usr/bin/env bash
+# init.bash
 #
-# init.sh
-# Setup initial globals and load function used to source other modules.
+# Setup initial globals and load function used to source other modules. This
+# file must be sourced before any others.
 
-# These globals can be set by a user to use a custom ellipsis fork/set of packages/etc
-
-# git config returns 1 if key isn't found, so we pipe to cat to squash that in
-# the case it's not-defined.
 if [[ -z "$ELLIPSIS_USER" ]]; then
+    # Pipe to cat to squash git config's exit code 1 in case of missing key.
     GITHUB_USER=$(git config github.user | cat)
     ELLIPSIS_USER=${GITHUB_USER:-zeekay}
 fi
@@ -36,7 +33,7 @@ load() {
         # Mark this module as loaded, prevent infinite recursion, ya know...
         eval "$loaded=1"
 
-        source $ELLIPSIS_PATH/src/$1.sh
+        source $ELLIPSIS_PATH/src/$1.bash
     fi
 }
 

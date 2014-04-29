@@ -1,12 +1,6 @@
-#!/usr/bin/env bash
+# cli.bash
 #
-# cli.sh
 # Command line interface for ellipsis.
-
-# Initialize ourselves if we haven't yet.
-if [[ $ELLIPSIS_INIT -ne 1 ]]; then
-    source "$(dirname "${BASH_SOURCE[0]}")"/init.sh
-fi
 
 load ellipsis
 load registry
