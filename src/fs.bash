@@ -2,6 +2,8 @@
 #
 # Files/path functions used by ellipis.
 
+load path
+
 # return true if folder is empty
 fs.folder_empty() {
     if [ "$(find $1 -prune -empty)" ]; then
