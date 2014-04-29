@@ -8,19 +8,31 @@ if [[ $ELLIPSIS_INIT -ne 1 ]]; then
     source "$(dirname "${BASH_SOURCE[0]}")/init.sh"
 fi
 
-# Run web-based installers
-ellipsis.run_installer() {
-    # save reference to current dir
-    local cwd=$(pwd)
-    # create temp dir and cd to it
-    local tmp_dir=$(mktemp -d $TMPDIR.XXXXXX) && cd $tmp_dir
-    # download installer
-    curl -sL "$url" > "tmp-$$.sh"
-    # run with ELLIPSIS env var set
-    ELLIPSIS=1 sh "tmp-$$.sh"
-    # change back to original dir and clean up
-    cd $cwd
-    rm -rf $tmp_dir
+load fs
+load git
+load pkg
+load utils
+
+# List all installed packages.
+ellipsis.list_packages() {
+    if ! fs.folder_empty $ELLIPSIS_PATH/packages; then
+        echo $ELLIPSIS_PATH/packages/*
+    fi
+}
+
+# Run commands across all packages.
+ellipsis.each() {
+    # execute command for ellipsis first
+    pkg.init $ELLIPSIS_PATH
+    pkg.run "$@"
+    pkg.del
+
+    # loop over packages, excecuting command
+    for pkg in $(ellipsis.list_packages); do
+        pkg.init "$pkg"
+        pkg.run "$@"
+        pkg.del
+    done
 }
 
 # Installs new ellipsis package, using install hook if one exists. If no hook is
@@ -74,6 +86,39 @@ ellipsis.list() {
         ellipsis.each pkg.list | column -t -s $'\t'
     else
         ellipsis.each pkg.list
+    fi
+}
+
+# List(s) package git status.
+ellipsis.status() {
+    if [ $# -eq 1 ]; then
+        pkg.init "$1"
+        pkg.run pkg.status
+        pkg.del
+    else
+        ellipsis.each pkg.status
+    fi
+}
+
+# Updates package(s) with git pull.
+ellipsis.pull() {
+    if [ $# -eq 1 ]; then
+        pkg.init "$1"
+        pkg.run pkg.pull
+        pkg.del
+    else
+        ellipsis.each pkg.pull
+    fi
+}
+
+# Push updated package(s) with git push.
+ellipsis.push() {
+    if [ $# -eq 1 ]; then
+        pkg.init "$1"
+        pkg.run pkg.push
+        pkg.del
+    else
+        ellipsis.each pkg.push
     fi
 }
 
@@ -157,39 +202,6 @@ ellipsis.edit() {
     fi
 }
 
-# Run commands across all packages.
-ellipsis.each() {
-    # execute command for ellipsis first
-    pkg.init $ELLIPSIS_PATH
-    pkg.run "$@"
-    pkg.del
-
-    # loop over packages, excecuting command
-    for pkg in $(ellipsis.list_packages); do
-        pkg.init "$pkg"
-        pkg.run "$@"
-        pkg.del
-    done
-}
-
-# List all installed packages.
-ellipsis.list_packages() {
-    if ! fs.folder_empty $ELLIPSIS_PATH/packages; then
-        echo $ELLIPSIS_PATH/packages/*
-    fi
-}
-
-# List all symlinks (slightly optimized over calling pkg.list_symlinks for each
-# package.
-ellipsis.list_symlinks() {
-    for file in $(fs.list_symlinks); do
-        local link="$(readlink $file)"
-        if [[ "$link" == $ELLIPSIS_PATH* ]]; then
-            echo "$(utils.strip_packages_dir $link) -> $(path.relative_path $file)";
-        fi
-    done
-}
-
 # List all symlinks, or just symlinks for a given package
 ellipsis.symlinks() {
     if [ $# -eq 1 ]; then
@@ -198,9 +210,9 @@ ellipsis.symlinks() {
         pkg.del
     else
         if utils.cmd_exists column; then
-            ellipsis.list_symlinks | sort | column -t
+            ellipsis.list_symlink_mappings | sort | column -t
         else
-            ellipsis.list_symlinks | sort
+            ellipsis.list_symlink_mappings | sort
         fi
     fi
 }
@@ -217,35 +229,3 @@ ellipsis.clean() {
     find -L $ELLIPSIS_HOME -maxdepth 1 -type l| xargs rm
 }
 
-# List(s) package git status.
-ellipsis.status() {
-    if [ $# -eq 1 ]; then
-        pkg.init "$1"
-        pkg.run pkg.status
-        pkg.del
-    else
-        ellipsis.each pkg.status
-    fi
-}
-
-# Updates package(s) with git pull.
-ellipsis.pull() {
-    if [ $# -eq 1 ]; then
-        pkg.init "$1"
-        pkg.run pkg.pull
-        pkg.del
-    else
-        ellipsis.each pkg.pull
-    fi
-}
-
-# Push updated package(s) with git push.
-ellipsis.push() {
-    if [ $# -eq 1 ]; then
-        pkg.init "$1"
-        pkg.run pkg.push
-        pkg.del
-    else
-        ellipsis.each pkg.push
-    fi
-}

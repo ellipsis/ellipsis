@@ -9,6 +9,12 @@ if [[ $ELLIPSIS_INIT -ne 1 ]]; then
     source "$(dirname "${BASH_SOURCE[0]}")"/init.sh
 fi
 
+load fs
+load hooks
+load log
+load path
+load utils
+
 # List of hooks available to package authors.
 PKG_HOOKS=(install uninstall unlink symlinks pull push status list)
 

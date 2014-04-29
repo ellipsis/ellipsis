@@ -8,6 +8,10 @@ if [[ $ELLIPSIS_INIT -ne 1 ]]; then
     source "$(dirname "${BASH_SOURCE[0]}")"/init.sh
 fi
 
+load fs
+load pkg
+load utils
+
 # Symlink files in PKG_PATH into ELLIPSIS_HOME.
 hooks.install() {
     fs.link_files $PKG_PATH

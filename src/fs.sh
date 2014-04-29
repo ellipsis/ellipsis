@@ -45,6 +45,18 @@ fs.list_symlinks() {
     find "${1:-$ELLIPSIS_HOME}" -maxdepth 1 -type l
 }
 
+# List all symlinks (slightly optimized over calling pkg.list_symlinks for each
+# package.
+# List all symlinks and files they resolve to
+fs.list_symlink_mappings() {
+    for file in $(fs.list_symlinks); do
+        local link="$(readlink $file)"
+        if [[ "$link" == $ELLIPSIS_PATH* ]]; then
+            echo "$(utils.strip_packages_dir $link) -> $(path.relative_path $file)";
+        fi
+    done
+}
+
 # backup existing file, ensuring you don't overwrite existing backups
 fs.backup() {
     local original="$1"

@@ -1,20 +1,15 @@
 #!/usr/bin/env bats
 
 load _helper
-load ellipsis
 load utils
 
 setup() {
-    mkdir -p tmp/empty
-    mkdir -p tmp/not_empty
-    mkdir -p tmp/symlinks
-    echo test > tmp/not_empty/file
-    ln -s ../not_empty/file tmp/symlinks/symlink
-    ln -s does_not_exist tmp/symlinks/brokensymlink
+    mkdir -p tmp/ellipsis_home
+    export ELLIPSIS_HOME=tmp/ellipsis_home
 }
 
 teardown() {
-    rm -rf tmp
+    rm -rf $ELLIPSIS_HOME
 }
 
 @test "utils.cmd_exists should find command in PATH" {
