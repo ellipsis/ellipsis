@@ -3,22 +3,22 @@
 _ellipsis() {
   local -a commands
   commands=(
+    'new:create a new package'
+    'edit:edit an installed package'
+    'add:add new dotfile to package'
+    'install:install new package'
+    'uninstall:uninstall package'
+    'link:link package'
+    'unlink:unlink package'
     'broken:list any broken symlinks'
     'clean:rm broken symlinks'
-    'edit:edit an installed package'
-    'help:show this usage'
-    'install:install new package'
+    'installed:list installed packages'
     'links:show symlinks installed by package(s)'
-    'list:list installed packages'
-    'new:create a new package'
-    'publish:publish package to repository'
     'pull:git pull package(s)'
     'push:git push package(s)'
-    'search:search package repository'
     'status:show status of package(s)'
-    'uninstall:uninstall package'
-    'unlink:unlink package'
-    'version:show current version'
+    'publish:publish package to repository'
+    'search:search package repository'
   )
 
   if (( CURRENT == 2 )); then
