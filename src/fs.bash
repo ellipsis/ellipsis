@@ -2,6 +2,7 @@
 #
 # Files/path functions used by ellipis.
 
+load log
 load path
 
 # return true if folder is empty
@@ -31,7 +32,6 @@ fs.is_symlink() {
 # check whether file is a symlink
 fs.is_ellipsis_symlink() {
     if [[ -L "$1" && "$(readlink $1)" == $ELLIPSIS_PATH/* ]]; then
-        echo symlink
         return 0
     fi
     return 1
@@ -58,7 +58,7 @@ fs.backup() {
 
     # remove broken symlink
     if fs.is_broken_symlink "$original"; then
-        echo "rm ~/$name (broken link to $(readlink $original))"
+        log.dim "rm ~/$name (broken link to $(readlink $original))"
         rm $original
         return
     fi
@@ -69,7 +69,8 @@ fs.backup() {
     fi
 
     # if file exists and is a symlink to ellipsis, remove
-    if fs.is_elipsis_symlink "$original"; then
+    if fs.is_ellipsis_symlink "$original"; then
+        log.dim "rm ~/$name (linked to $(path.relative_to_packages $(readlink $original)))"
         rm "$original"
         return
     fi
@@ -95,7 +96,7 @@ fs.link_file() {
 
     fs.backup "$dest"
 
-    echo linking "$dest"
+    echo "linking $(path.relative_to_packages $src) -> $(path.relative_to_home $dest)"
     ln -s "$src" "$dest"
 }
 
