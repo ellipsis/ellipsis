@@ -1,12 +1,6 @@
-#!/usr/bin/env bash
+# log.bash
 #
-# log.sh
 # Logging utilities.
-
-# Initialize ourselves if we haven't yet.
-if [[ $ELLIPSIS_INIT -ne 1 ]]; then
-    source "$(dirname "${BASH_SOURCE[0]}")"/init.sh
-fi
 
 log.info() {
     echo -e "\033[33minfo\033[0m" "$@"
@@ -18,4 +12,8 @@ log.error() {
 
 log.warn() {
     echo -e "\033[33mwarn\033[0m" "$@"
+}
+
+log.dim() {
+    echo -e "\033[90m$@\033[0m"
 }
