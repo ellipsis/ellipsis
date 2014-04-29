@@ -9,7 +9,7 @@ setup() {
 }
 
 teardown() {
-    rm -rf $ELLIPSIS_HOME
+    rm -rf tmp
 }
 
 @test "utils.cmd_exists should find command in PATH" {

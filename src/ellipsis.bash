@@ -34,22 +34,23 @@ ellipsis.each() {
 ellipsis.install() {
     case "$1" in
         http:*|https:*|git:*|ssh:*)
-            PKG_NAME="$(echo $1 | rev | cut -d '/' -f 1 | rev)"
-            PKG_PATH="$(pkg.path_from_name $PKG_NAME)"
+            PKG_NAME="$(pkg.name_from_url $1)"
             PKG_URL="$1"
         ;;
         */*)
-            PKG_USER=$(echo $1 | cut -d '/' -f1)
-            PKG_NAME=$(echo $1 | cut -d '/' -f2)
-            PKG_PATH="$(pkg.path_from_name $PKG_NAME)"
-            PKG_URL="$ELLIPSIS_PROTO://github.com/$PKG_USER/$PKG_NAME"
+            PKG_USER="$(pkg.user_from_shorthand $1)"
+            PKG_NAME="$(pkg.name_from_shorthand $1)"
+            PKG_URL="$ELLIPSIS_PROTO://github.com/$PKG_USER/dot-$(pkg.name_stripped $PKG_NAME)"
         ;;
         *)
             PKG_NAME="$1"
-            PKG_PATH="$(pkg.path_from_name $PKG_NAME)"
-            PKG_URL="$ELLIPSIS_PROTO://github.com/$ELLIPSIS_USER/$PKG_NAME"
+            PKG_URL="$ELLIPSIS_PROTO://github.com/$ELLIPSIS_USER/dot-$(pkg.name_stripped $PKG_NAME)"
         ;;
     esac
+
+    # strip leading dot- from name as a convenience
+    PKG_NAME=$(pkg.name_stripped $PKG_NAME)
+    PKG_PATH="$(pkg.path_from_name $PKG_NAME)"
 
     git.clone "$PKG_URL" "$PKG_PATH"
 
@@ -222,11 +223,19 @@ ellipsis.symlinks() {
     fi
 }
 
-# List broken symlinks in ELLIPSIS_HOME
-ellipsis.broken() {
+ellipsis._list_broken_symlink_mappings() {
     for file in $(find -L $ELLIPSIS_HOME -maxdepth 1 -type l); do
         echo "$(path.relative_to_packages $(readlink $file)) -> $(path.relative_to_home $file)";
     done
+}
+
+# List broken symlinks in ELLIPSIS_HOME
+ellipsis.broken() {
+    if utils.cmd_exists column; then
+        ellipsis._list_broken_symlink_mappings | sort | column -t
+    else
+        ellipsis._list_broken_symlink_mappings | sort
+    fi
 }
 
 # List broken symlinks in ELLIPSIS_HOME

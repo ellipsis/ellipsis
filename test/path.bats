@@ -9,7 +9,7 @@ setup() {
 }
 
 teardown() {
-    rm -rf $ELLIPSIS_HOME
+    rm -rf tmp
 }
 
 @test "path.relative_to_home should print path relative to $HOME" {

@@ -3,6 +3,9 @@
 # Command line interface for ellipsis.
 
 load ellipsis
+load fs
+load os
+load path
 load registry
 
 # prints usage for ellipsis
