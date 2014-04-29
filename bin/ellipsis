@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "$(dirname "${BASH_SOURCE[0]}")/../src/init.sh"
+source "$(dirname "${BASH_SOURCE[0]}")/../src/init.bash"
 
 load cli
 

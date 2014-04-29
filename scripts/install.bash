@@ -24,19 +24,18 @@ FINAL_ELLIPSIS_PATH=${ELLIPSIS_PATH:-$HOME/.ellipsis}
 ELLIPSIS_PATH="$tmp_dir/ellipsis"
 
 # Initialize ellipsis.
-source $tmp_dir/ellipsis/src/init.sh
+source $tmp_dir/ellipsis/src/init.bash
 
 # Load modules.
 load ellipsis
-load git
-load pkg
+load fs
+load os
 load registry
-load utils
 
 ELLIPSIS_PATH="$FINAL_ELLIPSIS_PATH"
 
 # Backup existing ~/.ellipsis if necessary and  move project into place.
-ellipsis.backup $ELLIPSIS_PATH
+fs.backup $ELLIPSIS_PATH
 mv $tmp_dir/ellipsis $ELLIPSIS_PATH
 
 # Clean up (only necessary on cygwin, really).
@@ -50,7 +49,7 @@ if [ -z "$PACKAGES" ]; then
     registry.available
 
     # List default packages for this platform.
-    if [ "$(utils.platform)" = "darwin" ]; then
+    if [ $(os.platform) = osx ]; then
         default="zeekay/dot-files zeekay/dot-vim zeekay/dot-zsh zeekay/dot-alfred zeekay/dot-iterm2"
     else
         default="zeekay/dot-files zeekay/dot-vim zeekay/dot-zsh"
