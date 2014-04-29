@@ -28,6 +28,15 @@ fs.is_symlink() {
     return 1
 }
 
+# check whether file is a symlink
+fs.is_ellipsis_symlink() {
+    if [[ -L "$1" && "$(readlink $1)" == $ELLIPSIS_PATH/* ]]; then
+        echo symlink
+        return 0
+    fi
+    return 1
+}
+
 # Check whether symlink is broken
 fs.is_broken_symlink() {
     if [[ -L "$1" && ! -e "$1" ]]; then
@@ -56,6 +65,12 @@ fs.backup() {
 
     # no file exists, simply ignore
     if ! fs.file_exists "$original"; then
+        return
+    fi
+
+    # if file exists and is a symlink to ellipsis, remove
+    if fs.is_elipsis_symlink "$original"; then
+        rm "$original"
         return
     fi
 
