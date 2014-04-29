@@ -9,7 +9,7 @@ setup() {
 }
 
 teardown() {
-    rm -rf $ELLIPSIS_HOME
+    rm -rf tmp
 }
 
 @test "pkg.name_from_path should derive package name from package path" {

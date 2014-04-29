@@ -12,6 +12,11 @@ load utils
 # List of hooks available to package authors.
 PKG_HOOKS=(install uninstall unlink symlinks pull push status list)
 
+# Strip leading dot- from package name.
+pkg.name_stripped() {
+    echo $1 | sed -e "s/^dot-//"
+}
+
 # Convert package name to path.
 pkg.path_from_name() {
     echo "$ELLIPSIS_PATH/packages/$1"
@@ -20,6 +25,21 @@ pkg.path_from_name() {
 # Convert package path to name, stripping any leading dots.
 pkg.name_from_path() {
     echo ${1##*/} | sed -e "s/^\.//"
+}
+
+# Pull name out as last path component of url
+pkg.name_from_url() {
+    echo $1 | rev | cut -d '/' -f 1 | rev
+}
+
+# Get user from github-user/name shorthand syntax.
+pkg.user_from_shorthand() {
+    echo $1 | cut -d '/' -f1
+}
+
+# Get name from github-user/name shorthand syntax.
+pkg.name_from_shorthand() {
+    echo $1 | cut -d '/' -f2
 }
 
 # Set PKG_NAME, PKG_PATH. If $1 looks like a path it's assumed to be
