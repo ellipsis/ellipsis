@@ -3,6 +3,7 @@
 # Default hooks used by ellipsis when package hooks are undefined.
 
 load fs
+load git
 load pkg
 load utils
 
@@ -26,7 +27,7 @@ hooks.uninstall() {
 
 # Show symlink mapping for package.
 hooks.symlinks() {
-    echo -e "\033[1m$PKG_NAME\033[0m"
+    echo -e "\033[1m${1:-$PKG_NAME}\033[0m"
 
     if utils.cmd_exists column; then
         pkg.list_symlink_mappings | sort | column -t
@@ -46,11 +47,23 @@ hooks.push() {
 }
 
 # List repo status.
-hooks.list() {
-    git.list
+hooks.installed() {
+    local sha1=$(git.sha1)
+    local last_updated=$(git.last_updated)
+
+    echo -e "\033[1m${1:-$PKG_NAME}\033[0m\t$sha1\t(updated $last_updated)"
 }
 
-# List repo status if it's changed and show git diffstat.
+# Show git diffstat if repo has changed
 hooks.status() {
-    git.status
+    local ahead="$(git.ahead)"
+
+    # Return unless there are changes or we are behind.
+    ! git.has_changes && [ -z "$ahead" ] || return
+
+    local sha1="$(git.sha1)"
+    local last_updated=$(git.last_updated)
+
+    echo -e "\033[1m${1:-$PKG_NAME}\033[0m $sha1 (updated $last_updated) $ahead"
+    git.diffstat
 }
