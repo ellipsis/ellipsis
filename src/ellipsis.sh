@@ -8,65 +8,6 @@ if [[ $ELLIPSIS_INIT -ne 1 ]]; then
     source "$(dirname "${BASH_SOURCE[0]}")/init.sh"
 fi
 
-# symlink a single file into ELLIPSIS_HOME
-ellipsis.link_file() {
-    local src="$1"
-    local name="${src##*/}"
-    local dest="${2:-$ELLIPSIS_HOME}/.$name"
-
-    ellipsis.backup "$dest"
-
-    echo linking "$dest"
-    ln -s "$src" "$dest"
-}
-
-# find all files in dir excluding the dir itself, hidden files, README,
-# LICENSE, *.rst, *.md, and *.txt and symlink into ELLIPSIS_HOME.
-ellipsis.link_files() {
-    for file in $(find "$1" -maxdepth 1 -name '*' \
-                                      ! -name '.*' \
-                                      ! -name 'README' \
-                                      ! -name 'LICENSE' \
-                                      ! -name '*.md' \
-                                      ! -name '*.rst' \
-                                      ! -name '*.txt' \
-                                      ! -wholename "$1" \
-                                      ! -name "ellipsis.sh" | sort); do
-        ellipsis.link_file "$file"
-    done
-}
-
-# backup existing file, ensuring you don't overwrite existing backups
-ellipsis.backup() {
-    local original="$1"
-    local backup="$original.bak"
-    local name="${original##*/}"
-
-    # remove broken symlink
-    if fs.is_broken_symlink "$original"; then
-        echo "rm ~/$name (broken link to $(readlink $original))"
-        rm $original
-        return
-    fi
-
-    # no file exists, simply ignore
-    if ! fs.file_exists "$original"; then
-        return
-    fi
-
-    # backup file
-    if fs.file_exists "$backup"; then
-        n=1
-        while fs.file_exists "$backup.$n"; do
-            n=$((n+1))
-        done
-        backup="$backup.$n"
-    fi
-
-    echo "mv ~/$name $backup"
-    mv "$original" "$backup"
-}
-
 # Run web-based installers
 ellipsis.run_installer() {
     # save reference to current dir
@@ -83,7 +24,7 @@ ellipsis.run_installer() {
 }
 
 # Installs new ellipsis package, using install hook if one exists. If no hook is
-# defined, all files are symlinked into ELLIPSIS_HOME using `ellipsis.link_files`.
+# defined, all files are symlinked into ELLIPSIS_HOME using `fs.link_files`.
 ellipsis.install() {
     case "$1" in
         http:*|https:*|git:*|ssh:*)
@@ -166,7 +107,7 @@ ellipsis.new() {
 
 # The following hooks can be defined to customize behavior of your package:
 # pkg.install() {
-#     ellipsis.link_files $_PKG_PATH
+#     fs.link_files $_PKG_PATH
 # }
 
 # pkg.push() {
@@ -201,7 +142,7 @@ EOF
     git init
     git add README.md ellipsis.sh
     git commit -m "Initial commit"
-    echo new package created at ${fs.relative_path $PKG_PATH}
+    echo new package created at ${path.relative_path $PKG_PATH}
 }
 
 # Edit ellipsis.sh for package, or open ellipsis dir in $EDITOR.
@@ -244,7 +185,7 @@ ellipsis.list_symlinks() {
     for file in $(fs.list_symlinks); do
         local link="$(readlink $file)"
         if [[ "$link" == $ELLIPSIS_PATH* ]]; then
-            echo "$(utils.strip_packages_dir $link) -> $(fs.relative_path $file)";
+            echo "$(utils.strip_packages_dir $link) -> $(path.relative_path $file)";
         fi
     done
 }
@@ -267,7 +208,7 @@ ellipsis.symlinks() {
 # List broken symlinks in ELLIPSIS_HOME
 ellipsis.broken() {
     for file in $(find -L $ELLIPSIS_HOME -maxdepth 1 -type l); do
-        echo "$(utils.strip_packages_dir $(readlink $file)) -> $(fs.relative_path $file)";
+        echo "$(utils.strip_packages_dir $(readlink $file)) -> $(path.relative_path $file)";
     done
 }
 
