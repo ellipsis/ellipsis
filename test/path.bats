@@ -12,19 +12,11 @@ teardown() {
     rm -rf $ELLIPSIS_HOME
 }
 
-@test "path.pkg_name_from_path should derive package name from package path" {
-    skip
-}
-
-@test "path.pkg_path_from_name should derive package path from package name" {
-    skip
-}
-
-@test "path.relative_path should print relative path to file" {
-    run path.relative_path $HOME/.ellipsis
+@test "path.relative_to_home should print path relative to $HOME" {
+    run path.relative_to_home $HOME/.ellipsis
     [ "$output" = "~/.ellipsis" ]
-    run path.relative_path ~/.ellipsis
+    run path.relative_to_home ~/.ellipsis
     [ "$output" = "~/.ellipsis" ]
-    run path.relative_path tmp
+    run path.relative_to_home tmp
     [ "$output" = "tmp" ]
 }

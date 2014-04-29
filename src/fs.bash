@@ -1,12 +1,6 @@
-#!/usr/bin/env bash
+# fs.bash
 #
-# fs.sh
 # Files/path functions used by ellipis.
-
-# Initialize ourselves if we haven't yet.
-if [[ $ELLIPSIS_INIT -ne 1 ]]; then
-    source "$(dirname "${BASH_SOURCE[0]}")"/init.sh
-fi
 
 # return true if folder is empty
 fs.folder_empty() {
@@ -43,18 +37,6 @@ fs.is_broken_symlink() {
 # List symlinks in a folder, defaulting to ELLIPSIS_HOME.
 fs.list_symlinks() {
     find "${1:-$ELLIPSIS_HOME}" -maxdepth 1 -type l
-}
-
-# List all symlinks (slightly optimized over calling pkg.list_symlinks for each
-# package.
-# List all symlinks and files they resolve to
-fs.list_symlink_mappings() {
-    for file in $(fs.list_symlinks); do
-        local link="$(readlink $file)"
-        if [[ "$link" == $ELLIPSIS_PATH* ]]; then
-            echo "$(utils.strip_packages_dir $link) -> $(path.relative_path $file)";
-        fi
-    done
 }
 
 # backup existing file, ensuring you don't overwrite existing backups

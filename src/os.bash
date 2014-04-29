@@ -1,9 +1,7 @@
-#!/usr/bin/env bash
+# os.bash
 #
-# os.sh
 # Platform detection and OS functions.
 
-# platform detection
 os.platform() {
     case "$(uname | tr '[:upper:]' '[:lower:]')" in
         cygwin*)

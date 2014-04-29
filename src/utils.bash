@@ -1,6 +1,5 @@
-#!/usr/bin/env bash
+# utils.bash
 #
-# utils.sh
 # Utility functions used by ellipsis.
 
 # check if a command or function exists

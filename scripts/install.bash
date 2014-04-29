@@ -24,21 +24,18 @@ FINAL_ELLIPSIS_PATH=${ELLIPSIS_PATH:-$HOME/.ellipsis}
 ELLIPSIS_PATH="$tmp_dir/ellipsis"
 
 # Initialize ellipsis.
-source $tmp_dir/ellipsis/src/init.sh
+source $tmp_dir/ellipsis/src/init.bash
 
 # Load modules.
 load ellipsis
 load fs
-load git
 load os
-load pkg
 load registry
-load utils
 
 ELLIPSIS_PATH="$FINAL_ELLIPSIS_PATH"
 
 # Backup existing ~/.ellipsis if necessary and  move project into place.
-ellipsis.backup $ELLIPSIS_PATH
+fs.backup $ELLIPSIS_PATH
 mv $tmp_dir/ellipsis $ELLIPSIS_PATH
 
 # Clean up (only necessary on cygwin, really).

@@ -1,13 +1,7 @@
-#!/usr/bin/env bash
+# pkg.bash
 #
-# pkg.sh
 # Ellipsis package interface. Encapsulates various useful functions for working
 # with packages.
-
-# Initialize ourselves if we haven't yet.
-if [[ $ELLIPSIS_INIT -ne 1 ]]; then
-    source "$(dirname "${BASH_SOURCE[0]}")"/init.sh
-fi
 
 load fs
 load hooks
@@ -18,15 +12,25 @@ load utils
 # List of hooks available to package authors.
 PKG_HOOKS=(install uninstall unlink symlinks pull push status list)
 
+# Convert package name to path.
+pkg.path_from_name() {
+    echo "$ELLIPSIS_PATH/packages/$1"
+}
+
+# Convert package path to name, stripping any leading dots.
+pkg.name_from_path() {
+    echo ${1##*/} | sed -e "s/^\.//"
+}
+
 # Set PKG_NAME, PKG_PATH. If $1 looks like a path it's assumed to be
 # PKG_PATH and not PKG_NAME, otherwise assume PKG_NAME.
 pkg.init_globals() {
     if path.is_path "$1"; then
         PKG_PATH="$1"
-        PKG_NAME="$(path.pkg_name_from_path $PKG_PATH)"
+        PKG_NAME="$(pkg.name_from_path $PKG_PATH)"
     else
         PKG_NAME="$1"
-        PKG_PATH="$(path.pkg_path_from_name $PKG_NAME)"
+        PKG_PATH="$(pkg.path_from_name $PKG_NAME)"
     fi
 }
 
@@ -56,7 +60,7 @@ pkg.list_symlinks() {
 }
 
 # Print file -> symlink mapping
-pkg.symlinks_mappings() {
+pkg.list_symlink_mappings() {
     for file in $(fs.list_symlinks); do
         local link=$(readlink $file)
 
@@ -89,9 +93,9 @@ pkg.run_hook() {
 
     # Run packages's hook.
     if utils.cmd_exists pkg.$1; then
-        run pkg.$1
+        pkg.run pkg.$1
     else
-        run hooks.$1
+        pkg.run hooks.$1
     fi
 }
 
