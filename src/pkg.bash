@@ -9,9 +9,6 @@ load log
 load path
 load utils
 
-# List of hooks available to package authors.
-PKG_HOOKS=(install uninstall unlink symlinks pull push status list)
-
 # Strip leading dot- from package name.
 pkg.name_stripped() {
     echo $1 | sed -e "s/^dot-//"
@@ -98,7 +95,7 @@ pkg.run() {
     cd "$PKG_PATH"
 
     # run command
-    $@
+    "$@"
 
     # return after running command
     cd "$cwd"
@@ -106,16 +103,18 @@ pkg.run() {
 
 # run hook if it's defined, otherwise use default implementation
 pkg.run_hook() {
+    # Prevent unknown hooks from running
     if ! utils.cmd_exists hooks.$1; then
         log.error "Unknown hook!"
         exit 1
     fi
 
-    # Run packages's hook.
-    if utils.cmd_exists pkg.$1; then
-        pkg.run pkg.$1
+    # Run packages's hook. Additional arguments are passed as arguments to
+    # command.
+    if utils.cmd_exists "pkg.$1"; then
+        pkg.run "pkg.$1" "${@:2}"
     else
-        pkg.run hooks.$1
+        pkg.run "hooks.$1" "${@:2}"
     fi
 }
 

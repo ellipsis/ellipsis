@@ -60,32 +60,54 @@ ellipsis.install() {
     git.clone "$PKG_URL" "$PKG_PATH"
 
     pkg.init "$PKG_PATH"
-    pkg.run_hook install
+    pkg.run_hook "install"
     pkg.del
 }
 
 # Uninstall package, using uninstall hook if one exists. If no hook is
 # defined, all symlinked files in ELLIPSIS_HOME are removed and package is rm -rf'd.
 ellipsis.uninstall() {
+    if [ $# -ne 1 ]; then
+        log.error "No package specified for uninstall"
+        exit 1
+    fi
+
     pkg.init "$1"
-    pkg.run_hook uninstall
+    pkg.run_hook "uninstall"
+    pkg.del
+}
+
+# Re-link unlinked packages.
+ellipsis.link() {
+    if [ $# -ne 1 ]; then
+        log.error "No package specified to link"
+        exit 1
+    fi
+
+    pkg.init "$1"
+    pkg.run_hook "install"
     pkg.del
 }
 
 # Unlink package, using unlink hooks, using unlink hook if one exists. If no
 # hook is defined, all symlinked files in ELLIPSIS_HOME are removed.
 ellipsis.unlink() {
+    if [ $# -ne 1 ]; then
+        log.error "No package specified to unlink"
+        exit 1
+    fi
+
     pkg.init "$1"
-    pkg.run_hook unlink
+    pkg.run_hook "unlink"
     pkg.del
 }
 
 # List installed packages.
 ellipsis.installed() {
     if utils.cmd_exists column; then
-        ellipsis.each pkg.run_hook installed | column -t -s $'\t'
+        ellipsis.each pkg.run_hook "installed" | column -t -s $'\t'
     else
-        ellipsis.each pkg.run_hook installed
+        ellipsis.each pkg.run_hook "installed"
     fi
 }
 
@@ -93,10 +115,10 @@ ellipsis.installed() {
 ellipsis.status() {
     if [ $# -eq 1 ]; then
         pkg.init "$1"
-        pkg.run_hook status
+        pkg.run_hook "status"
         pkg.del
     else
-        ellipsis.each pkg.run_hook status
+        ellipsis.each pkg.run_hook "status"
     fi
 }
 
@@ -104,10 +126,10 @@ ellipsis.status() {
 ellipsis.pull() {
     if [ $# -eq 1 ]; then
         pkg.init "$1"
-        pkg.run_hook pull
+        pkg.run_hook "pull"
         pkg.del
     else
-        ellipsis.each pkg.run_hook pull
+        ellipsis.each pkg.run_hook "pull"
     fi
 }
 
@@ -115,10 +137,10 @@ ellipsis.pull() {
 ellipsis.push() {
     if [ $# -eq 1 ]; then
         pkg.init "$1"
-        pkg.run_hook push
+        pkg.run_hook "push"
         pkg.del
     else
-        ellipsis.each pkg.run_hook push
+        ellipsis.each pkg.run_hook "push"
     fi
 }
 
@@ -218,10 +240,10 @@ ellipsis._list_symlink_mappings() {
 }
 
 # List all symlinks, or just symlinks for a given package
-ellipsis.symlinks() {
+ellipsis.links() {
     if [ $# -eq 1 ]; then
         pkg.init "$1"
-        pkg.run_hook symlinks
+        pkg.run_hook "links"
         pkg.del
     else
         if utils.cmd_exists column; then
@@ -250,4 +272,21 @@ ellipsis.broken() {
 # List broken symlinks in ELLIPSIS_HOME
 ellipsis.clean() {
     find -L $ELLIPSIS_HOME -maxdepth 1 -type l| xargs rm
+}
+
+# Re-link unlinked packages.
+ellipsis.add() {
+    if [ $# -lt 2 ]; then
+        log.error "Usage: ellipsis add <dotfile> <package>"
+        exit 1
+    fi
+
+    for file in "${@:2}"; do
+        # Important to get absolute path of each file as we'll be changing
+        # directory when hook is run.
+        local file="$(path.abs_path $file)"
+        pkg.init "$1"
+        pkg.run_hook "add" "$file"
+        pkg.del
+    done
 }

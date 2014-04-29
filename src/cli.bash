@@ -19,12 +19,14 @@ Usage: ellipsis <command>
   Commands:
     new        create a new package
     edit       edit an installed package
+    add        add new dotfile to package
     install    install new package
     uninstall  uninstall package
+    link       link package
     unlink     unlink package
     broken     list any broken symlinks
     clean      rm broken symlinks
-    list       list installed packages
+    installed  list installed packages
     links      show symlinks installed by package(s)
     pull       git pull package(s)
     push       git push package(s)
@@ -54,7 +56,10 @@ cli.run() {
         edit)
             ellipsis.edit $2
             ;;
-        install|in|add)
+        add)
+            ellipsis.add "${@:2}"
+            ;;
+        install|in)
             ellipsis.install $2
             ;;
         uninstall|remove|rm)
@@ -66,14 +71,17 @@ cli.run() {
         clean)
             ellipsis.clean $2
             ;;
+        link)
+            ellipsis.link $2
+            ;;
         unlink)
             ellipsis.unlink $2
             ;;
-        list|ls|installed)
-            ellipsis.installed
-            ;;
         links|symlinks)
-            ellipsis.symlinks $2
+            ellipsis.links $2
+            ;;
+        installed|list|ls)
+            ellipsis.installed
             ;;
         status|st)
             ellipsis.status $2

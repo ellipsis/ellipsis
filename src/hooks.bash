@@ -4,8 +4,42 @@
 
 load fs
 load git
+load path
 load pkg
 load utils
+
+# List of hooks available to package authors.
+PKG_HOOKS=(
+    add
+    install
+    installed
+    links
+    pull
+    push
+    status
+    uninstall
+    unlink
+)
+
+# Symlink files in PKG_PATH into ELLIPSIS_HOME.
+hooks.add() {
+    local dst="$PKG_PATH/$(path.strip_dot $(basename "$1"))"
+
+    if fs.file_exists "$dst"; then
+        log.error "$dst already exists!"
+        exit 1
+    fi
+
+    if fs.file_exists "$1"; then
+        log.error "$1 does not exist!"
+        exit 1
+    fi
+
+    echo mv "$(path.relative_to_home "$1")" "$(path.relative_to_packages "$dst")"
+    mv "$1" "$dst"
+
+    fs.link_file "$dst"
+}
 
 # Symlink files in PKG_PATH into ELLIPSIS_HOME.
 hooks.install() {
@@ -26,7 +60,7 @@ hooks.uninstall() {
 }
 
 # Show symlink mapping for package.
-hooks.symlinks() {
+hooks.links() {
     echo -e "\033[1m${1:-$PKG_NAME}\033[0m"
 
     if utils.cmd_exists column; then
