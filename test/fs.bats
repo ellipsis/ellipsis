@@ -4,8 +4,9 @@ load _helper
 load fs
 
 setup() {
-    mkdir -p tmp/ellipsis_home
+    mkdir -p tmp/ellipsis_home/.ellipsis
     export ELLIPSIS_HOME=tmp/ellipsis_home
+    export ELLIPSIS_PATH=$ELLIPSIS_HOME/.ellipsis
     touch tmp/file_to_backup
     touch tmp/file_to_link
     ln -s file_to_backup tmp/symlink
@@ -15,6 +16,7 @@ setup() {
     mkdir -p tmp/symlinks
     echo test > tmp/not_empty/file
     ln -s ../not_empty/file tmp/symlinks/symlink
+    ln -s $ELLIPSIS_PATH/test $ELLIPSIS_HOME/.test
     ln -s does_not_exist tmp/symlinks/brokensymlink
 }
 
@@ -123,4 +125,9 @@ teardown() {
     [ -f $(readlink $ELLIPSIS_HOME/.file_to_backup) ]
     [ -f tmp/file_to_backup ]
     [[ "$output" == linking* ]]
+}
+
+@test "fs.is_ellipsis_symlink should detect symlink pointing back to ELLIPSIS_PATH" {
+    run fs.is_ellipsis_symlink $ELLIPSIS_HOME/.test
+    [ $status -eq 0 ]
 }
