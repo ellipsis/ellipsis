@@ -32,6 +32,11 @@ ellipsis.each() {
 # Installs new ellipsis package, using install hook if one exists. If no hook is
 # defined, all files are symlinked into ELLIPSIS_HOME using `fs.link_files`.
 ellipsis.install() {
+    if [ $# -ne 1 ]; then
+        log.error "No package specified for install"
+        exit 1
+    fi
+
     case "$1" in
         http:*|https:*|git:*|ssh:*)
             PKG_NAME="$(pkg.name_from_url $1)"
