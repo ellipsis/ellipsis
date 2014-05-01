@@ -44,7 +44,7 @@ rm -rf $tmp_dir
 # Backwards compatability, originally referred to packages as modules.
 PACKAGES="${PACKAGES:-$MODULES}"
 
-if [ -z "$PACKAGES" ]; then
+if [[ -z "$PACKAGES" ]]; then
     # List available packages.
     registry.available
 
