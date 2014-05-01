@@ -182,7 +182,7 @@ guide</a>. To run tests you need to install <a href="https://github.com/sstephen
 </html><!-- 
 EOF
 
-# shim for ellipsis install.sh
+# shim for ellipsis install.bash
 #
 # This is used on ellipsis.sh to bootstrap the full installer, which you
 # otherwise can't curl and pipe to sh (as it requires bash). Not meant to be
@@ -192,15 +192,15 @@ EOF
 sleep 0.5
 
 # Ensure dependencies are installed.
-deps=(bash curl git)
+deps="bash curl git"
 
-for dep in ${deps[@]}; do
+for dep in $deps; do
     hash $dep 2>/dev/null || { echo >&2 "ellipsis requires $dep to be installed."; exit 1; }
 done
 
 # Download full installer and execute with bash
-curl -sL https://raw.githubusercontent.com/zeekay/ellipsis/master/scripts/install.sh > install-$$.sh
-bash install-$$.sh
+curl -sL https://raw.githubusercontent.com/zeekay/ellipsis/master/scripts/install.bash > install-$$.bash
+bash install-$$.bash
 
 # Clean up
-rm install-$$.sh
+rm install-$$.bash
