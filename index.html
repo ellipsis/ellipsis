@@ -124,10 +124,15 @@ instance if you want to change how your package is installed you can define
 <code>pkg.install</code> and specifiy exactly which files are symlinked into place, compile
 any libraries, etc.</p>
 <h4 id="example">Example</h4>
-<p>Here&#39;s a full example of an <code>ellipsis.sh</code> file, used by
-<a href="https://github.com/zeekay/dot-files">zeekay/files</a> (my common cross-platform
-dotfiles):</p>
-<pre><code class="lang-bash">pkg.<span class="hljs-function"><span class="hljs-title">install</span></span>() {
+<p>Here&#39;s a full example of an <code>ellipsis.sh</code> file:</p>
+<pre><code class="lang-bash"><span class="hljs-shebang">#!/usr/bin/env bash</span>
+</code></pre>
+<p>...of course that&#39;s not very helpful :) Here&#39;s a more complete example (from
+<a href="https://github.com/zeekay/dot-files">zeekay/files</a>, my collection of common,
+cross-platform dotfiles):</p>
+<pre><code class="lang-bash"><span class="hljs-shebang">#!/usr/bin/env bash
+</span>
+pkg.<span class="hljs-function"><span class="hljs-title">install</span></span>() {
     fs.link_files common
 
     <span class="hljs-keyword">case</span> $(os.platform) <span class="hljs-keyword">in</span>
@@ -146,9 +151,11 @@ dotfiles):</p>
     <span class="hljs-keyword">esac</span>
 }
 </code></pre>
-<p>And here&#39;s another more advanced one used by
-<a href="https://github.com/zeekay/dot-vim">zeekay/vim</a> (my vim configuration):</p>
-<pre><code class="lang-bash">pkg.<span class="hljs-function"><span class="hljs-title">install</span></span>() {
+<p>And here&#39;s a slightly more advanced example (used by
+<a href="https://github.com/zeekay/dot-vim">zeekay/vim</a>, my vim configuration):</p>
+<pre><code class="lang-bash"><span class="hljs-shebang">#!/usr/bin/env bash
+</span>
+pkg.<span class="hljs-function"><span class="hljs-title">install</span></span>() {
     files=(gvimrc vimrc vimgitrc vimpagerrc)
 
     <span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> <span class="hljs-variable">${files[@]}</span>; <span class="hljs-keyword">do</span>
