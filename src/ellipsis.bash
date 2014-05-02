@@ -213,7 +213,7 @@ EOF
     git init
     git add README.md ellipsis.sh
     git commit -m "Initial commit"
-    echo new package created at ${path.relative_to_home $PKG_PATH}
+    echo new package created at $(path.relative_to_home $PKG_PATH)
 }
 
 # Edit ellipsis.sh for package, or open ellipsis dir in $EDITOR.
