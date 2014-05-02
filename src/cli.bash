@@ -60,7 +60,7 @@ cli.run() {
             ellipsis.add "${@:2}"
             ;;
         install|in)
-            ellipsis.install $2
+            ellipsis.install "${@:2}"
             ;;
         uninstall|remove|rm)
             ellipsis.uninstall $2
