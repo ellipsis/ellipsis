@@ -31,6 +31,7 @@ load ellipsis
 load fs
 load os
 load registry
+load utils
 
 ELLIPSIS_PATH="$FINAL_ELLIPSIS_PATH"
 
@@ -51,6 +52,7 @@ if [[ -z "$PACKAGES" ]]; then
         default="zeekay/files zeekay/vim zeekay/zsh"
     fi
 
+    echo
     echo "Recommended packages: $default"
     echo
     if utils.prompt "Would you like install the recommended packages for your platform? [y/n]"; then
