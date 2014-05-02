@@ -102,6 +102,10 @@ useful for testing).
 #### ELLIPSIS_PATH
 Customize where ellipsis lives on your filesystem, defaults to `~/.ellipsis`.
 
+#### ELLIPSIS_PACKAGE
+Customize where ellipsis installs packages on your filesystem, defaults to
+`~/.ellipsis/packages`.
+
 ```bash
 export ELLIPSIS_USER="zeekay"
 export ELLIPSIS_SSH="ssh"
