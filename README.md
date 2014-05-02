@@ -109,27 +109,28 @@ export ELLIPSIS_PATH="~/.el"
 
 ### Packages
 A package is any repo with files you want to symlink into `$ELLIPSIS_PATH`
-(typically `$HOME`). By default a given repo's non-hidden files (read: not
-beginning with a `.`) will naively be linked into place.
+(typically `$HOME`). By default all of a respository's non-hidden files (read:
+not beginning with a `.`) will naively be linked into place, with the exception
+of a few common text files (`README`s, `LICENSES`s, etc).
 
-Need to compile some libraries or download dependencies? Run various one-off
-scripts when you setup a new system? No problem :) You can customize every
-aspect of how ellipsis uses your package by adding an `ellipsis.sh` file to the
-root of your project and defining various hooks (using normal bash syntax).
-
-Here's an example of a complete `ellipsis.sh` file:
+You can customize how ellipsis interacts with your package by adding an
+`ellipsis.sh` file to the root of your project. Here's an example of a complete
+`ellipsis.sh` file:
 
 ```bash
 #!/usr/bin/env bash
 ```
 
-Yep, that's it. If all you want to do is symlink some files into `$HOME`, adding
-an `ellipsis.sh` to your package is completely optional. Need more? Read on :)
+Yep, that's it :) If all you want to do is symlink some files into `$HOME`,
+adding an `ellipsis.sh` to your package is completely optional. But what if you
+need more? That's where hooks come in...
 
 ### Hooks
-Hooks allow you to customize how ellipsis interacts with your package. Say for
-instance you wanted to run the installer for your favorite zsh framework, you
-could define a `pkg.install` hook like this:
+Hooks allow you to control how ellipis interacts with your package, and how
+various commands are executed against your package. Say for instance you wanted
+to run the installer for your [favorite zsh
+framework](https://github.com/zeekay/zeesh), you could define a `pkg.install`
+hook like this:
 
 ```bash
 #!/usr/bin/env bash
@@ -149,8 +150,7 @@ When you `ellipsis install` a package, ellipsis:
 
 ### Examples
 Here's a more complete example (from
-[zeekay/files](https://github.com/zeekay/dot-files), my collection of common,
-cross-platform dotfiles):
+[zeekay/files](https://github.com/zeekay/dot-files):
 
 ```bash
 #!/usr/bin/env bash
@@ -175,8 +175,8 @@ pkg.install() {
 }
 ```
 
-...and here's a slightly more complex example (used by
-[zeekay/vim](https://github.com/zeekay/dot-vim), my vim configuration):
+...and here's a slightly more complex example (from
+[zeekay/vim](https://github.com/zeekay/dot-vim)):
 
 ```bash
 #!/usr/bin/env bash
