@@ -31,8 +31,8 @@ You can also specify which packages to install by setting the `PACKAGES` variabl
 $ curl ellipsis.sh | PACKAGES='vim zsh' sh
 ```
 
-I recommend adding `~/.ellipsis/bin` to your `$PATH`, but you could also just
-symlink `~/.ellipsis/bin/ellipsis` somewhere convenient.
+Add `~/.ellipsis/bin` to your `$PATH` (or symlink somewhere convenient) and
+start managing your dotfiles in style :)
 
 ### Usage
 Ellipsis comes with no dotfiles out of the box. To install packages, use
