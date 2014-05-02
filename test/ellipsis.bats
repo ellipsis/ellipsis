@@ -4,19 +4,33 @@ load _helper
 load ellipsis
 
 setup() {
-    mkdir -p tmp/ellipsis_home
-    export ELLIPSIS_HOME=tmp/ellipsis_home
+    export ELLIPSIS_HOME=$TESTS_DIR/tmp/ellipsis_home
+    export ELLIPSIS_PACKAGES=$ELLIPSIS_HOME/.ellipsis/packages
+    mkdir -p $ELLIPSIS_PACKAGES
+    echo 'old' > $ELLIPSIS_HOME/.ackrc
 }
 
 teardown() {
-    rm -rf tmp
+    rm -rf $TESTS_DIR/tmp
 }
 
 @test "ellipsis.install should install a new package" {
-    skip
+    run ellipsis.install zeekay/files
+    # packages gets installed into packages
+    [ -e $ELLIPSIS_PACKAGES/files/ellipsis.sh ]
+    # creates symlinks
+    [ -e $ELLIPSIS_HOME/.ackrc ]
+    [ "$(readlink $ELLIPSIS_HOME/.ackrc)" = "$ELLIPSIS_PACKAGES/files/common/ackrc" ]
+    # creates backups
+    [ -e $ELLIPSIS_HOME/.ackrc.bak ]
+    [ ! "$(cat $ELLIPSIS_HOME/.ackrc)" = old ]
 }
 
 @test "ellipsis.uninstall should uninstall a package" {
+    skip
+}
+
+@test "ellipsis.list should unlink a package" {
     skip
 }
 

@@ -9,8 +9,8 @@ load utils
 
 # List all installed packages.
 ellipsis.list_packages() {
-    if ! fs.folder_empty $ELLIPSIS_PATH/packages; then
-        echo $ELLIPSIS_PATH/packages/*
+    if ! fs.folder_empty $ELLIPSIS_PACKAGES; then
+        echo $ELLIPSIS_PACKAGES/*
     fi
 }
 

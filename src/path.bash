@@ -24,9 +24,9 @@ path.relative_to_home() {
     echo ${1/$HOME/\~}
 }
 
-# Path relative to packagesreturn path to file in packages dir
+# Path relative to packages dir
 path.relative_to_packages() {
-    echo ${1/$ELLIPSIS_PATH\/packages\//}
+    echo ${1/$ELLIPSIS_PACKAGES\//}
 }
 
 # Strip dot from hidden file
