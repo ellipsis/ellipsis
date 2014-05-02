@@ -236,11 +236,13 @@ The hooks available in your `ellipsis.sh` are:
 Customizes how a files is added to your package.
 
 #### pkg.install
-Customize how package is installed. By default all files are symlinked into
-place.
+Customize how package is installed. By default the pkg.link hooks is run.
 
 #### pkg.installed
 Customize how package is listed as installed.
+
+#### pkg.link
+Customizes which files are linked into `$ELLIPSIS_HOME`.
 
 #### pkg.links
 Customizes which files are detected as symlinks.
