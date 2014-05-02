@@ -14,6 +14,7 @@ PKG_HOOKS=(
     add
     install
     installed
+    link
     links
     pull
     push
@@ -43,8 +44,13 @@ hooks.add() {
 }
 
 # Symlink files in PKG_PATH into ELLIPSIS_HOME.
-hooks.install() {
+hooks.link() {
     fs.link_files $PKG_PATH
+}
+
+# Symlink files in PKG_PATH into ELLIPSIS_HOME.
+hooks.install() {
+    pkg.run_hook "link"
 }
 
 # Remove package's symlinks in ELLIPSIS_HOME.
