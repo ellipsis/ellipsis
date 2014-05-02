@@ -4,6 +4,7 @@
 
 load fs
 load git
+load os
 load path
 load pkg
 load utils
