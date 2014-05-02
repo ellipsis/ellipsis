@@ -32,36 +32,38 @@ ellipsis.each() {
 # Installs new ellipsis package, using install hook if one exists. If no hook is
 # defined, all files are symlinked into ELLIPSIS_HOME using `fs.link_files`.
 ellipsis.install() {
-    if [ $# -ne 1 ]; then
+    if [ $# -lt 1 ]; then
         log.error "No package specified for install"
         exit 1
     fi
 
-    case "$1" in
-        http:*|https:*|git:*|ssh:*)
-            PKG_NAME="$(pkg.name_from_url $1)"
-            PKG_URL="$1"
-        ;;
-        */*)
-            PKG_USER="$(pkg.user_from_shorthand $1)"
-            PKG_NAME="$(pkg.name_from_shorthand $1)"
-            PKG_URL="$ELLIPSIS_PROTO://github.com/$PKG_USER/dot-$(pkg.name_stripped $PKG_NAME)"
-        ;;
-        *)
-            PKG_NAME="$1"
-            PKG_URL="$ELLIPSIS_PROTO://github.com/$ELLIPSIS_USER/dot-$(pkg.name_stripped $PKG_NAME)"
-        ;;
-    esac
+    for package in "$@"; do
+        case "$1" in
+            http:*|https:*|git:*|ssh:*)
+                PKG_NAME="$(pkg.name_from_url $1)"
+                PKG_URL="$1"
+            ;;
+            */*)
+                PKG_USER="$(pkg.user_from_shorthand $1)"
+                PKG_NAME="$(pkg.name_from_shorthand $1)"
+                PKG_URL="$ELLIPSIS_PROTO://github.com/$PKG_USER/dot-$(pkg.name_stripped $PKG_NAME)"
+            ;;
+            *)
+                PKG_NAME="$1"
+                PKG_URL="$ELLIPSIS_PROTO://github.com/$ELLIPSIS_USER/dot-$(pkg.name_stripped $PKG_NAME)"
+            ;;
+        esac
 
-    # strip leading dot- from name as a convenience
-    PKG_NAME=$(pkg.name_stripped $PKG_NAME)
-    PKG_PATH="$(pkg.path_from_name $PKG_NAME)"
+        # strip leading dot- from name as a convenience
+        PKG_NAME=$(pkg.name_stripped $PKG_NAME)
+        PKG_PATH="$(pkg.path_from_name $PKG_NAME)"
 
-    git.clone "$PKG_URL" "$PKG_PATH"
+        git.clone "$PKG_URL" "$PKG_PATH"
 
-    pkg.init "$PKG_PATH"
-    pkg.run_hook "install"
-    pkg.del
+        pkg.init "$PKG_PATH"
+        pkg.run_hook "install"
+        pkg.del
+    done
 }
 
 # Uninstall package, using uninstall hook if one exists. If no hook is
