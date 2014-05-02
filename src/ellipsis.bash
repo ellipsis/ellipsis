@@ -87,7 +87,7 @@ ellipsis.link() {
     fi
 
     pkg.init "$1"
-    pkg.run_hook "install"
+    pkg.run_hook "link"
     pkg.del
 }
 
