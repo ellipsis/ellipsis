@@ -170,7 +170,7 @@ ellipsis.new() {
     cat > $PKG_PATH/ellipsis.sh <<EOF
 #!/usr/bin/env bash
 #
-# $PKG_NAME ellipsis package
+# $ELLIPSIS_USER/$PKG_NAME ellipsis package
 
 # The following hooks can be defined to customize behavior of your package:
 # pkg.install() {
@@ -196,14 +196,14 @@ EOF
 
     # Generate README.md for package.
     cat > $PKG_PATH/README.md <<EOF
-# $PKG_NAME
+# $ELLIPSIS_USER/$PKG_NAME
 Just a bunch of dotfiles.
 
 ## Install
 Clone and symlink or install with [ellipsis][ellipsis]:
 
 $_FENCE
-$_PROMPT ellipsis install $PKG_NAME
+$_PROMPT ellipsis install $ELLIPSIS_USER/$PKG_NAME
 $_FENCE
 
 [ellipsis]: http://ellipsis.sh

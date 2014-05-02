@@ -30,7 +30,7 @@ hooks.add() {
         exit 1
     fi
 
-    if fs.file_exists "$1"; then
+    if ! fs.file_exists "$1"; then
         log.error "$1 does not exist!"
         exit 1
     fi
