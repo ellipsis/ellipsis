@@ -17,6 +17,7 @@ Ellipsis is a package manager for dotfiles.
 - Cross platform, known to work on Mac OS X, Linux, FreeBSD and even Cygwin.
 - Large test suite to ensure your `$HOME` doesn't get ravaged.
 - Completely customizable.
+- [Works with existing dotfiles!](#upgrading-to-ellipsis)
 
 ### Install
 Clone and symlink or use handy-dandy installer:
@@ -362,6 +363,28 @@ Xmonad configuration.
 
 #### [zeekay/zsh][zsh]
 Zsh configuration using zeesh! framework.
+
+### <a class="anchor" href="#upgrading-to-ellipsis" name="upgrading-to-ellipsis">Upgrading to ellipsis</a>
+So you've been around the block, got your own collection of dotfiles and you've
+been managing them with a collection of scripts you've cobbled together over the
+years...we've all been there. Luckily ellipis makes it easy to convert your
+existing dotfiles into a pristine, new ellipsis package:
+
+```bash
+$ export ELLIPSIS_USER=zeekay
+$ ellipsis new dotfiles
+Initialized empty Git repository in /Users/zeekay/.ellipsis/packages/dotfiles/.git/
+[master (root-commit) 5f5d2a9] Initial commit
+ 2 files changed, 35 insertions(+)
+ create mode 100644 README.md
+ create mode 100644 ellipsis.sh
+new package created at ~/.ellipsis/packages/dotfiles
+$ ellipsis add dotfiles .*
+mv ~/my-dotfiles/.vimrc dotfiles/vimrc
+linking dotfiles/vimrc -> ~/.vimrc
+mv ~/my-dotfiles/.zshrc dotfiles/zshrc
+linking dotfiles/zshrc -> ~/.zshrc
+```
 
 ### Completion
 A completion file for zsh is [included](zshcomp). To use it add `_ellipsis` to
