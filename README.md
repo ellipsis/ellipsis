@@ -10,12 +10,14 @@ ellipsis is a package manager for dotfiles.
 
 ### Features
 - Creating new packages is trivial (any git repository is already a package).
-- Ellipsis packages make it easy to share specific bits of your dotfiles. Say a
-  friend wants to test out your ZSH setup but doesn't want to adopt the madness
-  that is your Vim config? No problem, he can just `ellipsis install
-  github-user/dot-zsh`
+- Ellipsis makes it easy to share specific bits of your dotfiles. Say a friend
+  wants to test out your ZSH setup but doesn't want to adopt the madness that is
+  your Vim config? No problem, he can just `ellipsis install
+  yourgithubuser/zsh`.
 - Quickly see which dotfiles have been modified, and keep them updated and in
   sync across systems.
+- Find and remove broken symlinks.
+- Easy to add new dotfiles to your dotfiles repo using `ellipsis add`.
 - Cross platform, known to work on Mac OS X, Linux, FreeBSD and even Cygwin.
 - Completely customizable.
 
@@ -29,14 +31,14 @@ $ curl -sL ellipsis.sh | sh
 You can also specify which packages to install by setting the `PACKAGES` variable, i.e.:
 
 ```bash
-$ curl -sL ellipsis.sh | PACKAGES='vim zsh' sh
+$ curl -sL ellipsis.sh | PACKAGES='zeekay/vim zeekay/zsh' sh
 ```
 
 I recommend adding `~/.ellipsis/bin` to your `$PATH`, but you can also just
 symlink `~/.ellipsis/bin/ellipsis` somewhere convenient.
 
 ### Usage
-Ellipsis comes with no dotfiles out of the box. To add a dotfiles packages, use
+Ellipsis comes with no dotfiles out of the box. To install packages, use
 `ellipsis install`. Packages to install can be specified by github-user/repo or
 full ssh/git/http(s) urls:
 
@@ -46,7 +48,8 @@ $ ellipsis install zeekay/vim
 $ ellipsis install zsh
 ```
 
-...all work.
+...all work. By convention `username/package` and `package` are aliases for
+https://github.com/username/dot-package.
 
 Full usage available via `ellipsis` executable:
 
@@ -60,12 +63,14 @@ Usage: ellipsis <command>
   Commands:
     new        create a new package
     edit       edit an installed package
+    add        add new dotfile to package
     install    install new package
     uninstall  uninstall package
+    link       link package
     unlink     unlink package
     broken     list any broken symlinks
     clean      rm broken symlinks
-    list       list installed packages
+    installed  list installed packages
     links      show symlinks installed by package(s)
     pull       git pull package(s)
     push       git push package(s)
@@ -77,117 +82,266 @@ Usage: ellipsis <command>
 ### Configuration
 You can customize ellipsis by exporting a few different variables.
 
-#### ELLIPSIS_USER
-Customize whose dotfiles are installed when you `ellipsis install` without
-specifiying user or a full repo url.
+#### GITHUB_USER / ELLIPSIS_USER
+Customizes whose dotfiles are installed when you `ellipsis install` without
+specifiying user or a full repo url. Defaults to `$(git config github.user)` or
+`zeekay`.
 
 #### ELLIPSIS_REPO
-Customize location of ellipsis repo cloned during a curl-based install.
+Customize location of ellipsis repo cloned during a curl-based install. Defaults
+to `https://github.com/zeekay/ellipsis`.
 
-#### ELLIPSIS_PACKAGES_URL
-Customizes which url is used to display available packages.
+#### ELLIPSIS_PROTO
+Customizes which protocol new packages are cloned with, you can specify
+`https`,`ssh`, `git`. Defaults to `https`.
+
+#### ELLIPSIS_HOME
+Customize which folder files are symlinked into, defaults to `$HOME`. (Mostly
+useful for testing).
+
+#### ELLIPSIS_PATH
+Customize where ellipsis lives on your filesystem, defaults to `~/.ellipsis`.
 
 ```bash
 export ELLIPSIS_USER="zeekay"
-export ELLIPSIS_REPO="https://github.com/zeekay/ellipsis"
-export ELLIPSIS_PACKAGES_URL="https://raw.githubusercontent.com/zeekay/ellipsis/master/available-packages.txt"
+export ELLIPSIS_SSH="ssh"
+export ELLIPSIS_PATH="~/.el"
 ```
 
 ### Packages
-A package is any repo with files you want to symlink into `$HOME`. By default a
-given repo's non-hidden files (read: not beginning with a `.`) will naively be
-linked into `$HOME`. Of course this isn't sufficient for a lot of cases, so you
-can customize how ellipsis treats your package by defining hooks in an
-`ellipsis.sh` file at the root of your repository.
+A package is any repo with files you want to symlink into `$ELLIPSIS_PATH`
+(typically `$HOME`). By default a given repo's non-hidden files (read: not
+beginning with a `.`) will naively be linked into place. Of course this isn't
+sufficient for a lot of cases, so you can customize how ellipsis treats your
+package by defining hooks in an `ellipsis.sh` file at the root of your
+repository.
 
 ### Hooks
 Hooks allow you to customize how ellipsis interacts with your package.  For
 instance if you want to change how your package is installed you can define
-`pkg.install` and specifiy exactly which files are symlinked into `$HOME`,
-compile any libraries, etc.
+`pkg.install` and specifiy exactly which files are symlinked into place, compile
+any libraries, etc.
 
-The follow hooks/variables are available in your `ellipsis.sh`:
+#### Example
+Here's a full example of an `ellipsis.sh` file, used by
+[zeekay/files](https://github.com/zeekay/dot-files) (my common cross-platform
+dotfiles):
+
+```bash
+pkg.install() {
+    fs.link_files common
+
+    case $(os.platform) in
+        cygwin)
+            fs.link_files platform/cygwin
+            ;;
+        osx)
+            fs.link_files platform/osx
+            ;;
+        freebsd)
+            fs.link_files platform/freebsd
+            ;;
+        linux)
+            fs.link_files platform/linux
+            ;;
+    esac
+}
+```
+
+And here's another more advanced one used by
+[zeekay/vim](https://github.com/zeekay/dot-vim) (my vim configuration):
+
+```bash
+pkg.install() {
+    files=(gvimrc vimrc vimgitrc vimpagerrc)
+
+    for file in ${files[@]}; do
+        fs.link_file $file
+    done
+
+    # link module into ~/.vim
+    fs.link_file $PKG_PATH
+
+    # install dependencies
+    cd ~/.vim/addons
+    git.clone https://github.com/zeekay/vice
+    git.clone https://github.com/MarcWeber/vim-addon-manager
+}
+
+helper() {
+    # run command for ourselves
+    $1
+
+    # run command for each addon
+    for addon in ~/.vim/addons/*; do
+        cd $addon
+        $1 $addon
+    done
+}
+
+pkg.pull() {
+    helper git.pull
+}
+
+pkg.status() {
+    helper hooks.status
+}
+
+pkg.push() {
+    git.push
+
+    # git push only repos where we have push permission
+    for addon in ~/.vim/addons/*; do
+        if [ "$(cat $addon/.git/config | grep $ELLIPSIS_USER)" ]; then
+            cd $addon
+            git.push $addon
+        fi
+    done
+}
+```
+
+### API
+You can customize the behavior of ellipsis by defining various hooks. When
+defining your hooks each hook is run from the directory of your package and
+`$PKG_NAME` and `$PKG_PATH` are set to reflect your package. The hooks available
+are:
+
+#### pkg.add
+Customizes how a files is added to your package.
 
 #### pkg.install
 Customize how package is installed. By default all files are symlinked into
-`$HOME`.
+place.
 
-#### pkg.uninstall
-Customize how package is uninstalled. By default all symlinks are removed from
-`$HOME`.
+#### pkg.installed
+Customize how package is listed as installed.
 
-#### pkg.push
-Customize how how changes are pushed `ellipsis push` is used.
+#### pkg.links
+Customizes which files are detected as symlinks.
 
 #### pkg.pull
 Customize how how changes are pulled in when `ellipsis pull` is used.
 
+#### pkg.push
+Customize how how changes are pushed `ellipsis push` is used.
+
 #### pkg.status
 Customize output of `ellipsis status`.
 
-#### $PKG_NAME
-Name of your package.
+#### pkg.uninstall
+Customize how package is uninstalled. By default all symlinks are removed and
+the package is deleted from `$ELLIPSIS_PATH/packages`.
 
-#### $PKG_PATH
-Path to your package.
+#### pkg.uninstall
+Customize which files are unlinked by your package.
 
-### API
-There are a number of functions ellipsis exposes which can be useful in your
-package's hooks:
+For references all the default hooks are available as `hooks.<hookname>`, which
+makes it easy to use them in your hooks.
 
-#### ellipsis.backup
-Moves existing file `$1` to `$1.bak`, taking care not to overwrite any existing
-backups.
+You can also call pretty much any internal ellipsis function, there are several
+which you might find useful when writing your own hooks:
 
-#### ellipsis.link_file
-Link a single file `$1` into `$HOME`, taking care to backup an existing file.
+#### ellipsis.list_packages
+Lists all installed packages.
 
-#### ellipsis.link_files
-Links files in `$1` into `$HOME`, taking care to backup any existing files.
+#### ellipsis.each
+Executes command for each installed package.
 
-#### ellipsis.run_installer
-Download an installation script from url `$1` with `curl` and execute it.
+#### fs.folder_empty
+Returns true if folder is empty.
 
-#### utils.platform
-Platform detection, returns lowercase result of `uname`.
+#### fs.file_exists
+Returns true if file exists.
 
-#### git.[command]
-There are also several wrappers around common git operations which can be used
-for consistency with the rest of ellipsis: **git.clone**, **git.pull**,
-**git.push**, and **git.status**.
+#### fs.is_symlink
+Returns true if file is a symlink.
+
+#### fs.is_ellipsis_symlink
+Returns true if file is a symlink pointing to an ellipsis package.
+
+##### fs.is_broken_symlink
+Returns true if file is a broken symlink.
+
+##### fs.list_symlinks
+Lists symlinks in a folder, defaulting to `$ELLIPSIS_HOME`.
+
+##### fs.backup
+Creates a backup of an existing file, ensuring you don't overwrite existing backups.
+
+##### fs.link_file
+Symlinks a single file into `$ELLIPSIS_HOME`.
+
+#### fs.link_files
+Symlinks all files in given folder into `$ELLIPSIS_HOME`.
+
+#### git.clone
+Clones a Git repo, identical to `git clone`.
+
+#### git.pull
+Identical to `git pull`.
+
+#### git.push
+Identical to `git push`.
+
+#### git.sha1
+Prints last commit's sha1 using `git rev-parse --short HEAD`.
+
+#### git.last_updated
+Prints commit's relative last update time.
+
+#### git.head
+Prints how far ahead a package is from origin.
+
+#### git.has_changes
+Returns true if repository has changes.
+
+#### git.diffstat
+Displays `git diff --stat`.
+
+#### os.platform
+Returns one of `cygwin`, `freebsd`, `linux`, `osx`.
+
+#### utils.cmd_exists
+Returns true if command exists.
+
+#### utils.prompt
+Prompts user `$1` message and returns true if `YES` or `yes` is input.
+
+#### utils.run_installer
+Downloads and runs web-based shell script installers.
 
 ### Available packages
 
-#### [zeekay/dot-alfred][alfred]
+#### [zeekay/alfred][alfred]
 Alfred configuration files.
 
-#### [zeekay/dot-atom][atom]
+#### [zeekay/atom][atom]
 Atom configuration files.
 
-#### [zeekay/dot-emacs][emacs]
+#### [zeekay/emacs][emacs]
 Emacs configuration files.
 
-#### [zeekay/dot-files][files]
-Default dotfiles for ellipsis.
+#### [zeekay/files][files]
+Common dotfiles for various programs.
 
-#### [zeekay/dot-irssi][irssi]
+#### [zeekay/irssi][irssi]
 Irssi configuration.
 
-#### [zeekay/dot-iterm2][iterm2]
+#### [zeekay/iterm2][iterm2]
 iTerm2 configuration files.
 
-#### [zeekay/dot-vim][vim]
+#### [zeekay/vim][vim]
 Vim configuration based on vice framework.
 
-#### [zeekay/dot-xmonad][xmonad]
+#### [zeekay/xmonad][xmonad]
 Xmonad configuration.
 
-#### [zeekay/dot-zsh][zsh]
+#### [zeekay/zsh][zsh]
 Zsh configuration using zeesh! framework.
 
 ### Completions
-Completion file for zsh is [included](zshcomp). To use it you need to add
-`_ellipsis` to your `fpath` and enable auto-completion:
+A completion file for zsh is [included](zshcomp). To use it add `_ellipsis` to
+your `fpath` and ensure auto-completion is enabled:
 
 ```bash
 fpath=($HOME/.ellipsis/comp $fpath)
@@ -195,8 +349,8 @@ autoload -U compinit; compinit
 ```
 
 ### Development
-Pull requests welcome! New code should follow [Google's style
-guide][style-guide]. To run tests you need to install [bats][bats].
+Pull requests welcome! New code should follow [existing style](style-guide) and include tests
+(tests are written with [bats][bats]).
 
 To suggest a feature or report a bug: http://github.com/zeekay/ellipsis/issues.
 
