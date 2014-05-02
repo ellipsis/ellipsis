@@ -1,3 +1,4 @@
+
 #!/bin/sh
 <<EOF
 <html>
@@ -110,22 +111,35 @@ useful for testing).</p>
 <h3 id="packages">Packages</h3>
 <p>A package is any repo with files you want to symlink into <code>$ELLIPSIS_PATH</code>
 (typically <code>$HOME</code>). By default a given repo&#39;s non-hidden files (read: not
-beginning with a <code>.</code>) will naively be linked into place. Need a more complex
-instsall process? No problem. You can customize every aspect of how ellipsis
-uses your package using various hooks.</p>
-<h3 id="hooks">Hooks</h3>
-<p>Hooks are defined in <code>ellipsis.sh</code> files in the root of your package&#39;s
-repository. Hooks allow you to customize how ellipsis interacts with your
-package. For instance, if you wanted to change how your package is installed you
-can define <code>pkg.install</code> and specifiy exactly which files are symlinked into
-place, compile any libraries necessary, etc.</p>
-<h4 id="example">Example</h4>
-<p>Here&#39;s a full example of an <code>ellipsis.sh</code> file:</p>
+beginning with a <code>.</code>) will naively be linked into place.</p>
+<p>Need to compile some libraries or download dependencies? Run various one-off
+scripts when you setup a new system? No problem :) You can customize every
+aspect of how ellipsis uses your package by adding an <code>ellipsis.sh</code> file to the
+root of your project and defining various hooks (using normal bash syntax).</p>
+<p>Here&#39;s an example of a complete <code>ellipsis.sh</code> file:</p>
 <pre><code class="lang-bash"><span class="hljs-shebang">#!/usr/bin/env bash</span>
 </code></pre>
-<p>...of course that&#39;s not very helpful! But it&#39;s true, the <code>ellipsis.sh</code> file is
-completely optional if all you want to do is symlink some files into your
-<code>$HOME</code>.</p>
+<p>Yep, that&#39;s it. If all you want to do is symlink some files into <code>$HOME</code>, adding
+an <code>ellipsis.sh</code> to your package is completely optional. Need more? Read on :)</p>
+<h3 id="hooks">Hooks</h3>
+<p>Hooks allow you to customize how ellipsis interacts with your package. Say for
+instance you wanted to run the installer for your favorite zsh framework, you
+could define a <code>pkg.install</code> hook like this:</p>
+<pre><code class="lang-bash"><span class="hljs-shebang">#!/usr/bin/env bash
+</span>
+pkg.<span class="hljs-function"><span class="hljs-title">install</span></span>() {
+    utils.run_installer <span class="hljs-string">'https://raw.github.com/zeekay/zeesh/master/scripts/install.sh'</span>
+}
+</code></pre>
+<p>When you <code>ellipsis install</code> a package, ellipsis:</p>
+<ol>
+<li><code>git clone</code>&#39;s the package into <code>~/.ellipsis/packages</code>.</li>
+<li>Changes the current working dir to the package.</li>
+<li>Sets <code>$PKG_NAME</code> and <code>$PKG_PATH</code>.</li>
+<li>Sources the package&#39;s <code>ellipsis.sh</code> (if one exists).</li>
+<li>Executes the package&#39;s <code>pkg.install</code> hook or <code>hooks.install</code> (the default hook).</li>
+</ol>
+<h3 id="examples">Examples</h3>
 <p>Here&#39;s a more complete example (from
 <a href="https://github.com/zeekay/dot-files">zeekay/files</a>, my collection of common,
 cross-platform dotfiles):</p>
@@ -201,14 +215,7 @@ pkg.<span class="hljs-function"><span class="hljs-title">push</span></span>() {
     <span class="hljs-keyword">done</span>
 }
 </code></pre>
-<h3 id="api">API</h3>
-<p>Typically you&#39;ll interact with the ellipsis API from your package&#39;s
-<code>ellipsis.sh</code> file. Besides the hooks which you can use to customize how
-ellipsis interacts with your package, there is a large collection of functions
-and variables which you might find useful in your packages.</p>
-<p>Hooks are executed from the root of your package and <code>$PKG_NAME</code> and <code>$PKG_PATH</code>
-are set to reflect your package. The hooks available
-are:</p>
+<p>The hooks available in your <code>ellipsis.sh</code> are:</p>
 <h4 id="pkg-add">pkg.add</h4>
 <p>Customizes how a files is added to your package.</p>
 <h4 id="pkg-install">pkg.install</h4>
@@ -229,10 +236,10 @@ place.</p>
 the package is deleted from <code>$ELLIPSIS_PATH/packages</code>.</p>
 <h4 id="pkg-uninstall">pkg.uninstall</h4>
 <p>Customize which files are unlinked by your package.</p>
-<p>For references all the default hooks are available as <code>hooks.&lt;hookname&gt;</code>, which
-makes it easy to use them in your hooks.</p>
-<p>You can also call pretty much any internal ellipsis function, there are several
-which you might find useful when writing your own hooks:</p>
+<h3 id="api">API</h3>
+<p>Besides the default hook implementations which are available to you from your
+<code>ellipsis.sh</code> as <code>hooks.&lt;name&gt;</code>, there are a number of useful functions and
+variables which ellipsis exposes for you:</p>
 <h4 id="ellipsis-list_packages">ellipsis.list_packages</h4>
 <p>Lists all installed packages.</p>
 <h4 id="ellipsis-each">ellipsis.each</h4>
@@ -298,7 +305,7 @@ which you might find useful when writing your own hooks:</p>
 <p>Xmonad configuration.</p>
 <h4 id="-zeekay-zsh-zsh-"><a href="https://github.com/zeekay/dot-zsh">zeekay/zsh</a></h4>
 <p>Zsh configuration using zeesh! framework.</p>
-<h3 id="completions">Completions</h3>
+<h3 id="completion">Completion</h3>
 <p>A completion file for zsh is <a href="zshcomp">included</a>. To use it add <code>_ellipsis</code> to
 your <code>fpath</code> and ensure auto-completion is enabled:</p>
 <pre><code class="lang-bash">fpath=(<span class="hljs-variable">$HOME</span>/.ellipsis/comp <span class="hljs-variable">$fpath</span>)
@@ -315,7 +322,7 @@ autoload -U compinit; compinit
       fixScale(document);
     -->
   </body>
-</html><!--
+</html><!-- 
 EOF
 
 # shim for ellipsis install.bash
