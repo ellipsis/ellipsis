@@ -111,7 +111,7 @@ export ELLIPSIS_PATH="~/.el"
 A package is any repo with files you want to symlink into `$ELLIPSIS_PATH`
 (typically `$HOME`). By default all of a respository's non-hidden files (read:
 not beginning with a `.`) will naively be linked into place, with the exception
-of a few common text files (`README`s, `LICENSES`s, etc).
+of a few common text files (`README`, `LICENSE`, etc).
 
 You can customize how ellipsis interacts with your package by adding an
 `ellipsis.sh` file to the root of your project. Here's an example of a complete
