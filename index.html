@@ -31,35 +31,31 @@
 <pre><code><span class="hljs-tag"> <span class="hljs-title">_</span>    <span class="hljs-title">_</span>    <span class="hljs-title">_</span>
 </span><span class="hljs-tag">/\<span class="hljs-title">_</span>\ /\<span class="hljs-title">_</span>\ /\<span class="hljs-title">_</span>\
 </span><span class="hljs-tag">\/<span class="hljs-title">_</span>/ \/<span class="hljs-title">_</span>/ \/<span class="hljs-title">_</span>/   …<span class="hljs-title">because</span> $<span class="hljs-title">HOME</span> <span class="hljs-title">is</span> <span class="hljs-title">where</span> <span class="hljs-title">the</span> &lt;<span class="hljs-title">3</span> <span class="hljs-title">is</span>!</span>
-</code></pre><p>ellipsis is a package manager for dotfiles.</p>
+</code></pre><p>Ellipsis is a package manager for dotfiles.</p>
 <h3 id="features">Features</h3>
 <ul>
 <li>Creating new packages is trivial (any git repository is already a package).</li>
-<li>Ellipsis makes it easy to share specific bits of your dotfiles. Say a friend
-wants to test out your ZSH setup but doesn&#39;t want to adopt the madness that is
-your Vim config? No problem, he can just <code>ellipsis install
-yourgithubuser/zsh</code>.</li>
-<li>Quickly see which dotfiles have been modified, and keep them updated and in
-sync across systems.</li>
-<li>Find and remove broken symlinks.</li>
-<li>Easy to add new dotfiles to your dotfiles repo using <code>ellipsis add</code>.</li>
+<li>Modular configuration files are easier to maintain and share with others.</li>
+<li>Allows you to quickly see which dotfiles have been modified, and keep them
+updated and in-sync across systems.</li>
+<li>Adding new dotfiles to your collection can be automated with <code>ellipsis add</code>.</li>
 <li>Cross platform, known to work on Mac OS X, Linux, FreeBSD and even Cygwin.</li>
-<li>Completely customizable.</li>
 <li>Large test suite to ensure your <code>$HOME</code> doesn&#39;t get ravaged.</li>
+<li>Completely customizable.</li>
 </ul>
 <h3 id="install">Install</h3>
 <p>Clone and symlink or use handy-dandy installer:</p>
 <pre><code class="lang-bash">$ curl <span class="hljs-operator">-s</span>L ellipsis.sh | sh
 </code></pre>
 <p>You can also specify which packages to install by setting the <code>PACKAGES</code> variable, i.e.:</p>
-<pre><code class="lang-bash">$ curl <span class="hljs-operator">-s</span>L ellipsis.sh | PACKAGES=<span class="hljs-string">'zeekay/vim zeekay/zsh'</span> sh
+<pre><code class="lang-bash">$ curl <span class="hljs-operator">-s</span>L ellipsis.sh | PACKAGES=<span class="hljs-string">'vim zsh'</span> sh
 </code></pre>
-<p>I recommend adding <code>~/.ellipsis/bin</code> to your <code>$PATH</code>, but you can also just
+<p>I recommend adding <code>~/.ellipsis/bin</code> to your <code>$PATH</code>, but you could also just
 symlink <code>~/.ellipsis/bin/ellipsis</code> somewhere convenient.</p>
 <h3 id="usage">Usage</h3>
 <p>Ellipsis comes with no dotfiles out of the box. To install packages, use
-<code>ellipsis install</code>. Packages to install can be specified by github-user/repo or
-full ssh/git/http(s) urls:</p>
+<code>ellipsis install</code>. Packages can be specified by github-user/repo or full
+ssh/git/http(s) urls:</p>
 <pre><code class="lang-bash">$ ellipsis install ssh://github.com/zeekay/private.git
 $ ellipsis install zeekay/vim
 $ ellipsis install zsh
@@ -91,7 +87,7 @@ $ ellipsis install zsh
 </span><span class="hljs-tag">    <span class="hljs-title">publish</span>    <span class="hljs-title">publish</span> <span class="hljs-title">package</span> <span class="hljs-title">to</span> <span class="hljs-title">repository</span>
 </span><span class="hljs-tag">    <span class="hljs-title">search</span>     <span class="hljs-title">search</span> <span class="hljs-title">package</span> <span class="hljs-title">repository</span></span>
 </code></pre><h3 id="configuration">Configuration</h3>
-<p>You can customize ellipsis by exporting a few different variables.</p>
+<p>You can customize ellipsis by exporting a few different variables:</p>
 <h4 id="github_user-ellipsis_user">GITHUB_USER / ELLIPSIS_USER</h4>
 <p>Customizes whose dotfiles are installed when you <code>ellipsis install</code> without
 specifiying user or a full repo url. Defaults to <code>$(git config github.user)</code> or
@@ -114,20 +110,23 @@ useful for testing).</p>
 <h3 id="packages">Packages</h3>
 <p>A package is any repo with files you want to symlink into <code>$ELLIPSIS_PATH</code>
 (typically <code>$HOME</code>). By default a given repo&#39;s non-hidden files (read: not
-beginning with a <code>.</code>) will naively be linked into place. Of course this isn&#39;t
-sufficient for a lot of cases, so you can customize how ellipsis treats your
-package by defining hooks in an <code>ellipsis.sh</code> file at the root of your
-repository.</p>
+beginning with a <code>.</code>) will naively be linked into place. Need a more complex
+instsall process? No problem. You can customize every aspect of how ellipsis
+uses your package using various hooks.</p>
 <h3 id="hooks">Hooks</h3>
-<p>Hooks allow you to customize how ellipsis interacts with your package.  For
-instance if you want to change how your package is installed you can define
-<code>pkg.install</code> and specifiy exactly which files are symlinked into place, compile
-any libraries, etc.</p>
+<p>Hooks are defined in <code>ellipsis.sh</code> files in the root of your package&#39;s
+repository. Hooks allow you to customize how ellipsis interacts with your
+package. For instance, if you wanted to change how your package is installed you
+can define <code>pkg.install</code> and specifiy exactly which files are symlinked into
+place, compile any libraries necessary, etc.</p>
 <h4 id="example">Example</h4>
 <p>Here&#39;s a full example of an <code>ellipsis.sh</code> file:</p>
 <pre><code class="lang-bash"><span class="hljs-shebang">#!/usr/bin/env bash</span>
 </code></pre>
-<p>...of course that&#39;s not very helpful :) Here&#39;s a more complete example (from
+<p>...of course that&#39;s not very helpful! But it&#39;s true, the <code>ellipsis.sh</code> file is
+completely optional if all you want to do is symlink some files into your
+<code>$HOME</code>.</p>
+<p>Here&#39;s a more complete example (from
 <a href="https://github.com/zeekay/dot-files">zeekay/files</a>, my collection of common,
 cross-platform dotfiles):</p>
 <pre><code class="lang-bash"><span class="hljs-shebang">#!/usr/bin/env bash
@@ -151,7 +150,7 @@ pkg.<span class="hljs-function"><span class="hljs-title">install</span></span>()
     <span class="hljs-keyword">esac</span>
 }
 </code></pre>
-<p>And here&#39;s a slightly more advanced example (used by
+<p>...and here&#39;s a slightly more complex example (used by
 <a href="https://github.com/zeekay/dot-vim">zeekay/vim</a>, my vim configuration):</p>
 <pre><code class="lang-bash"><span class="hljs-shebang">#!/usr/bin/env bash
 </span>
@@ -203,9 +202,12 @@ pkg.<span class="hljs-function"><span class="hljs-title">push</span></span>() {
 }
 </code></pre>
 <h3 id="api">API</h3>
-<p>You can customize the behavior of ellipsis by defining various hooks. When
-defining your hooks each hook is run from the directory of your package and
-<code>$PKG_NAME</code> and <code>$PKG_PATH</code> are set to reflect your package. The hooks available
+<p>Typically you&#39;ll interact with the ellipsis API from your package&#39;s
+<code>ellipsis.sh</code> file. Besides the hooks which you can use to customize how
+ellipsis interacts with your package, there is a large collection of functions
+and variables which you might find useful in your packages.</p>
+<p>Hooks are executed from the root of your package and <code>$PKG_NAME</code> and <code>$PKG_PATH</code>
+are set to reflect your package. The hooks available
 are:</p>
 <h4 id="pkg-add">pkg.add</h4>
 <p>Customizes how a files is added to your package.</p>
