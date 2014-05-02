@@ -20,6 +20,7 @@ ellipsis is a package manager for dotfiles.
 - Easy to add new dotfiles to your dotfiles repo using `ellipsis add`.
 - Cross platform, known to work on Mac OS X, Linux, FreeBSD and even Cygwin.
 - Completely customizable.
+- Large test suite to ensure your `$HOME` doesn't get ravaged.
 
 ### Install
 Clone and symlink or use handy-dandy installer:
