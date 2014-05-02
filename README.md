@@ -25,13 +25,13 @@ ellipsis is a package manager for dotfiles.
 ### Install
 Clone and symlink or use handy-dandy installer:
 
-```bash
+```shell
 $ curl -sL ellipsis.sh | sh
 ```
 
 You can also specify which packages to install by setting the `PACKAGES` variable, i.e.:
 
-```bash
+```shell
 $ curl -sL ellipsis.sh | PACKAGES='zeekay/vim zeekay/zsh' sh
 ```
 
@@ -43,7 +43,7 @@ Ellipsis comes with no dotfiles out of the box. To install packages, use
 `ellipsis install`. Packages to install can be specified by github-user/repo or
 full ssh/git/http(s) urls:
 
-```bash
+```shell
 $ ellipsis install ssh://github.com/zeekay/private.git
 $ ellipsis install zeekay/vim
 $ ellipsis install zsh
@@ -103,7 +103,7 @@ useful for testing).
 #### ELLIPSIS_PATH
 Customize where ellipsis lives on your filesystem, defaults to `~/.ellipsis`.
 
-```bash
+```shell
 export ELLIPSIS_USER="zeekay"
 export ELLIPSIS_SSH="ssh"
 export ELLIPSIS_PATH="~/.el"
@@ -128,7 +128,7 @@ Here's a full example of an `ellipsis.sh` file, used by
 [zeekay/files](https://github.com/zeekay/dot-files) (my common cross-platform
 dotfiles):
 
-```bash
+```shell
 pkg.install() {
     fs.link_files common
 
@@ -152,7 +152,7 @@ pkg.install() {
 And here's another more advanced one used by
 [zeekay/vim](https://github.com/zeekay/dot-vim) (my vim configuration):
 
-```bash
+```shell
 pkg.install() {
     files=(gvimrc vimrc vimgitrc vimpagerrc)
 
@@ -344,7 +344,7 @@ Zsh configuration using zeesh! framework.
 A completion file for zsh is [included](zshcomp). To use it add `_ellipsis` to
 your `fpath` and ensure auto-completion is enabled:
 
-```bash
+```shell
 fpath=($HOME/.ellipsis/comp $fpath)
 autoload -U compinit; compinit
 ```
