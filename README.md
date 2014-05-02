@@ -412,3 +412,4 @@ To suggest a feature or report a bug: http://github.com/zeekay/ellipsis/issues.
 [zsh]:         https://github.com/zeekay/dot-zsh
 [style-guide]: https://google-styleguide.googlecode.com/svn/trunk/shell.xml
 [bats]:        https://github.com/sstephenson/bats
+[zshcomp]:     https://github.com/zeekay/ellipsis/blob/master/comp/_ellipsis
