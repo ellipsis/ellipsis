@@ -50,9 +50,9 @@ if [[ -z "$PACKAGES" ]]; then
 
     # List default packages for this platform.
     if [ $(os.platform) = osx ]; then
-        default="zeekay/dot-files zeekay/dot-vim zeekay/dot-zsh zeekay/dot-alfred zeekay/dot-iterm2"
+        default="zeekay/files zeekay/vim zeekay/zsh zeekay/alfred zeekay/iterm2"
     else
-        default="zeekay/dot-files zeekay/dot-vim zeekay/dot-zsh"
+        default="zeekay/files zeekay/vim zeekay/zsh"
     fi
 
     echo "default: $default"
