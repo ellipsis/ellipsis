@@ -53,7 +53,7 @@ if [ "$PACKAGES" ]; then
     done
 fi
 
-echo
+echo '...done!'
 echo '   _    _    _'
 echo '  /\_\ /\_\ /\_\'
 echo '  \/_/ \/_/ \/_/                         …because $HOME is where the <3 is!'
@@ -66,11 +66,11 @@ echo 'Run `ellipsis help` for additional options.'
 
 if [[ -z "$PACKAGES" ]]; then
     if [ $(os.platform) = osx ]; then
-        default_packages="zeekay/files zeekay/vim zeekay/zsh zeekay/alfred zeekay/iterm2"
+        PACKAGES="zeekay/files zeekay/vim zeekay/zsh zeekay/alfred zeekay/iterm2"
     else
-        default_packages="zeekay/files zeekay/vim zeekay/zsh"
+        PACKAGES="zeekay/files zeekay/vim zeekay/zsh"
     fi
 
     echo
-    echo "Recommended packages: $default"
+    echo "Recommended packages: $PACKAGES"
 fi
