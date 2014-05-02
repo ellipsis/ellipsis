@@ -25,7 +25,7 @@ Clone and symlink or use handy-dandy installer:
 $ curl ellipsis.sh | sh
 ```
 
-<sup>...no you didn't read that wrong, [this website also doubles as the installer](https://github.com/zeekay/ellipsis/blob/gh-pages/index.html#L325)</sup>
+<sup>...no you didn't read that wrong, [this website also doubles as the installer](https://github.com/zeekay/ellipsis/blob/gh-pages/index.html#L322)</sup>
 
 You can also specify which packages to install by setting the `PACKAGES` variable, i.e.:
 
