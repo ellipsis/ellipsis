@@ -45,10 +45,10 @@ updated and in-sync across systems.</li>
 </ul>
 <h3 id="install">Install</h3>
 <p>Clone and symlink or use handy-dandy installer:</p>
-<pre><code class="lang-bash">$ curl <span class="hljs-operator">-s</span>L ellipsis.sh | sh
+<pre><code class="lang-bash">$ curl ellipsis.sh | sh
 </code></pre>
 <p>You can also specify which packages to install by setting the <code>PACKAGES</code> variable, i.e.:</p>
-<pre><code class="lang-bash">$ curl <span class="hljs-operator">-s</span>L ellipsis.sh | PACKAGES=<span class="hljs-string">'vim zsh'</span> sh
+<pre><code class="lang-bash">$ curl ellipsis.sh | PACKAGES=<span class="hljs-string">'vim zsh'</span> sh
 </code></pre>
 <p>I recommend adding <code>~/.ellipsis/bin</code> to your <code>$PATH</code>, but you could also just
 symlink <code>~/.ellipsis/bin/ellipsis</code> somewhere convenient.</p>
