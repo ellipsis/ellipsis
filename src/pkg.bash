@@ -57,7 +57,7 @@ pkg.init() {
 
     # Exit if we're asked to operate on an unknown package.
     if [ ! -d "$PKG_PATH" ]; then
-        log.error "Unkown package $PKG_NAME, $(path.relative_path $PKG_PATH) missing!"
+        log.error "Unkown package $PKG_NAME, $(path.relative_to_home $PKG_PATH) missing!"
         exit 1
     fi
 
@@ -82,7 +82,7 @@ pkg.list_symlink_mappings() {
         local link=$(readlink $file)
 
         if [[ "$link" == *packages/$PKG_NAME* ]]; then
-            echo "$(path.relative_packages_path $link) -> $(path.relative_path $file)";
+            echo "$(path.relative_to_packages $link) -> $(path.relative_to_home $file)";
         fi
     done
 }
