@@ -6,8 +6,8 @@ gh-pages:
 	brief
 
 tag:
-	@echo ELLIPSIS_VERSION=$(version) > src/version.sh
-	@git add src/version.sh
+	@echo ELLIPSIS_VERSION=$(version) > src/version.bash
+	@git add src/version.bash
 	@git commit -m v$(version)
 	@git tag v$(version)
 
