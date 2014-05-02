@@ -19,6 +19,8 @@ _ellipsis() {
     'status:show status of package(s)'
     'publish:publish package to repository'
     'search:search package repository'
+    'help:show usage'
+    'version:show version'
   )
 
   if (( CURRENT == 2 )); then
