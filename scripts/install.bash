@@ -53,6 +53,7 @@ if [ "$PACKAGES" ]; then
     done
 fi
 
+echo
 echo '                                   ~ fin ~                                 '
 echo '   _    _    _                                                             '
 echo '  /\_\ /\_\ /\_\                                                           '
