@@ -45,21 +45,6 @@ rm -rf $tmp_dir
 # Backwards compatability, originally referred to packages as modules.
 PACKAGES="${PACKAGES:-$MODULES}"
 
-if [[ -z "$PACKAGES" ]]; then
-    if [ $(os.platform) = osx ]; then
-        default="zeekay/files zeekay/vim zeekay/zsh zeekay/alfred zeekay/iterm2"
-    else
-        default="zeekay/files zeekay/vim zeekay/zsh"
-    fi
-
-    echo
-    echo "Recommended packages: $default"
-    echo
-    if utils.prompt "Would you like install the recommended packages for your platform? [y/n]"; then
-        PACKAGES="$default"
-    fi
-fi
-
 if [ "$PACKAGES" ]; then
     for pkg in ${PACKAGES[*]}; do
         echo
@@ -78,3 +63,14 @@ echo
 echo 'Run `ellipsis install <package>` to install a new package.'
 echo 'Run `ellipsis search <query>` to search for packages to install.'
 echo 'Run `ellipsis help` for additional options.'
+
+if [[ -z "$PACKAGES" ]]; then
+    if [ $(os.platform) = osx ]; then
+        default_packages="zeekay/files zeekay/vim zeekay/zsh zeekay/alfred zeekay/iterm2"
+    else
+        default_packages="zeekay/files zeekay/vim zeekay/zsh"
+    fi
+
+    echo
+    echo "Recommended packages: $default"
+fi
