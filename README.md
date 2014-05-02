@@ -364,7 +364,7 @@ Xmonad configuration.
 #### [zeekay/zsh][zsh]
 Zsh configuration using zeesh! framework.
 
-<a href="#upgrading-to-ellipsis"></a>
+<a class="anchor" href="#upgrading-to-ellipsis"></a>
 ### Upgrading to ellipsis
 So you've been around the block, got your own collection of dotfiles and you've
 been managing them with a collection of scripts you've cobbled together over the
