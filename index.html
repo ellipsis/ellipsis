@@ -110,21 +110,23 @@ useful for testing).</p>
 </code></pre>
 <h3 id="packages">Packages</h3>
 <p>A package is any repo with files you want to symlink into <code>$ELLIPSIS_PATH</code>
-(typically <code>$HOME</code>). By default a given repo&#39;s non-hidden files (read: not
-beginning with a <code>.</code>) will naively be linked into place.</p>
-<p>Need to compile some libraries or download dependencies? Run various one-off
-scripts when you setup a new system? No problem :) You can customize every
-aspect of how ellipsis uses your package by adding an <code>ellipsis.sh</code> file to the
-root of your project and defining various hooks (using normal bash syntax).</p>
-<p>Here&#39;s an example of a complete <code>ellipsis.sh</code> file:</p>
+(typically <code>$HOME</code>). By default all of a respository&#39;s non-hidden files (read:
+not beginning with a <code>.</code>) will naively be linked into place, with the exception
+of a few common text files (<code>README</code>s, <code>LICENSES</code>s, etc).</p>
+<p>You can customize how ellipsis interacts with your package by adding an
+<code>ellipsis.sh</code> file to the root of your project. Here&#39;s an example of a complete
+<code>ellipsis.sh</code> file:</p>
 <pre><code class="lang-bash"><span class="hljs-shebang">#!/usr/bin/env bash</span>
 </code></pre>
-<p>Yep, that&#39;s it. If all you want to do is symlink some files into <code>$HOME</code>, adding
-an <code>ellipsis.sh</code> to your package is completely optional. Need more? Read on :)</p>
+<p>Yep, that&#39;s it :) If all you want to do is symlink some files into <code>$HOME</code>,
+adding an <code>ellipsis.sh</code> to your package is completely optional. But what if you
+need more? That&#39;s where hooks come in...</p>
 <h3 id="hooks">Hooks</h3>
-<p>Hooks allow you to customize how ellipsis interacts with your package. Say for
-instance you wanted to run the installer for your favorite zsh framework, you
-could define a <code>pkg.install</code> hook like this:</p>
+<p>Hooks allow you to control how ellipis interacts with your package, and how
+various commands are executed against your package. Say for instance you wanted
+to run the installer for your <a href="https://github.com/zeekay/zeesh">favorite zsh
+framework</a>, you could define a <code>pkg.install</code>
+hook like this:</p>
 <pre><code class="lang-bash"><span class="hljs-shebang">#!/usr/bin/env bash
 </span>
 pkg.<span class="hljs-function"><span class="hljs-title">install</span></span>() {
@@ -141,8 +143,7 @@ pkg.<span class="hljs-function"><span class="hljs-title">install</span></span>()
 </ol>
 <h3 id="examples">Examples</h3>
 <p>Here&#39;s a more complete example (from
-<a href="https://github.com/zeekay/dot-files">zeekay/files</a>, my collection of common,
-cross-platform dotfiles):</p>
+<a href="https://github.com/zeekay/dot-files">zeekay/files</a>:</p>
 <pre><code class="lang-bash"><span class="hljs-shebang">#!/usr/bin/env bash
 </span>
 pkg.<span class="hljs-function"><span class="hljs-title">install</span></span>() {
@@ -164,8 +165,8 @@ pkg.<span class="hljs-function"><span class="hljs-title">install</span></span>()
     <span class="hljs-keyword">esac</span>
 }
 </code></pre>
-<p>...and here&#39;s a slightly more complex example (used by
-<a href="https://github.com/zeekay/dot-vim">zeekay/vim</a>, my vim configuration):</p>
+<p>...and here&#39;s a slightly more complex example (from
+<a href="https://github.com/zeekay/dot-vim">zeekay/vim</a>):</p>
 <pre><code class="lang-bash"><span class="hljs-shebang">#!/usr/bin/env bash
 </span>
 pkg.<span class="hljs-function"><span class="hljs-title">install</span></span>() {
