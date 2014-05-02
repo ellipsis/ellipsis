@@ -6,21 +6,17 @@
 \/_/ \/_/ \/_/   …because $HOME is where the <3 is!
 ```
 
-ellipsis is a package manager for dotfiles.
+Ellipsis is a package manager for dotfiles.
 
 ### Features
 - Creating new packages is trivial (any git repository is already a package).
-- Ellipsis makes it easy to share specific bits of your dotfiles. Say a friend
-  wants to test out your ZSH setup but doesn't want to adopt the madness that is
-  your Vim config? No problem, he can just `ellipsis install
-  yourgithubuser/zsh`.
-- Quickly see which dotfiles have been modified, and keep them updated and in
-  sync across systems.
-- Find and remove broken symlinks.
-- Easy to add new dotfiles to your dotfiles repo using `ellipsis add`.
+- Modular configuration files are easier to maintain and share with others.
+- Allows you to quickly see which dotfiles have been modified, and keep them
+  updated and in-sync across systems.
+- Adding new dotfiles to your collection can be automated with `ellipsis add`.
 - Cross platform, known to work on Mac OS X, Linux, FreeBSD and even Cygwin.
-- Completely customizable.
 - Large test suite to ensure your `$HOME` doesn't get ravaged.
+- Completely customizable.
 
 ### Install
 Clone and symlink or use handy-dandy installer:
@@ -32,16 +28,16 @@ $ curl -sL ellipsis.sh | sh
 You can also specify which packages to install by setting the `PACKAGES` variable, i.e.:
 
 ```bash
-$ curl -sL ellipsis.sh | PACKAGES='zeekay/vim zeekay/zsh' sh
+$ curl -sL ellipsis.sh | PACKAGES='vim zsh' sh
 ```
 
-I recommend adding `~/.ellipsis/bin` to your `$PATH`, but you can also just
+I recommend adding `~/.ellipsis/bin` to your `$PATH`, but you could also just
 symlink `~/.ellipsis/bin/ellipsis` somewhere convenient.
 
 ### Usage
 Ellipsis comes with no dotfiles out of the box. To install packages, use
-`ellipsis install`. Packages to install can be specified by github-user/repo or
-full ssh/git/http(s) urls:
+`ellipsis install`. Packages can be specified by github-user/repo or full
+ssh/git/http(s) urls:
 
 ```bash
 $ ellipsis install ssh://github.com/zeekay/private.git
@@ -81,7 +77,7 @@ Usage: ellipsis <command>
 ```
 
 ### Configuration
-You can customize ellipsis by exporting a few different variables.
+You can customize ellipsis by exporting a few different variables:
 
 #### GITHUB_USER / ELLIPSIS_USER
 Customizes whose dotfiles are installed when you `ellipsis install` without
@@ -112,16 +108,16 @@ export ELLIPSIS_PATH="~/.el"
 ### Packages
 A package is any repo with files you want to symlink into `$ELLIPSIS_PATH`
 (typically `$HOME`). By default a given repo's non-hidden files (read: not
-beginning with a `.`) will naively be linked into place. Of course this isn't
-sufficient for a lot of cases, so you can customize how ellipsis treats your
-package by defining hooks in an `ellipsis.sh` file at the root of your
-repository.
+beginning with a `.`) will naively be linked into place. Need a more complex
+instsall process? No problem. You can customize every aspect of how ellipsis
+uses your package using various hooks.
 
 ### Hooks
-Hooks allow you to customize how ellipsis interacts with your package.  For
-instance if you want to change how your package is installed you can define
-`pkg.install` and specifiy exactly which files are symlinked into place, compile
-any libraries, etc.
+Hooks are defined in `ellipsis.sh` files in the root of your package's
+repository. Hooks allow you to customize how ellipsis interacts with your
+package. For instance, if you wanted to change how your package is installed you
+can define `pkg.install` and specifiy exactly which files are symlinked into
+place, compile any libraries necessary, etc.
 
 #### Example
 Here's a full example of an `ellipsis.sh` file:
@@ -130,7 +126,11 @@ Here's a full example of an `ellipsis.sh` file:
 #!/usr/bin/env bash
 ```
 
-...of course that's not very helpful :) Here's a more complete example (from
+...of course that's not very helpful! But it's true, the `ellipsis.sh` file is
+completely optional if all you want to do is symlink some files into your
+`$HOME`.
+
+Here's a more complete example (from
 [zeekay/files](https://github.com/zeekay/dot-files), my collection of common,
 cross-platform dotfiles):
 
@@ -157,7 +157,7 @@ pkg.install() {
 }
 ```
 
-And here's a slightly more advanced example (used by
+...and here's a slightly more complex example (used by
 [zeekay/vim](https://github.com/zeekay/dot-vim), my vim configuration):
 
 ```bash
@@ -212,9 +212,13 @@ pkg.push() {
 ```
 
 ### API
-You can customize the behavior of ellipsis by defining various hooks. When
-defining your hooks each hook is run from the directory of your package and
-`$PKG_NAME` and `$PKG_PATH` are set to reflect your package. The hooks available
+Typically you'll interact with the ellipsis API from your package's
+`ellipsis.sh` file. Besides the hooks which you can use to customize how
+ellipsis interacts with your package, there is a large collection of functions
+and variables which you might find useful in your packages.
+
+Hooks are executed from the root of your package and `$PKG_NAME` and `$PKG_PATH`
+are set to reflect your package. The hooks available
 are:
 
 #### pkg.add
