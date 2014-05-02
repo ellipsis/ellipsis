@@ -874,8 +874,8 @@ h2 {
 
 a.anchor {
   display: block;
-  position: absolute;
-  top: 50px;
+  position: relative;
+  top: -150px;
   visibility: hidden;
   width: 1px;
 }
