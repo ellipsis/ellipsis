@@ -66,11 +66,8 @@ echo 'Run `ellipsis help` for additional options.'
 
 if [[ -z "$PACKAGES" ]]; then
     if [ $(os.platform) = osx ]; then
-        PACKAGES="zeekay/files zeekay/vim zeekay/zsh zeekay/alfred zeekay/iterm2"
+        echo Recommended: zeekay/files zeekay/vim zeekay/zsh zeekay/alfred zeekay/iterm2
     else
-        PACKAGES="zeekay/files zeekay/vim zeekay/zsh"
+        echo Recommended: zeekay/files zeekay/vim zeekay/zsh
     fi
-
-    echo
-    echo "Recommended packages: $PACKAGES"
 fi
