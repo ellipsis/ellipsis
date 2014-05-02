@@ -364,12 +364,15 @@ Xmonad configuration.
 #### [zeekay/zsh][zsh]
 Zsh configuration using zeesh! framework.
 
-<a class="anchor" href="#upgrading-to-ellipsis"></a>
+<a class="anchor" href="#upgrading-to-ellipsis" name="upgrading-to-ellipsis"></a>
+
 ### Upgrading to ellipsis
 So you've been around the block, you've got your own collection of dotfiles and
 you've been managing them with a collection of scripts you've cobbled together
-over the years...we've all been there. Luckily it's easy to convert your
-existing dotfiles into a shiny new ellipsis package:
+over the years...we've all been there.
+
+Luckily it's easy to convert your existing dotfiles into a shiny new ellipsis
+package:
 
 ```bash
 $ export ELLIPSIS_USER=your-github-user
