@@ -31,6 +31,7 @@ load ellipsis
 load fs
 load os
 load registry
+load utils
 
 ELLIPSIS_PATH="$FINAL_ELLIPSIS_PATH"
 
@@ -44,37 +45,31 @@ rm -rf $tmp_dir
 # Backwards compatability, originally referred to packages as modules.
 PACKAGES="${PACKAGES:-$MODULES}"
 
-if [[ -z "$PACKAGES" ]]; then
-    # List available packages.
-    registry.available
-
-    # List default packages for this platform.
-    if [ $(os.platform) = osx ]; then
-        default="zeekay/files zeekay/vim zeekay/zsh zeekay/alfred zeekay/iterm2"
-    else
-        default="zeekay/files zeekay/vim zeekay/zsh"
-    fi
-
-    echo "default: $default"
-
-    # allow user to override defaults
-    read packages < /dev/tty
-    packages="${packages:-$default}"
-else
-    # user already provided packages list to install
-    packages="$PACKAGES"
+if [ "$PACKAGES" ]; then
+    for pkg in ${PACKAGES[*]}; do
+        echo
+        echo -e "\033[1minstalling $pkg\033[0m"
+        ellipsis.install "$pkg"
+    done
 fi
 
-# install selected packages.
-for pkg in ${packages[*]}; do
-    echo -e "\033[1minstalling $pkg\033[0m"
-    ellipsis.install "$pkg"
-done
-
 echo
-echo 'Note: export PATH=~/.ellipsis/bin:$PATH to add ellipsis to your $PATH      '
-echo
-echo '   _    _    _'
-echo '  /\_\ /\_\ /\_\'
+echo '                                   ~ fin ~                                 '
+echo '   _    _    _                                                             '
+echo '  /\_\ /\_\ /\_\                                                           '
 echo '  \/_/ \/_/ \/_/                         …because $HOME is where the <3 is!'
 echo
+echo 'Be sure to add `export PATH=~/.ellipsis/bin:$PATH` to your bashrc or zshrc.'
+echo
+echo 'Run `ellipsis install <package>` to install a new package.'
+echo 'Run `ellipsis search <query>` to search for packages to install.'
+echo 'Run `ellipsis help` for additional options.'
+
+if [[ -z "$PACKAGES" ]]; then
+    echo
+    if [ $(os.platform) = osx ]; then
+        echo Recommended packages: zeekay/files zeekay/vim zeekay/zsh zeekay/alfred zeekay/iterm2
+    else
+        echo Recommended packages: zeekay/files zeekay/vim zeekay/zsh
+    fi
+fi
