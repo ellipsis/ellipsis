@@ -327,14 +327,14 @@ mv ~/my-dotfiles/.zshrc dotfiles/zshrc
 linking dotfiles/zshrc -&gt; ~/.zshrc
 </code></pre>
 <h3 id="completion">Completion</h3>
-<p>A completion file for zsh is <a href="zshcomp">included</a>. To use it add <code>_ellipsis</code> to
+<p>A completion file for zsh is [included][zshcomp]. To use it add <code>_ellipsis</code> to
 your <code>fpath</code> and ensure auto-completion is enabled:</p>
 <pre><code class="lang-bash">fpath=(<span class="hljs-variable">$HOME</span>/.ellipsis/comp <span class="hljs-variable">$fpath</span>)
 autoload -U compinit; compinit
 </code></pre>
 <h3 id="development">Development</h3>
-<p>Pull requests welcome! New code should follow <a href="style-guide">existing style</a> and include tests
-(tests are written with <a href="https://github.com/sstephenson/bats">bats</a>).</p>
+<p>Pull requests welcome! New code should follow the <a href="https://google-styleguide.googlecode.com/svn/trunk/shell.xml">existing style</a>
+(and ideally include <a href="https://github.com/sstephenson/bats">tests</a>).</p>
 <p>To suggest a feature or report a bug: <a href="http://github.com/zeekay/ellipsis/issues">http://github.com/zeekay/ellipsis/issues</a>.</p>
 </section>
     </div>
