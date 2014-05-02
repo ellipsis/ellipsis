@@ -150,7 +150,7 @@ When you `ellipsis install` a package, ellipsis:
 
 ### Examples
 Here's a more complete example (from
-[zeekay/files](https://github.com/zeekay/dot-files):
+[zeekay/files](https://github.com/zeekay/dot-files)):
 
 ```bash
 #!/usr/bin/env bash
@@ -283,16 +283,16 @@ Returns true if file is a symlink.
 #### fs.is_ellipsis_symlink
 Returns true if file is a symlink pointing to an ellipsis package.
 
-##### fs.is_broken_symlink
+#### fs.is_broken_symlink
 Returns true if file is a broken symlink.
 
-##### fs.list_symlinks
+#### fs.list_symlinks
 Lists symlinks in a folder, defaulting to `$ELLIPSIS_HOME`.
 
-##### fs.backup
+#### fs.backup
 Creates a backup of an existing file, ensuring you don't overwrite existing backups.
 
-##### fs.link_file
+#### fs.link_file
 Symlinks a single file into `$ELLIPSIS_HOME`.
 
 #### fs.link_files
