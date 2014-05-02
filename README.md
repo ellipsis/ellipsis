@@ -397,7 +397,7 @@ autoload -U compinit; compinit
 
 ### Development
 Pull requests welcome! New code should follow the [existing style](style-guide)
-(and ideally include tests).
+(and ideally include [tests](bats)).
 
 To suggest a feature or report a bug: http://github.com/zeekay/ellipsis/issues.
 
