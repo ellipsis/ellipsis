@@ -367,9 +367,9 @@ Zsh configuration using zeesh! framework.
 <a class="anchor" href="#upgrading-to-ellipsis" name="upgrading-to-ellipsis"></a>
 
 ### Upgrading to ellipsis
-So you've been around the block, you've got your own collection of dotfiles and
-you've been managing them with a collection of scripts you've cobbled together
-over the years...we've all been there.
+No stranger to dotfiles? Spent years hording complex configurations for esoteric
+and archaic programs? Have your own system for managing them using a bunch of
+scripts you've cobbled together over the years? ...I've been there, friend.
 
 Luckily it's easy to convert your existing dotfiles into a shiny new ellipsis
 package:
