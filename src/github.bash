@@ -14,12 +14,30 @@ github.list_repos() {
 }
 
 # Parses Github JSON API responses into:
+#   name         zeekay/alfred
+#   description  My alfred dotfiles, ellipsis.sh compatible.
+#   homepage     https://github.com/zeekay/dot-alfred
+github.format_json() {
+    grep -e '"description": "[^"]*[^"]'                      \
+         -e '"name": "[^"]*[^"]'                             \
+         -e '"homepage": "[^"]*[^"]'                         \
+         -e '"default_branch": "[^"]*[^"]'                   \
+   | sed -e 's/"default_branch":.*//'                        \
+   | cut -f2- -d '"'                                         \
+   | sed -E 's/name": "(.+[^-])-(.+[^-])-(.+)/name  \1\/\3/' \
+   | sed -e 's/description": "/desc  /'                      \
+         -e 's/homepage": "/url   /'                         \
+         -e 's/,$//'                                         \
+         -e 's/"$//'
+}
+
+# Parses Github JSON API responses into:
 #   name         zeekay/dot-alfred
 #   description  My alfred dotfiles, ellipsis.sh compatible.
 #   homepage     https://github.com/zeekay/dot-alfred
 #   forks        0
 #   watchers     0
-github.format_json() {
+github.format_json_long() {
     grep -e '"description": "[^"]*[^"]'                  \
          -e '"name": "[^"]*[^"]'                         \
          -e '"homepage": "[^"]*[^"]'                     \
