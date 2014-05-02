@@ -42,6 +42,7 @@ updated and in-sync across systems.</li>
 <li>Cross platform, known to work on Mac OS X, Linux, FreeBSD and even Cygwin.</li>
 <li>Large test suite to ensure your <code>$HOME</code> doesn&#39;t get ravaged.</li>
 <li>Completely customizable.</li>
+<li><a href="#upgrading-to-ellipsis">Works with existing dotfiles!</a></li>
 </ul>
 <h3 id="install">Install</h3>
 <p>Clone and symlink or use handy-dandy installer:</p>
@@ -306,6 +307,25 @@ variables which ellipsis exposes for you:</p>
 <p>Xmonad configuration.</p>
 <h4 id="-zeekay-zsh-zsh-"><a href="https://github.com/zeekay/dot-zsh">zeekay/zsh</a></h4>
 <p>Zsh configuration using zeesh! framework.</p>
+<h3 id="-a-class-anchor-href-upgrading-to-ellipsis-name-upgrading-to-ellipsis-upgrading-to-ellipsis-a-"><a class="anchor" href="#upgrading-to-ellipsis" name="upgrading-to-ellipsis">Upgrading to ellipsis</a></h3>
+<p>So you&#39;ve been around the block, got your own collection of dotfiles and you&#39;ve
+been managing them with a collection of scripts you&#39;ve cobbled together over the
+years...we&#39;ve all been there. Luckily ellipis makes it easy to convert your
+existing dotfiles into a pristine, new ellipsis package:</p>
+<pre><code class="lang-bash">$ <span class="hljs-keyword">export</span> ELLIPSIS_USER=zeekay
+$ ellipsis new dotfiles
+Initialized empty Git repository <span class="hljs-keyword">in</span> /Users/zeekay/.ellipsis/packages/dotfiles/.git/
+[master (root-commit) <span class="hljs-number">5</span>f5d2a9] Initial commit
+ <span class="hljs-number">2</span> files changed, <span class="hljs-number">35</span> insertions(+)
+ create mode <span class="hljs-number">100644</span> README.md
+ create mode <span class="hljs-number">100644</span> ellipsis.sh
+new package created at ~/.ellipsis/packages/dotfiles
+$ ellipsis add dotfiles .*
+mv ~/my-dotfiles/.vimrc dotfiles/vimrc
+linking dotfiles/vimrc -&gt; ~/.vimrc
+mv ~/my-dotfiles/.zshrc dotfiles/zshrc
+linking dotfiles/zshrc -&gt; ~/.zshrc
+</code></pre>
 <h3 id="completion">Completion</h3>
 <p>A completion file for zsh is <a href="zshcomp">included</a>. To use it add <code>_ellipsis</code> to
 your <code>fpath</code> and ensure auto-completion is enabled:</p>
