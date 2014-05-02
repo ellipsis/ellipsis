@@ -366,15 +366,15 @@ Zsh configuration using zeesh! framework.
 
 <a class="anchor" href="#upgrading-to-ellipsis"></a>
 ### Upgrading to ellipsis
-So you've been around the block, got your own collection of dotfiles and you've
-been managing them with a collection of scripts you've cobbled together over the
-years...we've all been there. Luckily it's easy to convert your existing
-dotfiles into a shiny new ellipsis package:
+So you've been around the block, you've got your own collection of dotfiles and
+you've been managing them with a collection of scripts you've cobbled together
+over the years...we've all been there. Luckily it's easy to convert your
+existing dotfiles into a shiny new ellipsis package:
 
 ```bash
 $ export ELLIPSIS_USER=your-github-user
 $ ellipsis new dotfiles
-Initialized empty Git repository in /home/user/.ellipsis/packages/dotfiles/.git/
+Initialized empty Git repository in /home/u/.ellipsis/packages/dotfiles/.git/
 [master (root-commit) 5f5d2a9] Initial commit
  2 files changed, 35 insertions(+)
  create mode 100644 README.md
