@@ -25,8 +25,9 @@ Clone and symlink or use handy-dandy installer:
 $ curl ellipsis.sh | sh
 ```
 
-<sup>...no you didn't read that wrong, [this website also doubles as the
-installer.](view-source:http://ellipsis.sh)</sup>
+<sup>...no you didn't read that wrong, <a
+href="view-source:http://ellipsis.sh/">this website also doubles as the
+installer.</a></sup>
 
 You can also specify which packages to install by setting the `PACKAGES` variable, i.e.:
 
