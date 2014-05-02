@@ -387,7 +387,7 @@ linking dotfiles/zshrc -> ~/.zshrc
 ```
 
 ### Completion
-A completion file for zsh is [included](zshcomp). To use it add `_ellipsis` to
+A completion file for zsh is [included][zshcomp]. To use it add `_ellipsis` to
 your `fpath` and ensure auto-completion is enabled:
 
 ```bash
@@ -396,8 +396,8 @@ autoload -U compinit; compinit
 ```
 
 ### Development
-Pull requests welcome! New code should follow the [existing style](style-guide)
-(and ideally include [tests](bats)).
+Pull requests welcome! New code should follow the [existing style][style-guide]
+(and ideally include [tests][bats]).
 
 To suggest a feature or report a bug: http://github.com/zeekay/ellipsis/issues.
 
