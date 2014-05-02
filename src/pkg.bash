@@ -16,7 +16,7 @@ pkg.name_stripped() {
 
 # Convert package name to path.
 pkg.path_from_name() {
-    echo "$ELLIPSIS_PATH/packages/$1"
+    echo "$ELLIPSIS_PACKAGES/$1"
 }
 
 # Convert package path to name, stripping any leading dots.
