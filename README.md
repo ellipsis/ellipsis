@@ -124,11 +124,19 @@ instance if you want to change how your package is installed you can define
 any libraries, etc.
 
 #### Example
-Here's a full example of an `ellipsis.sh` file, used by
-[zeekay/files](https://github.com/zeekay/dot-files) (my common cross-platform
-dotfiles):
+Here's a full example of an `ellipsis.sh` file:
 
 ```shell
+#!/usr/bin/env bash
+```
+
+...of course that's not very helpful :) Here's a more complete example (from
+[zeekay/files](https://github.com/zeekay/dot-files), my collection of common,
+cross-platform dotfiles):
+
+```shell
+#!/usr/bin/env bash
+
 pkg.install() {
     fs.link_files common
 
@@ -149,10 +157,12 @@ pkg.install() {
 }
 ```
 
-And here's another more advanced one used by
-[zeekay/vim](https://github.com/zeekay/dot-vim) (my vim configuration):
+And here's a slightly more advanced example (used by
+[zeekay/vim](https://github.com/zeekay/dot-vim), my vim configuration):
 
 ```shell
+#!/usr/bin/env bash
+
 pkg.install() {
     files=(gvimrc vimrc vimgitrc vimpagerrc)
 
