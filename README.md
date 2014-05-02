@@ -377,16 +377,16 @@ package:
 ```bash
 $ export ELLIPSIS_USER=your-github-user
 $ ellipsis new dotfiles
-Initialized empty Git repository in /home/u/.ellipsis/packages/dotfiles/.git/
+Initialized empty Git repository in /home/user/.ellipsis/packages/dotfiles/.git/
 [master (root-commit) 5f5d2a9] Initial commit
  2 files changed, 35 insertions(+)
  create mode 100644 README.md
  create mode 100644 ellipsis.sh
 new package created at ~/.ellipsis/packages/dotfiles
 $ ellipsis add dotfiles .*
-mv ~/my-dotfiles/.vimrc dotfiles/vimrc
+mv ~/.vimrc dotfiles/vimrc
 linking dotfiles/vimrc -> ~/.vimrc
-mv ~/my-dotfiles/.zshrc dotfiles/zshrc
+mv ~/.zshrc dotfiles/zshrc
 linking dotfiles/zshrc -> ~/.zshrc
 ```
 
