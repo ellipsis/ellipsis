@@ -53,7 +53,6 @@ if [ "$PACKAGES" ]; then
     done
 fi
 
-echo '...done!'
 echo '   _    _    _'
 echo '  /\_\ /\_\ /\_\'
 echo '  \/_/ \/_/ \/_/                         …because $HOME is where the <3 is!'
@@ -65,9 +64,10 @@ echo 'Run `ellipsis search <query>` to search for packages to install.'
 echo 'Run `ellipsis help` for additional options.'
 
 if [[ -z "$PACKAGES" ]]; then
+    echo
     if [ $(os.platform) = osx ]; then
-        echo Recommended: zeekay/files zeekay/vim zeekay/zsh zeekay/alfred zeekay/iterm2
+        echo Recommended packages: zeekay/files zeekay/vim zeekay/zsh zeekay/alfred zeekay/iterm2
     else
-        echo Recommended: zeekay/files zeekay/vim zeekay/zsh
+        echo Recommended packages: zeekay/files zeekay/vim zeekay/zsh
     fi
 fi
