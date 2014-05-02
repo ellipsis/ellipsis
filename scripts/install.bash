@@ -62,6 +62,7 @@ fi
 
 if [ "$PACKAGES" ]; then
     for pkg in ${PACKAGES[*]}; do
+        echo
         echo -e "\033[1minstalling $pkg\033[0m"
         ellipsis.install "$pkg"
     done
