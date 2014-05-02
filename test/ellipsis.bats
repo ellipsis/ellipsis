@@ -16,6 +16,7 @@ teardown() {
 
 @test "ellipsis.install should install a new package" {
     run ellipsis.install zeekay/files
+    [ $status -eq 0 ]
     # packages gets installed into packages
     [ -e $ELLIPSIS_PACKAGES/files/ellipsis.sh ]
     # creates symlinks
@@ -26,20 +27,40 @@ teardown() {
     [ ! "$(cat $ELLIPSIS_HOME/.ackrc)" = old ]
 }
 
+
 @test "ellipsis.uninstall should uninstall a package" {
-    skip
+    run ellipsis.install zeekay/files
+    [ $status -eq 0 ]
+    run ellipsis.uninstall files
+    [ $status -eq 0 ]
+    [ ! -e $ELLIPSIS_PACKAGES/files/ellipsis.sh ]
+    [ ! -e $ELLIPSIS_HOME/.ackrc ]
 }
 
-@test "ellipsis.list should unlink a package" {
-    skip
+@test "ellipsis.link should link a package" {
+    run ellipsis.install zeekay/files
+    [ $status -eq 0 ]
+    run ellipsis.unlink files
+    [ $status -eq 0 ]
+    run ellipsis.link files
+    [ $status -eq 0 ]
+    [ -e $ELLIPSIS_HOME/.ackrc ]
 }
 
 @test "ellipsis.unlink should unlink a package" {
-    skip
+    run ellipsis.install zeekay/files
+    [ $status -eq 0 ]
+    run ellipsis.unlink files
+    [ $status -eq 0 ]
+    [ ! -e $ELLIPSIS_HOME/.ackrc ]
 }
 
-@test "ellipsis.list should list installed packages" {
-    skip
+@test "ellipsis.installed should list installed packages" {
+    run ellipsis.install zeekay/files
+    [ $status -eq 0 ]
+    run ellipsis.installed
+    echo $output
+    [ $status -eq 0 ]
 }
 
 @test "ellipsis.new should create a new package" {
