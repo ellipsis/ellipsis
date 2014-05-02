@@ -871,3 +871,10 @@ section {
 h2 {
   margin-bottom: 20px;
 }
+
+a.anchor {
+  display: block;
+  position: relative;
+  top: -75px;
+  visibility: hidden;
+}
