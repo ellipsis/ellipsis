@@ -31,7 +31,6 @@ load ellipsis
 load fs
 load os
 load registry
-load utils
 
 ELLIPSIS_PATH="$FINAL_ELLIPSIS_PATH"
 
