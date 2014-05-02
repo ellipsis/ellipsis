@@ -110,28 +110,44 @@ export ELLIPSIS_PATH="~/.el"
 ### Packages
 A package is any repo with files you want to symlink into `$ELLIPSIS_PATH`
 (typically `$HOME`). By default a given repo's non-hidden files (read: not
-beginning with a `.`) will naively be linked into place. Need a more complex
-instsall process? No problem. You can customize every aspect of how ellipsis
-uses your package using various hooks.
+beginning with a `.`) will naively be linked into place.
 
-### Hooks
-Hooks are defined in `ellipsis.sh` files in the root of your package's
-repository. Hooks allow you to customize how ellipsis interacts with your
-package. For instance, if you wanted to change how your package is installed you
-can define `pkg.install` and specifiy exactly which files are symlinked into
-place, compile any libraries necessary, etc.
+Need to compile some libraries or download dependencies? Run various one-off
+scripts when you setup a new system? No problem :) You can customize every
+aspect of how ellipsis uses your package by adding an `ellipsis.sh` file to the
+root of your project and defining various hooks (using normal bash syntax).
 
-#### Example
-Here's a full example of an `ellipsis.sh` file:
+Here's an example of a complete `ellipsis.sh` file:
 
 ```bash
 #!/usr/bin/env bash
 ```
 
-...of course that's not very helpful! But it's true, the `ellipsis.sh` file is
-completely optional if all you want to do is symlink some files into your
-`$HOME`.
+Yep, that's it. If all you want to do is symlink some files into `$HOME`, adding
+an `ellipsis.sh` to your package is completely optional. Need more? Read on :)
 
+### Hooks
+Hooks allow you to customize how ellipsis interacts with your package. Say for
+instance you wanted to run the installer for your favorite zsh framework, you
+could define a `pkg.install` hook like this:
+
+```bash
+#!/usr/bin/env bash
+
+pkg.install() {
+    utils.run_installer 'https://raw.github.com/zeekay/zeesh/master/scripts/install.sh'
+}
+```
+
+When you `ellipsis install` a package, ellipsis:
+
+1. `git clone`'s the package into `~/.ellipsis/packages`.
+2. Changes the current working dir to the package.
+3. Sets `$PKG_NAME` and `$PKG_PATH`.
+4. Sources the package's `ellipsis.sh` (if one exists).
+5. Executes the package's `pkg.install` hook or `hooks.install` (the default hook).
+
+### Examples
 Here's a more complete example (from
 [zeekay/files](https://github.com/zeekay/dot-files), my collection of common,
 cross-platform dotfiles):
@@ -213,15 +229,7 @@ pkg.push() {
 }
 ```
 
-### API
-Typically you'll interact with the ellipsis API from your package's
-`ellipsis.sh` file. Besides the hooks which you can use to customize how
-ellipsis interacts with your package, there is a large collection of functions
-and variables which you might find useful in your packages.
-
-Hooks are executed from the root of your package and `$PKG_NAME` and `$PKG_PATH`
-are set to reflect your package. The hooks available
-are:
+The hooks available in your `ellipsis.sh` are:
 
 #### pkg.add
 Customizes how a files is added to your package.
@@ -252,11 +260,10 @@ the package is deleted from `$ELLIPSIS_PATH/packages`.
 #### pkg.uninstall
 Customize which files are unlinked by your package.
 
-For references all the default hooks are available as `hooks.<hookname>`, which
-makes it easy to use them in your hooks.
-
-You can also call pretty much any internal ellipsis function, there are several
-which you might find useful when writing your own hooks:
+### API
+Besides the default hook implementations which are available to you from your
+`ellipsis.sh` as `hooks.<name>`, there are a number of useful functions and
+variables which ellipsis exposes for you:
 
 #### ellipsis.list_packages
 Lists all installed packages.
@@ -356,7 +363,7 @@ Xmonad configuration.
 #### [zeekay/zsh][zsh]
 Zsh configuration using zeesh! framework.
 
-### Completions
+### Completion
 A completion file for zsh is [included](zshcomp). To use it add `_ellipsis` to
 your `fpath` and ensure auto-completion is enabled:
 
