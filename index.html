@@ -105,6 +105,9 @@ to <code>https://github.com/zeekay/ellipsis</code>.</p>
 useful for testing).</p>
 <h4 id="ellipsis_path">ELLIPSIS_PATH</h4>
 <p>Customize where ellipsis lives on your filesystem, defaults to <code>~/.ellipsis</code>.</p>
+<h4 id="ellipsis_package">ELLIPSIS_PACKAGE</h4>
+<p>Customize where ellipsis installs packages on your filesystem, defaults to
+<code>~/.ellipsis/packages</code>.</p>
 <pre><code class="lang-bash"><span class="hljs-keyword">export</span> ELLIPSIS_USER=<span class="hljs-string">"zeekay"</span>
 <span class="hljs-keyword">export</span> ELLIPSIS_SSH=<span class="hljs-string">"ssh"</span>
 <span class="hljs-keyword">export</span> ELLIPSIS_PATH=<span class="hljs-string">"~/.el"</span>
@@ -281,6 +284,16 @@ variables which ellipsis exposes for you:</p>
 <p>Returns true if repository has changes.</p>
 <h4 id="git-diffstat">git.diffstat</h4>
 <p>Displays <code>git diff --stat</code>.</p>
+<h4 id="path-abs_path">path.abs_path</h4>
+<p>Return absolute path to <code>$1</code>.</p>
+<h4 id="path-is_path">path.is_path</h4>
+<p>Simple heuristic to determine if <code>$1</code> is a path.</p>
+<h4 id="path-relative_to_home">path.relative_to_home</h4>
+<p>Replaces <code>$HOME</code> with <code>~</code></p>
+<h4 id="path-relative_to_packages">path.relative_to_packages</h4>
+<p>Strips <code>$ELLIPSIS_PACKAGES</code> from path.</p>
+<h4 id="path-strip_dot">path.strip_dot</h4>
+<p>Strip dot from hidden files/folders.</p>
 <h4 id="os-platform">os.platform</h4>
 <p>Returns one of <code>cygwin</code>, <code>freebsd</code>, <code>linux</code>, <code>osx</code>.</p>
 <h4 id="utils-cmd_exists">utils.cmd_exists</h4>
