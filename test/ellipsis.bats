@@ -5,7 +5,7 @@ load ellipsis
 
 mock_package() {
     cp -rf test/fixtures/test-package $ELLIPSIS_PACKAGES/test
-    cp -rf test/fixtures/test-package/.git $ELLIPSIS_PACKAGES/test/.git
+    cp -rf test/fixtures/test-package/.git $ELLIPSIS_PACKAGES/test
 }
 
 mock_package_install() {
