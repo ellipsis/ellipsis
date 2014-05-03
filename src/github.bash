@@ -3,14 +3,14 @@
 # Assorted functions for querying Github for package information and formatting
 # responses.
 
-# Search epmi org on Github for a given package.
+# Search ellipsis-index org on Github for a given package.
 github.search() {
-    curl -s https://api.github.com/search/repositories\?q\=$1+user:epmi+fork:only
+    curl -s https://api.github.com/search/repositories\?q\=$1+user:ellipsis-index+fork:only
 }
 
-# List packages forked to epmi org on Github.
+# List packages forked to ellipsis-index org on Github.
 github.list_repos() {
-    curl -s https://api.github.com/orgs/epmi/repos\?type\=forks
+    curl -s https://api.github.com/orgs/ellipsis-index/repos\?type\=forks
 }
 
 # Parses Github JSON API responses into:
