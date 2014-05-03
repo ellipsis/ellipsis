@@ -38,21 +38,26 @@ ellipsis.install() {
     fi
 
     for package in "$@"; do
-        case "$package" in
-            http:*|https:*|git:*|ssh:*)
-                PKG_NAME="$(pkg.name_from_url $package)"
-                PKG_URL="$package"
-            ;;
-            */*)
-                PKG_USER="$(pkg.user_from_shorthand $package)"
-                PKG_NAME="$(pkg.name_from_shorthand $package)"
-                PKG_URL="$ELLIPSIS_PROTO://github.com/$PKG_USER/dot-$(pkg.name_stripped $PKG_NAME)"
-            ;;
-            *)
-                PKG_NAME="$package"
-                PKG_URL="$ELLIPSIS_PROTO://github.com/$ELLIPSIS_USER/dot-$(pkg.name_stripped $PKG_NAME)"
-            ;;
-        esac
+        if [ -e "$package" ]; then
+            PKG_URL="$package"
+            PKG_NAME="$(pkg.name_from_url $package)"
+        else
+            case "$package" in
+                http:*|https:*|git:*|ssh:*)
+                    PKG_NAME="$(pkg.name_from_url $package)"
+                    PKG_URL="$package"
+                ;;
+                */*)
+                    PKG_USER="$(pkg.user_from_shorthand $package)"
+                    PKG_NAME="$(pkg.name_from_shorthand $package)"
+                    PKG_URL="$ELLIPSIS_PROTO://github.com/$PKG_USER/dot-$(pkg.name_stripped $PKG_NAME)"
+                ;;
+                *)
+                    PKG_NAME="$package"
+                    PKG_URL="$ELLIPSIS_PROTO://github.com/$ELLIPSIS_USER/dot-$(pkg.name_stripped $PKG_NAME)"
+                ;;
+            esac
+        fi
 
         # strip leading dot- from name as a convenience
         PKG_NAME=$(pkg.name_stripped $PKG_NAME)
