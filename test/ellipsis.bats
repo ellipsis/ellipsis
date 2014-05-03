@@ -3,28 +3,28 @@
 load _helper
 load ellipsis
 
-mock_package() {
-    cp -rf test/fixtures/test-package $ELLIPSIS_PACKAGES/test
-    cp -rf test/fixtures/test-package/.git $ELLIPSIS_PACKAGES/test
+cp_test_package() {
+    cp -rf test/fixtures/dot-test $ELLIPSIS_PACKAGES/test
+    cp -rf test/fixtures/dot-test/.git $ELLIPSIS_PACKAGES/test/.git
 }
 
-mock_package_install() {
-    mv $ELLIPSIS_HOME/.ackrc $ELLIPSIS_HOME/.ackrc.bak
-    ln -s $ELLIPSIS_PACKAGES/file/common/ackrc $ELLIPSIS_HOME/.ackrc
+ln_test_package() {
+    mv $ELLIPSIS_HOME/.file $ELLIPSIS_HOME/.file.bak
+    ln -s $ELLIPSIS_PACKAGES/file/common/file $ELLIPSIS_HOME/.file
 }
 
 setup() {
     export ELLIPSIS_HOME=$TESTS_DIR/tmp/ellipsis_home
     export ELLIPSIS_PACKAGES=$ELLIPSIS_HOME/.ellipsis/packages
     mkdir -p $ELLIPSIS_PACKAGES
-    echo 'old' > $ELLIPSIS_HOME/.ackrc
+    echo 'old' > $ELLIPSIS_HOME/.file
 
     if [ $BATS_TEST_NUMBER -eq 2 ]; then
-        mock_package
+        cp_test_package
     fi
 
-    if [ $BATS_TEST_NUMBER -gt 1 ]; then
-        mock_package_install
+    if [ $BATS_TEST_NUMBER -gt 2 ]; then
+        ln_test_package
     fi
 }
 
