@@ -3,11 +3,34 @@
 load _helper
 load ellipsis
 
+mock_package() {
+    mkdir -p $ELLIPSIS_PACKAGES/files/common
+    cd $ELLIPSIS_PACKAGES/files
+    echo 'pkg.link() { fs.link_files common }' > ellipsis.sh
+    echo 'new' > common/ackrc
+    git init
+    git add ellipsis.sh common/ackrc
+    git commit -m "Initial commit."
+}
+
+mock_package_install() {
+    mv $ELLIPSIS_HOME/.ackrc $ELLIPSIS_HOME/.ackrc.bak
+    ln -s $ELLIPSIS_PACKAGES/file/common/ackrc $ELLIPSIS_HOME/.ackrc
+}
+
 setup() {
     export ELLIPSIS_HOME=$TESTS_DIR/tmp/ellipsis_home
     export ELLIPSIS_PACKAGES=$ELLIPSIS_HOME/.ellipsis/packages
     mkdir -p $ELLIPSIS_PACKAGES
     echo 'old' > $ELLIPSIS_HOME/.ackrc
+
+    if [ $BATS_TEST_NUMBER -eq 2 ]; then
+        mock_package
+    fi
+
+    if [ $BATS_TEST_NUMBER -gt 1 ]; then
+        mock_package_install
+    fi
 }
 
 teardown() {
@@ -27,39 +50,27 @@ teardown() {
     [ ! "$(cat $ELLIPSIS_HOME/.ackrc)" = old ]
 }
 
+@test "ellipsis.link should link a package" {
+    run ellipsis.link files
+    [ $status -eq 0 ]
+    [ -e $ELLIPSIS_HOME/.ackrc ]
+}
 
 @test "ellipsis.uninstall should uninstall a package" {
-    run ellipsis.install zeekay/files
-    [ $status -eq 0 ]
     run ellipsis.uninstall files
     [ $status -eq 0 ]
     [ ! -e $ELLIPSIS_PACKAGES/files/ellipsis.sh ]
     [ ! -e $ELLIPSIS_HOME/.ackrc ]
 }
 
-@test "ellipsis.link should link a package" {
-    run ellipsis.install zeekay/files
-    [ $status -eq 0 ]
-    run ellipsis.unlink files
-    [ $status -eq 0 ]
-    run ellipsis.link files
-    [ $status -eq 0 ]
-    [ -e $ELLIPSIS_HOME/.ackrc ]
-}
-
 @test "ellipsis.unlink should unlink a package" {
-    run ellipsis.install zeekay/files
-    [ $status -eq 0 ]
     run ellipsis.unlink files
     [ $status -eq 0 ]
     [ ! -e $ELLIPSIS_HOME/.ackrc ]
 }
 
 @test "ellipsis.installed should list installed packages" {
-    run ellipsis.install zeekay/files
-    [ $status -eq 0 ]
     run ellipsis.installed
-    echo $output
     [ $status -eq 0 ]
 }
 
@@ -68,11 +79,15 @@ teardown() {
 }
 
 @test "ellipsis.edit should edit package ellipsis.sh" {
-    skip
+    export EDITOR=cat
+    run ellipsis.edit files
+    [ $status -eq 0 ]
+    [ "${lines[0]}" = "pkg.link() { fs.link_files common }" ]
 }
 
 @test "ellipsis.each should run hook for each installed package" {
-    skip
+    run ellipsis.each git.status
+    [ $status -eq 0 ]
 }
 
 @test "ellipsis.list_packages should list installed packages" {
