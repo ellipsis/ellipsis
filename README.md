@@ -390,7 +390,7 @@ Zsh configuration using zeesh! framework.
 ### Upgrading to ellipsis
 No stranger to dotfiles? Spent years hording complex configurations for esoteric
 and archaic programs? Have your own system for managing them using a bunch of
-scripts you've cobbled together over the years? ...I've been there, friend.
+scripts you've cobbled together over the years? I've been there, friend.
 
 Luckily it's easy to convert your existing dotfiles into a shiny new ellipsis
 package:
