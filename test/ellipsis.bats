@@ -3,28 +3,27 @@
 load _helper
 load ellipsis
 
-cp_test_package() {
-    cp -rf test/fixtures/dot-test $ELLIPSIS_PACKAGES
-    cp -rf test/fixtures/dot-test/.git $ELLIPSIS_PACKAGES/dot-test
-}
-
-ln_test_package() {
-    mv $ELLIPSIS_HOME/.file $ELLIPSIS_HOME/.file.bak
-    ln -s $ELLIPSIS_PACKAGES/dot-test/common/file $ELLIPSIS_HOME/.file
-}
-
 setup() {
     export ELLIPSIS_HOME=$TESTS_DIR/tmp/ellipsis_home
     export ELLIPSIS_PACKAGES=$ELLIPSIS_HOME/.ellipsis/packages
     mkdir -p $ELLIPSIS_PACKAGES
     echo 'old' > $ELLIPSIS_HOME/.file
 
+    clone_test_package() {
+        git clone $TESTS_DIR/fixtures/dot-test $ELLIPSIS_PACKAGES/test
+    }
+
+    link_test_package() {
+        mv $ELLIPSIS_HOME/.file $ELLIPSIS_HOME/.file.bak
+        ln -s $ELLIPSIS_PACKAGES/test/common/file $ELLIPSIS_HOME/.file
+    }
+
     if [ $BATS_TEST_NUMBER -eq 2 ]; then
-        cp_test_package
+        clone_test_package
     fi
 
     if [ $BATS_TEST_NUMBER -gt 2 ]; then
-        ln_test_package
+        link_test_package
     fi
 }
 
@@ -37,30 +36,31 @@ teardown() {
     echo $output
     [ $status -eq 0 ]
     # packages gets installed into packages
-    [ -e $ELLIPSIS_PACKAGES/dot-test/ellipsis.sh ]
+    [ -e $ELLIPSIS_PACKAGES/test/ellipsis.sh ]
     # creates symlinks
     [ -e $ELLIPSIS_HOME/.file ]
-    [ "$(readlink $ELLIPSIS_HOME/.file)" = "$ELLIPSIS_PACKAGES/dot-test/common/file" ]
+    [ "$(readlink $ELLIPSIS_HOME/.file)" = "$ELLIPSIS_PACKAGES/test/common/file" ]
     # creates backups
-    [ -e $ELLIPSIS_HOME/.file.back ]
+    [ -e $ELLIPSIS_HOME/.file.bak ]
     [ ! "$(cat $ELLIPSIS_HOME/.file)" = old ]
 }
 
 @test "ellipsis.link should link a package" {
-    run ellipsis.link dot-test
+    run ellipsis.link test
     [ $status -eq 0 ]
     [ -e $ELLIPSIS_HOME/.file ]
 }
 
 @test "ellipsis.uninstall should uninstall a package" {
-    run ellipsis.uninstall dot-test
+    run ellipsis.uninstall test
+    echo $output
     [ $status -eq 0 ]
-    [ ! -e $ELLIPSIS_PACKAGES/dot-test/ellipsis.sh ]
+    [ ! -e $ELLIPSIS_PACKAGES/test/ellipsis.sh ]
     [ ! -e $ELLIPSIS_HOME/.file ]
 }
 
 @test "ellipsis.unlink should unlink a package" {
-    run ellipsis.unlink dot-test
+    run ellipsis.unlink test
     [ $status -eq 0 ]
     [ ! -e $ELLIPSIS_HOME/.file ]
 }
@@ -76,7 +76,7 @@ teardown() {
 
 @test "ellipsis.edit should edit package ellipsis.sh" {
     export EDITOR=cat
-    run ellipsis.edit dot-test
+    run ellipsis.edit test
     [ $status -eq 0 ]
     [ "${lines[0]}" = "pkg.link() { fs.link_files common }" ]
 }
