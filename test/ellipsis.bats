@@ -4,13 +4,13 @@ load _helper
 load ellipsis
 
 cp_test_package() {
-    cp -rf test/fixtures/dot-test $ELLIPSIS_PACKAGES/test
-    cp -rf test/fixtures/dot-test/.git $ELLIPSIS_PACKAGES/test/.git
+    cp -rf test/fixtures/dot-test $ELLIPSIS_PACKAGES
+    cp -rf test/fixtures/dot-test/.git $ELLIPSIS_PACKAGES/dot-test
 }
 
 ln_test_package() {
     mv $ELLIPSIS_HOME/.file $ELLIPSIS_HOME/.file.bak
-    ln -s $ELLIPSIS_PACKAGES/file/common/file $ELLIPSIS_HOME/.file
+    ln -s $ELLIPSIS_PACKAGES/dot-test/common/file $ELLIPSIS_HOME/.file
 }
 
 setup() {
@@ -33,35 +33,36 @@ teardown() {
 }
 
 @test "ellipsis.install should install a new package" {
-    run ellipsis.install zeekay/files
+    run ellipsis.install test/fixtures/dot-test
+    echo $output
     [ $status -eq 0 ]
     # packages gets installed into packages
-    [ -e $ELLIPSIS_PACKAGES/files/ellipsis.sh ]
+    [ -e $ELLIPSIS_PACKAGES/dot-test/ellipsis.sh ]
     # creates symlinks
-    [ -e $ELLIPSIS_HOME/.ackrc ]
-    [ "$(readlink $ELLIPSIS_HOME/.ackrc)" = "$ELLIPSIS_PACKAGES/files/common/ackrc" ]
+    [ -e $ELLIPSIS_HOME/.file ]
+    [ "$(readlink $ELLIPSIS_HOME/.file)" = "$ELLIPSIS_PACKAGES/dot-test/common/file" ]
     # creates backups
-    [ -e $ELLIPSIS_HOME/.ackrc.bak ]
-    [ ! "$(cat $ELLIPSIS_HOME/.ackrc)" = old ]
+    [ -e $ELLIPSIS_HOME/.file.back ]
+    [ ! "$(cat $ELLIPSIS_HOME/.file)" = old ]
 }
 
 @test "ellipsis.link should link a package" {
-    run ellipsis.link files
+    run ellipsis.link dot-test
     [ $status -eq 0 ]
-    [ -e $ELLIPSIS_HOME/.ackrc ]
+    [ -e $ELLIPSIS_HOME/.file ]
 }
 
 @test "ellipsis.uninstall should uninstall a package" {
-    run ellipsis.uninstall files
+    run ellipsis.uninstall dot-test
     [ $status -eq 0 ]
-    [ ! -e $ELLIPSIS_PACKAGES/files/ellipsis.sh ]
-    [ ! -e $ELLIPSIS_HOME/.ackrc ]
+    [ ! -e $ELLIPSIS_PACKAGES/dot-test/ellipsis.sh ]
+    [ ! -e $ELLIPSIS_HOME/.file ]
 }
 
 @test "ellipsis.unlink should unlink a package" {
-    run ellipsis.unlink files
+    run ellipsis.unlink dot-test
     [ $status -eq 0 ]
-    [ ! -e $ELLIPSIS_HOME/.ackrc ]
+    [ ! -e $ELLIPSIS_HOME/.file ]
 }
 
 @test "ellipsis.installed should list installed packages" {
@@ -75,7 +76,7 @@ teardown() {
 
 @test "ellipsis.edit should edit package ellipsis.sh" {
     export EDITOR=cat
-    run ellipsis.edit files
+    run ellipsis.edit dot-test
     [ $status -eq 0 ]
     [ "${lines[0]}" = "pkg.link() { fs.link_files common }" ]
 }
