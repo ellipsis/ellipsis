@@ -4,13 +4,8 @@ load _helper
 load ellipsis
 
 mock_package() {
-    mkdir -p $ELLIPSIS_PACKAGES/files/common
-    cd $ELLIPSIS_PACKAGES/files
-    echo 'pkg.link() { fs.link_files common }' > ellipsis.sh
-    echo 'new' > common/ackrc
-    git init
-    git add ellipsis.sh common/ackrc
-    git commit -m "Initial commit."
+    cp -rf test/fixtures/test-package $ELLIPSIS_PACKAGES/test
+    cp -rf test/fixtures/test-package/.git $ELLIPSIS_PACKAGES/test/.git
 }
 
 mock_package_install() {
