@@ -18,7 +18,7 @@ setup() {
         ln -s $ELLIPSIS_PACKAGES/test/common/file $ELLIPSIS_HOME/.file
     }
 
-    if [ $BATS_TEST_NUMBER -eq 2 ]; then
+    if [ $BATS_TEST_NUMBER -gt 1 ]; then
         clone_test_package
     fi
 
@@ -33,7 +33,6 @@ teardown() {
 
 @test "ellipsis.install should install a new package" {
     run ellipsis.install test/fixtures/dot-test
-    echo $output
     [ $status -eq 0 ]
     # packages gets installed into packages
     [ -e $ELLIPSIS_PACKAGES/test/ellipsis.sh ]
@@ -53,7 +52,6 @@ teardown() {
 
 @test "ellipsis.uninstall should uninstall a package" {
     run ellipsis.uninstall test
-    echo $output
     [ $status -eq 0 ]
     [ ! -e $ELLIPSIS_PACKAGES/test/ellipsis.sh ]
     [ ! -e $ELLIPSIS_HOME/.file ]
@@ -78,7 +76,7 @@ teardown() {
     export EDITOR=cat
     run ellipsis.edit test
     [ $status -eq 0 ]
-    [ "${lines[0]}" = "pkg.link() { fs.link_files common }" ]
+    [ "${lines[0]}" = "#!/usr/bin/env bash" ]
 }
 
 @test "ellipsis.each should run hook for each installed package" {
