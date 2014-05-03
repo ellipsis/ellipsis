@@ -4,6 +4,7 @@
 # with packages.
 
 load fs
+load git
 load hooks
 load log
 load path

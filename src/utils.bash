@@ -34,3 +34,7 @@ utils.run_installer() {
     cd $cwd
     rm -rf $tmp_dir
 }
+
+utils.strip_colors() {
+    echo "$@" | sed -e 's/\[[^m]*m//g'
+}

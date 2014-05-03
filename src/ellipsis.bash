@@ -18,13 +18,13 @@ ellipsis.list_packages() {
 ellipsis.each() {
     # execute command for ellipsis first
     pkg.init $ELLIPSIS_PATH
-    $@
+    "$@"
     pkg.del
 
     # loop over packages, excecuting command
     for pkg in $(ellipsis.list_packages); do
         pkg.init "$pkg"
-        $@
+        "$@"
         pkg.del
     done
 }
