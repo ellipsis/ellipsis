@@ -329,6 +329,21 @@ Returns true if repository has changes.
 #### git.diffstat
 Displays `git diff --stat`.
 
+#### path.abs_path
+Return absolute path to `$1`.
+
+#### path.is_path
+Simple heuristic to determine if `$1` is a path.
+
+#### path.relative_to_home
+Replaces `$HOME` with `~`
+
+#### path.relative_to_packages
+Strips `$ELLIPSIS_PACKAGES` from path.
+
+#### path.strip_dot
+Strip dot from hidden files/folders.
+
 #### os.platform
 Returns one of `cygwin`, `freebsd`, `linux`, `osx`.
 
