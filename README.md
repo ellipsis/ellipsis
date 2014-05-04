@@ -1,4 +1,4 @@
-## ellipsis [![Build Status](https://travis-ci.org/zeekay/ellipsis.svg?branch=master)](https://travis-ci.org/zeekay/ellipsis)
+## ellipsis [![Build Status][travis-badge]][travis]
 
 ```
  _    _    _
@@ -26,7 +26,7 @@ Clone and symlink or use handy-dandy installer:
 $ curl -sL ellipsis.sh | sh
 ```
 
-<sup>...no you didn't read that wrong, [this website also doubles as the installer](https://github.com/zeekay/ellipsis/blob/gh-pages/index.html)</sup>
+<sup>...no you didn't read that wrong, [this website also doubles as the installer][installer]</sup>
 
 You can also specify which packages to install by setting the `PACKAGES` variable, i.e.:
 
@@ -134,7 +134,7 @@ need more? That's where hooks come in...
 Hooks allow you to control how ellipis interacts with your package, and how
 various commands are executed against your package. Say for instance you wanted
 to run the installer for your [favorite zsh
-framework](https://github.com/zeekay/zeesh), you could define a `pkg.install`
+framework][zeesh], you could define a `pkg.install`
 hook like this:
 
 ```bash
@@ -155,7 +155,7 @@ When you `ellipsis install` a package, ellipsis:
 
 ### Examples
 Here's a more complete example (from
-[zeekay/files](https://github.com/zeekay/dot-files)):
+[zeekay/files][dot-files]):
 
 ```bash
 #!/usr/bin/env bash
@@ -181,7 +181,7 @@ pkg.install() {
 ```
 
 ...and here's a slightly more complex example (from
-[zeekay/vim](https://github.com/zeekay/dot-vim)):
+[zeekay/vim][dot-vim]):
 
 ```bash
 #!/usr/bin/env bash
@@ -426,15 +426,19 @@ Pull requests welcome! New code should follow the [existing style][style-guide]
 
 To suggest a feature or report a bug: http://github.com/zeekay/ellipsis/issues.
 
-[alfred]:      https://github.com/zeekay/dot-alfred
-[atom]:        https://github.com/zeekay/dot-atom
-[emacs]:       https://github.com/zeekay/dot-emacs
-[files]:       https://github.com/zeekay/dot-files
-[irssi]:       https://github.com/zeekay/dot-irssi
-[iterm2]:      https://github.com/zeekay/dot-iterm2
-[vim]:         https://github.com/zeekay/dot-vim
-[xmonad]:      https://github.com/zeekay/dot-xmonad
-[zsh]:         https://github.com/zeekay/dot-zsh
-[style-guide]: https://google-styleguide.googlecode.com/svn/trunk/shell.xml
-[bats]:        https://github.com/sstephenson/bats
-[zshcomp]:     https://github.com/zeekay/ellipsis/blob/master/comp/_ellipsis
+[bats]:         https://github.com/sstephenson/bats
+[dot-alfred]:   https://github.com/zeekay/dot-alfred
+[dot-atom]:     https://github.com/zeekay/dot-atom
+[dot-emacs]:    https://github.com/zeekay/dot-emacs
+[dot-files]:    https://github.com/zeekay/dot-files
+[dot-irssi]:    https://github.com/zeekay/dot-irssi
+[dot-iterm2]:   https://github.com/zeekay/dot-iterm2
+[dot-vim]:      https://github.com/zeekay/dot-vim
+[dot-xmonad]:   https://github.com/zeekay/dot-xmonad
+[dot-zsh]:      https://github.com/zeekay/dot-zsh
+[installer]:    https://github.com/zeekay/ellipsis/blob/gh-pages/index.html
+[style-guide]:  https://google-styleguide.googlecode.com/svn/trunk/shell.xml
+[travis-badge]: https://travis-ci.org/zeekay/ellipsis.svg?branch=master
+[travis]:       https://travis-ci.org/zeekay/ellipsis
+[zeesh]:        https://github.com/zeekay/zeesh
+[zshcomp]:      https://github.com/zeekay/ellipsis/blob/master/comp/_ellipsis
