@@ -1,6 +1,4 @@
-language: node_js
-node_js:
-  - 0.10
+language: objective_c
 script: make test
 env:
   - TEST_OPTS=--tap
@@ -12,5 +10,3 @@ notifications:
   email:
     on_success: change
     on_failure: always
-after_sucess:
-  - npm install brief && node_modules/.bin/brief
