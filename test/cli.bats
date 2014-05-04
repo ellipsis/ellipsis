@@ -21,7 +21,7 @@ load _helper
 }
 
 @test "cli.run --version prints version" {
-  run ellipsis --version
+  run $ELLIPSIS_PATH/bin/ellipsis --version
   [ "$status" -eq 0 ]
   [[ "$output" =  v1* ]]
 }
