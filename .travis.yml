@@ -1,4 +1,4 @@
-language: objective_c
+language: objective-c
 script: make test
 env:
   - TEST_OPTS=--tap
