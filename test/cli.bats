@@ -22,7 +22,6 @@ load _helper
 
 @test "cli.run --version prints version" {
   run ellipsis --version
-  echo output: $output
   [ "$status" -eq 0 ]
-  [[ "$output" =  v1* ]]
+  [ $(expr "$output" : "v[0-9][0-9.]*") -ne 0 ]
 }
