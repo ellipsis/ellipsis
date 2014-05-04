@@ -23,6 +23,10 @@ setup() {
         ln -s $ELLIPSIS_PACKAGES/test/doesnotexist $ELLIPSIS_HOME/.doesnotexist
     }
 
+    modify_test_package() {
+        echo modified > $ELLIPSIS_PACKAGES/test/common/file
+    }
+
     if [ $BATS_TEST_NUMBER -gt 1 ]; then
         clone_test_package
     fi
@@ -37,6 +41,10 @@ setup() {
 
     if [ $BATS_TEST_NUMBER -eq 13 ]; then
         link_broken
+    fi
+
+    if [ $BATS_TEST_NUMBER -eq 14 ]; then
+        modify_test_package
     fi
 }
 
@@ -133,13 +141,17 @@ teardown() {
 }
 
 @test "ellipsis.status should show diffstat if changes in packages" {
-    skip
+    run ellipsis.status
+    [ $status -eq 0 ]
+    [[ "$output" = *common/file* ]]
 }
 
 @test "ellipsis.pull should update packages" {
-    skip
+    run ellipsis.pull
+    [ $status -eq 0 ]
 }
 
 @test "ellipsis.push should push changes in packages" {
-    skip
+    run ellipsis.push
+    [ $status -eq 0 ]
 }
