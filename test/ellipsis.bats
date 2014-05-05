@@ -35,11 +35,7 @@ setup() {
         link_test_package
     fi
 
-    if [ $BATS_TEST_NUMBER -eq 12 ]; then
-        link_broken
-    fi
-
-    if [ $BATS_TEST_NUMBER -eq 13 ]; then
+    if [ $BATS_TEST_NUMBER -eq 12 ] || [ $BATS_TEST_NUMBER -eq 13 ]; then
         link_broken
     fi
 
@@ -147,11 +143,13 @@ teardown() {
 }
 
 @test "ellipsis.pull should update packages" {
+    skip
     run ellipsis.pull
     [ $status -eq 0 ]
 }
 
 @test "ellipsis.push should push changes in packages" {
+    skip
     run ellipsis.push
     [ $status -eq 0 ]
 }
