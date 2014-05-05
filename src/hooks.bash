@@ -100,7 +100,7 @@ hooks.status() {
     local ahead="$(git.ahead)"
 
     # Return unless there are changes or we are behind.
-    ! git.has_changes && [ -z "$ahead" ] || return
+    git.has_changes || [ "$ahead" ] || return
 
     local sha1="$(git.sha1)"
     local last_updated=$(git.last_updated)

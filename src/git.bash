@@ -43,10 +43,10 @@ git.ahead() {
 
 # Check whether get repo has changes.
 git.has_changes() {
-    if  git diff-index --quiet HEAD --; then
-        return 0
+    if git diff-index --quiet HEAD --; then
+        return 1
     fi
-    return 1
+    return 0
 }
 
 # Print diffstat for git repo
