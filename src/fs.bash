@@ -7,10 +7,11 @@ load path
 
 # return true if folder is empty
 fs.folder_empty() {
-    if [ "$(find $1 -prune -empty)" ]; then
-        return 0
+    local files=($(shopt -s nullglob; shopt -s dotglob; echo $1/*))
+    if [ ${#files[@]} -gt 0 ]; then
+        return 1
     fi
-    return 1
+    return 0
 }
 
 # check whether file exists
