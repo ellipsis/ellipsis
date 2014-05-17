@@ -110,7 +110,6 @@ fs.link_files() {
                                       ! -name '*.md' \
                                       ! -name '*.rst' \
                                       ! -name '*.txt' \
-                                      ! -wholename "$1" \
                                       ! -name "ellipsis.sh" | sort); do
         fs.link_file "$file"
     done
