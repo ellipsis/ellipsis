@@ -38,7 +38,7 @@ git.last_updated() {
 
 # Print how far ahead git repo is
 git.ahead() {
-    git status -sb --porcelain | grep --color=no -o '\[.*\]'
+    git status -sb --porcelain | grep -o '\[.*\]'
 }
 
 # Check whether get repo has changes.
