@@ -262,7 +262,7 @@ ellipsis.links() {
 }
 
 ellipsis._list_broken_symlink_mappings() {
-    for file in $(find -L $ELLIPSIS_HOME -maxdepth 1 -type l); do
+    for file in $(fs.list_broken_symlinks $ELLIPSIS_HOME); do
         echo "$(path.relative_to_packages $(readlink $file)) -> $(path.relative_to_home $file)";
     done
 }
@@ -278,7 +278,9 @@ ellipsis.broken() {
 
 # List broken symlinks in ELLIPSIS_HOME
 ellipsis.clean() {
-    find -L $ELLIPSIS_HOME -maxdepth 1 -type l| xargs rm
+    for file in $(fs.list_broken_symlinks $ELLIPSIS_HOME); do
+        rm $file
+    done
 }
 
 # Re-link unlinked packages.
