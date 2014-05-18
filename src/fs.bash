@@ -46,6 +46,11 @@ fs.is_broken_symlink() {
     return 1
 }
 
+# List broken symlinks in a folder, defaulting to ELLIPSIS_HOME.
+fs.list_broken_symlinks() {
+    find "${1:-$ELLIPSIS_HOME}" -maxdepth 1 -type l -exec test ! -e {} \; -print
+}
+
 # List symlinks in a folder, defaulting to ELLIPSIS_HOME.
 fs.list_symlinks() {
     find "${1:-$ELLIPSIS_HOME}" -maxdepth 1 -type l
