@@ -57,7 +57,7 @@ Dark style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Or
 .tex .hljs-command,
 .hljs-prompt,
 .coffeescript .hljs-attribute {
-  color: #d88;
+  color: #FFCC00;
 }
 
 .hljs-comment,
