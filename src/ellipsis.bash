@@ -66,6 +66,7 @@ ellipsis.install() {
         git.clone "$PKG_URL" "$PKG_PATH"
 
         pkg.init "$PKG_PATH"
+        pkg.run_hook "link"
         pkg.run_hook "install"
         pkg.del
     done
