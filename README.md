@@ -160,7 +160,7 @@ Here's a more complete example (from
 ```bash
 #!/usr/bin/env bash
 
-pkg.install() {
+pkg.link() {
     fs.link_files common
 
     case $(os.platform) in
@@ -186,18 +186,22 @@ pkg.install() {
 ```bash
 #!/usr/bin/env bash
 
-pkg.install() {
-    files=(gvimrc vimrc vimgitrc vimpagerrc)
+pkg.link() {
+    files=(gvimrc vimrc vimgitrc vimpagerrc xvimrc)
 
+    # link files into $HOME
     for file in ${files[@]}; do
         fs.link_file $file
     done
 
-    # link module into ~/.vim
+    # link package into $HOME/.vim
     fs.link_file $PKG_PATH
+}
+
+pkg.install() {
+    cd ~/.vim/addons
 
     # install dependencies
-    cd ~/.vim/addons
     git.clone https://github.com/zeekay/vice
     git.clone https://github.com/MarcWeber/vim-addon-manager
 }
@@ -208,8 +212,11 @@ helper() {
 
     # run command for each addon
     for addon in ~/.vim/addons/*; do
-        cd $addon
-        $1 $addon
+        # git status/push only repos which are ours
+        if [ $1 = "git.pull" ] || [ "$(cat $addon/.git/config | grep url | grep $ELLIPSIS_USER)" ]; then
+            cd $addon
+            $1 vim/$(basename $addon)
+        fi
     done
 }
 
@@ -222,15 +229,7 @@ pkg.status() {
 }
 
 pkg.push() {
-    git.push
-
-    # git push only repos where we have push permission
-    for addon in ~/.vim/addons/*; do
-        if [ "$(cat $addon/.git/config | grep $ELLIPSIS_USER)" ]; then
-            cd $addon
-            git.push $addon
-        fi
-    done
+    helper git.push
 }
 ```
 
