@@ -1,6 +1,6 @@
 ## ellipsis [![Build Status][travis-badge]][travis]
 
-```no-highlight
+```
  _    _    _
 /\_\ /\_\ /\_\
 \/_/ \/_/ \/_/   …because $HOME is where the <3 is!
@@ -53,7 +53,7 @@ https://github.com/username/dot-package.
 
 Full usage available via `ellipsis` executable:
 
-```no-highlight
+```
 $ ellipsis -h
 Usage: ellipsis <command>
   Options:
