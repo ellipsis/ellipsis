@@ -27,7 +27,7 @@
     </div>
     <!-- end header-->
     <div class="wrapper">
-      <section><h2 id="ellipsis-build-status-https-travis-ci-org-zeekay-ellipsis-svg-branch-master-https-travis-ci-org-zeekay-ellipsis-">ellipsis <a href="https://travis-ci.org/zeekay/ellipsis"><img src="https://travis-ci.org/zeekay/ellipsis.svg?branch=master" alt="Build Status"></a></h2>
+      <section><h2 id="ellipsis-build-status-travis-badge-travis-">ellipsis <a href="https://travis-ci.org/zeekay/ellipsis"><img src="https://travis-ci.org/zeekay/ellipsis.svg?branch=master" alt="Build Status"></a></h2>
 <pre><code><span class="hljs-tag"> <span class="hljs-title">_</span>    <span class="hljs-title">_</span>    <span class="hljs-title">_</span>
 </span><span class="hljs-tag">/\<span class="hljs-title">_</span>\ /\<span class="hljs-title">_</span>\ /\<span class="hljs-title">_</span>\
 </span><span class="hljs-tag">\/<span class="hljs-title">_</span>/ \/<span class="hljs-title">_</span>/ \/<span class="hljs-title">_</span>/   …<span class="hljs-title">because</span> $<span class="hljs-title">HOME</span> <span class="hljs-title">is</span> <span class="hljs-title">where</span> <span class="hljs-title">the</span> &lt;<span class="hljs-title">3</span> <span class="hljs-title">is</span>!</span>
@@ -150,7 +150,7 @@ pkg.<span class="hljs-function"><span class="hljs-title">install</span></span>()
 <a href="https://github.com/zeekay/dot-files">zeekay/files</a>):</p>
 <pre><code class="lang-bash"><span class="hljs-shebang">#!/usr/bin/env bash
 </span>
-pkg.<span class="hljs-function"><span class="hljs-title">install</span></span>() {
+pkg.<span class="hljs-function"><span class="hljs-title">link</span></span>() {
     fs.link_files common
 
     <span class="hljs-keyword">case</span> $(os.platform) <span class="hljs-keyword">in</span>
@@ -173,18 +173,22 @@ pkg.<span class="hljs-function"><span class="hljs-title">install</span></span>()
 <a href="https://github.com/zeekay/dot-vim">zeekay/vim</a>):</p>
 <pre><code class="lang-bash"><span class="hljs-shebang">#!/usr/bin/env bash
 </span>
-pkg.<span class="hljs-function"><span class="hljs-title">install</span></span>() {
-    files=(gvimrc vimrc vimgitrc vimpagerrc)
+pkg.<span class="hljs-function"><span class="hljs-title">link</span></span>() {
+    files=(gvimrc vimrc vimgitrc vimpagerrc xvimrc)
 
+    <span class="hljs-comment"># link files into $HOME</span>
     <span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> <span class="hljs-variable">${files[@]}</span>; <span class="hljs-keyword">do</span>
         fs.link_file <span class="hljs-variable">$file</span>
     <span class="hljs-keyword">done</span>
 
-    <span class="hljs-comment"># link module into ~/.vim</span>
+    <span class="hljs-comment"># link package into $HOME/.vim</span>
     fs.link_file <span class="hljs-variable">$PKG_PATH</span>
+}
+
+pkg.<span class="hljs-function"><span class="hljs-title">install</span></span>() {
+    <span class="hljs-built_in">cd</span> ~/.vim/addons
 
     <span class="hljs-comment"># install dependencies</span>
-    <span class="hljs-built_in">cd</span> ~/.vim/addons
     git.clone https://github.com/zeekay/vice
     git.clone https://github.com/MarcWeber/vim-addon-manager
 }
@@ -195,8 +199,11 @@ pkg.<span class="hljs-function"><span class="hljs-title">install</span></span>()
 
     <span class="hljs-comment"># run command for each addon</span>
     <span class="hljs-keyword">for</span> addon <span class="hljs-keyword">in</span> ~/.vim/addons/*; <span class="hljs-keyword">do</span>
-        <span class="hljs-built_in">cd</span> <span class="hljs-variable">$addon</span>
-        <span class="hljs-variable">$1</span> <span class="hljs-variable">$addon</span>
+        <span class="hljs-comment"># git status/push only repos which are ours</span>
+        <span class="hljs-keyword">if</span> [ <span class="hljs-variable">$1</span> = <span class="hljs-string">"git.pull"</span> ] || [ <span class="hljs-string">"<span class="hljs-variable">$(cat $addon/.git/config | grep url | grep $ELLIPSIS_USER)</span>"</span> ]; <span class="hljs-keyword">then</span>
+            <span class="hljs-built_in">cd</span> <span class="hljs-variable">$addon</span>
+            <span class="hljs-variable">$1</span> vim/$(basename <span class="hljs-variable">$addon</span>)
+        <span class="hljs-keyword">fi</span>
     <span class="hljs-keyword">done</span>
 }
 
@@ -209,15 +216,7 @@ pkg.<span class="hljs-function"><span class="hljs-title">status</span></span>() 
 }
 
 pkg.<span class="hljs-function"><span class="hljs-title">push</span></span>() {
-    git.push
-
-    <span class="hljs-comment"># git push only repos where we have push permission</span>
-    <span class="hljs-keyword">for</span> addon <span class="hljs-keyword">in</span> ~/.vim/addons/*; <span class="hljs-keyword">do</span>
-        <span class="hljs-keyword">if</span> [ <span class="hljs-string">"<span class="hljs-variable">$(cat $addon/.git/config | grep $ELLIPSIS_USER)</span>"</span> ]; <span class="hljs-keyword">then</span>
-            <span class="hljs-built_in">cd</span> <span class="hljs-variable">$addon</span>
-            git.push <span class="hljs-variable">$addon</span>
-        <span class="hljs-keyword">fi</span>
-    <span class="hljs-keyword">done</span>
+    helper git.push
 }
 </code></pre>
 <p>The hooks available in your <code>ellipsis.sh</code> are:</p>
@@ -303,29 +302,29 @@ variables which ellipsis exposes for you:</p>
 <h4 id="utils-run_installer">utils.run_installer</h4>
 <p>Downloads and runs web-based shell script installers.</p>
 <h3 id="available-packages">Available packages</h3>
-<h4 id="-zeekay-alfred-alfred-"><a href="https://github.com/zeekay/dot-alfred">zeekay/alfred</a></h4>
+<h4 id="-zeekay-alfred-alfred-">[zeekay/alfred][alfred]</h4>
 <p>Alfred configuration files.</p>
-<h4 id="-zeekay-atom-atom-"><a href="https://github.com/zeekay/dot-atom">zeekay/atom</a></h4>
+<h4 id="-zeekay-atom-atom-">[zeekay/atom][atom]</h4>
 <p>Atom configuration files.</p>
-<h4 id="-zeekay-emacs-emacs-"><a href="https://github.com/zeekay/dot-emacs">zeekay/emacs</a></h4>
+<h4 id="-zeekay-emacs-emacs-">[zeekay/emacs][emacs]</h4>
 <p>Emacs configuration files.</p>
-<h4 id="-zeekay-files-files-"><a href="https://github.com/zeekay/dot-files">zeekay/files</a></h4>
+<h4 id="-zeekay-files-files-">[zeekay/files][files]</h4>
 <p>Common dotfiles for various programs.</p>
-<h4 id="-zeekay-irssi-irssi-"><a href="https://github.com/zeekay/dot-irssi">zeekay/irssi</a></h4>
+<h4 id="-zeekay-irssi-irssi-">[zeekay/irssi][irssi]</h4>
 <p>Irssi configuration.</p>
-<h4 id="-zeekay-iterm2-iterm2-"><a href="https://github.com/zeekay/dot-iterm2">zeekay/iterm2</a></h4>
+<h4 id="-zeekay-iterm2-iterm2-">[zeekay/iterm2][iterm2]</h4>
 <p>iTerm2 configuration files.</p>
-<h4 id="-zeekay-vim-vim-"><a href="https://github.com/zeekay/dot-vim">zeekay/vim</a></h4>
+<h4 id="-zeekay-vim-vim-">[zeekay/vim][vim]</h4>
 <p>Vim configuration based on vice framework.</p>
-<h4 id="-zeekay-xmonad-xmonad-"><a href="https://github.com/zeekay/dot-xmonad">zeekay/xmonad</a></h4>
+<h4 id="-zeekay-xmonad-xmonad-">[zeekay/xmonad][xmonad]</h4>
 <p>Xmonad configuration.</p>
-<h4 id="-zeekay-zsh-zsh-"><a href="https://github.com/zeekay/dot-zsh">zeekay/zsh</a></h4>
+<h4 id="-zeekay-zsh-zsh-">[zeekay/zsh][zsh]</h4>
 <p>Zsh configuration using zeesh! framework.</p>
 <p><a class="anchor" href="#upgrading-to-ellipsis" name="upgrading-to-ellipsis"></a></p>
 <h3 id="upgrading-to-ellipsis">Upgrading to ellipsis</h3>
 <p>No stranger to dotfiles? Spent years hording complex configurations for esoteric
 and archaic programs? Have your own system for managing them using a bunch of
-scripts you&#39;ve cobbled together over the years? ...I&#39;ve been there, friend.</p>
+scripts you&#39;ve cobbled together over the years? I&#39;ve been there, friend.</p>
 <p>Luckily it&#39;s easy to convert your existing dotfiles into a shiny new ellipsis
 package:</p>
 <pre><code class="lang-bash">$ <span class="hljs-keyword">export</span> ELLIPSIS_USER=your-github-user
