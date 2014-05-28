@@ -53,3 +53,22 @@ git.has_changes() {
 git.diffstat() {
     git --no-pager diff --stat --color=always
 }
+
+# Checks if git is configured as we expect.
+git.configured() {
+    for key in user.name user.email github.user; do
+        if [ -z "$(git config --global $key | cat)"  ]; then
+            return 1
+        fi
+    done
+    return 0
+}
+
+# Adds an include safely.
+git.add_include() {
+    git config --global --unset-all include.path $1
+    if [ -z "$(git config --global include.path)" ]; then
+        git config --global --remove-section include &>/dev/null
+    fi
+    git config --global --add include.path $1
+}
