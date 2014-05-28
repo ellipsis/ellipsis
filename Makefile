@@ -11,14 +11,14 @@ tag:
 	@git commit -m v$(version)
 	@git tag v$(version)
 
-test: deps/bats test/fixtures/dot-test
+test: deps/bats test/fixtures/dot-test/ellipsis.sh
 	deps/bats/bin/bats test $(TEST_OPTS)
 
 deps/bats:
 	@mkdir -p deps
 	git clone --depth 1 git://github.com/sstephenson/bats.git deps/bats
 
-test/fixtures/dot-test:
+test/fixtures/dot-test/ellipsis.sh:
 	git submodule init
 	git submodule update
 
