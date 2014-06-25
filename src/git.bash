@@ -9,7 +9,7 @@ load pkg
 
 # Clone a Git repo.
 git.clone() {
-    git clone --depth 1 "$@" 2>&1 | grep 'Cloning into'
+    git clone --depth 1 "$@"
 }
 
 # Pull git repo.
