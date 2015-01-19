@@ -117,6 +117,8 @@ fs.link_files() {
                                       ! -name '*.rst' \
                                       ! -name '*.txt' \
                                       ! -name "ellipsis.sh" | sort); do
-        fs.link_file "$file"
+        if [ ! "$1" = "$file" ]; then
+            fs.link_file "$file"
+        fi
     done
 }
