@@ -1,4 +1,4 @@
-## ellipsis [![Build Status][travis-badge]][travis]
+# Ellipsis  [![Build Status][travis-image]][travis-url] [![Gitter chat][gitter-image]][gitter-url]
 
 ```
  _    _    _
@@ -425,6 +425,11 @@ Pull requests welcome! New code should follow the [existing style][style-guide]
 
 To suggest a feature or report a bug: http://github.com/zeekay/ellipsis/issues.
 
+[gitter-image]: https://img.shields.io/badge/gitter-join_chat-brightgreen.svg
+[gitter-url]:   https://gitter.im/zeekay/hi
+[travis-image]: https://img.shields.io/travis/zeekay/ellipsis.svg
+[travis-url]:   https://travis-ci.org/zeekay/ellipsis
+
 [bats]:         https://github.com/sstephenson/bats
 [dot-alfred]:   https://github.com/zeekay/dot-alfred
 [dot-atom]:     https://github.com/zeekay/dot-atom
@@ -437,7 +442,5 @@ To suggest a feature or report a bug: http://github.com/zeekay/ellipsis/issues.
 [dot-zsh]:      https://github.com/zeekay/dot-zsh
 [installer]:    https://github.com/zeekay/ellipsis/blob/gh-pages/index.html
 [style-guide]:  https://google-styleguide.googlecode.com/svn/trunk/shell.xml
-[travis-badge]: https://travis-ci.org/zeekay/ellipsis.svg?branch=master
-[travis]:       https://travis-ci.org/zeekay/ellipsis
 [zeesh]:        https://github.com/zeekay/zeesh
 [zshcomp]:      https://github.com/zeekay/ellipsis/blob/master/comp/_ellipsis
