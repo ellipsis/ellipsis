@@ -108,7 +108,7 @@ Customize where ellipsis installs packages on your filesystem, defaults to
 
 ```bash
 export ELLIPSIS_USER="zeekay"
-export ELLIPSIS_SSH="ssh"
+export ELLIPSIS_PROTO="ssh"
 export ELLIPSIS_PATH="~/.el"
 ```
 
