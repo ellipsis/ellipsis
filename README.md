@@ -425,6 +425,9 @@ Pull requests welcome! New code should follow the [existing style][style-guide]
 
 To suggest a feature or report a bug: http://github.com/zeekay/ellipsis/issues.
 
+### License
+Ellipsis is open-source software licensed under the [MIT license][mit-license].
+
 [gitter-image]: https://img.shields.io/badge/gitter-join_chat-brightgreen.svg
 [gitter-url]:   https://gitter.im/zeekay/hi
 [travis-image]: https://img.shields.io/travis/zeekay/ellipsis.svg
@@ -444,3 +447,5 @@ To suggest a feature or report a bug: http://github.com/zeekay/ellipsis/issues.
 [style-guide]:  https://google-styleguide.googlecode.com/svn/trunk/shell.xml
 [zeesh]:        https://github.com/zeekay/zeesh
 [zshcomp]:      https://github.com/zeekay/ellipsis/blob/master/comp/_ellipsis
+
+[mit-license]:  http://opensource.org/licenses/MIT
