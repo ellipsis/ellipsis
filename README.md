@@ -89,7 +89,7 @@ specifiying user or a full repo url. Defaults to `$(git config github.user)` or
 
 #### ELLIPSIS_REPO
 Customize location of ellipsis repo cloned during a curl-based install. Defaults
-to `https://github.com/zeekay/ellipsis`.
+to `https://github.com/ellipsis/ellipsis`.
 
 #### ELLIPSIS_PROTO
 Customizes which protocol new packages are cloned with, you can specify
@@ -423,12 +423,15 @@ autoload -U compinit; compinit
 Pull requests welcome! New code should follow the [existing style][style-guide]
 (and ideally include [tests][bats]).
 
-To suggest a feature or report a bug: http://github.com/zeekay/ellipsis/issues.
+Suggest a feature or report a bug? Create an [issue][issues]!
+
+### License
+Ellipsis is open-source software licensed under the [MIT license][mit-license].
 
 [gitter-image]: https://img.shields.io/badge/gitter-join_chat-brightgreen.svg
 [gitter-url]:   https://gitter.im/zeekay/hi
-[travis-image]: https://img.shields.io/travis/zeekay/ellipsis.svg
-[travis-url]:   https://travis-ci.org/zeekay/ellipsis
+[travis-image]: https://img.shields.io/travis/ellipsis/ellipsis.svg
+[travis-url]:   https://travis-ci.org/ellipsis/ellipsis
 
 [bats]:         https://github.com/sstephenson/bats
 [dot-alfred]:   https://github.com/zeekay/dot-alfred
@@ -440,7 +443,10 @@ To suggest a feature or report a bug: http://github.com/zeekay/ellipsis/issues.
 [dot-vim]:      https://github.com/zeekay/dot-vim
 [dot-xmonad]:   https://github.com/zeekay/dot-xmonad
 [dot-zsh]:      https://github.com/zeekay/dot-zsh
-[installer]:    https://github.com/zeekay/ellipsis/blob/gh-pages/index.html
+[installer]:    https://github.com/ellipsis/ellipsis/blob/gh-pages/index.html
 [style-guide]:  https://google-styleguide.googlecode.com/svn/trunk/shell.xml
 [zeesh]:        https://github.com/zeekay/zeesh
-[zshcomp]:      https://github.com/zeekay/ellipsis/blob/master/comp/_ellipsis
+[zshcomp]:      https://github.com/ellipsis/ellipsis/blob/master/comp/_ellipsis
+
+[issues]:       http://github.com/ellipsis/ellipsis/issues
+[mit-license]:  http://opensource.org/licenses/MIT
