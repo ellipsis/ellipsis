@@ -89,7 +89,7 @@ specifiying user or a full repo url. Defaults to `$(git config github.user)` or
 
 #### ELLIPSIS_REPO
 Customize location of ellipsis repo cloned during a curl-based install. Defaults
-to `https://github.com/zeekay/ellipsis`.
+to `https://github.com/ellipsis/ellipsis`.
 
 #### ELLIPSIS_PROTO
 Customizes which protocol new packages are cloned with, you can specify
@@ -430,8 +430,8 @@ Ellipsis is open-source software licensed under the [MIT license][mit-license].
 
 [gitter-image]: https://img.shields.io/badge/gitter-join_chat-brightgreen.svg
 [gitter-url]:   https://gitter.im/zeekay/hi
-[travis-image]: https://img.shields.io/travis/zeekay/ellipsis.svg
-[travis-url]:   https://travis-ci.org/zeekay/ellipsis
+[travis-image]: https://img.shields.io/travis/ellipsis/ellipsis.svg
+[travis-url]:   https://travis-ci.org/ellipsis/ellipsis
 
 [bats]:         https://github.com/sstephenson/bats
 [dot-alfred]:   https://github.com/zeekay/dot-alfred
@@ -443,9 +443,9 @@ Ellipsis is open-source software licensed under the [MIT license][mit-license].
 [dot-vim]:      https://github.com/zeekay/dot-vim
 [dot-xmonad]:   https://github.com/zeekay/dot-xmonad
 [dot-zsh]:      https://github.com/zeekay/dot-zsh
-[installer]:    https://github.com/zeekay/ellipsis/blob/gh-pages/index.html
+[installer]:    https://github.com/ellipsis/ellipsis/blob/gh-pages/index.html
 [style-guide]:  https://google-styleguide.googlecode.com/svn/trunk/shell.xml
 [zeesh]:        https://github.com/zeekay/zeesh
-[zshcomp]:      https://github.com/zeekay/ellipsis/blob/master/comp/_ellipsis
+[zshcomp]:      https://github.com/ellipsis/ellipsis/blob/master/comp/_ellipsis
 
 [mit-license]:  http://opensource.org/licenses/MIT
