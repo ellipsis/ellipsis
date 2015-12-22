@@ -357,32 +357,32 @@ Downloads and runs web-based shell script installers.
 
 ### Available packages
 
-#### [zeekay/alfred][alfred]
+#### [zeekay/alfred][dot-alfred]
 Alfred configuration files.
 
-#### [zeekay/atom][atom]
+#### [zeekay/atom][dot-atom]
 Atom configuration files.
 
-#### [zeekay/emacs][emacs]
+#### [zeekay/emacs][dot-emacs]
 Emacs configuration files.
 
-#### [zeekay/files][files]
+#### [zeekay/files][dot-files]
 Common dotfiles for various programs.
 
-#### [zeekay/irssi][irssi]
+#### [zeekay/irssi][dot-irssi]
 Irssi configuration.
 
-#### [zeekay/iterm2][iterm2]
+#### [zeekay/iterm2][dot-iterm2]
 iTerm2 configuration files.
 
-#### [zeekay/vim][vim]
-Vim configuration based on vice framework.
+#### [zeekay/vim][dot-vim]
+Vim configuration based on [vice][vice] framework.
 
-#### [zeekay/xmonad][xmonad]
+#### [zeekay/xmonad][dot-xmonad]
 Xmonad configuration.
 
-#### [zeekay/zsh][zsh]
-Zsh configuration using zeesh! framework.
+#### [zeekay/zsh][dot-zsh]
+Zsh configuration using [zeesh!][zeesh] framework.
 
 <a class="anchor" href="#upgrading-to-ellipsis" name="upgrading-to-ellipsis"></a>
 
@@ -445,6 +445,7 @@ Ellipsis is open-source software licensed under the [MIT license][mit-license].
 [dot-zsh]:      https://github.com/zeekay/dot-zsh
 [installer]:    https://github.com/ellipsis/ellipsis/blob/gh-pages/index.html
 [style-guide]:  https://google-styleguide.googlecode.com/svn/trunk/shell.xml
+[vice]:        https://github.com/zeekay/vice
 [zeesh]:        https://github.com/zeekay/zeesh
 [zshcomp]:      https://github.com/ellipsis/ellipsis/blob/master/comp/_ellipsis
 
