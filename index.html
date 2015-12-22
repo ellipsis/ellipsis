@@ -1,3 +1,4 @@
+
 #!/bin/sh
 <<\EOF
 <html lang="en">
@@ -26,10 +27,10 @@
     </div>
     <!-- end header-->
     <div class="wrapper">
-      <section><h2 id="ellipsis-build-status-travis-badge-travis-">ellipsis <a href="https://travis-ci.org/zeekay/ellipsis"><img src="https://travis-ci.org/zeekay/ellipsis.svg?branch=master" alt="Build Status"></a></h2>
-<pre><code><span class="hljs-fake-tag"> <span class="hljs-fake-title">_</span>    <span class="hljs-fake-title">_</span>    <span class="hljs-fake-title">_</span>
-</span><span class="hljs-fake-tag">/\<span class="hljs-fake-title">_</span>\ /\<span class="hljs-fake-title">_</span>\ /\<span class="hljs-fake-title">_</span>\
-</span><span class="hljs-fake-tag">\/<span class="hljs-fake-title">_</span>/ \/<span class="hljs-fake-title">_</span>/ \/<span class="hljs-fake-title">_</span>/   …<span class="hljs-fake-title">because</span> $<span class="hljs-fake-title">HOME</span> <span class="hljs-fake-title">is</span> <span class="hljs-fake-title">where</span> <span class="hljs-fake-title">the</span> &lt;<span class="hljs-fake-title">3</span> <span class="hljs-fake-title">is</span>!</span>
+      <section><h1 id="ellipsis-build-status-travis-image-travis-url-gitter-chat-gitter-image-gitter-url-">Ellipsis  <a href="https://travis-ci.org/ellipsis/ellipsis"><img src="https://img.shields.io/travis/ellipsis/ellipsis.svg" alt="Build Status"></a> <a href="https://gitter.im/zeekay/hi"><img src="https://img.shields.io/badge/gitter-join_chat-brightgreen.svg" alt="Gitter chat"></a></h1>
+<pre><code><span class="hljs-tag"> <span class="hljs-title">_</span>    <span class="hljs-title">_</span>    <span class="hljs-title">_</span>
+</span><span class="hljs-tag">/\<span class="hljs-title">_</span>\ /\<span class="hljs-title">_</span>\ /\<span class="hljs-title">_</span>\
+</span><span class="hljs-tag">\/<span class="hljs-title">_</span>/ \/<span class="hljs-title">_</span>/ \/<span class="hljs-title">_</span>/   …<span class="hljs-title">because</span> $<span class="hljs-title">HOME</span> <span class="hljs-title">is</span> <span class="hljs-title">where</span> <span class="hljs-title">the</span> &lt;<span class="hljs-title">3</span> <span class="hljs-title">is</span>!</span>
 </code></pre><p>Ellipsis is a package manager for dotfiles.</p>
 <h3 id="features">Features</h3>
 <ul>
@@ -47,7 +48,7 @@ updated and in-sync across systems.</li>
 <p>Clone and symlink or use handy-dandy installer:</p>
 <pre><code class="lang-bash">$ curl <span class="hljs-operator">-s</span>L ellipsis.sh | sh
 </code></pre>
-<p><sup>...no you didn&#39;t read that wrong, <a href="https://github.com/zeekay/ellipsis/blob/gh-pages/index.html">this website also doubles as the installer</a></sup></p>
+<p><sup>...no you didn&#39;t read that wrong, <a href="https://github.com/ellipsis/ellipsis/blob/gh-pages/index.html">this website also doubles as the installer</a></sup></p>
 <p>You can also specify which packages to install by setting the <code>PACKAGES</code> variable, i.e.:</p>
 <pre><code class="lang-bash">$ curl <span class="hljs-operator">-s</span>L ellipsis.sh | PACKAGES=<span class="hljs-string">'vim zsh'</span> sh
 </code></pre>
@@ -64,29 +65,29 @@ $ ellipsis install zsh
 <p>...all work. By convention <code>username/package</code> and <code>package</code> are aliases for
 <a href="https://github.com/username/dot-package">https://github.com/username/dot-package</a>.</p>
 <p>Full usage available via <code>ellipsis</code> executable:</p>
-<pre><code><span class="hljs-fake-attribute keyword">$ </span>ellipsis -h
-<span class="hljs-fake-attribute keyword">Usage: </span>ellipsis &lt;command&gt;
-<span class="hljs-fake-tag">  <span class="hljs-fake-title">Options</span>:
+<pre><code><span class="hljs-attribute keyword">$ </span>ellipsis -h
+<span class="hljs-attribute keyword">Usage: </span>ellipsis &lt;command&gt;
+<span class="hljs-tag">  <span class="hljs-title">Options</span>:
 </span>    -h, --help     show help
     -v, --version  show version
-<span class="hljs-fake-tag">
-  <span class="hljs-fake-title">Commands</span>:
-</span><span class="hljs-fake-tag">    <span class="hljs-fake-title">new</span>        <span class="hljs-fake-title">create</span> <span class="hljs-fake-title">a</span> <span class="hljs-fake-title">new</span> <span class="hljs-fake-title">package</span>
-</span><span class="hljs-fake-tag">    <span class="hljs-fake-title">edit</span>       <span class="hljs-fake-title">edit</span> <span class="hljs-fake-title">an</span> <span class="hljs-fake-title">installed</span> <span class="hljs-fake-title">package</span>
-</span><span class="hljs-fake-tag">    <span class="hljs-fake-title">add</span>        <span class="hljs-fake-title">add</span> <span class="hljs-fake-title">new</span> <span class="hljs-fake-title">dotfile</span> <span class="hljs-fake-title">to</span> <span class="hljs-fake-title">package</span>
-</span><span class="hljs-fake-tag">    <span class="hljs-fake-title">install</span>    <span class="hljs-fake-title">install</span> <span class="hljs-fake-title">new</span> <span class="hljs-fake-title">package</span>
-</span><span class="hljs-fake-tag">    <span class="hljs-fake-title">uninstall</span>  <span class="hljs-fake-title">uninstall</span> <span class="hljs-fake-title">package</span>
-</span><span class="hljs-fake-tag">    <span class="hljs-fake-title">link</span>       <span class="hljs-fake-title">link</span> <span class="hljs-fake-title">package</span>
-</span><span class="hljs-fake-tag">    <span class="hljs-fake-title">unlink</span>     <span class="hljs-fake-title">unlink</span> <span class="hljs-fake-title">package</span>
-</span><span class="hljs-fake-tag">    <span class="hljs-fake-title">broken</span>     <span class="hljs-fake-title">list</span> <span class="hljs-fake-title">any</span> <span class="hljs-fake-title">broken</span> <span class="hljs-fake-title">symlinks</span>
-</span><span class="hljs-fake-tag">    <span class="hljs-fake-title">clean</span>      <span class="hljs-fake-title">rm</span> <span class="hljs-fake-title">broken</span> <span class="hljs-fake-title">symlinks</span>
-</span><span class="hljs-fake-tag">    <span class="hljs-fake-title">installed</span>  <span class="hljs-fake-title">list</span> <span class="hljs-fake-title">installed</span> <span class="hljs-fake-title">packages</span>
-</span><span class="hljs-fake-tag">    <span class="hljs-fake-title">links</span>      <span class="hljs-fake-title">show</span> <span class="hljs-fake-title">symlinks</span> <span class="hljs-fake-title">installed</span> <span class="hljs-fake-title">by</span> <span class="hljs-fake-title">package</span><span class="hljs-fake-attribute">(<span class="hljs-fake-attribute"><span class="hljs-fake-attribute">s</span>)</span></span>
-</span><span class="hljs-fake-tag">    <span class="hljs-fake-title">pull</span>       <span class="hljs-fake-title">git</span> <span class="hljs-fake-title">pull</span> <span class="hljs-fake-title">package</span><span class="hljs-fake-attribute">(<span class="hljs-fake-attribute"><span class="hljs-fake-attribute">s</span>)</span></span>
-</span><span class="hljs-fake-tag">    <span class="hljs-fake-title">push</span>       <span class="hljs-fake-title">git</span> <span class="hljs-fake-title">push</span> <span class="hljs-fake-title">package</span><span class="hljs-fake-attribute">(<span class="hljs-fake-attribute"><span class="hljs-fake-attribute">s</span>)</span></span>
-</span><span class="hljs-fake-tag">    <span class="hljs-fake-title">status</span>     <span class="hljs-fake-title">show</span> <span class="hljs-fake-title">status</span> <span class="hljs-fake-title">of</span> <span class="hljs-fake-title">package</span><span class="hljs-fake-attribute">(<span class="hljs-fake-attribute"><span class="hljs-fake-attribute">s</span>)</span></span>
-</span><span class="hljs-fake-tag">    <span class="hljs-fake-title">publish</span>    <span class="hljs-fake-title">publish</span> <span class="hljs-fake-title">package</span> <span class="hljs-fake-title">to</span> <span class="hljs-fake-title">repository</span>
-</span><span class="hljs-fake-tag">    <span class="hljs-fake-title">search</span>     <span class="hljs-fake-title">search</span> <span class="hljs-fake-title">package</span> <span class="hljs-fake-title">repository</span></span>
+<span class="hljs-tag">
+  <span class="hljs-title">Commands</span>:
+</span><span class="hljs-tag">    <span class="hljs-title">new</span>        <span class="hljs-title">create</span> <span class="hljs-title">a</span> <span class="hljs-title">new</span> <span class="hljs-title">package</span>
+</span><span class="hljs-tag">    <span class="hljs-title">edit</span>       <span class="hljs-title">edit</span> <span class="hljs-title">an</span> <span class="hljs-title">installed</span> <span class="hljs-title">package</span>
+</span><span class="hljs-tag">    <span class="hljs-title">add</span>        <span class="hljs-title">add</span> <span class="hljs-title">new</span> <span class="hljs-title">dotfile</span> <span class="hljs-title">to</span> <span class="hljs-title">package</span>
+</span><span class="hljs-tag">    <span class="hljs-title">install</span>    <span class="hljs-title">install</span> <span class="hljs-title">new</span> <span class="hljs-title">package</span>
+</span><span class="hljs-tag">    <span class="hljs-title">uninstall</span>  <span class="hljs-title">uninstall</span> <span class="hljs-title">package</span>
+</span><span class="hljs-tag">    <span class="hljs-title">link</span>       <span class="hljs-title">link</span> <span class="hljs-title">package</span>
+</span><span class="hljs-tag">    <span class="hljs-title">unlink</span>     <span class="hljs-title">unlink</span> <span class="hljs-title">package</span>
+</span><span class="hljs-tag">    <span class="hljs-title">broken</span>     <span class="hljs-title">list</span> <span class="hljs-title">any</span> <span class="hljs-title">broken</span> <span class="hljs-title">symlinks</span>
+</span><span class="hljs-tag">    <span class="hljs-title">clean</span>      <span class="hljs-title">rm</span> <span class="hljs-title">broken</span> <span class="hljs-title">symlinks</span>
+</span><span class="hljs-tag">    <span class="hljs-title">installed</span>  <span class="hljs-title">list</span> <span class="hljs-title">installed</span> <span class="hljs-title">packages</span>
+</span><span class="hljs-tag">    <span class="hljs-title">links</span>      <span class="hljs-title">show</span> <span class="hljs-title">symlinks</span> <span class="hljs-title">installed</span> <span class="hljs-title">by</span> <span class="hljs-title">package</span><span class="hljs-attribute">(<span class="hljs-attribute"><span class="hljs-attribute">s</span>)</span></span>
+</span><span class="hljs-tag">    <span class="hljs-title">pull</span>       <span class="hljs-title">git</span> <span class="hljs-title">pull</span> <span class="hljs-title">package</span><span class="hljs-attribute">(<span class="hljs-attribute"><span class="hljs-attribute">s</span>)</span></span>
+</span><span class="hljs-tag">    <span class="hljs-title">push</span>       <span class="hljs-title">git</span> <span class="hljs-title">push</span> <span class="hljs-title">package</span><span class="hljs-attribute">(<span class="hljs-attribute"><span class="hljs-attribute">s</span>)</span></span>
+</span><span class="hljs-tag">    <span class="hljs-title">status</span>     <span class="hljs-title">show</span> <span class="hljs-title">status</span> <span class="hljs-title">of</span> <span class="hljs-title">package</span><span class="hljs-attribute">(<span class="hljs-attribute"><span class="hljs-attribute">s</span>)</span></span>
+</span><span class="hljs-tag">    <span class="hljs-title">publish</span>    <span class="hljs-title">publish</span> <span class="hljs-title">package</span> <span class="hljs-title">to</span> <span class="hljs-title">repository</span>
+</span><span class="hljs-tag">    <span class="hljs-title">search</span>     <span class="hljs-title">search</span> <span class="hljs-title">package</span> <span class="hljs-title">repository</span></span>
 </code></pre><h3 id="configuration">Configuration</h3>
 <p>You can customize ellipsis by exporting a few different variables:</p>
 <h4 id="github_user-ellipsis_user">GITHUB_USER / ELLIPSIS_USER</h4>
@@ -95,7 +96,7 @@ specifiying user or a full repo url. Defaults to <code>$(git config github.user)
 <code>zeekay</code>.</p>
 <h4 id="ellipsis_repo">ELLIPSIS_REPO</h4>
 <p>Customize location of ellipsis repo cloned during a curl-based install. Defaults
-to <code>https://github.com/zeekay/ellipsis</code>.</p>
+to <code>https://github.com/ellipsis/ellipsis</code>.</p>
 <h4 id="ellipsis_proto">ELLIPSIS_PROTO</h4>
 <p>Customizes which protocol new packages are cloned with, you can specify
 <code>https</code>,<code>ssh</code>, <code>git</code>. Defaults to <code>https</code>.</p>
@@ -108,7 +109,7 @@ useful for testing).</p>
 <p>Customize where ellipsis installs packages on your filesystem, defaults to
 <code>~/.ellipsis/packages</code>.</p>
 <pre><code class="lang-bash"><span class="hljs-keyword">export</span> ELLIPSIS_USER=<span class="hljs-string">"zeekay"</span>
-<span class="hljs-keyword">export</span> ELLIPSIS_SSH=<span class="hljs-string">"ssh"</span>
+<span class="hljs-keyword">export</span> ELLIPSIS_PROTO=<span class="hljs-string">"ssh"</span>
 <span class="hljs-keyword">export</span> ELLIPSIS_PATH=<span class="hljs-string">"~/.el"</span>
 </code></pre>
 <h3 id="packages">Packages</h3>
@@ -341,7 +342,7 @@ mv ~/.zshrc dotfiles/zshrc
 linking dotfiles/zshrc -&gt; ~/.zshrc
 </code></pre>
 <h3 id="completion">Completion</h3>
-<p>A completion file for zsh is <a href="https://github.com/zeekay/ellipsis/blob/master/comp/_ellipsis">included</a>. To use it add <code>_ellipsis</code> to
+<p>A completion file for zsh is <a href="https://github.com/ellipsis/ellipsis/blob/master/comp/_ellipsis">included</a>. To use it add <code>_ellipsis</code> to
 your <code>fpath</code> and ensure auto-completion is enabled:</p>
 <pre><code class="lang-bash">fpath=(<span class="hljs-variable">$HOME</span>/.ellipsis/comp <span class="hljs-variable">$fpath</span>)
 autoload -U compinit; compinit
@@ -349,7 +350,9 @@ autoload -U compinit; compinit
 <h3 id="development">Development</h3>
 <p>Pull requests welcome! New code should follow the <a href="https://google-styleguide.googlecode.com/svn/trunk/shell.xml">existing style</a>
 (and ideally include <a href="https://github.com/sstephenson/bats">tests</a>).</p>
-<p>To suggest a feature or report a bug: <a href="http://github.com/zeekay/ellipsis/issues">http://github.com/zeekay/ellipsis/issues</a>.</p>
+<p>Suggest a feature or report a bug? Create an <a href="http://github.com/ellipsis/ellipsis/issues">issue</a>!</p>
+<h3 id="license">License</h3>
+<p>Ellipsis is open-source software licensed under the <a href="http://opensource.org/licenses/MIT">MIT license</a>.</p>
 </section>
     </div>
     <!--if !IE
@@ -357,7 +360,7 @@ autoload -U compinit; compinit
       fixScale(document);
     -->
   </body>
-</html><!--
+</html><!-- 
 EOF
 
 # shim for ellipsis install.bash
@@ -377,7 +380,7 @@ for dep in $deps; do
 done
 
 # Download full installer and execute with bash
-curl -sL https://raw.githubusercontent.com/zeekay/ellipsis/master/scripts/install.bash > install-$$.bash
+curl -sL https://raw.githubusercontent.com/ellipsis/ellipsis/master/scripts/install.bash > install-$$.bash
 bash install-$$.bash
 
 # Clean up
