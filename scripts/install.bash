@@ -14,7 +14,7 @@ done
 tmp_dir=$(mktemp -d ${TMPDIR:-tmp}-XXXXXX)
 
 # Clone ellipsis into $tmp_dir.
-git clone --depth 1 git://github.com/zeekay/ellipsis.git $tmp_dir/ellipsis
+git clone --depth 1 git://github.com/ellipsis/ellipsis.git $tmp_dir/ellipsis
 
 # Save reference to specified ELLIPSIS_PATH (if any) otherwise final
 # destination: $HOME/.ellipsis.
