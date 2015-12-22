@@ -423,7 +423,7 @@ autoload -U compinit; compinit
 Pull requests welcome! New code should follow the [existing style][style-guide]
 (and ideally include [tests][bats]).
 
-To suggest a feature or report a bug: http://github.com/zeekay/ellipsis/issues.
+Suggest a feature or report a bug? Create an [issue][issues]!
 
 ### License
 Ellipsis is open-source software licensed under the [MIT license][mit-license].
@@ -448,4 +448,5 @@ Ellipsis is open-source software licensed under the [MIT license][mit-license].
 [zeesh]:        https://github.com/zeekay/zeesh
 [zshcomp]:      https://github.com/ellipsis/ellipsis/blob/master/comp/_ellipsis
 
+[issues]:       http://github.com/ellipsis/ellipsis/issues
 [mit-license]:  http://opensource.org/licenses/MIT
