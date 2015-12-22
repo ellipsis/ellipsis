@@ -396,6 +396,7 @@ package:
 
 ```bash
 $ export ELLIPSIS_USER=your-github-user
+
 $ ellipsis new dotfiles
 Initialized empty Git repository in /home/user/.ellipsis/packages/dotfiles/.git/
 [master (root-commit) 5f5d2a9] Initial commit
@@ -403,6 +404,7 @@ Initialized empty Git repository in /home/user/.ellipsis/packages/dotfiles/.git/
  create mode 100644 README.md
  create mode 100644 ellipsis.sh
 new package created at ~/.ellipsis/packages/dotfiles
+
 $ ellipsis add dotfiles .*
 mv ~/.vimrc dotfiles/vimrc
 linking dotfiles/vimrc -> ~/.vimrc
@@ -445,7 +447,7 @@ Ellipsis is open-source software licensed under the [MIT license][mit-license].
 [dot-zsh]:      https://github.com/zeekay/dot-zsh
 [installer]:    https://github.com/ellipsis/ellipsis/blob/gh-pages/index.html
 [style-guide]:  https://google-styleguide.googlecode.com/svn/trunk/shell.xml
-[vice]:        https://github.com/zeekay/vice
+[vice]:         https://github.com/zeekay/vice
 [zeesh]:        https://github.com/zeekay/zeesh
 [zshcomp]:      https://github.com/ellipsis/ellipsis/blob/master/comp/_ellipsis
 
