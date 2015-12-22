@@ -639,6 +639,7 @@ code {
   -ms-border-radius: 2px;
   -khtml-border-radius: 2px;
   border-radius: 2px;
+  line-height: 1.75em;
 }
 
 /* Header looks best compressed, slightly. */
