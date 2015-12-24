@@ -434,8 +434,8 @@ Ellipsis is open-source software licensed under the [MIT license][mit-license].
 [travis-url]:   https://travis-ci.org/ellipsis/ellipsis
 [tag-image]:    https://img.shields.io/github/tag/ellipsis/ellipsis.svg
 [tag-url]:      https://github.com/ellipsis/ellipsis/tags
-[gitter-image]: https://badges.gitter.im/joinchat.svg
-[gitter-url]:   https://gitter.im/zeekay/hi
+[gitter-image]: https://badges.gitter.im/ellipsis/ellipsis.svg
+[gitter-url]:   https://gitter.im/ellipsis/ellipsis
 
 [bats]:         https://github.com/sstephenson/bats
 [dot-alfred]:   https://github.com/zeekay/dot-alfred
