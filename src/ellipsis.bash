@@ -38,6 +38,11 @@ ellipsis.install() {
     fi
 
     for package in "$@"; do
+        # split branch from package name (if possible)
+        parts=($(pkg.split_name "$package"))
+        package="${parts[0]}"
+        PKG_BRANCH="${parts[1]}"
+
         if [ -e "$package" ]; then
             PKG_URL="$package"
             PKG_NAME="$(pkg.name_from_url $package)"
@@ -63,7 +68,7 @@ ellipsis.install() {
         PKG_NAME=$(pkg.name_stripped $PKG_NAME)
         PKG_PATH="$(pkg.path_from_name $PKG_NAME)"
 
-        git.clone "$PKG_URL" "$PKG_PATH"
+        git.clone "$PKG_URL" "$PKG_PATH" "$PKG_BRANCH"
 
         pkg.init "$PKG_PATH"
         pkg.run_hook "link"

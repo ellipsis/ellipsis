@@ -27,19 +27,19 @@ setup() {
         echo modified > $ELLIPSIS_PACKAGES/test/common/file
     }
 
-    if [ $BATS_TEST_NUMBER -gt 1 ]; then
+    if [ $BATS_TEST_NUMBER -gt 2 ]; then
         clone_test_package
     fi
 
-    if [ $BATS_TEST_NUMBER -gt 2 ]; then
+    if [ $BATS_TEST_NUMBER -gt 3 ]; then
         link_test_package
     fi
 
-    if [ $BATS_TEST_NUMBER -eq 12 ] || [ $BATS_TEST_NUMBER -eq 13 ]; then
+    if [ $BATS_TEST_NUMBER -eq 13 ] || [ $BATS_TEST_NUMBER -eq 14 ]; then
         link_broken
     fi
 
-    if [ $BATS_TEST_NUMBER -eq 14 ]; then
+    if [ $BATS_TEST_NUMBER -eq 15 ]; then
         modify_test_package
     fi
 }
@@ -48,7 +48,7 @@ teardown() {
     rm -rf $TESTS_DIR/tmp
 }
 
-@test "ellipsis.install should install a new package" {
+@test "ellipsis.install should install package" {
     run ellipsis.install test/fixtures/dot-test
     [ $status -eq 0 ]
     # packages gets installed into packages
@@ -59,6 +59,14 @@ teardown() {
     # creates backups
     [ -e $ELLIPSIS_HOME/.file.bak ]
     [ ! "$(cat $ELLIPSIS_HOME/.file)" = old ]
+    run ellipsis.uninstall test
+}
+
+@test "ellipsis.install should install package using branch" {
+    run ellipsis.install zeekay/dot-test2@test-branch
+    [ $status -eq 0 ]
+    # packages gets installed into packages
+    [ -e $ELLIPSIS_PACKAGES/test2/ellipsis.sh ]
 }
 
 @test "ellipsis.link should link a package" {
@@ -122,6 +130,7 @@ teardown() {
 
 @test "ellipsis.broken should not list symlinks if none are broken" {
     run ellipsis.broken
+    echo $output
     [[ "$output" == "" ]]
 }
 

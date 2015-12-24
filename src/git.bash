@@ -9,7 +9,11 @@ load pkg
 
 # Clone a Git repo.
 git.clone() {
-    git clone --depth 1 "$@"
+    if [ -z "$3" ]; then
+        git clone --depth 1 "$1" "$2"
+    else
+        git clone --depth 1 "$1" "$2" --branch "$3"
+    fi
 }
 
 # Pull git repo.
