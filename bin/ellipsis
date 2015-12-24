@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 
-source "$(dirname "${BASH_SOURCE[0]}")/../src/init.bash"
+ELLIPSIS_BIN="${BASH_SOURCE[0]}"
+
+# Remove single(!) symlink if present
+if [ -L "$ELLIPSIS_BIN" ]; then
+    ELLIPSIS_BIN="$(readlink "$ELLIPSIS_BIN")"
+fi
+
+ELLIPSIS_PATH="${ELLIPSIS_PATH:-$(cd "$(dirname "$ELLIPSIS_BIN")/.." && pwd)}"
+
+source "$ELLIPSIS_PATH/src/init.bash"
 
 load cli
 
