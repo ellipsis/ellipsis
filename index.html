@@ -27,7 +27,7 @@
     </div>
     <!-- end header-->
     <div class="wrapper">
-      <section><h1 id="ellipsis-build-status-travis-image-travis-url-gitter-chat-gitter-image-gitter-url-">Ellipsis  <a href="https://travis-ci.org/ellipsis/ellipsis"><img src="https://img.shields.io/travis/ellipsis/ellipsis.svg" alt="Build Status"></a> <a href="https://gitter.im/zeekay/hi"><img src="https://img.shields.io/badge/gitter-join_chat-brightgreen.svg" alt="Gitter chat"></a></h1>
+      <section><h1 id="ellipsis-build-status-travis-image-travis-url-latest-tag-tag-image-tag-url-gitter-chat-gitter-image-gitter-url-">Ellipsis  <a href="https://travis-ci.org/ellipsis/ellipsis"><img src="https://img.shields.io/travis/ellipsis/ellipsis.svg" alt="Build Status"></a> <a href="https://github.com/ellipsis/ellipsis/tags"><img src="https://img.shields.io/github/tag/ellipsis/ellipsis.svg" alt="Latest tag"></a> <a href="https://gitter.im/zeekay/hi"><img src="https://badges.gitter.im/joinchat.svg" alt="Gitter chat"></a></h1>
 <pre><code><span class="hljs-tag"> <span class="hljs-title">_</span>    <span class="hljs-title">_</span>    <span class="hljs-title">_</span>
 </span><span class="hljs-tag">/\<span class="hljs-title">_</span>\ /\<span class="hljs-title">_</span>\ /\<span class="hljs-title">_</span>\
 </span><span class="hljs-tag">\/<span class="hljs-title">_</span>/ \/<span class="hljs-title">_</span>/ \/<span class="hljs-title">_</span>/   …<span class="hljs-title">because</span> $<span class="hljs-title">HOME</span> <span class="hljs-title">is</span> <span class="hljs-title">where</span> <span class="hljs-title">the</span> &lt;<span class="hljs-title">3</span> <span class="hljs-title">is</span>!</span>
@@ -328,6 +328,7 @@ scripts you&#39;ve cobbled together over the years? I&#39;ve been there, friend.
 <p>Luckily it&#39;s easy to convert your existing dotfiles into a shiny new ellipsis
 package:</p>
 <pre><code class="lang-bash">$ <span class="hljs-keyword">export</span> ELLIPSIS_USER=your-github-user
+
 $ ellipsis new dotfiles
 Initialized empty Git repository <span class="hljs-keyword">in</span> /home/user/.ellipsis/packages/dotfiles/.git/
 [master (root-commit) <span class="hljs-number">5</span>f5d2a9] Initial commit
@@ -335,6 +336,7 @@ Initialized empty Git repository <span class="hljs-keyword">in</span> /home/user
  create mode <span class="hljs-number">100644</span> README.md
  create mode <span class="hljs-number">100644</span> ellipsis.sh
 new package created at ~/.ellipsis/packages/dotfiles
+
 $ ellipsis add dotfiles .*
 mv ~/.vimrc dotfiles/vimrc
 linking dotfiles/vimrc -&gt; ~/.vimrc
