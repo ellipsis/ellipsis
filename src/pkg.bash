@@ -12,7 +12,7 @@ load utils
 
 # Split name/branch to use
 pkg.split_name() {
-    echo ${1//@ }
+    echo ${1//@/ }
 }
 
 # Strip leading dot- from package name.
