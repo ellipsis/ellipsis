@@ -430,12 +430,12 @@ Suggest a feature or report a bug? Create an [issue][issues]!
 ### License
 Ellipsis is open-source software licensed under the [MIT license][mit-license].
 
-[gitter-image]: https://img.shields.io/badge/gitter-join_chat-brightgreen.svg
-[gitter-url]:   https://gitter.im/zeekay/hi
 [travis-image]: https://img.shields.io/travis/ellipsis/ellipsis.svg
 [travis-url]:   https://travis-ci.org/ellipsis/ellipsis
 [tag-image]:    https://img.shields.io/github/tag/ellipsis/ellipsis.svg
 [tag-url]:      https://github.com/ellipsis/ellipsis/tags
+[gitter-image]: https://badges.gitter.im/joinchat.svg
+[gitter-url]:   https://gitter.im/zeekay/hi
 
 [bats]:         https://github.com/sstephenson/bats
 [dot-alfred]:   https://github.com/zeekay/dot-alfred
