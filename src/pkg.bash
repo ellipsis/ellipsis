@@ -10,6 +10,11 @@ load log
 load path
 load utils
 
+# Split name/branch to use
+pkg.split_name() {
+    echo ${1//@/ }
+}
+
 # Strip leading dot- from package name.
 pkg.name_stripped() {
     echo $1 | sed -e "s/^dot-//"
