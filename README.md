@@ -235,36 +235,18 @@ pkg.push() {
 
 The hooks available in your `ellipsis.sh` are:
 
-#### pkg.add
-Customizes how a files is added to your package.
-
-#### pkg.install
-Customize how package is installed. By default the pkg.link hooks is run.
-
-#### pkg.installed
-Customize how package is listed as installed.
-
-#### pkg.link
-Customizes which files are linked into `$ELLIPSIS_HOME`.
-
-#### pkg.links
-Customizes which files are detected as symlinks.
-
-#### pkg.pull
-Customize how how changes are pulled in when `ellipsis pull` is used.
-
-#### pkg.push
-Customize how how changes are pushed `ellipsis push` is used.
-
-#### pkg.status
-Customize output of `ellipsis status`.
-
-#### pkg.uninstall
-Customize how package is uninstalled. By default all symlinks are removed and
-the package is deleted from `$ELLIPSIS_PATH/packages`.
-
-#### pkg.uninstall
-Customize which files are unlinked by your package.
+Hook            | Desciption
+----------------|-----------
+`pkg.add`       | Customizes how a files is added to your package.
+`pkg.install`   | Customize how package is installed. By default the pkg.link hooks is run.
+`pkg.installed` | Customize how package is listed as installed.
+`pkg.link`      | Customizes which files are linked into `$ELLIPSIS_HOME`.
+`pkg.links`     | Customizes which files are detected as symlinks.
+`pkg.pull`      | Customize how how changes are pulled in when `ellipsis pull` is used.
+`pkg.push`      | Customize how how changes are pushed `ellipsis push` is used.
+`pkg.status`    | Customize output of `ellipsis status`.
+`pkg.uninstall` | Customize how package is uninstalled. By default all symlinks are removed and the package is deleted from `$ELLIPSIS_PATH/packages`.
+`pkg.uninstall` | Customize which files are unlinked by your package.
 
 ### API
 Besides the default hook implementations which are available to you from your
