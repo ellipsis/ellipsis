@@ -82,29 +82,14 @@ Usage: ellipsis <command>
 ### Configuration
 You can customize ellipsis by exporting a few different variables:
 
-#### GITHUB_USER / ELLIPSIS_USER
-Customizes whose dotfiles are installed when you `ellipsis install` without
-specifiying user or a full repo url. Defaults to `$(git config github.user)` or
-`zeekay`.
-
-#### ELLIPSIS_REPO
-Customize location of ellipsis repo cloned during a curl-based install. Defaults
-to `https://github.com/ellipsis/ellipsis`.
-
-#### ELLIPSIS_PROTO
-Customizes which protocol new packages are cloned with, you can specify
-`https`,`ssh`, `git`. Defaults to `https`.
-
-#### ELLIPSIS_HOME
-Customize which folder files are symlinked into, defaults to `$HOME`. (Mostly
-useful for testing).
-
-#### ELLIPSIS_PATH
-Customize where ellipsis lives on your filesystem, defaults to `~/.ellipsis`.
-
-#### ELLIPSIS_PACKAGE
-Customize where ellipsis installs packages on your filesystem, defaults to
-`~/.ellipsis/packages`.
+Variable                        | Description
+--------------------------------|------------
+`GITHUB_USER` / `ELLIPSIS_USER` | Customizes whose dotfiles are installed when you `ellipsis install` without specifiying user or a full repo url. Defaults to `$(git config github.user)` or `zeekay`.
+`ELLIPSIS_REPO`                 | Customize location of ellipsis repo cloned during a curl-based install. Defaults to `https://github.com/ellipsis/ellipsis`.
+`ELLIPSIS_PROTO`                | Customizes which protocol new packages are cloned with, you can specify `https`,`ssh`, `git`. Defaults to `https`.
+`ELLIPSIS_HOME`                 | Customize which folder files are symlinked into, defaults to `$HOME`. (Mostly useful for testing)
+`ELLIPSIS_PATH`                 | Customize where ellipsis lives on your filesystem, defaults to `~/.ellipsis`.
+`ELLIPSIS_PACKAGE`              | Customize where ellipsis installs packages on your filesystem, defaults to `~/.ellipsis/packages`.
 
 ```bash
 export ELLIPSIS_USER="zeekay"
