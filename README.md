@@ -82,29 +82,14 @@ Usage: ellipsis <command>
 ### Configuration
 You can customize ellipsis by exporting a few different variables:
 
-#### GITHUB_USER / ELLIPSIS_USER
-Customizes whose dotfiles are installed when you `ellipsis install` without
-specifiying user or a full repo url. Defaults to `$(git config github.user)` or
-`zeekay`.
-
-#### ELLIPSIS_REPO
-Customize location of ellipsis repo cloned during a curl-based install. Defaults
-to `https://github.com/ellipsis/ellipsis`.
-
-#### ELLIPSIS_PROTO
-Customizes which protocol new packages are cloned with, you can specify
-`https`,`ssh`, `git`. Defaults to `https`.
-
-#### ELLIPSIS_HOME
-Customize which folder files are symlinked into, defaults to `$HOME`. (Mostly
-useful for testing).
-
-#### ELLIPSIS_PATH
-Customize where ellipsis lives on your filesystem, defaults to `~/.ellipsis`.
-
-#### ELLIPSIS_PACKAGE
-Customize where ellipsis installs packages on your filesystem, defaults to
-`~/.ellipsis/packages`.
+Variable                        | Description
+--------------------------------|------------
+`GITHUB_USER` / `ELLIPSIS_USER` | Customizes whose dotfiles are installed when you `ellipsis install` without specifiying user or a full repo url. Defaults to `$(git config github.user)` or `zeekay`.
+`ELLIPSIS_REPO`                 | Customize location of ellipsis repo cloned during a curl-based install. Defaults to `https://github.com/ellipsis/ellipsis`.
+`ELLIPSIS_PROTO`                | Customizes which protocol new packages are cloned with, you can specify `https`,`ssh`, `git`. Defaults to `https`.
+`ELLIPSIS_HOME`                 | Customize which folder files are symlinked into, defaults to `$HOME`. (Mostly useful for testing)
+`ELLIPSIS_PATH`                 | Customize where ellipsis lives on your filesystem, defaults to `~/.ellipsis`.
+`ELLIPSIS_PACKAGE`              | Customize where ellipsis installs packages on your filesystem, defaults to `~/.ellipsis/packages`.
 
 ```bash
 export ELLIPSIS_USER="zeekay"
@@ -235,125 +220,54 @@ pkg.push() {
 
 The hooks available in your `ellipsis.sh` are:
 
-#### pkg.add
-Customizes how a files is added to your package.
-
-#### pkg.install
-Customize how package is installed. By default the pkg.link hooks is run.
-
-#### pkg.installed
-Customize how package is listed as installed.
-
-#### pkg.link
-Customizes which files are linked into `$ELLIPSIS_HOME`.
-
-#### pkg.links
-Customizes which files are detected as symlinks.
-
-#### pkg.pull
-Customize how how changes are pulled in when `ellipsis pull` is used.
-
-#### pkg.push
-Customize how how changes are pushed `ellipsis push` is used.
-
-#### pkg.status
-Customize output of `ellipsis status`.
-
-#### pkg.uninstall
-Customize how package is uninstalled. By default all symlinks are removed and
-the package is deleted from `$ELLIPSIS_PATH/packages`.
-
-#### pkg.uninstall
-Customize which files are unlinked by your package.
+Hook            | Desciption
+----------------|-----------
+`pkg.add`       | Customizes how a files is added to your package.
+`pkg.install`   | Customize how package is installed. By default the pkg.link hooks is run.
+`pkg.installed` | Customize how package is listed as installed.
+`pkg.link`      | Customizes which files are linked into `$ELLIPSIS_HOME`.
+`pkg.links`     | Customizes which files are detected as symlinks.
+`pkg.pull`      | Customize how how changes are pulled in when `ellipsis pull` is used.
+`pkg.push`      | Customize how how changes are pushed `ellipsis push` is used.
+`pkg.status`    | Customize output of `ellipsis status`.
+`pkg.uninstall` | Customize how package is uninstalled. By default all symlinks are removed and the package is deleted from `$ELLIPSIS_PATH/packages`.
+`pkg.uninstall` | Customize which files are unlinked by your package.
 
 ### API
 Besides the default hook implementations which are available to you from your
 `ellipsis.sh` as `hooks.<name>`, there are a number of useful functions and
 variables which ellipsis exposes for you:
 
-#### ellipsis.list_packages
-Lists all installed packages.
-
-#### ellipsis.each
-Executes command for each installed package.
-
-#### fs.folder_empty
-Returns true if folder is empty.
-
-#### fs.file_exists
-Returns true if file exists.
-
-#### fs.is_symlink
-Returns true if file is a symlink.
-
-#### fs.is_ellipsis_symlink
-Returns true if file is a symlink pointing to an ellipsis package.
-
-#### fs.is_broken_symlink
-Returns true if file is a broken symlink.
-
-#### fs.list_symlinks
-Lists symlinks in a folder, defaulting to `$ELLIPSIS_HOME`.
-
-#### fs.backup
-Creates a backup of an existing file, ensuring you don't overwrite existing backups.
-
-#### fs.link_file
-Symlinks a single file into `$ELLIPSIS_HOME`.
-
-#### fs.link_files
-Symlinks all files in given folder into `$ELLIPSIS_HOME`.
-
-#### git.clone
-Clones a Git repo, identical to `git clone`.
-
-#### git.pull
-Identical to `git pull`.
-
-#### git.push
-Identical to `git push`.
-
-#### git.sha1
-Prints last commit's sha1 using `git rev-parse --short HEAD`.
-
-#### git.last_updated
-Prints commit's relative last update time.
-
-#### git.head
-Prints how far ahead a package is from origin.
-
-#### git.has_changes
-Returns true if repository has changes.
-
-#### git.diffstat
-Displays `git diff --stat`.
-
-#### path.abs_path
-Return absolute path to `$1`.
-
-#### path.is_path
-Simple heuristic to determine if `$1` is a path.
-
-#### path.relative_to_home
-Replaces `$HOME` with `~`
-
-#### path.relative_to_packages
-Strips `$ELLIPSIS_PACKAGES` from path.
-
-#### path.strip_dot
-Strip dot from hidden files/folders.
-
-#### os.platform
-Returns one of `cygwin`, `freebsd`, `linux`, `osx`.
-
-#### utils.cmd_exists
-Returns true if command exists.
-
-#### utils.prompt
-Prompts user `$1` message and returns true if `YES` or `yes` is input.
-
-#### utils.run_installer
-Downloads and runs web-based shell script installers.
+Function/Variable             | Description
+------------------------------|------------
+`ellipsis.list_packages`      | Lists all installed packages.
+`ellipsis.each`               | Executes command for each installed package.
+`fs.folder_empty`             | Returns true if folder is empty.
+`fs.file_exists`              | Returns true if file exists.
+`fs.is_symlink`               | Returns true if file is a symlink.
+`fs.is_ellipsis_symlink`      | Returns true if file is a symlink pointing to an ellipsis package.
+`fs.is_broken_symlink`        | Returns true if file is a broken symlink.
+`fs.list_symlinks`            | Lists symlinks in a folder, defaulting to `$ELLIPSIS_HOME`.
+`fs.backup`                   | Creates a backup of an existing file, ensuring you don't overwrite existing backups.
+`fs.link_file`                | Symlinks a single file into `$ELLIPSIS_HOME`.
+`fs.link_files`               | Symlinks all files in given folder into `$ELLIPSIS_HOME`.
+`git.clone`                   | Clones a Git repo, identical to `git clone`.
+`git.pull`                    | Identical to `git pull`.
+`git.push`                    | Identical to `git push`.
+`git.sha1`                    | Prints last commit's sha1 using `git rev-parse --short HEAD`.
+`git.last_updated`            | Prints commit's relative last update time.
+`git.head`                    | Prints how far ahead a package is from origin.
+`git.has_changes`             | Returns true if repository has changes.
+`git.diffstat`                | Displays `git diff --stat`.
+`path.abs_path`               | Return absolute path to `$1`.
+`path.is_path`                | Simple heuristic to determine if `$1` is a path.
+`path.relative_to_home`       | Replaces `$HOME` with `~`
+`path.relative_to_packages`   | Strips `$ELLIPSIS_PACKAGES` from path.
+`path.strip_dot`              | Strip dot from hidden files/folders.
+`os.platform`                 | Returns one of `cygwin`, `freebsd`, `linux`, `osx`.
+`utils.cmd_exists`            | Returns true if command exists.
+`utils.prompt`                | Prompts user `$1` message and returns true if `YES` or `yes` is input.
+`utils.run_installer`         | Downloads and runs web-based shell script installers.
 
 ### Available packages
 
