@@ -84,7 +84,7 @@ You can customize ellipsis by exporting a few different variables:
 
 Variable                        | Description
 --------------------------------|------------
-`GITHUB_USER` / `ELLIPSIS_USER` | Customizes whose dotfiles are installed when you `ellipsis install` without specifiying user or a full repo url. Defaults to `$(git config github.user)` or `zeekay`.
+`GITHUB_USER` / `ELLIPSIS_USER` | Customizes whose dotfiles are installed when you `ellipsis install` without specifying user or a full repo url. Defaults to `$(git config github.user)` or `zeekay`.
 `ELLIPSIS_REPO`                 | Customize location of ellipsis repo cloned during a curl-based install. Defaults to `https://github.com/ellipsis/ellipsis`.
 `ELLIPSIS_PROTO`                | Customizes which protocol new packages are cloned with, you can specify `https`,`ssh`, `git`. Defaults to `https`.
 `ELLIPSIS_HOME`                 | Customize which folder files are symlinked into, defaults to `$HOME`. (Mostly useful for testing)
@@ -99,7 +99,7 @@ export ELLIPSIS_PATH="~/.el"
 
 ### Packages
 A package is any repo with files you want to symlink into `$ELLIPSIS_PATH`
-(typically `$HOME`). By default all of a respository's non-hidden files (read:
+(typically `$HOME`). By default all of a repository's non-hidden files (read:
 not beginning with a `.`) will naively be linked into place, with the exception
 of a few common text files (`README`, `LICENSE`, etc).
 
@@ -116,11 +116,10 @@ adding an `ellipsis.sh` to your package is completely optional. But what if you
 need more? That's where hooks come in...
 
 ### Hooks
-Hooks allow you to control how ellipis interacts with your package, and how
+Hooks allow you to control how ellipsis interacts with your package, and how
 various commands are executed against your package. Say for instance you wanted
-to run the installer for your [favorite zsh
-framework][zeesh], you could define a `pkg.install`
-hook like this:
+to run the installer for your [favorite zsh framework][zeesh], you could define
+a `pkg.install` hook like this:
 
 ```bash
 #!/usr/bin/env bash
@@ -220,7 +219,7 @@ pkg.push() {
 
 The hooks available in your `ellipsis.sh` are:
 
-Hook            | Desciption
+Hook            | Description
 ----------------|-----------
 `pkg.add`       | Customizes how a files is added to your package.
 `pkg.install`   | Customize how package is installed. By default the pkg.link hooks is run.
@@ -231,7 +230,7 @@ Hook            | Desciption
 `pkg.push`      | Customize how how changes are pushed `ellipsis push` is used.
 `pkg.status`    | Customize output of `ellipsis status`.
 `pkg.uninstall` | Customize how package is uninstalled. By default all symlinks are removed and the package is deleted from `$ELLIPSIS_PATH/packages`.
-`pkg.uninstall` | Customize which files are unlinked by your package.
+`pkg.unlink`    | Customize which files are unlinked by your package.
 
 ### API
 Besides the default hook implementations which are available to you from your
