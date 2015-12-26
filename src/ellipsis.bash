@@ -68,7 +68,11 @@ ellipsis.install() {
         PKG_NAME=$(pkg.name_stripped $PKG_NAME)
         PKG_PATH="$(pkg.path_from_name $PKG_NAME)"
 
-        git.clone "$PKG_URL" "$PKG_PATH" "$PKG_BRANCH"
+        if [ -z "$PKG_BRANCH" ]; then
+            git.clone "$PKG_URL" "$PKG_PATH"
+        else
+            git.clone "$PKG_URL" "$PKG_PATH" --branch "$PKG_BRANCH"
+        fi
 
         pkg.init "$PKG_PATH"
         pkg.run_hook "link"
