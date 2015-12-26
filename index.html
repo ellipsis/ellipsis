@@ -90,31 +90,47 @@ $ ellipsis install zsh
 </span><span class="hljs-tag">    <span class="hljs-title">search</span>     <span class="hljs-title">search</span> <span class="hljs-title">package</span> <span class="hljs-title">repository</span></span>
 </code></pre><h3 id="configuration">Configuration</h3>
 <p>You can customize ellipsis by exporting a few different variables:</p>
-<h4 id="github_user-ellipsis_user">GITHUB_USER / ELLIPSIS_USER</h4>
-<p>Customizes whose dotfiles are installed when you <code>ellipsis install</code> without
-specifiying user or a full repo url. Defaults to <code>$(git config github.user)</code> or
-<code>zeekay</code>.</p>
-<h4 id="ellipsis_repo">ELLIPSIS_REPO</h4>
-<p>Customize location of ellipsis repo cloned during a curl-based install. Defaults
-to <code>https://github.com/ellipsis/ellipsis</code>.</p>
-<h4 id="ellipsis_proto">ELLIPSIS_PROTO</h4>
-<p>Customizes which protocol new packages are cloned with, you can specify
-<code>https</code>,<code>ssh</code>, <code>git</code>. Defaults to <code>https</code>.</p>
-<h4 id="ellipsis_home">ELLIPSIS_HOME</h4>
-<p>Customize which folder files are symlinked into, defaults to <code>$HOME</code>. (Mostly
-useful for testing).</p>
-<h4 id="ellipsis_path">ELLIPSIS_PATH</h4>
-<p>Customize where ellipsis lives on your filesystem, defaults to <code>~/.ellipsis</code>.</p>
-<h4 id="ellipsis_package">ELLIPSIS_PACKAGE</h4>
-<p>Customize where ellipsis installs packages on your filesystem, defaults to
-<code>~/.ellipsis/packages</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GITHUB_USER</code> / <code>ELLIPSIS_USER</code></td>
+<td>Customizes whose dotfiles are installed when you <code>ellipsis install</code> without specifying user or a full repo url. Defaults to <code>$(git config github.user)</code> or <code>zeekay</code>.</td>
+</tr>
+<tr>
+<td><code>ELLIPSIS_REPO</code></td>
+<td>Customize location of ellipsis repo cloned during a curl-based install. Defaults to <code>https://github.com/ellipsis/ellipsis</code>.</td>
+</tr>
+<tr>
+<td><code>ELLIPSIS_PROTO</code></td>
+<td>Customizes which protocol new packages are cloned with, you can specify <code>https</code>,<code>ssh</code>, <code>git</code>. Defaults to <code>https</code>.</td>
+</tr>
+<tr>
+<td><code>ELLIPSIS_HOME</code></td>
+<td>Customize which folder files are symlinked into, defaults to <code>$HOME</code>. (Mostly useful for testing)</td>
+</tr>
+<tr>
+<td><code>ELLIPSIS_PATH</code></td>
+<td>Customize where ellipsis lives on your filesystem, defaults to <code>~/.ellipsis</code>.</td>
+</tr>
+<tr>
+<td><code>ELLIPSIS_PACKAGE</code></td>
+<td>Customize where ellipsis installs packages on your filesystem, defaults to <code>~/.ellipsis/packages</code>.</td>
+</tr>
+</tbody>
+</table>
 <pre><code class="lang-bash"><span class="hljs-keyword">export</span> ELLIPSIS_USER=<span class="hljs-string">"zeekay"</span>
 <span class="hljs-keyword">export</span> ELLIPSIS_PROTO=<span class="hljs-string">"ssh"</span>
 <span class="hljs-keyword">export</span> ELLIPSIS_PATH=<span class="hljs-string">"~/.el"</span>
 </code></pre>
 <h3 id="packages">Packages</h3>
 <p>A package is any repo with files you want to symlink into <code>$ELLIPSIS_PATH</code>
-(typically <code>$HOME</code>). By default all of a respository&#39;s non-hidden files (read:
+(typically <code>$HOME</code>). By default all of a repository&#39;s non-hidden files (read:
 not beginning with a <code>.</code>) will naively be linked into place, with the exception
 of a few common text files (<code>README</code>, <code>LICENSE</code>, etc).</p>
 <p>You can customize how ellipsis interacts with your package by adding an
@@ -126,11 +142,10 @@ of a few common text files (<code>README</code>, <code>LICENSE</code>, etc).</p>
 adding an <code>ellipsis.sh</code> to your package is completely optional. But what if you
 need more? That&#39;s where hooks come in...</p>
 <h3 id="hooks">Hooks</h3>
-<p>Hooks allow you to control how ellipis interacts with your package, and how
+<p>Hooks allow you to control how ellipsis interacts with your package, and how
 various commands are executed against your package. Say for instance you wanted
-to run the installer for your <a href="https://github.com/zeekay/zeesh">favorite zsh
-framework</a>, you could define a <code>pkg.install</code>
-hook like this:</p>
+to run the installer for your <a href="https://github.com/zeekay/zeesh">favorite zsh framework</a>, you could define
+a <code>pkg.install</code> hook like this:</p>
 <pre><code class="lang-bash"><span class="hljs-shebang">#!/usr/bin/env bash
 </span>
 pkg.<span class="hljs-function"><span class="hljs-title">install</span></span>() {
@@ -220,87 +235,182 @@ pkg.<span class="hljs-function"><span class="hljs-title">push</span></span>() {
 }
 </code></pre>
 <p>The hooks available in your <code>ellipsis.sh</code> are:</p>
-<h4 id="pkg-add">pkg.add</h4>
-<p>Customizes how a files is added to your package.</p>
-<h4 id="pkg-install">pkg.install</h4>
-<p>Customize how package is installed. By default the pkg.link hooks is run.</p>
-<h4 id="pkg-installed">pkg.installed</h4>
-<p>Customize how package is listed as installed.</p>
-<h4 id="pkg-link">pkg.link</h4>
-<p>Customizes which files are linked into <code>$ELLIPSIS_HOME</code>.</p>
-<h4 id="pkg-links">pkg.links</h4>
-<p>Customizes which files are detected as symlinks.</p>
-<h4 id="pkg-pull">pkg.pull</h4>
-<p>Customize how how changes are pulled in when <code>ellipsis pull</code> is used.</p>
-<h4 id="pkg-push">pkg.push</h4>
-<p>Customize how how changes are pushed <code>ellipsis push</code> is used.</p>
-<h4 id="pkg-status">pkg.status</h4>
-<p>Customize output of <code>ellipsis status</code>.</p>
-<h4 id="pkg-uninstall">pkg.uninstall</h4>
-<p>Customize how package is uninstalled. By default all symlinks are removed and
-the package is deleted from <code>$ELLIPSIS_PATH/packages</code>.</p>
-<h4 id="pkg-uninstall">pkg.uninstall</h4>
-<p>Customize which files are unlinked by your package.</p>
+<table>
+<thead>
+<tr>
+<th>Hook</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pkg.add</code></td>
+<td>Customizes how a files is added to your package.</td>
+</tr>
+<tr>
+<td><code>pkg.install</code></td>
+<td>Customize how package is installed. By default the pkg.link hooks is run.</td>
+</tr>
+<tr>
+<td><code>pkg.installed</code></td>
+<td>Customize how package is listed as installed.</td>
+</tr>
+<tr>
+<td><code>pkg.link</code></td>
+<td>Customizes which files are linked into <code>$ELLIPSIS_HOME</code>.</td>
+</tr>
+<tr>
+<td><code>pkg.links</code></td>
+<td>Customizes which files are detected as symlinks.</td>
+</tr>
+<tr>
+<td><code>pkg.pull</code></td>
+<td>Customize how how changes are pulled in when <code>ellipsis pull</code> is used.</td>
+</tr>
+<tr>
+<td><code>pkg.push</code></td>
+<td>Customize how how changes are pushed <code>ellipsis push</code> is used.</td>
+</tr>
+<tr>
+<td><code>pkg.status</code></td>
+<td>Customize output of <code>ellipsis status</code>.</td>
+</tr>
+<tr>
+<td><code>pkg.uninstall</code></td>
+<td>Customize how package is uninstalled. By default all symlinks are removed and the package is deleted from <code>$ELLIPSIS_PATH/packages</code>.</td>
+</tr>
+<tr>
+<td><code>pkg.unlink</code></td>
+<td>Customize which files are unlinked by your package.</td>
+</tr>
+</tbody>
+</table>
 <h3 id="api">API</h3>
 <p>Besides the default hook implementations which are available to you from your
 <code>ellipsis.sh</code> as <code>hooks.&lt;name&gt;</code>, there are a number of useful functions and
 variables which ellipsis exposes for you:</p>
-<h4 id="ellipsis-list_packages">ellipsis.list_packages</h4>
-<p>Lists all installed packages.</p>
-<h4 id="ellipsis-each">ellipsis.each</h4>
-<p>Executes command for each installed package.</p>
-<h4 id="fs-folder_empty">fs.folder_empty</h4>
-<p>Returns true if folder is empty.</p>
-<h4 id="fs-file_exists">fs.file_exists</h4>
-<p>Returns true if file exists.</p>
-<h4 id="fs-is_symlink">fs.is_symlink</h4>
-<p>Returns true if file is a symlink.</p>
-<h4 id="fs-is_ellipsis_symlink">fs.is_ellipsis_symlink</h4>
-<p>Returns true if file is a symlink pointing to an ellipsis package.</p>
-<h4 id="fs-is_broken_symlink">fs.is_broken_symlink</h4>
-<p>Returns true if file is a broken symlink.</p>
-<h4 id="fs-list_symlinks">fs.list_symlinks</h4>
-<p>Lists symlinks in a folder, defaulting to <code>$ELLIPSIS_HOME</code>.</p>
-<h4 id="fs-backup">fs.backup</h4>
-<p>Creates a backup of an existing file, ensuring you don&#39;t overwrite existing backups.</p>
-<h4 id="fs-link_file">fs.link_file</h4>
-<p>Symlinks a single file into <code>$ELLIPSIS_HOME</code>.</p>
-<h4 id="fs-link_files">fs.link_files</h4>
-<p>Symlinks all files in given folder into <code>$ELLIPSIS_HOME</code>.</p>
-<h4 id="git-clone">git.clone</h4>
-<p>Clones a Git repo, identical to <code>git clone</code>.</p>
-<h4 id="git-pull">git.pull</h4>
-<p>Identical to <code>git pull</code>.</p>
-<h4 id="git-push">git.push</h4>
-<p>Identical to <code>git push</code>.</p>
-<h4 id="git-sha1">git.sha1</h4>
-<p>Prints last commit&#39;s sha1 using <code>git rev-parse --short HEAD</code>.</p>
-<h4 id="git-last_updated">git.last_updated</h4>
-<p>Prints commit&#39;s relative last update time.</p>
-<h4 id="git-head">git.head</h4>
-<p>Prints how far ahead a package is from origin.</p>
-<h4 id="git-has_changes">git.has_changes</h4>
-<p>Returns true if repository has changes.</p>
-<h4 id="git-diffstat">git.diffstat</h4>
-<p>Displays <code>git diff --stat</code>.</p>
-<h4 id="path-abs_path">path.abs_path</h4>
-<p>Return absolute path to <code>$1</code>.</p>
-<h4 id="path-is_path">path.is_path</h4>
-<p>Simple heuristic to determine if <code>$1</code> is a path.</p>
-<h4 id="path-relative_to_home">path.relative_to_home</h4>
-<p>Replaces <code>$HOME</code> with <code>~</code></p>
-<h4 id="path-relative_to_packages">path.relative_to_packages</h4>
-<p>Strips <code>$ELLIPSIS_PACKAGES</code> from path.</p>
-<h4 id="path-strip_dot">path.strip_dot</h4>
-<p>Strip dot from hidden files/folders.</p>
-<h4 id="os-platform">os.platform</h4>
-<p>Returns one of <code>cygwin</code>, <code>freebsd</code>, <code>linux</code>, <code>osx</code>.</p>
-<h4 id="utils-cmd_exists">utils.cmd_exists</h4>
-<p>Returns true if command exists.</p>
-<h4 id="utils-prompt">utils.prompt</h4>
-<p>Prompts user <code>$1</code> message and returns true if <code>YES</code> or <code>yes</code> is input.</p>
-<h4 id="utils-run_installer">utils.run_installer</h4>
-<p>Downloads and runs web-based shell script installers.</p>
+<table>
+<thead>
+<tr>
+<th>Function/Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ellipsis.list_packages</code></td>
+<td>Lists all installed packages.</td>
+</tr>
+<tr>
+<td><code>ellipsis.each</code></td>
+<td>Executes command for each installed package.</td>
+</tr>
+<tr>
+<td><code>fs.folder_empty</code></td>
+<td>Returns true if folder is empty.</td>
+</tr>
+<tr>
+<td><code>fs.file_exists</code></td>
+<td>Returns true if file exists.</td>
+</tr>
+<tr>
+<td><code>fs.is_symlink</code></td>
+<td>Returns true if file is a symlink.</td>
+</tr>
+<tr>
+<td><code>fs.is_ellipsis_symlink</code></td>
+<td>Returns true if file is a symlink pointing to an ellipsis package.</td>
+</tr>
+<tr>
+<td><code>fs.is_broken_symlink</code></td>
+<td>Returns true if file is a broken symlink.</td>
+</tr>
+<tr>
+<td><code>fs.list_symlinks</code></td>
+<td>Lists symlinks in a folder, defaulting to <code>$ELLIPSIS_HOME</code>.</td>
+</tr>
+<tr>
+<td><code>fs.backup</code></td>
+<td>Creates a backup of an existing file, ensuring you don&#39;t overwrite existing backups.</td>
+</tr>
+<tr>
+<td><code>fs.link_file</code></td>
+<td>Symlinks a single file into <code>$ELLIPSIS_HOME</code>.</td>
+</tr>
+<tr>
+<td><code>fs.link_files</code></td>
+<td>Symlinks all files in given folder into <code>$ELLIPSIS_HOME</code>.</td>
+</tr>
+<tr>
+<td><code>git.clone</code></td>
+<td>Clones a Git repo, identical to <code>git clone</code>.</td>
+</tr>
+<tr>
+<td><code>git.pull</code></td>
+<td>Identical to <code>git pull</code>.</td>
+</tr>
+<tr>
+<td><code>git.push</code></td>
+<td>Identical to <code>git push</code>.</td>
+</tr>
+<tr>
+<td><code>git.sha1</code></td>
+<td>Prints last commit&#39;s sha1 using <code>git rev-parse --short HEAD</code>.</td>
+</tr>
+<tr>
+<td><code>git.last_updated</code></td>
+<td>Prints commit&#39;s relative last update time.</td>
+</tr>
+<tr>
+<td><code>git.head</code></td>
+<td>Prints how far ahead a package is from origin.</td>
+</tr>
+<tr>
+<td><code>git.has_changes</code></td>
+<td>Returns true if repository has changes.</td>
+</tr>
+<tr>
+<td><code>git.diffstat</code></td>
+<td>Displays <code>git diff --stat</code>.</td>
+</tr>
+<tr>
+<td><code>path.abs_path</code></td>
+<td>Return absolute path to <code>$1</code>.</td>
+</tr>
+<tr>
+<td><code>path.is_path</code></td>
+<td>Simple heuristic to determine if <code>$1</code> is a path.</td>
+</tr>
+<tr>
+<td><code>path.relative_to_home</code></td>
+<td>Replaces <code>$HOME</code> with <code>~</code></td>
+</tr>
+<tr>
+<td><code>path.relative_to_packages</code></td>
+<td>Strips <code>$ELLIPSIS_PACKAGES</code> from path.</td>
+</tr>
+<tr>
+<td><code>path.strip_dot</code></td>
+<td>Strip dot from hidden files/folders.</td>
+</tr>
+<tr>
+<td><code>os.platform</code></td>
+<td>Returns one of <code>cygwin</code>, <code>freebsd</code>, <code>linux</code>, <code>osx</code>.</td>
+</tr>
+<tr>
+<td><code>utils.cmd_exists</code></td>
+<td>Returns true if command exists.</td>
+</tr>
+<tr>
+<td><code>utils.prompt</code></td>
+<td>Prompts user <code>$1</code> message and returns true if <code>YES</code> or <code>yes</code> is input.</td>
+</tr>
+<tr>
+<td><code>utils.run_installer</code></td>
+<td>Downloads and runs web-based shell script installers.</td>
+</tr>
+</tbody>
+</table>
 <h3 id="available-packages">Available packages</h3>
 <h4 id="-zeekay-alfred-dot-alfred-"><a href="https://github.com/zeekay/dot-alfred">zeekay/alfred</a></h4>
 <p>Alfred configuration files.</p>
