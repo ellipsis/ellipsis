@@ -63,7 +63,7 @@ teardown() {
 }
 
 @test "ellipsis.install should install package using branch" {
-    run ellipsis.install zeekay/dot-test2@test-branch
+    run ellipsis.install ellipsis/dot-test2@test-branch
     [ $status -eq 0 ]
     # packages gets installed into packages
     [ -e $ELLIPSIS_PACKAGES/test2/ellipsis.sh ]
