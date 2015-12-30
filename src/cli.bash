@@ -33,6 +33,7 @@ Usage: ellipsis <command>
     status     show status of package(s)
     publish    publish package to repository
     search     search package repository
+    strip      strip . from filenames
 	EOF
 }
 
@@ -100,6 +101,9 @@ cli.run() {
             ;;
         search)
             registry.search $2
+            ;;
+        strip)
+            fs.strip_dot $2
             ;;
         help|--help|-h)
             cli.usage

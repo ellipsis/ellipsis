@@ -122,3 +122,12 @@ fs.link_files() {
         fi
     done
 }
+
+fs.strip_dot() {
+    dir=${1:-.}
+    for file in $(find $dir -maxdepth 1 ! -path . -name '.*'); do
+        base=$(basename $file)
+        stripped=${base/./}
+        mv $file $dir/$stripped
+    done
+}
