@@ -56,7 +56,7 @@ fs.list_symlinks() {
     find "${1:-$ELLIPSIS_HOME}" -maxdepth 1 -type l
 }
 
-fs.list_directories() {
+fs.list_dirs() {
     dir=${1:-.}
     find $dir -maxdepth 1 ! -path $dir -type d
 }
