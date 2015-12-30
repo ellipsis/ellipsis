@@ -298,40 +298,36 @@ variables which ellipsis exposes for you:</p>
 </thead>
 <tbody>
 <tr>
-<td><code>ellipsis.list_packages</code></td>
-<td>Lists all installed packages.</td>
-</tr>
-<tr>
 <td><code>ellipsis.each</code></td>
 <td>Executes command for each installed package.</td>
 </tr>
 <tr>
-<td><code>fs.folder_empty</code></td>
-<td>Returns true if folder is empty.</td>
+<td><code>ellipsis.list_packages</code></td>
+<td>Lists all installed packages.</td>
+</tr>
+<tr>
+<td><code>fs.backup</code></td>
+<td>Creates a backup of an existing file, ensuring you don&#39;t overwrite existing backups.</td>
 </tr>
 <tr>
 <td><code>fs.file_exists</code></td>
 <td>Returns true if file exists.</td>
 </tr>
 <tr>
-<td><code>fs.is_symlink</code></td>
-<td>Returns true if file is a symlink.</td>
-</tr>
-<tr>
-<td><code>fs.is_ellipsis_symlink</code></td>
-<td>Returns true if file is a symlink pointing to an ellipsis package.</td>
+<td><code>fs.folder_empty</code></td>
+<td>Returns true if folder is empty.</td>
 </tr>
 <tr>
 <td><code>fs.is_broken_symlink</code></td>
 <td>Returns true if file is a broken symlink.</td>
 </tr>
 <tr>
-<td><code>fs.list_symlinks</code></td>
-<td>Lists symlinks in a folder, defaulting to <code>$ELLIPSIS_HOME</code>.</td>
+<td><code>fs.is_ellipsis_symlink</code></td>
+<td>Returns true if file is a symlink pointing to an ellipsis package.</td>
 </tr>
 <tr>
-<td><code>fs.backup</code></td>
-<td>Creates a backup of an existing file, ensuring you don&#39;t overwrite existing backups.</td>
+<td><code>fs.is_symlink</code></td>
+<td>Returns true if file is a symlink.</td>
 </tr>
 <tr>
 <td><code>fs.link_file</code></td>
@@ -342,8 +338,36 @@ variables which ellipsis exposes for you:</p>
 <td>Symlinks all files in given folder into <code>$ELLIPSIS_HOME</code>.</td>
 </tr>
 <tr>
+<td><code>fs.list_dirs</code></td>
+<td>Lists directories, useful for passing subdirectories to <code>fs.link_files</code>.</td>
+</tr>
+<tr>
+<td><code>fs.list_symlinks</code></td>
+<td>Lists symlinks in a folder, defaulting to <code>$ELLIPSIS_HOME</code>.</td>
+</tr>
+<tr>
+<td><code>fs.strip_dot</code></td>
+<td>Removes <code>.</code> prefix from files in a given directory.</td>
+</tr>
+<tr>
 <td><code>git.clone</code></td>
 <td>Clones a Git repo, identical to <code>git clone</code>.</td>
+</tr>
+<tr>
+<td><code>git.diffstat</code></td>
+<td>Displays <code>git diff --stat</code>.</td>
+</tr>
+<tr>
+<td><code>git.has_changes</code></td>
+<td>Returns true if repository has changes.</td>
+</tr>
+<tr>
+<td><code>git.head</code></td>
+<td>Prints how far ahead a package is from origin.</td>
+</tr>
+<tr>
+<td><code>git.last_updated</code></td>
+<td>Prints commit&#39;s relative last update time.</td>
 </tr>
 <tr>
 <td><code>git.pull</code></td>
@@ -358,20 +382,8 @@ variables which ellipsis exposes for you:</p>
 <td>Prints last commit&#39;s sha1 using <code>git rev-parse --short HEAD</code>.</td>
 </tr>
 <tr>
-<td><code>git.last_updated</code></td>
-<td>Prints commit&#39;s relative last update time.</td>
-</tr>
-<tr>
-<td><code>git.head</code></td>
-<td>Prints how far ahead a package is from origin.</td>
-</tr>
-<tr>
-<td><code>git.has_changes</code></td>
-<td>Returns true if repository has changes.</td>
-</tr>
-<tr>
-<td><code>git.diffstat</code></td>
-<td>Displays <code>git diff --stat</code>.</td>
+<td><code>os.platform</code></td>
+<td>Returns one of <code>cygwin</code>, <code>freebsd</code>, <code>linux</code>, <code>osx</code>.</td>
 </tr>
 <tr>
 <td><code>path.abs_path</code></td>
@@ -392,10 +404,6 @@ variables which ellipsis exposes for you:</p>
 <tr>
 <td><code>path.strip_dot</code></td>
 <td>Strip dot from hidden files/folders.</td>
-</tr>
-<tr>
-<td><code>os.platform</code></td>
-<td>Returns one of <code>cygwin</code>, <code>freebsd</code>, <code>linux</code>, <code>osx</code>.</td>
 </tr>
 <tr>
 <td><code>utils.cmd_exists</code></td>
