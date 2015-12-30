@@ -56,6 +56,11 @@ fs.list_symlinks() {
     find "${1:-$ELLIPSIS_HOME}" -maxdepth 1 -type l
 }
 
+fs.list_directories() {
+    dir=${1:-.}
+    find $dir -maxdepth 1 ! -path $dir -type d
+}
+
 # backup existing file, ensuring you don't overwrite existing backups
 fs.backup() {
     local original="$1"
@@ -125,7 +130,7 @@ fs.link_files() {
 
 fs.strip_dot() {
     dir=${1:-.}
-    for file in $(find $dir -maxdepth 1 ! -path . -name '.*'); do
+    for file in $(find $dir -maxdepth 1 ! -path $dir -name '.*'); do
         base=$(basename $file)
         stripped=${base/./}
         mv $file $dir/$stripped
