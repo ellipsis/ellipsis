@@ -19,6 +19,11 @@ Ellipsis is a package manager for dotfiles.
 - Completely customizable.
 - [Works with existing dotfiles!](#upgrading-to-ellipsis)
 
+### Requirements
+- bash
+- curl
+- git
+
 ### Install
 Clone and symlink or use handy-dandy installer:
 
@@ -137,7 +142,22 @@ When you `ellipsis install` a package, ellipsis:
 4. Sources the package's `ellipsis.sh` (if one exists).
 5. Executes the package's `pkg.install` hook or `hooks.install` (the default hook).
 
-### Examples
+The hooks available in your `ellipsis.sh` are:
+
+Hook            | Description
+----------------|------------
+`pkg.add`       | Customizes how files are added to your package.
+`pkg.install`   | Customize how a package is installed. By default the pkg.link hook is run.
+`pkg.installed` | Customize how a package is listed as installed.
+`pkg.link`      | Customizes which files are linked into `$ELLIPSIS_HOME`.
+`pkg.links`     | Customizes which files are detected as symlinks.
+`pkg.pull`      | Customize how changes are pulled in when `ellipsis pull` is used.
+`pkg.push`      | Customize how changes are pushed when `ellipsis push` is used.
+`pkg.status`    | Customize the output of `ellipsis status`.
+`pkg.uninstall` | Customize how a package is uninstalled. By default all symlinks are removed and the package is deleted from `$ELLIPSIS_PATH/packages`.
+`pkg.unlink`    | Customize which files are unlinked by your package.
+
+#### Examples
 Here's a more complete example (from
 [zeekay/files][dot-files]):
 
@@ -216,21 +236,6 @@ pkg.push() {
     helper git.push
 }
 ```
-
-The hooks available in your `ellipsis.sh` are:
-
-Hook            | Description
-----------------|-----------
-`pkg.add`       | Customizes how a files is added to your package.
-`pkg.install`   | Customize how package is installed. By default the pkg.link hooks is run.
-`pkg.installed` | Customize how package is listed as installed.
-`pkg.link`      | Customizes which files are linked into `$ELLIPSIS_HOME`.
-`pkg.links`     | Customizes which files are detected as symlinks.
-`pkg.pull`      | Customize how how changes are pulled in when `ellipsis pull` is used.
-`pkg.push`      | Customize how how changes are pushed `ellipsis push` is used.
-`pkg.status`    | Customize output of `ellipsis status`.
-`pkg.uninstall` | Customize how package is uninstalled. By default all symlinks are removed and the package is deleted from `$ELLIPSIS_PATH/packages`.
-`pkg.unlink`    | Customize which files are unlinked by your package.
 
 ### API
 Besides the default hook implementations which are available to you from your
