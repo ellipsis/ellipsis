@@ -44,6 +44,12 @@ updated and in-sync across systems.</li>
 <li>Completely customizable.</li>
 <li><a href="#upgrading-to-ellipsis">Works with existing dotfiles!</a></li>
 </ul>
+<h3 id="requirements">Requirements</h3>
+<ul>
+<li>bash</li>
+<li>curl</li>
+<li>git</li>
+</ul>
 <h3 id="install">Install</h3>
 <p>Clone and symlink or use handy-dandy installer:</p>
 <pre><code class="lang-bash">$ curl <span class="hljs-operator">-s</span>L ellipsis.sh | sh
@@ -160,7 +166,58 @@ pkg.<span class="hljs-function"><span class="hljs-title">install</span></span>()
 <li>Sources the package&#39;s <code>ellipsis.sh</code> (if one exists).</li>
 <li>Executes the package&#39;s <code>pkg.install</code> hook or <code>hooks.install</code> (the default hook).</li>
 </ol>
-<h3 id="examples">Examples</h3>
+<p>The hooks available in your <code>ellipsis.sh</code> are:</p>
+<table>
+<thead>
+<tr>
+<th>Hook</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pkg.add</code></td>
+<td>Customizes how files are added to your package.</td>
+</tr>
+<tr>
+<td><code>pkg.install</code></td>
+<td>Customize how a package is installed. By default the pkg.link hook is run.</td>
+</tr>
+<tr>
+<td><code>pkg.installed</code></td>
+<td>Customize how a package is listed as installed.</td>
+</tr>
+<tr>
+<td><code>pkg.link</code></td>
+<td>Customizes which files are linked into <code>$ELLIPSIS_HOME</code>.</td>
+</tr>
+<tr>
+<td><code>pkg.links</code></td>
+<td>Customizes which files are detected as symlinks.</td>
+</tr>
+<tr>
+<td><code>pkg.pull</code></td>
+<td>Customize how changes are pulled in when <code>ellipsis pull</code> is used.</td>
+</tr>
+<tr>
+<td><code>pkg.push</code></td>
+<td>Customize how changes are pushed when <code>ellipsis push</code> is used.</td>
+</tr>
+<tr>
+<td><code>pkg.status</code></td>
+<td>Customize the output of <code>ellipsis status</code>.</td>
+</tr>
+<tr>
+<td><code>pkg.uninstall</code></td>
+<td>Customize how a package is uninstalled. By default all symlinks are removed and the package is deleted from <code>$ELLIPSIS_PATH/packages</code>.</td>
+</tr>
+<tr>
+<td><code>pkg.unlink</code></td>
+<td>Customize which files are unlinked by your package.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="examples">Examples</h4>
 <p>Here&#39;s a more complete example (from
 <a href="https://github.com/zeekay/dot-files">zeekay/files</a>):</p>
 <pre><code class="lang-bash"><span class="hljs-shebang">#!/usr/bin/env bash
@@ -234,57 +291,6 @@ pkg.<span class="hljs-function"><span class="hljs-title">push</span></span>() {
     helper git.push
 }
 </code></pre>
-<p>The hooks available in your <code>ellipsis.sh</code> are:</p>
-<table>
-<thead>
-<tr>
-<th>Hook</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>pkg.add</code></td>
-<td>Customizes how a files is added to your package.</td>
-</tr>
-<tr>
-<td><code>pkg.install</code></td>
-<td>Customize how package is installed. By default the pkg.link hooks is run.</td>
-</tr>
-<tr>
-<td><code>pkg.installed</code></td>
-<td>Customize how package is listed as installed.</td>
-</tr>
-<tr>
-<td><code>pkg.link</code></td>
-<td>Customizes which files are linked into <code>$ELLIPSIS_HOME</code>.</td>
-</tr>
-<tr>
-<td><code>pkg.links</code></td>
-<td>Customizes which files are detected as symlinks.</td>
-</tr>
-<tr>
-<td><code>pkg.pull</code></td>
-<td>Customize how how changes are pulled in when <code>ellipsis pull</code> is used.</td>
-</tr>
-<tr>
-<td><code>pkg.push</code></td>
-<td>Customize how how changes are pushed <code>ellipsis push</code> is used.</td>
-</tr>
-<tr>
-<td><code>pkg.status</code></td>
-<td>Customize output of <code>ellipsis status</code>.</td>
-</tr>
-<tr>
-<td><code>pkg.uninstall</code></td>
-<td>Customize how package is uninstalled. By default all symlinks are removed and the package is deleted from <code>$ELLIPSIS_PATH/packages</code>.</td>
-</tr>
-<tr>
-<td><code>pkg.unlink</code></td>
-<td>Customize which files are unlinked by your package.</td>
-</tr>
-</tbody>
-</table>
 <h3 id="api">API</h3>
 <p>Besides the default hook implementations which are available to you from your
 <code>ellipsis.sh</code> as <code>hooks.&lt;name&gt;</code>, there are a number of useful functions and
