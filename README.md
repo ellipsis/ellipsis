@@ -19,6 +19,11 @@ Ellipsis is a package manager for dotfiles.
 - Completely customizable.
 - [Works with existing dotfiles!](#upgrading-to-ellipsis)
 
+### Requirements
+- bash
+- curl
+- git
+
 ### Install
 Clone and symlink or use handy-dandy installer:
 
@@ -220,7 +225,7 @@ pkg.push() {
 The hooks available in your `ellipsis.sh` are:
 
 Hook            | Description
-----------------|-----------
+----------------|------------
 `pkg.add`       | Customizes how a files is added to your package.
 `pkg.install`   | Customize how package is installed. By default the pkg.link hooks is run.
 `pkg.installed` | Customize how package is listed as installed.
