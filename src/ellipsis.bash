@@ -40,25 +40,35 @@ ellipsis.install() {
     for package in "$@"; do
         # split branch from package name (if possible)
         parts=($(pkg.split_name "$package"))
-        package="${parts[0]}"
+        PKG_RAW="${parts[0]}"
         PKG_BRANCH="${parts[1]}"
 
-        if [ -e "$package" ]; then
-            PKG_URL="$package"
-            PKG_NAME="$(pkg.name_from_url $package)"
+        if [ -e "$PKG_RAW" ]; then
+            PKG_URL="$PKG_RAW"
+            PKG_NAME="$(pkg.name_from_url $PKG_URL)"
         else
-            case "$package" in
+            case "$PKG_RAW" in
+                ssh://git)
+                    # Set correct url by restoring first '@' comming from
+                    # 'ssh://git@...'
+                    PKG_URL="${parts[0]}@${parts[1]}"
+                    PKG_NAME="$(pkg.name_from_url $PKG_URL)"
+                    # Set correct branch
+                    PKG_BRANCH="${parts[2]}"
+                ;;
+                # 'ssh:*' still included because user could be handled in
+                # ~/.ssh/config
                 http:*|https:*|git:*|ssh:*)
-                    PKG_NAME="$(pkg.name_from_url $package)"
-                    PKG_URL="$package"
+                    PKG_URL="$PKG_RAW"
+                    PKG_NAME="$(pkg.name_from_url $PKG_URL)"
                 ;;
                 */*)
-                    PKG_USER="$(pkg.user_from_shorthand $package)"
-                    PKG_NAME="$(pkg.name_from_shorthand $package)"
+                    PKG_USER="$(pkg.user_from_shorthand $PKG_RAW)"
+                    PKG_NAME="$(pkg.name_from_shorthand $PKG_RAW)"
                     PKG_URL="$ELLIPSIS_PROTO://github.com/$PKG_USER/dot-$(pkg.name_stripped $PKG_NAME)"
                 ;;
                 *)
-                    PKG_NAME="$package"
+                    PKG_NAME="$PKG_RAW"
                     PKG_URL="$ELLIPSIS_PROTO://github.com/$ELLIPSIS_USER/dot-$(pkg.name_stripped $PKG_NAME)"
                 ;;
             esac
