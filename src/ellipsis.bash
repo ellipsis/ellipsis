@@ -49,7 +49,7 @@ ellipsis.install() {
         else
             case "$PKG_RAW" in
                 ssh://git)
-                    # Set correct url by restoring first '@' comming from
+                    # Set correct url by restoring first '@' coming from
                     # 'ssh://git@...'
                     PKG_URL="${parts[0]}@${parts[1]}"
                     PKG_NAME="$(pkg.name_from_url $PKG_URL)"
