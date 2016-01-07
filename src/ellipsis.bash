@@ -152,7 +152,12 @@ ellipsis.status() {
 # Updates package(s) with git pull.
 ellipsis.pull() {
     if [ $# -eq 1 ]; then
-        pkg.init "$1"
+        if [[ "$1" =~ ^[Ee]llipsis$ ]]; then
+            pkg.init $ELLIPSIS_PATH
+        else
+            pkg.init "$1"
+        fi
+
         pkg.run_hook "pull"
         pkg.del
     else
