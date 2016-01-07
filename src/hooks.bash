@@ -48,9 +48,9 @@ hooks.link() {
     fs.link_files $PKG_PATH
 }
 
-# Symlink files in PKG_PATH into ELLIPSIS_HOME.
+# Dummy, by default only symlinks are made.
 hooks.install() {
-    pkg.run_hook "link"
+    :
 }
 
 # Remove package's symlinks in ELLIPSIS_HOME.
