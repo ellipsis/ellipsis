@@ -103,7 +103,8 @@ fs.backup() {
 fs.link_file() {
     local src="$(path.abs_path $1)"
     local name="${src##*/}"
-    local dest="${2:-$ELLIPSIS_HOME}/.$name"
+    local default="$ELLIPSIS_HOME/.$name"
+    local dest="${2:-$default}"
 
     fs.backup "$dest"
 
