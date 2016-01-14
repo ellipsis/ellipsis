@@ -15,7 +15,6 @@ ELLIPSIS_REPO="${ELLIPSIS_REPO:-https://github.com/$ELLIPSIS_USER/ellipsis}"
 
 # Default locations for ellipsis and packages.
 ELLIPSIS_HOME="${ELLIPSIS_HOME:-$HOME}"
-ELLIPSIS_PATH="${ELLIPSIS_PATH:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 ELLIPSIS_PACKAGES="${ELLIPSIS_PACKAGES:-$ELLIPSIS_PATH/packages}"
 
 # Ellipsis is the default package.
