@@ -311,7 +311,7 @@ ellipsis.clean() {
 # Re-link unlinked packages.
 ellipsis.add() {
     if [ $# -lt 2 ]; then
-        log.error "Usage: ellipsis add <dotfile> <package>"
+        log.error "Usage: ellipsis add <package> <dotfile>"
         exit 1
     fi
 
