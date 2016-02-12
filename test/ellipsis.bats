@@ -91,8 +91,8 @@ teardown() {
 @test "ellipsis.installed should list installed packages" {
     run ellipsis.installed
     [ $status -eq 0 ]
-    [[ "$(utils.strip_colors ${lines[0]})" == ellipsis* ]]
-    [[ "$(utils.strip_colors ${lines[1]})" == test* ]]
+    [[ "$(utils.strip_colors ${lines[0]})" == ellipsis* ]] || false
+    [[ "$(utils.strip_colors ${lines[1]})" == test* ]] || false
 }
 
 @test "ellipsis.edit should edit package ellipsis.sh" {
@@ -112,31 +112,31 @@ teardown() {
 @test "ellipsis.each should run hook for each installed package" {
     run ellipsis.each pkg.run_hook "installed"
     [ $status -eq 0 ]
-    [[ "$(utils.strip_colors ${lines[0]})" == ellipsis* ]]
-    [[ "$(utils.strip_colors ${lines[1]})" == test* ]]
+    [[ "$(utils.strip_colors ${lines[0]})" == ellipsis* ]] || false
+    [[ "$(utils.strip_colors ${lines[1]})" == test* ]] || false
 }
 
 @test "ellipsis.list_packages should list installed packages" {
     run ellipsis.list_packages
     [ $status -eq 0 ]
-    [[ "$output" == "$ELLIPSIS_PACKAGES/test" ]]
+    [[ "$output" == "$ELLIPSIS_PACKAGES/test" ]] || false
 }
 
 @test "ellipsis.links should list symlinks to installed packages" {
     run ellipsis.links
     [ $status -eq 0 ]
-    [[ "$output" == test/common/file* ]]
+    [[ "$output" == test/common/file* ]] || false
 }
 
 @test "ellipsis.broken should not list symlinks if none are broken" {
     run ellipsis.broken
     echo $output
-    [[ "$output" == "" ]]
+    [[ "$output" == "" ]] || false
 }
 
 @test "ellipsis.broken should list broken symlinks" {
     run ellipsis.broken
-    [[ "$output" == test/doesnotexist* ]]
+    [[ "$output" == test/doesnotexist* ]] || false
 }
 
 @test "ellipsis.clean should remove broken symlinks from ELLIPSIS_HOME" {
@@ -148,7 +148,7 @@ teardown() {
 @test "ellipsis.status should show diffstat if changes in packages" {
     run ellipsis.status
     [ $status -eq 0 ]
-    [[ "$output" = *common/file* ]]
+    [[ "$output" = *common/file* ]] || false
 }
 
 @test "ellipsis.pull should update packages" {
