@@ -63,7 +63,7 @@ pkg.init() {
 
     # Exit if we're asked to operate on an unknown package.
     if [ ! -d "$PKG_PATH" ]; then
-        log.error "Unkown package $PKG_NAME, $(path.relative_to_home $PKG_PATH) missing!"
+        log.fail "Unkown package $PKG_NAME, $(path.relative_to_home $PKG_PATH) missing!"
         exit 1
     fi
 
@@ -111,7 +111,7 @@ pkg.run() {
 pkg.run_hook() {
     # Prevent unknown hooks from running
     if ! utils.cmd_exists hooks.$1; then
-        log.error "Unknown hook!"
+        log.fail "Unknown hook!"
         exit 1
     fi
 

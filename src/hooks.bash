@@ -8,6 +8,7 @@ load os
 load path
 load pkg
 load utils
+load log
 
 # List of hooks available to package authors.
 PKG_HOOKS=(
@@ -28,12 +29,12 @@ hooks.add() {
     local dst="$PKG_PATH/$(path.strip_dot $(basename "$1"))"
 
     if fs.file_exists "$dst"; then
-        log.error "$dst already exists!"
+        log.fail "$dst already exists!"
         exit 1
     fi
 
     if ! fs.file_exists "$1"; then
-        log.error "$1 does not exist!"
+        log.fail "$1 does not exist!"
         exit 1
     fi
 
