@@ -19,12 +19,9 @@ Ellipsis is a package manager for dotfiles.
 - Completely customizable.
 - [Works with existing dotfiles!](#upgrading-to-ellipsis)
 
-### Requirements
-- bash
-- curl
-- git
-
 ### Install
+**Requirements:** bash, curl, git
+
 Clone and symlink or use handy-dandy installer:
 
 ```bash
@@ -269,6 +266,7 @@ Function/Variable             | Description
 `path.abs_path`               | Return absolute path to `$1`.
 `path.is_path`                | Simple heuristic to determine if `$1` is a path.
 `path.relative_to_home`       | Replaces `$HOME` with `~`
+`path.expand`                 | Replaces `~` with `$HOME`
 `path.relative_to_packages`   | Strips `$ELLIPSIS_PACKAGES` from path.
 `path.strip_dot`              | Strip dot from hidden files/folders.
 `utils.cmd_exists`            | Returns true if command exists.
