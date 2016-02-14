@@ -24,6 +24,11 @@ path.relative_to_home() {
     echo ${1/$HOME/\~}
 }
 
+# Expand tilde to $HOME
+path.expand() {
+    echo ${1/\~/$HOME}
+}
+
 # Path relative to packages dir
 path.relative_to_packages() {
     echo ${1/$ELLIPSIS_PACKAGES\//}
