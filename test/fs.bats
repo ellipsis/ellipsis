@@ -114,7 +114,7 @@ teardown() {
     [ $status -eq 0 ]
     [ -f $(readlink $ELLIPSIS_HOME/.file_to_link) ]
     [ -f tmp/file_to_link ]
-    [[ "$output" == linking* ]]
+    [[ "$output" == linking* ]] || false
 }
 
 @test "fs.link_files should link all the files in folder into HOME" {
@@ -124,7 +124,7 @@ teardown() {
     [ -f tmp/file_to_link ]
     [ -f $(readlink $ELLIPSIS_HOME/.file_to_backup) ]
     [ -f tmp/file_to_backup ]
-    [[ "$output" == linking* ]]
+    [[ "$output" == linking* ]] || false
 }
 
 @test "fs.is_ellipsis_symlink should detect symlink pointing back to ELLIPSIS_PATH" {
