@@ -67,6 +67,11 @@ ellipsis.install() {
                     PKG_NAME="$(pkg.name_from_shorthand $PKG_RAW)"
                     PKG_URL="$ELLIPSIS_PROTO://github.com/$PKG_USER/dot-$(pkg.name_stripped $PKG_NAME)"
                 ;;
+                # Easy extension installation
+                ellipsis-*)
+                    PKG_NAME="$PKG_RAW"
+                    PKG_URL="$ELLIPSIS_PROTO://github.com/ellipsis/$PKG_NAME"
+                ;;
                 *)
                     PKG_NAME="$PKG_RAW"
                     PKG_URL="$ELLIPSIS_PROTO://github.com/$ELLIPSIS_USER/dot-$(pkg.name_stripped $PKG_NAME)"
