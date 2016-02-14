@@ -20,3 +20,10 @@ teardown() {
     run path.relative_to_home tmp
     [ "$output" = "tmp" ]
 }
+
+@test "path.expand expands '~/' to '\$HOME'" {
+    run path.expand '~/.ellipsis'
+    [ "$output" = "$HOME/.ellipsis" ]
+    run path.expand "tmp"
+    [ "$output" = "tmp" ]
+}
