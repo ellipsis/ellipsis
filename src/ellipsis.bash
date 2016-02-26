@@ -6,6 +6,7 @@ load fs
 load git
 load pkg
 load utils
+load log
 
 # List all installed packages.
 ellipsis.list_packages() {
@@ -33,7 +34,7 @@ ellipsis.each() {
 # defined, all files are symlinked into ELLIPSIS_HOME using `fs.link_files`.
 ellipsis.install() {
     if [ $# -lt 1 ]; then
-        log.error "No package specified for install"
+        log.fail "No package specified for install"
         exit 1
     fi
 
@@ -100,7 +101,7 @@ ellipsis.install() {
 # defined, all symlinked files in ELLIPSIS_HOME are removed and package is rm -rf'd.
 ellipsis.uninstall() {
     if [ $# -ne 1 ]; then
-        log.error "No package specified for uninstall"
+        log.fail "No package specified for uninstall"
         exit 1
     fi
 
@@ -112,7 +113,7 @@ ellipsis.uninstall() {
 # Re-link unlinked packages.
 ellipsis.link() {
     if [ $# -ne 1 ]; then
-        log.error "No package specified to link"
+        log.fail "No package specified to link"
         exit 1
     fi
 
@@ -125,7 +126,7 @@ ellipsis.link() {
 # hook is defined, all symlinked files in ELLIPSIS_HOME are removed.
 ellipsis.unlink() {
     if [ $# -ne 1 ]; then
-        log.error "No package specified to unlink"
+        log.fail "No package specified to unlink"
         exit 1
     fi
 
@@ -316,7 +317,7 @@ ellipsis.clean() {
 # Re-link unlinked packages.
 ellipsis.add() {
     if [ $# -lt 2 ]; then
-        log.error "Usage: ellipsis add <package> <dotfile>"
+        log.fail "Usage: ellipsis add <package> <dotfile>"
         exit 1
     fi
 

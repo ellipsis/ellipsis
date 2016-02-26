@@ -7,6 +7,7 @@ load utils
 setup() {
     export ELLIPSIS_HOME=$TESTS_DIR/tmp/ellipsis_home
     export ELLIPSIS_PACKAGES=$ELLIPSIS_HOME/.ellipsis/packages
+    export ELLIPSIS_LOGFILE=$TESTS_DIR/tmp/log
     mkdir -p $ELLIPSIS_PACKAGES
     echo 'old' > $ELLIPSIS_HOME/.file
 
