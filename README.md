@@ -67,7 +67,7 @@ Variable                        | Description
 `ELLIPSIS_HOME`                 | Customize which folder files are symlinked into, defaults to `$HOME`. (Mostly useful for testing)
 `ELLIPSIS_PATH`                 | Customize where ellipsis lives on your filesystem, defaults to `~/.ellipsis`.
 `ELLIPSIS_PACKAGE`              | Customize where ellipsis installs packages on your filesystem, defaults to `~/.ellipsis/packages`.
-`ELLIPSIS_LOGFILE`              | Customize location of the logfile
+`ELLIPSIS_LOGFILE`              | Customize location of the logfile, defaults to `/tmp/ellipsis.log`.
 
 ```bash
 export ELLIPSIS_USER="zeekay"
