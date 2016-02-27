@@ -1,4 +1,4 @@
-# Ellipsis [![Build Status][travis-image]][travis-url] [![Latest tag][tag-image]][tag-url] [![Gitter chat][gitter-image]][gitter-url]
+# Ellipsis [![Build Status][travis-image]][travis-url] [![Documentation status][docs-image]][docs-url] [![Latest tag][tag-image]][tag-url] [![Gitter chat][gitter-image]][gitter-url]
 
 ```
  _    _    _
@@ -351,6 +351,8 @@ Ellipsis is open-source software licensed under the [MIT license][mit-license].
 
 [travis-image]: https://img.shields.io/travis/ellipsis/ellipsis.svg
 [travis-url]:   https://travis-ci.org/ellipsis/ellipsis
+[docs-image]:   https://readthedocs.org/projects/ellipsis/badge/?version=master
+[docs-url]:     http://ellipsis-tpm.readthedocs.org/en/master
 [tag-image]:    https://img.shields.io/github/tag/ellipsis/ellipsis.svg
 [tag-url]:      https://github.com/ellipsis/ellipsis/tags
 [gitter-image]: https://badges.gitter.im/ellipsis/ellipsis.svg
