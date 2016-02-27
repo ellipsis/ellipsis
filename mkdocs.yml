@@ -1,0 +1,21 @@
+# Name
+site_name: Ellipsis
+
+# Docs directory
+docs_dir: docs
+
+# Docs page index
+pages:
+  - Home: index.md
+  - Installation: install.md
+  - Usage: usage.md
+  - Packages: packages.md
+  - Hooks: hooks.md
+  - API: api.md
+  - Package index: pkgindex.md
+  - Upgrading: upgrading.md
+  - Completion: completion.md
+  - About: about.md
+
+# Theme
+theme: readthedocs
