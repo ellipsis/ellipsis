@@ -28,7 +28,7 @@ Clone and symlink or use handy-dandy installer:
 $ curl -sL ellipsis.sh | sh
 ```
 
-<sup>...no you didn't read that wrong, [this website also doubles as the installer][installer]</sup>
+<sup>...no you didn't read that wrong, [the ellipsis.sh website also doubles as the installer][installer]</sup>
 
 You can also specify which packages to install by setting the `PACKAGES` variable, i.e.:
 
@@ -274,35 +274,6 @@ Function/Variable             | Description
 `utils.prompt`                | Prompts user `$1` message and returns true if `YES` or `yes` is input.
 `utils.run_installer`         | Downloads and runs web-based shell script installers.
 
-### Available packages
-
-#### [zeekay/alfred][dot-alfred]
-Alfred configuration files.
-
-#### [zeekay/atom][dot-atom]
-Atom configuration files.
-
-#### [zeekay/emacs][dot-emacs]
-Emacs configuration files.
-
-#### [zeekay/files][dot-files]
-Common dotfiles for various programs.
-
-#### [zeekay/irssi][dot-irssi]
-Irssi configuration.
-
-#### [zeekay/iterm2][dot-iterm2]
-iTerm2 configuration files.
-
-#### [zeekay/vim][dot-vim]
-Vim configuration based on [vice][vice] framework.
-
-#### [zeekay/xmonad][dot-xmonad]
-Xmonad configuration.
-
-#### [zeekay/zsh][dot-zsh]
-Zsh configuration using [zeesh!][zeesh] framework.
-
 <a class="anchor" href="#upgrading-to-ellipsis" name="upgrading-to-ellipsis"></a>
 
 ### Upgrading to ellipsis
@@ -331,14 +302,14 @@ mv ~/.zshrc dotfiles/zshrc
 linking dotfiles/zshrc -> ~/.zshrc
 ```
 
-### Completion
-A completion file for zsh is [included][zshcomp]. To use it add `_ellipsis` to
-your `fpath` and ensure auto-completion is enabled:
+### Docs
+Please consult the [docs][docs-url] for more information.
 
-```bash
-fpath=($HOME/.ellipsis/comp $fpath)
-autoload -U compinit; compinit
-```
+Specific parts that could be off interest:
+- [Hooks][docs-hooks]
+- [API][docs-api]
+- [Package index][docs-pkgindex]
+- [Zsh completion][docs-completion]
 
 ### Development
 Pull requests welcome! New code should follow the [existing style][style-guide]
@@ -352,11 +323,16 @@ Ellipsis is open-source software licensed under the [MIT license][mit-license].
 [travis-image]: https://img.shields.io/travis/ellipsis/ellipsis.svg
 [travis-url]:   https://travis-ci.org/ellipsis/ellipsis
 [docs-image]:   https://readthedocs.org/projects/ellipsis/badge/?version=master
-[docs-url]:     http://ellipsis-tpm.readthedocs.org/en/master
+[docs-url]:     http://ellipsis.readthedocs.org/en/master
 [tag-image]:    https://img.shields.io/github/tag/ellipsis/ellipsis.svg
 [tag-url]:      https://github.com/ellipsis/ellipsis/tags
 [gitter-image]: https://badges.gitter.im/ellipsis/ellipsis.svg
 [gitter-url]:   https://gitter.im/ellipsis/ellipsis
+
+[docs-hooks]:       http://ellipsis.readthedocs.org/en/master/hooks
+[docs-api]:         http://ellipsis.readthedocs.org/en/master/api
+[docs-pkgindex]:    http://ellipsis.readthedocs.org/en/master/pkgindex
+[docs-completion]:  http://ellipsis.readthedocs.org/en/master/completion
 
 [bats]:         https://github.com/sstephenson/bats
 [dot-alfred]:   https://github.com/zeekay/dot-alfred
