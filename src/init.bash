@@ -33,7 +33,7 @@ load() {
         # Mark this module as loaded, prevent infinite recursion, ya know...
         eval "$loaded=1"
 
-        source $ELLIPSIS_PATH/src/$1.bash
+        source "$ELLIPSIS_PATH/src/$1.bash"
     fi
 }
 
