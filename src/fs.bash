@@ -7,7 +7,7 @@ load path
 
 # return true if folder is empty
 fs.folder_empty() {
-    local files=($(shopt -s nullglob; shopt -s dotglob; echo $1/*))
+    local files=($(shopt -s nullglob; shopt -s dotglob; echo "$1"/*))
     if [ ${#files[@]} -gt 0 ]; then
         return 1
     fi
@@ -32,7 +32,7 @@ fs.is_symlink() {
 
 # check whether file is a symlink
 fs.is_ellipsis_symlink() {
-    if [[ -L "$1" && "$(readlink $1)" == $ELLIPSIS_PATH/* ]]; then
+    if [[ -L "$1" && "$(readlink "$1")" == $ELLIPSIS_PATH/* ]]; then
         return 0
     fi
     return 1
@@ -57,8 +57,8 @@ fs.list_symlinks() {
 }
 
 fs.list_dirs() {
-    dir=${1:-.}
-    find $dir -maxdepth 1 ! -path $dir -type d
+    dir="${1:-.}"
+    find "$dir" -maxdepth 1 ! -path "$dir" -type d
 }
 
 # backup existing file, ensuring you don't overwrite existing backups
@@ -69,8 +69,8 @@ fs.backup() {
 
     # remove broken symlink
     if fs.is_broken_symlink "$original"; then
-        msg.dim "rm ~/$name (broken link to $(readlink $original))"
-        rm $original
+        msg.dim "rm ~/$name (broken link to $(readlink "$original"))"
+        rm "$original"
         return
     fi
 
@@ -81,7 +81,7 @@ fs.backup() {
 
     # if file exists and is a symlink to ellipsis, remove
     if fs.is_ellipsis_symlink "$original"; then
-        msg.dim "rm ~/$name (linked to $(path.relative_to_packages $(readlink $original)))"
+        msg.dim "rm ~/$name (linked to $(path.relative_to_packages "$(readlink "$original")"))"
         rm "$original"
         return
     fi
@@ -101,14 +101,14 @@ fs.backup() {
 
 # symlink a single file into ELLIPSIS_HOME
 fs.link_file() {
-    local src="$(path.abs_path $1)"
+    local src="$(path.abs_path "$1")"
     local name="${src##*/}"
     local default="$ELLIPSIS_HOME/.$name"
     local dest="${2:-$default}"
 
     fs.backup "$dest"
 
-    echo "linking $(path.relative_to_packages $src) -> $(path.relative_to_home $dest)"
+    echo "linking $(path.relative_to_packages "$src") -> $(path.relative_to_home "$dest")"
     ln -s "$src" "$dest"
 }
 
@@ -130,10 +130,10 @@ fs.link_files() {
 }
 
 fs.strip_dot() {
-    dir=${1:-.}
-    for file in $(find $dir -maxdepth 1 ! -path $dir -name '.*'); do
-        base=$(basename $file)
-        stripped=${base/./}
-        mv $file $dir/$stripped
+    dir="${1:-.}"
+    for file in $(find "$dir" -maxdepth 1 ! -path "$dir" -name '.*'); do
+        base="$(basename "$file")"
+        stripped="${base/./}"
+        mv "$file" "$dir/$stripped"
     done
 }
