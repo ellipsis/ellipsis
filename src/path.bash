@@ -21,7 +21,7 @@ path.is_path() {
 
 # return path to file relative to HOME (if possible)
 path.relative_to_home() {
-    echo "${1/$HOME/\~}"
+    echo ${1/$HOME/\~}
 }
 
 # Expand tilde to $HOME
