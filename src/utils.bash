@@ -22,6 +22,7 @@ utils.prompt() {
 
 # Run web-based installers
 utils.run_installer() {
+    local url="${url:-$1}"
     # save reference to current dir
     local cwd=$(pwd)
     # create temp dir and cd to it
