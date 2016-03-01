@@ -13,7 +13,7 @@ teardown() {
 }
 
 @test "path.relative_to_home should print path relative to $HOME" {
-    run path.relative_to_home $HOME/.ellipsis
+    run path.relative_to_home "$HOME/.ellipsis"
     [ "$output" = "~/.ellipsis" ]
     run path.relative_to_home ~/.ellipsis
     [ "$output" = "~/.ellipsis" ]

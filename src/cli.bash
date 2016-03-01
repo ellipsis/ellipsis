@@ -40,12 +40,12 @@ Usage: ellipsis <command>
 # prints ellipsis version
 cli.version() {
     local cwd="$(pwd)"
-    cd $ELLIPSIS_PATH
+    cd "$ELLIPSIS_PATH"
 
-    local sha1=$(git rev-parse --short HEAD)
+    local sha1="$(git rev-parse --short HEAD)"
     echo -e "\033[1mv$ELLIPSIS_VERSION\033[0m ($sha1)"
 
-    cd $cwd
+    cd "$cwd"
 }
 
 # run ellipsis

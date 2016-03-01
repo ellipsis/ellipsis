@@ -4,7 +4,7 @@
 
 # dunno how this isn't part of POSIX
 path.abs_path() {
-    echo $(cd $(dirname "$1"); pwd)/$(basename "$1")
+    echo "$(cd "$(dirname "$1")"; pwd)/$(basename "$1")"
 }
 
 # Tries to determine if string is a path.
@@ -26,12 +26,12 @@ path.relative_to_home() {
 
 # Expand tilde to $HOME
 path.expand() {
-    echo ${1/\~/$HOME}
+    echo "${1/\~/$HOME}"
 }
 
 # Path relative to packages dir
 path.relative_to_packages() {
-    echo ${1/$ELLIPSIS_PACKAGES\//}
+    echo "${1/$ELLIPSIS_PACKAGES\//}"
 }
 
 # Strip dot from hidden file

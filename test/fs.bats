@@ -113,7 +113,7 @@ teardown() {
 @test "fs.link_file should link a file into HOME" {
     run fs.link_file tmp/file_to_link
     [ $status -eq 0 ]
-    [ -f $(readlink $ELLIPSIS_HOME/.file_to_link) ]
+    [ -f "$(readlink "$ELLIPSIS_HOME/.file_to_link")" ]
     [ -f tmp/file_to_link ]
     [[ "$output" == linking* ]] || false
 }
@@ -121,9 +121,9 @@ teardown() {
 @test "fs.link_files should link all the files in folder into HOME" {
     run fs.link_files tmp
     [ $status -eq 0 ]
-    [ -f $(readlink $ELLIPSIS_HOME/.file_to_link) ]
+    [ -f "$(readlink "$ELLIPSIS_HOME/.file_to_link")" ]
     [ -f tmp/file_to_link ]
-    [ -f $(readlink $ELLIPSIS_HOME/.file_to_backup) ]
+    [ -f "$(readlink "$ELLIPSIS_HOME/.file_to_backup")" ]
     [ -f tmp/file_to_backup ]
     [[ "$output" == linking* ]] || false
 }

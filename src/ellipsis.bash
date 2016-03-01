@@ -10,15 +10,15 @@ load log
 
 # List all installed packages.
 ellipsis.list_packages() {
-    if ! fs.folder_empty $ELLIPSIS_PACKAGES; then
-        echo $ELLIPSIS_PACKAGES/*
+    if ! fs.folder_empty "$ELLIPSIS_PACKAGES"; then
+        echo "$ELLIPSIS_PACKAGES"/*
     fi
 }
 
 # Run commands across all packages.
 ellipsis.each() {
     # execute command for ellipsis first
-    pkg.init $ELLIPSIS_PATH
+    pkg.init "$ELLIPSIS_PATH"
     "$@"
     pkg.del
 
@@ -46,14 +46,14 @@ ellipsis.install() {
 
         if [ -e "$PKG_RAW" ]; then
             PKG_URL="$PKG_RAW"
-            PKG_NAME="$(pkg.name_from_url $PKG_URL)"
+            PKG_NAME="$(pkg.name_from_url "$PKG_URL")"
         else
             case "$PKG_RAW" in
                 ssh://git)
                     # Set correct url by restoring first '@' coming from
                     # 'ssh://git@...'
                     PKG_URL="${parts[0]}@${parts[1]}"
-                    PKG_NAME="$(pkg.name_from_url $PKG_URL)"
+                    PKG_NAME="$(pkg.name_from_url "$PKG_URL")"
                     # Set correct branch
                     PKG_BRANCH="${parts[2]}"
                 ;;
@@ -61,12 +61,12 @@ ellipsis.install() {
                 # ~/.ssh/config
                 http:*|https:*|git:*|ssh:*)
                     PKG_URL="$PKG_RAW"
-                    PKG_NAME="$(pkg.name_from_url $PKG_URL)"
+                    PKG_NAME="$(pkg.name_from_url "$PKG_URL")"
                 ;;
                 */*)
-                    PKG_USER="$(pkg.user_from_shorthand $PKG_RAW)"
-                    PKG_NAME="$(pkg.name_from_shorthand $PKG_RAW)"
-                    PKG_URL="$ELLIPSIS_PROTO://github.com/$PKG_USER/dot-$(pkg.name_stripped $PKG_NAME)"
+                    PKG_USER="$(pkg.user_from_shorthand "$PKG_RAW")"
+                    PKG_NAME="$(pkg.name_from_shorthand "$PKG_RAW")"
+                    PKG_URL="$ELLIPSIS_PROTO://github.com/$PKG_USER/dot-$(pkg.name_stripped "$PKG_NAME")"
                 ;;
                 # Easy extension installation
                 ellipsis-*)
@@ -75,14 +75,14 @@ ellipsis.install() {
                 ;;
                 *)
                     PKG_NAME="$PKG_RAW"
-                    PKG_URL="$ELLIPSIS_PROTO://github.com/$ELLIPSIS_USER/dot-$(pkg.name_stripped $PKG_NAME)"
+                    PKG_URL="$ELLIPSIS_PROTO://github.com/$ELLIPSIS_USER/dot-$(pkg.name_stripped "$PKG_NAME")"
                 ;;
             esac
         fi
 
         # strip leading dot- from name as a convenience
-        PKG_NAME=$(pkg.name_stripped $PKG_NAME)
-        PKG_PATH="$(pkg.path_from_name $PKG_NAME)"
+        PKG_NAME="$(pkg.name_stripped "$PKG_NAME")"
+        PKG_PATH="$(pkg.path_from_name "$PKG_NAME")"
 
         if [ -z "$PKG_BRANCH" ]; then
             git.clone "$PKG_URL" "$PKG_PATH"
@@ -159,7 +159,7 @@ ellipsis.status() {
 ellipsis.pull() {
     if [ $# -eq 1 ]; then
         if [[ "$1" =~ ^[Ee]llipsis$ ]]; then
-            pkg.init $ELLIPSIS_PATH
+            pkg.init "$ELLIPSIS_PATH"
         else
             pkg.init "$1"
         fi
@@ -192,10 +192,10 @@ ellipsis.new() {
     fi
 
     # Create package dir if necessary.
-    mkdir -p $PKG_PATH
+    mkdir -p "$PKG_PATH"
 
     # If path is not empty, ensure they are serious.
-    if ! fs.folder_empty $PKG_PATH; then
+    if ! $(fs.folder_empty "$PKG_PATH"); then
         utils.prompt "destination is not empty, continue? [y/n]" || exit 1
     fi
 
@@ -205,7 +205,7 @@ ellipsis.new() {
     local _FENCE=\`\`\`
 
     # Generate ellipsis.sh for package.
-    cat > $PKG_PATH/ellipsis.sh <<EOF
+    cat > "$PKG_PATH/ellipsis.sh" <<EOF
 #!/usr/bin/env bash
 #
 # $ELLIPSIS_USER/$PKG_NAME ellipsis package
@@ -233,7 +233,7 @@ ellipsis.new() {
 EOF
 
     # Generate README.md for package.
-    cat > $PKG_PATH/README.md <<EOF
+    cat > "$PKG_PATH/README.md" <<EOF
 # $ELLIPSIS_USER/$PKG_NAME
 Just a bunch of dotfiles.
 
@@ -247,11 +247,11 @@ $_FENCE
 [ellipsis]: http://ellipsis.sh
 EOF
 
-    cd $PKG_PATH
+    cd "$PKG_PATH"
     git init
     git add README.md ellipsis.sh
     git commit -m "Initial commit"
-    echo new package created at $(path.relative_to_home $PKG_PATH)
+    echo "new package created at $(path.relative_to_home "$PKG_PATH")"
 }
 
 # Edit ellipsis.sh for package, or open ellipsis dir in $EDITOR.
@@ -259,10 +259,10 @@ ellipsis.edit() {
     if [ $# -eq 1 ]; then
         # Edit package's ellipsis.sh file.
         pkg.init "$1"
-        $EDITOR $PKG_PATH/ellipsis.sh
+        "$EDITOR" "$PKG_PATH/ellipsis.sh"
     else
         # Open ellipsis dir in editor.
-        $EDITOR $ELLIPSIS_PATH
+        "$EDITOR" "$ELLIPSIS_PATH"
     fi
 }
 
@@ -270,9 +270,9 @@ ellipsis.edit() {
 # package.
 ellipsis._list_symlink_mappings() {
     for file in $(fs.list_symlinks); do
-        local link="$(readlink $file)"
+        local link="$(readlink "$file")"
         if [[ "$link" == $ELLIPSIS_PATH* ]]; then
-            echo "$(path.relative_to_packages $link) -> $(path.relative_to_home $file)";
+            echo "$(path.relative_to_packages "$link") -> $(path.relative_to_home "$file")";
         fi
     done
 }
@@ -293,8 +293,8 @@ ellipsis.links() {
 }
 
 ellipsis._list_broken_symlink_mappings() {
-    for file in $(fs.list_broken_symlinks $ELLIPSIS_HOME); do
-        echo "$(path.relative_to_packages $(readlink $file)) -> $(path.relative_to_home $file)";
+    for file in $(fs.list_broken_symlinks "$ELLIPSIS_HOME"); do
+        echo "$(path.relative_to_packages $(readlink "$file")) -> $(path.relative_to_home "$file")";
     done
 }
 
