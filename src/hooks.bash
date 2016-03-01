@@ -46,7 +46,7 @@ hooks.add() {
 
 # Symlink files in PKG_PATH into ELLIPSIS_HOME.
 hooks.link() {
-    fs.link_files $PKG_PATH
+    fs.link_files "$PKG_PATH"
 }
 
 # Dummy, by default only symlinks are made.
@@ -57,14 +57,14 @@ hooks.install() {
 # Remove package's symlinks in ELLIPSIS_HOME.
 hooks.unlink() {
     for symlink in $(pkg.list_symlinks); do
-        rm $symlink
+        rm "$symlink"
     done
 }
 
 # Remove package's symlinks then remove package.
 hooks.uninstall() {
     pkg.run_hook unlink
-    rm -rf $PKG_PATH
+    rm -rf "$PKG_PATH"
 }
 
 # Show symlink mapping for package.
@@ -90,8 +90,8 @@ hooks.push() {
 
 # List repo status.
 hooks.installed() {
-    local sha1=$(git.sha1)
-    local last_updated=$(git.last_updated)
+    local sha1="$(git.sha1)"
+    local last_updated="$(git.last_updated)"
 
     echo -e "\033[1m${1:-$PKG_NAME}\033[0m\t$sha1\t(updated $last_updated)"
 }
@@ -104,7 +104,7 @@ hooks.status() {
     git.has_changes || [ "$ahead" ] || return
 
     local sha1="$(git.sha1)"
-    local last_updated=$(git.last_updated)
+    local last_updated="$(git.last_updated)"
 
     echo -e "\033[1m${1:-$PKG_NAME}\033[0m $sha1 (updated $last_updated) $ahead"
     git.diffstat
