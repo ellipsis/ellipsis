@@ -37,4 +37,5 @@ Function/Variable             | Description
 `utils.cmd_exists`            | Returns true if command exists.
 `utils.prompt`                | Prompts user `$1` message and returns true if `YES` or `yes` is input.
 `utils.run_installer`         | Downloads and runs web-based shell script installers.
+`utils.version_compare`       | Compare version strings. Usage: `utils.version_compare "$Version1" ">=" "1.2.4"`.
 
