@@ -27,22 +27,22 @@ pkg.path_from_name() {
 
 # Convert package path to name, stripping any leading dots.
 pkg.name_from_path() {
-    echo ${1##*/} | sed -e "s/^\.//"
+    echo "${1##*/}" | sed -e "s/^\.//"
 }
 
 # Pull name out as last path component of url
 pkg.name_from_url() {
-    echo $1 | rev | cut -d '/' -f 1 | rev
+    echo "$1" | rev | cut -d '/' -f 1 | rev
 }
 
 # Get user from github-user/name shorthand syntax.
 pkg.user_from_shorthand() {
-    echo $1 | cut -d '/' -f1
+    echo "$1" | cut -d '/' -f1
 }
 
 # Get name from github-user/name shorthand syntax.
 pkg.name_from_shorthand() {
-    echo $1 | cut -d '/' -f2
+    echo "$1" | cut -d '/' -f2
 }
 
 # Set PKG_NAME, PKG_PATH. If $1 looks like a path it's assumed to be
@@ -50,20 +50,20 @@ pkg.name_from_shorthand() {
 pkg.init_globals() {
     if path.is_path "$1"; then
         PKG_PATH="$1"
-        PKG_NAME="$(pkg.name_from_path $PKG_PATH)"
+        PKG_NAME="$(pkg.name_from_path "$PKG_PATH")"
     else
         PKG_NAME="$1"
-        PKG_PATH="$(pkg.path_from_name $PKG_NAME)"
+        PKG_PATH="$(pkg.path_from_name "$PKG_NAME")"
     fi
 }
 
 # Initialize a package and it's hooks.
 pkg.init() {
-    pkg.init_globals ${1:-$PKG_PATH}
+    pkg.init_globals "${1:-"$PKG_PATH"}"
 
     # Exit if we're asked to operate on an unknown package.
     if [ ! -d "$PKG_PATH" ]; then
-        log.fail "Unkown package $PKG_NAME, $(path.relative_to_home $PKG_PATH) missing!"
+        log.fail "Unkown package $PKG_NAME, $(path.relative_to_home "$PKG_PATH") missing!"
         exit 1
     fi
 
@@ -76,8 +76,8 @@ pkg.init() {
 # List symlinks associated with package.
 pkg.list_symlinks() {
     for file in $(fs.list_symlinks); do
-        if [[ "$(readlink $file)" == *packages/$PKG_NAME* ]]; then
-            echo $file
+        if [[ "$(readlink "$file")" == *packages/$PKG_NAME* ]]; then
+            echo "$file"
         fi
     done
 }

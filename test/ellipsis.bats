@@ -5,27 +5,27 @@ load ellipsis
 load utils
 
 setup() {
-    export ELLIPSIS_HOME=$TESTS_DIR/tmp/ellipsis_home
-    export ELLIPSIS_PACKAGES=$ELLIPSIS_HOME/.ellipsis/packages
-    export ELLIPSIS_LOGFILE=$TESTS_DIR/tmp/log
-    mkdir -p $ELLIPSIS_PACKAGES
-    echo 'old' > $ELLIPSIS_HOME/.file
+    export ELLIPSIS_HOME="$TESTS_DIR/tmp/ellipsis_home"
+    export ELLIPSIS_PACKAGES="$ELLIPSIS_HOME/.ellipsis/packages"
+    export ELLIPSIS_LOGFILE="$TESTS_DIR/tmp/log"
+    mkdir -p "$ELLIPSIS_PACKAGES"
+    echo 'old' > "$ELLIPSIS_HOME/.file"
 
     clone_test_package() {
-        git clone $TESTS_DIR/fixtures/dot-test $ELLIPSIS_PACKAGES/test &>/dev/null
+        git clone "$TESTS_DIR/fixtures/dot-test" "$ELLIPSIS_PACKAGES/test" &>/dev/null
     }
 
     link_test_package() {
-        mv $ELLIPSIS_HOME/.file $ELLIPSIS_HOME/.file.bak
-        ln -s $ELLIPSIS_PACKAGES/test/common/file $ELLIPSIS_HOME/.file
+        mv "$ELLIPSIS_HOME/.file" "$ELLIPSIS_HOME/.file.bak"
+        ln -s "$ELLIPSIS_PACKAGES/test/common/file" "$ELLIPSIS_HOME/.file"
     }
 
     link_broken() {
-        ln -s $ELLIPSIS_PACKAGES/test/doesnotexist $ELLIPSIS_HOME/.doesnotexist
+        ln -s "$ELLIPSIS_PACKAGES/test/doesnotexist" "$ELLIPSIS_HOME/.doesnotexist"
     }
 
     modify_test_package() {
-        echo modified > $ELLIPSIS_PACKAGES/test/common/file
+        echo modified > "$ELLIPSIS_PACKAGES/test/common/file"
     }
 
     if [ $BATS_TEST_NUMBER -gt 2 ]; then
@@ -46,20 +46,20 @@ setup() {
 }
 
 teardown() {
-    rm -rf $TESTS_DIR/tmp
+    rm -rf "$TESTS_DIR/tmp"
 }
 
 @test "ellipsis.install should install package" {
     run ellipsis.install test/fixtures/dot-test
     [ $status -eq 0 ]
     # packages gets installed into packages
-    [ -e $ELLIPSIS_PACKAGES/test/ellipsis.sh ]
+    [ -e "$ELLIPSIS_PACKAGES/test/ellipsis.sh" ]
     # creates symlinks
-    [ -e $ELLIPSIS_HOME/.file ]
-    [ "$(readlink $ELLIPSIS_HOME/.file)" = "$ELLIPSIS_PACKAGES/test/common/file" ]
+    [ -L "$ELLIPSIS_HOME/.file" ]
+    [ "$(readlink "$ELLIPSIS_HOME/.file")" = "$ELLIPSIS_PACKAGES/test/common/file" ]
     # creates backups
-    [ -e $ELLIPSIS_HOME/.file.bak ]
-    [ ! "$(cat $ELLIPSIS_HOME/.file)" = old ]
+    [ -e "$ELLIPSIS_HOME/.file.bak" ]
+    [ ! "$(cat "$ELLIPSIS_HOME/.file")" = old ]
     run ellipsis.uninstall test
 }
 
@@ -67,26 +67,26 @@ teardown() {
     run ellipsis.install ellipsis/dot-test2@test-branch
     [ $status -eq 0 ]
     # packages gets installed into packages
-    [ -e $ELLIPSIS_PACKAGES/test2/ellipsis.sh ]
+    [ -e "$ELLIPSIS_PACKAGES/test2/ellipsis.sh" ]
 }
 
 @test "ellipsis.link should link a package" {
     run ellipsis.link test
     [ $status -eq 0 ]
-    [ -e $ELLIPSIS_HOME/.file ]
+    [ -L "$ELLIPSIS_HOME/.file" ]
 }
 
 @test "ellipsis.uninstall should uninstall a package" {
     run ellipsis.uninstall test
     [ $status -eq 0 ]
-    [ ! -e $ELLIPSIS_PACKAGES/test/ellipsis.sh ]
-    [ ! -e $ELLIPSIS_HOME/.file ]
+    [ ! -e "$ELLIPSIS_PACKAGES/test/ellipsis.sh" ]
+    [ ! -e "$ELLIPSIS_HOME/.file" ]
 }
 
 @test "ellipsis.unlink should unlink a package" {
     run ellipsis.unlink test
     [ $status -eq 0 ]
-    [ ! -e $ELLIPSIS_HOME/.file ]
+    [ ! -L "$ELLIPSIS_HOME/.file" ]
 }
 
 @test "ellipsis.installed should list installed packages" {
@@ -106,8 +106,8 @@ teardown() {
 @test "ellipsis.new should create a new package" {
     run ellipsis.new foo
     [ $status -eq 0 ]
-    [ -e $ELLIPSIS_PACKAGES/foo/ellipsis.sh ]
-    [ -e $ELLIPSIS_PACKAGES/foo/README.md ]
+    [ -e "$ELLIPSIS_PACKAGES/foo/ellipsis.sh" ]
+    [ -e "$ELLIPSIS_PACKAGES/foo/README.md" ]
 }
 
 @test "ellipsis.each should run hook for each installed package" {
@@ -126,12 +126,11 @@ teardown() {
 @test "ellipsis.links should list symlinks to installed packages" {
     run ellipsis.links
     [ $status -eq 0 ]
-    [[ "$output" == test/common/file* ]] || false
+    [[ "${lines[0]}" == test/common/file* ]] || false
 }
 
 @test "ellipsis.broken should not list symlinks if none are broken" {
     run ellipsis.broken
-    echo $output
     [[ "$output" == "" ]] || false
 }
 
@@ -143,7 +142,7 @@ teardown() {
 @test "ellipsis.clean should remove broken symlinks from ELLIPSIS_HOME" {
     run ellipsis.clean
     [ $status -eq 0 ]
-    [ ! -e $ELLIPSIS_HOME/.doesnotexist ]
+    [ ! -e "$ELLIPSIS_HOME/.doesnotexist" ]
 }
 
 @test "ellipsis.status should show diffstat if changes in packages" {
