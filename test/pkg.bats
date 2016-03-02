@@ -6,7 +6,6 @@ load pkg
 setup() {
     mkdir -p tmp/ellipsis_home
     export ELLIPSIS_HOME=tmp/ellipsis_home
-    export ELLIPSIS_LOGFILE=tmp/log
 }
 
 teardown() {
