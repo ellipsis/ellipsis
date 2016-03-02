@@ -7,5 +7,7 @@ export TESTS_DIR="$BATS_TEST_DIRNAME"
 export ELLIPSIS_PATH="$(cd "$TESTS_DIR/.." && pwd)"
 export PATH="$ELLIPSIS_PATH/bin:$PATH"
 
+export ELLIPSIS_LOGFILE="/dev/null"
+
 # Initialize ellipsis, which replaces bat's `load` function with ours.
 load ../src/init
