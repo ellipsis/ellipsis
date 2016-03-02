@@ -7,6 +7,7 @@ load fs
 load os
 load path
 load registry
+load git
 
 # prints usage for ellipsis
 cli.usage() {
@@ -42,7 +43,7 @@ cli.version() {
     local cwd="$(pwd)"
     cd "$ELLIPSIS_PATH"
 
-    local sha1="$(git rev-parse --short HEAD)"
+    local sha1="$(git.sha1)"
     echo -e "\033[1mv$ELLIPSIS_VERSION\033[0m ($sha1)"
 
     cd "$cwd"
