@@ -44,7 +44,7 @@ cli.version() {
     cd "$ELLIPSIS_PATH"
 
     local sha1="$(git.sha1)"
-    echo -e "\033[1mv$ELLIPSIS_VERSION\033[0m ($sha1)"
+    msg.print "\033[1mv$ELLIPSIS_VERSION\033[0m ($sha1)"
 
     cd "$cwd"
 }
