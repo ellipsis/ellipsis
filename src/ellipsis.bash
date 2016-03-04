@@ -92,8 +92,8 @@ ellipsis.install() {
         fi
 
         pkg.init "$PKG_PATH"
-        pkg.run_hook "link"
         pkg.run_hook "install"
+        pkg.run_hook "link"
         pkg.del
     done
 }
