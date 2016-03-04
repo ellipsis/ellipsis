@@ -62,10 +62,9 @@ hooks.unlink() {
     done
 }
 
-# Remove package's symlinks then remove package.
+# Dummy, by default only removing symlinks and package
 hooks.uninstall() {
-    pkg.run_hook unlink
-    rm -rf "$PKG_PATH"
+    :
 }
 
 # Show symlink mapping for package.

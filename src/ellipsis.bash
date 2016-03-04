@@ -107,7 +107,9 @@ ellipsis.uninstall() {
     fi
 
     pkg.init "$1"
+    pkg.run_hook "unlink"
     pkg.run_hook "uninstall"
+    rm -rf "$PKG_PATH"
     pkg.del
 }
 
