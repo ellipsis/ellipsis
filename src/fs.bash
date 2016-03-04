@@ -95,7 +95,7 @@ fs.backup() {
         backup="$backup.$n"
     fi
 
-    echo "mv ~/$name $backup"
+    msg.print "mv ~/$name $backup"
     mv "$original" "$backup"
 }
 
@@ -108,7 +108,7 @@ fs.link_file() {
 
     fs.backup "$dest"
 
-    echo "linking $(path.relative_to_packages "$src") -> $(path.relative_to_home "$dest")"
+    msg.print "linking $(path.relative_to_packages "$src") -> $(path.relative_to_home "$dest")"
     ln -s "$src" "$dest"
 }
 

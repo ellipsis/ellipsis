@@ -8,6 +8,7 @@ load os
 load path
 load registry
 load git
+load msg
 
 # prints usage for ellipsis
 cli.usage() {
@@ -114,7 +115,7 @@ cli.run() {
             ;;
         *)
             if [ $# -gt 0 ]; then
-                echo ellipsis: invalid command -- $1
+                msg.print "ellipsis: invalid command -- $1"
             fi
             cli.usage
             return 1
