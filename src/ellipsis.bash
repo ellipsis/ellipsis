@@ -7,6 +7,7 @@ load git
 load pkg
 load utils
 load log
+load msg
 
 # List all installed packages.
 ellipsis.list_packages() {
@@ -251,7 +252,7 @@ EOF
     git init
     git add README.md ellipsis.sh
     git commit -m "Initial commit"
-    echo "new package created at $(path.relative_to_home "$PKG_PATH")"
+    msg.print "new package created at $(path.relative_to_home "$PKG_PATH")"
 }
 
 # Edit ellipsis.sh for package, or open ellipsis dir in $EDITOR.
@@ -272,7 +273,7 @@ ellipsis._list_symlink_mappings() {
     for file in $(fs.list_symlinks); do
         local link="$(readlink "$file")"
         if [[ "$link" == $ELLIPSIS_PATH* ]]; then
-            echo "$(path.relative_to_packages "$link") -> $(path.relative_to_home "$file")";
+            msg.print "$(path.relative_to_packages "$link") -> $(path.relative_to_home "$file")"
         fi
     done
 }
@@ -294,7 +295,7 @@ ellipsis.links() {
 
 ellipsis._list_broken_symlink_mappings() {
     for file in $(fs.list_broken_symlinks "$ELLIPSIS_HOME"); do
-        echo "$(path.relative_to_packages $(readlink "$file")) -> $(path.relative_to_home "$file")";
+        msg.print "$(path.relative_to_packages $(readlink "$file")) -> $(path.relative_to_home "$file")"
     done
 }
 
@@ -309,8 +310,8 @@ ellipsis.broken() {
 
 # List broken symlinks in ELLIPSIS_HOME
 ellipsis.clean() {
-    for file in $(fs.list_broken_symlinks $ELLIPSIS_HOME); do
-        rm $file
+    for file in $(fs.list_broken_symlinks "$ELLIPSIS_HOME"); do
+        rm "$file"
     done
 }
 
@@ -324,7 +325,7 @@ ellipsis.add() {
     for file in "${@:2}"; do
         # Important to get absolute path of each file as we'll be changing
         # directory when hook is run.
-        local file="$(path.abs_path $file)"
+        local file="$(path.abs_path "$file")"
         pkg.init "$1"
         pkg.run_hook "add" "$file"
         pkg.del

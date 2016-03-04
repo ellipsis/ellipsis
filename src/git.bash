@@ -6,6 +6,7 @@
 # by package authors for consistency with them.
 
 load pkg
+load msg
 
 # Clone a Git repo.
 git.clone() {
@@ -14,15 +15,15 @@ git.clone() {
 
 # Pull git repo.
 git.pull() {
-    pkg.init_globals ${1:-$PKG_NAME}
-    echo -e "\033[1mupdating $PKG_NAME\033[0m"
+    pkg.init_globals "${1:-$PKG_NAME}"
+    msg.bold "updating $PKG_NAME"
     git pull
 }
 
 # Push git repo.
 git.push() {
     pkg.init_globals ${1:-$PKG_NAME}
-    echo -e "\033[1mpushing $PKG_NAME\033[0m"
+    msg.bold "pushing $PKG_NAME"
     git push
 }
 
