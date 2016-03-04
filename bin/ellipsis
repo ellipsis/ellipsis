@@ -16,9 +16,12 @@ do
     fi
 done
 
+# Set path variables used by loader
 ELLIPSIS_PATH="${ELLIPSIS_PATH:-$(cd "$(dirname "$ELLIPSIS_BIN")/.." && pwd)}"
+ELLIPSIS_SRC="$ELLIPSIS_PATH/src"
 
-source "$ELLIPSIS_PATH/src/init.bash"
+# Include the load function
+source "$ELLIPSIS_SRC/init.bash"
 
 load cli
 
