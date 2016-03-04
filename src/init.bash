@@ -33,7 +33,12 @@ load() {
         # Mark this module as loaded, prevent infinite recursion, ya know...
         eval "$loaded=1"
 
-        source "$ELLIPSIS_PATH/src/$1.bash"
+        # Load extension specific sources if possible
+        if [ -n "$ELLIPSIS_XSRC" -a -f "$ELLIPSIS_XSRC/$1.bash" ]; then
+            source "$ELLIPSIS_XSRC/$1.bash"
+        else
+            source "$ELLIPSIS_SRC/$1.bash"
+        fi
     fi
 }
 
