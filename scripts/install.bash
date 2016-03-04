@@ -22,6 +22,7 @@ FINAL_ELLIPSIS_PATH=${ELLIPSIS_PATH:-$HOME/.ellipsis}
 
 # Temporarily set ellipsis PATH so we can load other files.
 ELLIPSIS_PATH="$tmp_dir/ellipsis"
+ELLIPSIS_SRC="$ELLIPSIS_PATH/src"
 
 # Initialize ellipsis.
 source $tmp_dir/ellipsis/src/init.bash
@@ -33,6 +34,7 @@ load os
 load registry
 
 ELLIPSIS_PATH="$FINAL_ELLIPSIS_PATH"
+ELLIPSIS_SRC="$ELLIPSIS_PATH/src"
 
 # Backup existing ~/.ellipsis if necessary and  move project into place.
 fs.backup $ELLIPSIS_PATH
