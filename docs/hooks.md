@@ -13,28 +13,70 @@ pkg.install() {
 }
 ```
 
-When you `ellipsis install` a package, ellipsis:
-
-1. `git clone`'s the package into `~/.ellipsis/packages`.
-2. Changes the current working dir to the package.
-3. Sets `$PKG_NAME` and `$PKG_PATH`.
-4. Sources the package's `ellipsis.sh` (if one exists).
-5. Executes the package's `pkg.install` hook or `hooks.install` (the default hook).
-
 The hooks available in your `ellipsis.sh` are:
 
 Hook            | Description
 ----------------|------------
 `pkg.add`       | Customizes how files are added to your package.
-`pkg.install`   | Customize how a package is installed. By default the pkg.link hook is run.
+`pkg.install`   | Custom installation steps before linking the package.
 `pkg.installed` | Customize how a package is listed as installed.
 `pkg.link`      | Customizes which files are linked into `$ELLIPSIS_HOME`.
 `pkg.links`     | Customizes which files are detected as symlinks.
 `pkg.pull`      | Customize how changes are pulled in when `ellipsis pull` is used.
 `pkg.push`      | Customize how changes are pushed when `ellipsis push` is used.
 `pkg.status`    | Customize the output of `ellipsis status`.
-`pkg.uninstall` | Customize how a package is uninstalled. By default all symlinks are removed and the package is deleted from `$ELLIPSIS_PATH/packages`.
+`pkg.uninstall` | Custom uninstall steps to undo the install steps.
 `pkg.unlink`    | Customize which files are unlinked by your package.
+
+Lets look at this in more detail!
+
+### Installation
+
+When you `ellipsis install` a package, ellipsis:
+
+1. `git clone`'s the package into `~/.ellipsis/packages`.
+2. Changes the current working dir to the package.
+3. Sets `$PKG_NAME` and `$PKG_PATH`.
+4. Sources the package's `ellipsis.sh` (if one exists).
+5. Executes the package's `pkg.install` hook if available.
+6. Executes the package's `pkg.link` hook if available, else the default link
+   hook is run.
+
+The default link hook symlinks all non-hidden files (read: not beginning with a
+`.`) into `$ELLIPSIS_HOME` (typically `$HOME`). A few common text files like the
+README, LICENSE, etc are not linked.
+
+##### pkg.install
+The `pkg.install` hook lets you run custom install steps. The hook is run after
+cloning the repo.
+This is the place to install plugin managers, dependencies,...
+
+##### pkg.link
+The `pkg.link` hook lets you customize which files are linked. It is recommended
+to use the `fs.link_file` function, because it provides backup capability's.
+
+### Uninstalling
+
+When you `ellipsis uninstall` a package, ellipsis:
+
+2. Changes the current working dir to the package.
+3. Sets `$PKG_NAME` and `$PKG_PATH`.
+4. Sources the package's `ellipsis.sh` (if one exists).
+5. Executes the package's `pkg.unlink` hook if available, else the default
+   unlink hook is run.
+6. Executes the package's `pkg.uninstall` hook if available.
+6. Deletes the package from the packages.
+
+The default unlink hook removes all symlinks to the package from the `$ELLIPSIS_HOME` (typically
+`$HOME`).
+
+##### pkg.unlink
+The `pkg.unlink` hook lets you customize which files are unlinked.
+
+##### pkg.uninstall
+The `pkg.uninstall` hook lets you run custom uninstall steps.
+If your `pkg.install` hook does anything outside of the `PKG_PATH` this is the
+place to restore the original state.
 
 #### Examples
 Here's a more complete example (from

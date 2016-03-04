@@ -1,6 +1,6 @@
 <h1>Packages</h1>
 
-A package is any repo with files you want to symlink into `$ELLIPSIS_PATH`
+A package is any repo with files you want to symlink into `$ELLIPSIS_HOME`
 (typically `$HOME`). By default all of a repository's non-hidden files (read:
 not beginning with a `.`) will naively be linked into place, with the exception
 of a few common text files (`README`, `LICENSE`, etc).
