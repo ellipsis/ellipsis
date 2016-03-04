@@ -8,6 +8,7 @@ load os
 load path
 load pkg
 load utils
+load msg
 load log
 
 # List of hooks available to package authors.
@@ -26,7 +27,7 @@ PKG_HOOKS=(
 
 # Symlink files in PKG_PATH into ELLIPSIS_HOME.
 hooks.add() {
-    local dst="$PKG_PATH/$(path.strip_dot $(basename "$1"))"
+    local dst="$PKG_PATH/$(path.strip_dot "$(basename "$1")")"
 
     if fs.file_exists "$dst"; then
         log.fail "$dst already exists!"
@@ -38,7 +39,7 @@ hooks.add() {
         exit 1
     fi
 
-    echo mv "$(path.relative_to_home "$1")" "$(path.relative_to_packages "$dst")"
+    msg.print "mv $(path.relative_to_home "$1") $(path.relative_to_packages "$dst")"
     mv "$1" "$dst"
 
     fs.link_file "$dst"
@@ -69,7 +70,7 @@ hooks.uninstall() {
 
 # Show symlink mapping for package.
 hooks.links() {
-    echo -e "\033[1m${1:-$PKG_NAME}\033[0m"
+    msg.bold "${1:-$PKG_NAME}"
 
     if utils.cmd_exists column; then
         pkg.list_symlink_mappings | sort | column -t
@@ -93,7 +94,7 @@ hooks.installed() {
     local sha1="$(git.sha1)"
     local last_updated="$(git.last_updated)"
 
-    echo -e "\033[1m${1:-$PKG_NAME}\033[0m\t$sha1\t(updated $last_updated)"
+    msg.print "\033[1m${1:-$PKG_NAME}\033[0m\t$sha1\t(updated $last_updated)"
 }
 
 # Show git diffstat if repo has changed
@@ -106,6 +107,6 @@ hooks.status() {
     local sha1="$(git.sha1)"
     local last_updated="$(git.last_updated)"
 
-    echo -e "\033[1m${1:-$PKG_NAME}\033[0m $sha1 (updated $last_updated) $ahead"
+    msg.print "\033[1m${1:-$PKG_NAME}\033[0m $sha1 (updated $last_updated) $ahead"
     git.diffstat
 }
