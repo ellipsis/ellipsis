@@ -3,6 +3,7 @@
 # Interface to ellipsis package manager index. Uses github under the covers.
 
 load github
+load msg
 
 # Search registry for ellipsis packages.
 registry.search() {
@@ -16,5 +17,5 @@ registry.available() {
 
 # Publish packge to repository.
 registry.publish() {
-    echo TODO
+    msg.print "TODO"
 }
