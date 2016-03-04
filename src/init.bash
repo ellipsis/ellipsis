@@ -5,8 +5,8 @@
 
 if [[ -z "$ELLIPSIS_USER" ]]; then
     # Pipe to cat to squash git config's exit code 1 in case of missing key.
-    GITHUB_USER=$(git config github.user | cat)
-    ELLIPSIS_USER=${GITHUB_USER:-zeekay}
+    GITHUB_USER="$(git config github.user | cat)"
+    ELLIPSIS_USER="${GITHUB_USER:-zeekay}"
 fi
 
 # Repostitory defaults.
@@ -18,8 +18,8 @@ ELLIPSIS_HOME="${ELLIPSIS_HOME:-$HOME}"
 ELLIPSIS_PACKAGES="${ELLIPSIS_PACKAGES:-$ELLIPSIS_PATH/packages}"
 
 # Ellipsis is the default package.
-PKG_PATH=${PKG_PATH:-$ELLIPSIS_PATH}
-PKG_NAME=${PKG_NAME:-${PKG_PATH##*/.}}
+PKG_PATH="${PKG_PATH:-$ELLIPSIS_PATH}"
+PKG_NAME="${PKG_NAME:-${PKG_PATH##*/.}}"
 
 # Utility to load other modules. Uses a tiny bit of black magic to ensure each
 # module is only loaded once.
