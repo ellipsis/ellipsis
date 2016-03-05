@@ -3,6 +3,13 @@
 # Setup initial globals and load function used to source other modules. This
 # file must be sourced before any others.
 
+# Count nested runs for msg indentation
+if [ -z "$ELLIPSIS_LVL" ]; then
+    export ELLIPSIS_LVL=1
+else
+    let ELLIPSIS_LVL=ELLIPSIS_LVL+1
+fi
+
 if [[ -z "$ELLIPSIS_USER" ]]; then
     # Pipe to cat to squash git config's exit code 1 in case of missing key.
     GITHUB_USER="$(git config github.user | cat)"
