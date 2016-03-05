@@ -16,6 +16,19 @@ load msg
     [ "${lines[0]}" = "Test print message (colored)" ]
 }
 
+@test "msg.print shows message indented (nested)" {
+    # 1 level, 4 spaces
+    ELLIPSIS_LVL=2\
+    run msg.print "Test print message indented"
+    [ "$status" -eq 0 ]
+    [ "${lines[0]}" = "    Test print message indented" ]
+    # 2 levels, 8 spaces
+    ELLIPSIS_LVL=3\
+    run msg.print "Test print message indented"
+    [ "$status" -eq 0 ]
+    [ "${lines[0]}" = "        Test print message indented" ]
+}
+
 @test "msg.log shows message without colors" {
     run msg.log "\033[1mTest no color message\033[0m"
     [ "$status" -eq 0 ]
