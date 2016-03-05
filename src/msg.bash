@@ -7,9 +7,9 @@ load utils
 # Show message
 msg.print() {
     if [ -t 1 ] || [ -n "$ELLIPSIS_FORCE_COLOR" ]; then
-        echo -e "$@"
+        echo -e "$(msg.tabs)$@"
     else
-        msg.log "$@"
+        msg.log "$(msg.tabs)$@"
     fi
 }
 
@@ -26,4 +26,10 @@ msg.bold() {
 # Show dim message
 msg.dim() {
     msg.print "\033[90m$@\033[0m"
+}
+
+msg.tabs() {
+    for (( n=1; n<"$ELLIPSIS_LVL"; n++ )); do
+        printf '    '
+    done
 }
