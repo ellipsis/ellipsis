@@ -18,7 +18,15 @@ proto="${ELLIPSIS_PROTO:-https}"
 url="${ELLIPSIS_REPO:-$proto://github.com/ellipsis/ellipsis.git}"
 
 # Clone ellipsis into $tmp_dir.
-git clone --depth 1 "$url" "$tmp_dir/ellipsis"
+if ! git clone --depth 1 "$url" "$tmp_dir/ellipsis"; then
+    # Clean up
+    rm -rf "$tmp_dir"
+
+    # Print error message
+    echo >&2 "Installation failed!"
+    echo >&2 'Please check $ELLIPSIS_REPO and try again!'
+    exit 1
+fi
 
 # Save reference to specified ELLIPSIS_PATH (if any) otherwise final
 # destination: $HOME/.ellipsis.
@@ -51,7 +59,7 @@ if ! mv "$tmp_dir/ellipsis" "$ELLIPSIS_PATH"; then
 
     # Log error
     log.fail "Installation failed!"
-    msg.print "Please check your ELLIPSIS_PATH and try again!"
+    msg.print 'Please check $ELLIPSIS_PATH and try again!'
     exit 1
 fi
 
