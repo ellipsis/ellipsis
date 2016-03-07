@@ -115,20 +115,20 @@ Ellipsis is open-source software licensed under the [MIT license][mit-license].
 [travis-image]: https://img.shields.io/travis/ellipsis/ellipsis.svg
 [travis-url]:   https://travis-ci.org/ellipsis/ellipsis
 [docs-image]:   https://readthedocs.org/projects/ellipsis/badge/?version=master
-[docs-url]:     http://ellipsis.readthedocs.org/en/master
+[docs-url]:     http://docs.ellipsis.sh
 [tag-image]:    https://img.shields.io/github/tag/ellipsis/ellipsis.svg
 [tag-url]:      https://github.com/ellipsis/ellipsis/tags
 [gitter-image]: https://badges.gitter.im/ellipsis/ellipsis.svg
 [gitter-url]:   https://gitter.im/ellipsis/ellipsis
 
-[docs-installation]:    http://ellipsis.readthedocs.org/en/master/install
-[docs-usage]:           http://ellipsis.readthedocs.org/en/master/usage
-[docs-packages]:        http://ellipsis.readthedocs.org/en/master/packages
-[docs-hooks]:           http://ellipsis.readthedocs.org/en/master/hooks
-[docs-api]:             http://ellipsis.readthedocs.org/en/master/api
-[docs-pkgindex]:        http://ellipsis.readthedocs.org/en/master/pkgindex
-[docs-upgrading]:       http://ellipsis.readthedocs.org/en/master/upgrading
-[docs-completion]:      http://ellipsis.readthedocs.org/en/master/completion
+[docs-installation]:    http://docs.ellipsis.sh/install
+[docs-usage]:           http://docs.ellipsis.sh/usage
+[docs-packages]:        http://docs.ellipsis.sh/packages
+[docs-hooks]:           http://docs.ellipsis.sh/hooks
+[docs-api]:             http://docs.ellipsis.sh/api
+[docs-pkgindex]:        http://docs.ellipsis.sh/pkgindex
+[docs-upgrading]:       http://docs.ellipsis.sh/upgrading
+[docs-completion]:      http://docs.ellipsis.sh/completion
 
 [bats]:         https://github.com/sstephenson/bats
 [installer]:    https://github.com/ellipsis/ellipsis/blob/gh-pages/index.html
