@@ -29,31 +29,42 @@ ELLIPSIS_PATH="$tmp_dir/ellipsis"
 ELLIPSIS_SRC="$ELLIPSIS_PATH/src"
 
 # Initialize ellipsis.
-source "$tmp_dir/ellipsis/src/init.bash"
+source "$ELLIPSIS_SRC/init.bash"
 
 # Load modules.
 load ellipsis
 load fs
 load os
-load registry
+load msg
+load log
 
 ELLIPSIS_PATH="$FINAL_ELLIPSIS_PATH"
 ELLIPSIS_SRC="$ELLIPSIS_PATH/src"
 
-# Backup existing ~/.ellipsis if necessary and  move project into place.
+# Backup existing ~/.ellipsis if necessary
 fs.backup "$ELLIPSIS_PATH"
-mv "$tmp_dir/ellipsis" "$ELLIPSIS_PATH"
+
+# Move project into place
+if ! mv "$tmp_dir/ellipsis" "$ELLIPSIS_PATH"; then
+    # Clean up
+    rm -rf "$tmp_dir"
+
+    # Log error
+    log.fail "Installation failed!"
+    msg.print "Please check your ELLIPSIS_PATH and try again!"
+    exit 1
+fi
 
 # Clean up (only necessary on cygwin, really).
 rm -rf "$tmp_dir"
 
-# Backwards compatability, originally referred to packages as modules.
+# Backwards compatibility, originally referred to packages as modules.
 PACKAGES="${PACKAGES:-$MODULES}"
 
 if [ "$PACKAGES" ]; then
+    msg.print ""
     for pkg in ${PACKAGES[*]}; do
-        echo
-        echo -e "\033[1minstalling $pkg\033[0m"
+        msg.bold "Installing $pkg"
         ellipsis.install "$pkg"
     done
 fi
@@ -73,8 +84,8 @@ echo 'Run `ellipsis help` for additional options.'
 if [[ -z "$PACKAGES" ]]; then
     echo
     if [ "$(os.platform)" = osx ]; then
-        echo Recommended packages: zeekay/files zeekay/vim zeekay/zsh zeekay/alfred zeekay/iterm2
+        msg.print "Recommended packages: zeekay/files zeekay/vim zeekay/zsh zeekay/alfred zeekay/iterm2"
     else
-        echo Recommended packages: zeekay/files zeekay/vim zeekay/zsh
+        msg.print "Recommended packages: zeekay/files zeekay/vim zeekay/zsh"
     fi
 fi
