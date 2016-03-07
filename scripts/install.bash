@@ -91,5 +91,5 @@ Run `ellipsis help` for additional options.'
 
 if [ -z "$PACKAGES" ]; then
     msg.print ''
-    msg.print 'Check http://ellipsis.readthedocs.org/en/master/pkgindex for available packages!'
+    msg.print 'Check http://docs.ellipsis.sh/pkgindex for available packages!'
 fi
