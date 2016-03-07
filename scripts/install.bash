@@ -7,25 +7,25 @@
 deps=(bash curl git)
 
 for dep in ${deps[*]}; do
-    hash $dep 2>/dev/null || { echo >&2 "ellipsis requires $dep to be installed."; exit 1; }
+    hash "$dep" 2>/dev/null || { echo >&2 "ellipsis requires $dep to be installed."; exit 1; }
 done
 
 # Create temp dir.
-tmp_dir=$(mktemp -d ${TMPDIR:-tmp}-XXXXXX)
+tmp_dir="$(mktemp -d "${TMPDIR:-tmp}"-XXXXXX)"
 
 # Clone ellipsis into $tmp_dir.
-git clone --depth 1 git://github.com/ellipsis/ellipsis.git $tmp_dir/ellipsis
+git clone --depth 1 git://github.com/ellipsis/ellipsis.git "$tmp_dir/ellipsis"
 
 # Save reference to specified ELLIPSIS_PATH (if any) otherwise final
 # destination: $HOME/.ellipsis.
-FINAL_ELLIPSIS_PATH=${ELLIPSIS_PATH:-$HOME/.ellipsis}
+FINAL_ELLIPSIS_PATH="${ELLIPSIS_PATH:-$HOME/.ellipsis}"
 
 # Temporarily set ellipsis PATH so we can load other files.
 ELLIPSIS_PATH="$tmp_dir/ellipsis"
 ELLIPSIS_SRC="$ELLIPSIS_PATH/src"
 
 # Initialize ellipsis.
-source $tmp_dir/ellipsis/src/init.bash
+source "$tmp_dir/ellipsis/src/init.bash"
 
 # Load modules.
 load ellipsis
@@ -37,11 +37,11 @@ ELLIPSIS_PATH="$FINAL_ELLIPSIS_PATH"
 ELLIPSIS_SRC="$ELLIPSIS_PATH/src"
 
 # Backup existing ~/.ellipsis if necessary and  move project into place.
-fs.backup $ELLIPSIS_PATH
-mv $tmp_dir/ellipsis $ELLIPSIS_PATH
+fs.backup "$ELLIPSIS_PATH"
+mv "$tmp_dir/ellipsis" "$ELLIPSIS_PATH"
 
 # Clean up (only necessary on cygwin, really).
-rm -rf $tmp_dir
+rm -rf "$tmp_dir"
 
 # Backwards compatability, originally referred to packages as modules.
 PACKAGES="${PACKAGES:-$MODULES}"
@@ -68,7 +68,7 @@ echo 'Run `ellipsis help` for additional options.'
 
 if [[ -z "$PACKAGES" ]]; then
     echo
-    if [ $(os.platform) = osx ]; then
+    if [ "$(os.platform)" = osx ]; then
         echo Recommended packages: zeekay/files zeekay/vim zeekay/zsh zeekay/alfred zeekay/iterm2
     else
         echo Recommended packages: zeekay/files zeekay/vim zeekay/zsh
