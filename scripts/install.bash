@@ -62,30 +62,26 @@ rm -rf "$tmp_dir"
 PACKAGES="${PACKAGES:-$MODULES}"
 
 if [ "$PACKAGES" ]; then
-    msg.print ""
+    msg.print ''
     for pkg in ${PACKAGES[*]}; do
         msg.bold "Installing $pkg"
         ellipsis.install "$pkg"
     done
 fi
 
-echo
-echo '                                   ~ fin ~                                 '
-echo '   _    _    _                                                             '
-echo '  /\_\ /\_\ /\_\                                                           '
-echo '  \/_/ \/_/ \/_/                         …because $HOME is where the <3 is!'
-echo
-echo 'Be sure to add `export PATH=~/.ellipsis/bin:$PATH` to your bashrc or zshrc.'
-echo
-echo 'Run `ellipsis install <package>` to install a new package.'
-echo 'Run `ellipsis search <query>` to search for packages to install.'
-echo 'Run `ellipsis help` for additional options.'
+msg.print '
+                                   ~ fin ~
+   _    _    _
+  /\_\ /\_\ /\_\
+  \/_/ \/_/ \/_/                         …because $HOME is where the <3 is!
 
-if [[ -z "$PACKAGES" ]]; then
-    echo
-    if [ "$(os.platform)" = osx ]; then
-        msg.print "Recommended packages: zeekay/files zeekay/vim zeekay/zsh zeekay/alfred zeekay/iterm2"
-    else
-        msg.print "Recommended packages: zeekay/files zeekay/vim zeekay/zsh"
-    fi
+Be sure to add `export PATH=~/.ellipsis/bin:$PATH` to your bashrc or zshrc.
+
+Run `ellipsis install <package>` to install a new package.
+Run `ellipsis search <query>` to search for packages to install.
+Run `ellipsis help` for additional options.'
+
+if [ -z "$PACKAGES" ]; then
+    msg.print ''
+    msg.print 'Check http://ellipsis.readthedocs.org/en/master/pkgindex for available packages!'
 fi
