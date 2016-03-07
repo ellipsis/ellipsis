@@ -50,6 +50,18 @@ teardown() {
     [ "${lines[0]}" = "ellipsis requires git to be installed." ]
 }
 
+@test "Installer fails in a clean way when cloning fails" {
+    ELLIPSIS_REPO="https://ellipsis:not_valid@github.com/ellipsis/not_valid"\
+    run scripts/install.bash
+
+    # Check output status
+    [ "$status" -eq 1 ]
+
+    # Check messages
+    [ $(expr "$output" : ".*Installation failed!") -ne 0 ]
+    [ $(expr "$output" : '.*Please check $ELLIPSIS_REPO and try again!') -ne 0 ]
+}
+
 @test "Installer fails in a clean way when copying ellipsis fails" {
     # stderr output is disabled to remove git progress messages
     ELLIPSIS_PATH="$TESTS_DIR/tmp/not_valid/not_valid"\
@@ -60,16 +72,12 @@ teardown() {
     [ "$status" -eq 1 ]
 
     # Check messages
-    [ "${lines[10]}" = "Installation failed!" ]
-    [ "${lines[11]}" = "Please check your ELLIPSIS_PATH and try again!" ]
-
-    # Check if tmp dir is cleaned up
-    [ ! -d "${lines[1]}" ]
+    [ $(expr "$output" : ".*Installation failed!") -ne 0 ]
+    [ $(expr "$output" : '.*Please check $ELLIPSIS_PATH and try again!') -ne 0 ]
 }
 
 # Tests multiple things to avoid unnecessary cloning
 @test "Installer correctly 'installs' test project" {
-    # Use/test custom install repository
     # stderr output is disabled to remove git progress messages
     PACKAGES="test1 test2"\
     ELLIPSIS_REPO="https://github.com/ellipsis/installer-test"\
@@ -79,26 +87,27 @@ teardown() {
     [ "$status" -eq 0 ]
 
     # Check if `$ELLIPSIS_PATH` is set correctly
-    [ "${lines[2]}" = "Ellipsis path : $TESTS_DIR/tmp/ellipsis" ]
+    [ $(expr "$output" : ".*Ellipsis path : $TESTS_DIR/tmp/ellipsis") -ne 0 ]
+    #[ "${lines[2]}" = "Ellipsis path : $TESTS_DIR/tmp/ellipsis" ]
 
     # Check if project is installed
     [ -f "$TESTS_DIR/tmp/ellipsis/installer-test" ]
 
     # Check if libs get loaded
-    [ "${lines[3]}" = "load : ellipsis" ]
-    [ "${lines[4]}" = "load : fs" ]
-    [ "${lines[5]}" = "load : os" ]
-    [ "${lines[6]}" = "load : msg" ]
-    [ "${lines[7]}" = "load : log" ]
+    [ $(expr "$output" : ".*load : ellipsis") -ne 0 ]
+    [ $(expr "$output" : ".*load : fs") -ne 0 ]
+    [ $(expr "$output" : ".*load : os") -ne 0 ]
+    [ $(expr "$output" : ".*load : msg") -ne 0 ]
+    [ $(expr "$output" : ".*load : log") -ne 0 ]
 
     # Check if fs.backup is called on the correct dir
-    [ "${lines[8]}" = "fs.backup : $TESTS_DIR/tmp/ellipsis" ]
+    [ $(expr "$output" : ".*fs.backup : $TESTS_DIR/tmp/ellipsis") -ne 0 ]
 
     # Check if packages would be installed
-    [ "${lines[9]}" = "Installing test1" ]
-    [ "${lines[10]}" = "ellipsis.install : test1" ]
-    [ "${lines[11]}" = "Installing test2" ]
-    [ "${lines[12]}" = "ellipsis.install : test2" ]
+    [ $(expr "$output" : ".*Installing test1") -ne 0 ]
+    [ $(expr "$output" : ".*ellipsis.install : test1") -ne 0 ]
+    [ $(expr "$output" : ".*Installing test2") -ne 0 ]
+    [ $(expr "$output" : ".*ellipsis.install : test2") -ne 0 ]
 }
 
 @test "Installer correctly installs ellipsis" {
