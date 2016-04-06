@@ -27,7 +27,7 @@ teardown() {
     touch "$TESTS_DIR/tmp/bin/no_git/bash"
     touch "$TESTS_DIR/tmp/bin/no_git/curl"
 
-    chmod +x "$TESTS_DIR/tmp/bin" -R
+    chmod -R +x "$TESTS_DIR/tmp/bin"
 
     export BASH="$(which bash)"
 
