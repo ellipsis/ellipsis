@@ -27,7 +27,7 @@
     </div>
     <!-- end header-->
     <div class="wrapper">
-      <section><h1 id="ellipsis-build-status-travis-image-travis-url-documentation-status-docs-image-docs-url-latest-tag-tag-image-tag-url-gitter-chat-gitter-image-gitter-url-">Ellipsis <a href="https://travis-ci.org/ellipsis/ellipsis"><img src="https://img.shields.io/travis/ellipsis/ellipsis.svg" alt="Build Status"></a> <a href="http://ellipsis.readthedocs.org/en/master"><img src="https://readthedocs.org/projects/ellipsis/badge/?version=master" alt="Documentation status"></a> <a href="https://github.com/ellipsis/ellipsis/tags"><img src="https://img.shields.io/github/tag/ellipsis/ellipsis.svg" alt="Latest tag"></a> <a href="https://gitter.im/ellipsis/ellipsis"><img src="https://badges.gitter.im/ellipsis/ellipsis.svg" alt="Gitter chat"></a></h1>
+      <section><h1 id="ellipsis-build-status-travis-image-travis-url-documentation-status-docs-image-docs-url-latest-tag-tag-image-tag-url-gitter-chat-gitter-image-gitter-url-">Ellipsis <a href="https://travis-ci.org/ellipsis/ellipsis"><img src="https://img.shields.io/travis/ellipsis/ellipsis.svg" alt="Build Status"></a> <a href="http://docs.ellipsis.sh"><img src="https://readthedocs.org/projects/ellipsis/badge/?version=master" alt="Documentation status"></a> <a href="https://github.com/ellipsis/ellipsis/tags"><img src="https://img.shields.io/github/tag/ellipsis/ellipsis.svg" alt="Latest tag"></a> <a href="https://gitter.im/ellipsis/ellipsis"><img src="https://badges.gitter.im/ellipsis/ellipsis.svg" alt="Gitter chat"></a></h1>
 <pre><code><span class="hljs-tag"> <span class="hljs-title">_</span>    <span class="hljs-title">_</span>    <span class="hljs-title">_</span>
 </span><span class="hljs-tag">/\<span class="hljs-title">_</span>\ /\<span class="hljs-title">_</span>\ /\<span class="hljs-title">_</span>\
 </span><span class="hljs-tag">\/<span class="hljs-title">_</span>/ \/<span class="hljs-title">_</span>/ \/<span class="hljs-title">_</span>/   …<span class="hljs-title">because</span> $<span class="hljs-title">HOME</span> <span class="hljs-title">is</span> <span class="hljs-title">where</span> <span class="hljs-title">the</span> &lt;<span class="hljs-title">3</span> <span class="hljs-title">is</span>!</span>
@@ -42,7 +42,7 @@ updated and in-sync across systems.</li>
 <li>Cross platform, known to work on Mac OS X, Linux, FreeBSD and even Cygwin.</li>
 <li>Large test suite to ensure your <code>$HOME</code> doesn&#39;t get ravaged.</li>
 <li>Completely customizable.</li>
-<li><a href="http://ellipsis.readthedocs.org/en/master/upgrading">Works with existing dotfiles!</a></li>
+<li><a href="http://docs.ellipsis.sh/upgrading">Works with existing dotfiles!</a></li>
 </ul>
 <h3 id="install">Install</h3>
 <p><strong>Requirements:</strong> bash, curl, git</p>
@@ -65,7 +65,7 @@ $ ellipsis install zsh
 </code></pre>
 <p>...all work. By convention <code>username/package</code> and <code>package</code> are aliases for
 <a href="https://github.com/username/dot-package">https://github.com/username/dot-package</a>.</p>
-<p>For full usage information you can read the <a href="http://ellipsis.readthedocs.org/en/master/usage">docs</a> or ask help from
+<p>For full usage information you can read the <a href="http://docs.ellipsis.sh/usage">docs</a> or ask help from
 the command line with the <code>-h</code> option.</p>
 <h3 id="configuration">Configuration</h3>
 <p>You can customize ellipsis by exporting a few different variables:</p>
@@ -112,7 +112,7 @@ the command line with the <code>-h</code> option.</p>
 <span class="hljs-keyword">export</span> ELLIPSIS_PATH=<span class="hljs-string">"~/.el"</span>
 </code></pre>
 <h3 id="packages">Packages</h3>
-<p>A package is any repo with files you want to symlink into <code>$ELLIPSIS_PATH</code>
+<p>A package is any repo with files you want to symlink into <code>$ELLIPSIS_HOME</code>
 (typically <code>$HOME</code>). By default all of a repository&#39;s non-hidden files (read:
 not beginning with a <code>.</code>) will naively be linked into place, with the exception
 of a few common text files (<code>README</code>, <code>LICENSE</code>, etc).</p>
@@ -123,16 +123,16 @@ of a few common text files (<code>README</code>, <code>LICENSE</code>, etc).</p>
 </code></pre>
 <p>Yep, that&#39;s it :) If all you want to do is symlink some files into <code>$HOME</code>,
 adding an <code>ellipsis.sh</code> to your package is completely optional. But what if you
-need more? <a href="http://ellipsis.readthedocs.org/en/master/hooks">That&#39;s where hooks come in...</a></p>
+need more? <a href="http://docs.ellipsis.sh/hooks">That&#39;s where hooks come in...</a></p>
 <h3 id="docs">Docs</h3>
-<p>Please consult the <a href="http://ellipsis.readthedocs.org/en/master">docs</a> for more information.</p>
+<p>Please consult the <a href="http://docs.ellipsis.sh">docs</a> for more information.</p>
 <p>Specific parts that could be off interest:</p>
 <ul>
-<li><a href="http://ellipsis.readthedocs.org/en/master/hooks">Hooks</a></li>
-<li><a href="http://ellipsis.readthedocs.org/en/master/api">API</a></li>
-<li><a href="http://ellipsis.readthedocs.org/en/master/pkgindex">Package index</a></li>
-<li><a href="http://ellipsis.readthedocs.org/en/master/upgrading">Upgrading to Ellipsis</a></li>
-<li><a href="http://ellipsis.readthedocs.org/en/master/completion">Zsh completion</a></li>
+<li><a href="http://docs.ellipsis.sh/hooks">Hooks</a></li>
+<li><a href="http://docs.ellipsis.sh/api">API</a></li>
+<li><a href="http://docs.ellipsis.sh/pkgindex">Package index</a></li>
+<li><a href="http://docs.ellipsis.sh/upgrading">Upgrading to Ellipsis</a></li>
+<li><a href="http://docs.ellipsis.sh/completion">Zsh completion</a></li>
 </ul>
 <h3 id="development">Development</h3>
 <p>Pull requests welcome! New code should follow the <a href="https://google-styleguide.googlecode.com/svn/trunk/shell.xml">existing style</a>
