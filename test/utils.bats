@@ -23,13 +23,13 @@ teardown() {
 }
 
 @test "utils.prompt should return true if yes otherwise no" {
-    skip
+    skip "No test implementation"
     run echo y | utils.prompt "select yes"
     [ $status -eq 0 ]
 }
 
 @test "utils.prompt should return true if yes otherwise no" {
-    skip
+    skip "No test implementation"
     run echo n | utils.prompt "select yes"
     [ $status -eq 1 ]
 }
