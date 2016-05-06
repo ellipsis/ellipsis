@@ -13,41 +13,41 @@ teardown() {
 }
 
 @test "pkg.name_from_path should derive package name from package path" {
-    skip
+    skip "No test implementation"
 }
 
 @test "pkg.path_from_name should derive package path from package name" {
-    skip
+    skip "No test implementation"
 }
 
 @test "pkg.init_globals should setup PKG_PATH and PKG_NAME properly" {
-    skip
+    skip "No test implementation"
 }
 
 @test "pkg.init should initialize globals for package and source hooks" {
-    skip
+    skip "No test implementation"
 }
 
 @test "pkg.list_symlinks should list symlinks for package" {
-    skip
+    skip "No test implementation"
 }
 
 @test "pkg.symlinks_mappings should list symlink mappings for package" {
-    skip
+    skip "No test implementation"
 }
 
 @test "pkg.run should run command or hook from PKG_PATH" {
-    skip
+    skip "No test implementation"
 }
 
 @test "pkg.run_hook should run_hook from PKG_PATH" {
-    skip
+    skip "No test implementation"
 }
 
 @test "pkg.del should unset globals/hooks setup by package initialization" {
-    skip
+    skip "No test implementation"
 }
 
 @test "pkg.del should unset globals/hooks setup by package initialization" {
-    skip
+    skip "No test implementation"
 }
