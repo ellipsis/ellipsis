@@ -100,16 +100,25 @@ fs.backup() {
 }
 
 # symlink a single file into ELLIPSIS_HOME
-fs.link_file() {
+fs.link_rfile() {
     local src="$(path.abs_path "$1")"
     local name="${src##*/}"
-    local default="$ELLIPSIS_HOME/.$name"
+    local default="$ELLIPSIS_HOME/$name"
     local dest="${2:-$default}"
 
     fs.backup "$dest"
 
     msg.print "linking $(path.relative_to_packages "$src") -> $(path.relative_to_home "$dest")"
     ln -s "$src" "$dest"
+}
+
+# symlink a single file into ELLIPSIS_HOME
+fs.link_file() {
+    local name="${1##*/}"
+          name="${name#.}"
+    local default="$ELLIPSIS_HOME/.$name"
+    local dest="${2:-$default}"
+    fs.link_rfile "$1" "$dest"
 }
 
 # find all files in dir excluding the dir itself, hidden files, README,
