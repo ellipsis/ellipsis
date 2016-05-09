@@ -99,7 +99,7 @@ fs.backup() {
     mv "$original" "$backup"
 }
 
-# symlink a single file into ELLIPSIS_HOME
+# symlink a single (regular) file into ELLIPSIS_HOME
 fs.link_rfile() {
     local src="$(path.abs_path "$1")"
     local name="${src##*/}"
