@@ -109,6 +109,14 @@ teardown() {
     [ ! -e tmp/broken_symlink ]
 }
 
+@test "fs.link_rfile should link a file into HOME" {
+    run fs.link_rfile tmp/file_to_link
+    [ $status -eq 0 ]
+    [ -f "$(readlink "$ELLIPSIS_HOME/file_to_link")" ]
+    [ -f tmp/file_to_link ]
+    [[ "$output" == linking* ]] || false
+}
+
 @test "fs.link_file should link a file into HOME" {
     run fs.link_file tmp/file_to_link
     [ $status -eq 0 ]
