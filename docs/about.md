@@ -10,6 +10,6 @@ Suggest a feature or report a bug? Create an [issue][issues]!
 Ellipsis is open-source software licensed under the [MIT license][mit-license].
 
 [bats]:         https://github.com/sstephenson/bats
-[style-guide]:  https://google-styleguide.googlecode.com/svn/trunk/shell.xml
+[style-guide]:  https://google.github.io/styleguide/shell.xml
 [issues]:       http://github.com/ellipsis/ellipsis/issues
 [mit-license]:  http://opensource.org/licenses/MIT
