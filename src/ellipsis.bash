@@ -320,16 +320,56 @@ ellipsis.clean() {
 # Re-link unlinked packages.
 ellipsis.add() {
     if [ $# -lt 2 ]; then
-        log.fail "Usage: ellipsis add <package> <dotfile>"
+        log.fail "Usage: ellipsis add <package> <(dot)file>"
         exit 1
+    fi
+
+    # Detect explicit additions
+    if [ $# -eq 2 ]; then
+        explicit_add=true
     fi
 
     for file in "${@:2}"; do
         # Important to get absolute path of each file as we'll be changing
         # directory when hook is run.
         local file="$(path.abs_path "$file")"
+        local file_name="$(basename "$file")"
+
+        # Ignore if file is ellipsis related
+        if ellipsis.is_related "$file"; then
+            continue
+        fi
+
+        # Ignore useless files
+        if [ -z "$explicit_add" ] && ellipsis.is_useless "$file"; then
+            continue
+        fi
+
+        # Warn about sensitive files
+        if ellipsis.is_sensitive "$file"; then
+            log.warn "Attention: $file_name might contain sensitive information!"
+        fi
+
         pkg.init "$1"
         pkg.run_hook "add" "$file"
         pkg.del
     done
+}
+
+# Check if a file is related to ellipsis
+ellipsis.is_related() {
+    #TODO: Implementation
+    return false
+}
+
+# Check if a file is useless
+ellipsis.is_useless() {
+    #TODO: Implementation
+    return false
+}
+
+#Check if file is in the list of possibly sensitive files
+ellipsis.is_sensitive() {
+    #TODO: Implementation
+    return false
 }
