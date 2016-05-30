@@ -205,3 +205,31 @@ teardown() {
     run ellipsis.push
     [ $status -eq 0 ]
 }
+
+@test "ellipsis.add should add files to a package" {
+    skip "No test implementation"
+
+    run ellipsis.add
+    [ $status -eq 0 ]
+}
+
+@test "ellipsis.is_related should detect ellipsis related files" {
+    skip "No test implementation"
+
+    run ellipsis.is_related
+    [ $status -eq 0 ]
+}
+
+@test "ellipsis.is_useless should detect \"useless\" files" {
+    skip "No test implementation"
+
+    run ellipsis.is_useless
+    [ $status -eq 0 ]
+}
+
+@test "ellipsis.is_sensitive should detect sensitive files" {
+    skip "No test implementation"
+
+    run ellipsis.is_sensitive
+    [ $status -eq 0 ]
+}
