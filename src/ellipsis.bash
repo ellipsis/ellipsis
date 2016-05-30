@@ -364,12 +364,32 @@ ellipsis.is_related() {
 
 # Check if a file is useless
 ellipsis.is_useless() {
-    #TODO: Implementation
-    return false
+    local file="$1"
+
+    case $file in
+        ~/.cache|~/.zcompdump)
+            # Matched files are labled "useless"
+            return true
+        ;;
+        *)
+            # File is ok for this test
+            return false
+        ;;
+    esac
 }
 
 #Check if file is in the list of possibly sensitive files
 ellipsis.is_sensitive() {
-    #TODO: Implementation
-    return false
+    local file="$1"
+
+    case $file in
+        ~/.ssh|~/.gitconfig|~/.gemrc|~/.npmrc|~/.pypirc|~/.pgpass|~/.floorc|~/.gist|~/.netrc|~/.git-credential-cache)
+            # Matched files are labled "sensitive"
+            return true
+        ;;
+        *)
+            # File is ok for this test
+            return false
+        ;;
+    esac
 }
