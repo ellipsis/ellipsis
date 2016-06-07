@@ -337,17 +337,19 @@ ellipsis.add() {
 
         # Ignore if file is ellipsis related
         if ellipsis.is_related "$file"; then
+            # Can be ignored without message
             continue
         fi
 
         # Ignore useless files
         if [ -z "$explicit_add" ] && ellipsis.is_useless "$file"; then
+            log.info "Ignored $file_name (marked useless)"
             continue
         fi
 
         # Warn about sensitive files
         if ellipsis.is_sensitive "$file"; then
-            log.warn "Attention: $file_name might contain sensitive information!"
+            log.warn "Attention, $file_name might contain sensitive information!"
         fi
 
         pkg.init "$1"
@@ -358,8 +360,23 @@ ellipsis.add() {
 
 # Check if a file is related to ellipsis
 ellipsis.is_related() {
-    #TODO: Implementation
-    return false
+    local file="$1"
+
+    # If link, check destination
+    if [ -L "$file" ]; then
+        file="$(readlink "$file")"
+    fi
+
+    case $file in
+        $ELLIPSIS_PATH | $ELLIPSIS_PATH/pkg/*)
+            # File is ellipsis related
+            return 1
+            ;;
+        *)
+            # File is ok for this test
+            return 0
+            ;;
+    esac
 }
 
 # Check if a file is useless
@@ -369,11 +386,11 @@ ellipsis.is_useless() {
     case $file in
         ~/.cache|~/.zcompdump)
             # Matched files are labled "useless"
-            return true
-        ;;
+            return 1
+            ;;
         *)
             # File is ok for this test
-            return false
+            return 0
         ;;
     esac
 }
@@ -385,11 +402,11 @@ ellipsis.is_sensitive() {
     case $file in
         ~/.ssh|~/.gitconfig|~/.gemrc|~/.npmrc|~/.pypirc|~/.pgpass|~/.floorc|~/.gist|~/.netrc|~/.git-credential-cache)
             # Matched files are labled "sensitive"
-            return true
+            return 1
         ;;
         *)
             # File is ok for this test
-            return false
+            return 0
         ;;
     esac
 }
