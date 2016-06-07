@@ -106,10 +106,6 @@ teardown() {
 }
 
 @test "ellipsis.new should create a new package" {
-    # Test specific setup
-    clone_test_package
-    link_test_package
-
     run ellipsis.new foo
     [ $status -eq 0 ]
     [ -e "$ELLIPSIS_PACKAGES/foo/ellipsis.sh" ]
@@ -207,10 +203,14 @@ teardown() {
 }
 
 @test "ellipsis.add should add files to a package" {
-    skip "No test implementation"
+    # Test specific setup
+    run ellipsis.new foo
 
-    run ellipsis.add
+    run ellipsis.add foo "$ELLIPSIS_HOME/.file"
     [ $status -eq 0 ]
+    [ -L "$ELLIPSIS_HOME/.file" ]
+    [ -e "$ELLIPSIS_PACKAGES/foo/file" ]
+    [ "$(readlink "$ELLIPSIS_HOME/.file")" == "$ELLIPSIS_PACKAGES/foo/file" ]
 }
 
 @test "ellipsis.is_related should detect ellipsis related files" {
