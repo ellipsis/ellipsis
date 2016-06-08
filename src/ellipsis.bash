@@ -368,7 +368,7 @@ ellipsis.is_related() {
     fi
 
     case $file in
-        $ELLIPSIS_PATH | $ELLIPSIS_PATH/packages/*)
+        $ELLIPSIS_PATH|$ELLIPSIS_PACKAGES/*)
             # File is ellipsis related
             return 0
             ;;
@@ -384,7 +384,7 @@ ellipsis.is_useless() {
     local file="$1"
 
     case $file in
-        ~/.cache|~/.zcompdump)
+        $ELLIPSIS_HOME/.cache|$ELLIPSIS_HOME/.zcompdump)
             # Matched files are labled "useless"
             return 0
             ;;
@@ -400,7 +400,10 @@ ellipsis.is_sensitive() {
     local file="$1"
 
     case $file in
-        ~/.ssh|~/.gitconfig|~/.gemrc|~/.npmrc|~/.pypirc|~/.pgpass|~/.floorc|~/.gist|~/.netrc|~/.git-credential-cache)
+        $ELLIPSIS_HOME/.ssh|$ELLIPSIS_HOME/.gitconfig|$ELLIPSIS_HOME/.gemrc \
+        |$ELLIPSIS_HOME/.npmrc|$ELLIPSIS_HOME/.pypirc|$ELLIPSIS_HOME/.pgpass \
+        |$ELLIPSIS_HOME/.floorc|$ELLIPSIS_HOME/.gist|$ELLIPSIS_HOME/.netrc \
+        |$ELLIPSIS_HOME/.git-credential-cache)
             # Matched files are labled "sensitive"
             return 0
         ;;

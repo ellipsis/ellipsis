@@ -214,22 +214,54 @@ teardown() {
 }
 
 @test "ellipsis.is_related should detect ellipsis related files" {
-    skip "No test implementation"
+    # Test specific setup
+    touch "$TESTS_DIR/tmp/test_file"
+    touch "$ELLIPSIS_HOME/test_file"
+    clone_test_package
+    link_test_package
 
-    run ellipsis.is_related
+    run ellipsis.is_related "$TESTS_DIR/tmp/test_file"
+    [ $status -eq 1 ]
+    run ellipsis.is_related "$ELLIPSIS_HOME/test_file"
+    [ $status -eq 1 ]
+    run ellipsis.is_related "$ELLIPSIS_PATH"
+    [ $status -eq 0 ]
+    run ellipsis.is_related "$ELLIPSIS_HOME/.file"
+    [ $status -eq 0 ]
+    run ellipsis.is_related "$ELLIPSIS_PACKAGES/test/ellipsis.sh"
     [ $status -eq 0 ]
 }
 
 @test "ellipsis.is_useless should detect \"useless\" files" {
-    skip "No test implementation"
+    # Test specific setup
+    touch "$TESTS_DIR/tmp/test_file"
+    touch "$ELLIPSIS_HOME/test_file"
 
-    run ellipsis.is_useless
+    run ellipsis.is_useless "$TESTS_DIR/tmp/test_file"
+    [ $status -eq 1 ]
+    run ellipsis.is_useless "$ELLIPSIS_HOME/test_file"
+    [ $status -eq 1 ]
+    run ellipsis.is_useless "$ELLIPSIS_HOME/.cache"
     [ $status -eq 0 ]
+    run ellipsis.is_useless "$ELLIPSIS_HOME/.zcompdump"
+    [ $status -eq 0 ]
+    # Optionally test on all useless files
 }
 
 @test "ellipsis.is_sensitive should detect sensitive files" {
-    skip "No test implementation"
+    # Test specific setup
+    touch "$TESTS_DIR/tmp/test_file"
+    touch "$ELLIPSIS_HOME/test_file"
 
-    run ellipsis.is_sensitive
+    run ellipsis.is_sensitive "$TESTS_DIR/tmp/test_file"
+    [ $status -eq 1 ]
+    run ellipsis.is_sensitive "$ELLIPSIS_HOME/test_file"
+    [ $status -eq 1 ]
+    run ellipsis.is_sensitive "$ELLIPSIS_HOME/.ssh"
     [ $status -eq 0 ]
+    run ellipsis.is_sensitive "$ELLIPSIS_HOME/.gitconfig"
+    [ $status -eq 0 ]
+    run ellipsis.is_sensitive "$ELLIPSIS_HOME/.gemrc"
+    [ $status -eq 0 ]
+    # Optionally test on all sensitive files
 }
