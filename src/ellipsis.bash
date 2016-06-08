@@ -330,6 +330,11 @@ ellipsis.add() {
     fi
 
     for file in "${@:2}"; do
+        # Ignore . and ..
+        if [ "$file" == '.' -o "$file" == '..' ]; then
+            continue
+        fi
+
         # Important to get absolute path of each file as we'll be changing
         # directory when hook is run.
         local file="$(path.abs_path "$file")"
@@ -384,7 +389,8 @@ ellipsis.is_useless() {
     local file="$1"
 
     case $file in
-        $ELLIPSIS_HOME/.cache|$ELLIPSIS_HOME/.zcompdump)
+        $ELLIPSIS_HOME/.cache|$ELLIPSIS_HOME/.zcompdump|$ELLIPSIS_HOME/.ecryptfs \
+        |$ELLIPSIS_HOME/.Private|$ELLIPSIS_HOME/*.bak)
             # Matched files are labled "useless"
             return 0
             ;;
