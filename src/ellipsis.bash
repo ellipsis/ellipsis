@@ -409,7 +409,7 @@ ellipsis.is_sensitive() {
         $ELLIPSIS_HOME/.ssh|$ELLIPSIS_HOME/.gitconfig|$ELLIPSIS_HOME/.gemrc \
         |$ELLIPSIS_HOME/.npmrc|$ELLIPSIS_HOME/.pypirc|$ELLIPSIS_HOME/.pgpass \
         |$ELLIPSIS_HOME/.floorc|$ELLIPSIS_HOME/.gist|$ELLIPSIS_HOME/.netrc \
-        |$ELLIPSIS_HOME/.git-credential-cache)
+        |$ELLIPSIS_HOME/.git-credential-cache|*history*)
             # Matched files are labled "sensitive"
             return 0
         ;;

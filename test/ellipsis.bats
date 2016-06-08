@@ -252,6 +252,7 @@ teardown() {
     # Test specific setup
     touch "$TESTS_DIR/tmp/test_file"
     touch "$ELLIPSIS_HOME/test_file"
+    touch "$ELLIPSIS_HOME/test_file.history"
 
     run ellipsis.is_sensitive "$TESTS_DIR/tmp/test_file"
     [ $status -eq 1 ]
@@ -264,4 +265,7 @@ teardown() {
     run ellipsis.is_sensitive "$ELLIPSIS_HOME/.gemrc"
     [ $status -eq 0 ]
     # Optionally test on all sensitive files
+
+    run ellipsis.is_sensitive "$ELLIPSIS_HOME/test_file.history"
+    [ $status -eq 0 ]
 }
