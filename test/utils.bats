@@ -177,6 +177,14 @@ teardown() {
     run utils.is_true "$var"
     [ $status -eq 0 ]
 
+    local var="y"
+    run utils.is_true "$var"
+    [ $status -eq 0 ]
+
+    local var="Y"
+    run utils.is_true "$var"
+    [ $status -eq 0 ]
+
     local var="1"
     run utils.is_true "$var"
     [ $status -eq 0 ]
