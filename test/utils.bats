@@ -148,3 +148,63 @@ teardown() {
     [ $status -eq 1 ]
 }
 
+@test "utils.is_true correctly evaluates variables" {
+    local var=true
+    run utils.is_true "$var"
+    [ $status -eq 0 ]
+
+    local var="true"
+    run utils.is_true "$var"
+    [ $status -eq 0 ]
+
+    local var="True"
+    run utils.is_true "$var"
+    [ $status -eq 0 ]
+
+    local var="TRUE"
+    run utils.is_true "$var"
+    [ $status -eq 0 ]
+
+    local var="yes"
+    run utils.is_true "$var"
+    [ $status -eq 0 ]
+
+    local var="Yes"
+    run utils.is_true "$var"
+    [ $status -eq 0 ]
+
+    local var="YES"
+    run utils.is_true "$var"
+    [ $status -eq 0 ]
+
+    local var="1"
+    run utils.is_true "$var"
+    [ $status -eq 0 ]
+
+    local var=1
+    run utils.is_true "$var"
+    [ $status -eq 0 ]
+
+    local var=0
+    run utils.is_true "$var"
+    [ $status -eq 1 ]
+
+    local var="0"
+    run utils.is_true "$var"
+    [ $status -eq 1 ]
+
+    local var="false"
+    run utils.is_true "$var"
+    [ $status -eq 1 ]
+
+    local var="random"
+    run utils.is_true "$var"
+    [ $status -eq 1 ]
+
+    local var=""
+    run utils.is_true "$var"
+    [ $status -eq 1 ]
+
+    run utils.is_true "$unset"
+    [ $status -eq 1 ]
+}
