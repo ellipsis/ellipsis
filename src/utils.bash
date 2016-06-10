@@ -10,14 +10,7 @@ utils.cmd_exists() {
 # prompt with message and return true if yes/YES, otherwise false
 utils.prompt() {
     read -r -p "$1 " answer
-    case $answer in
-        y*|Y*)
-            return 0
-            ;;
-        *)
-            return 1
-            ;;
-    esac
+    return utils.is_true "$answer"
 }
 
 # Run web-based installers
@@ -113,4 +106,18 @@ utils.version_compare() {
     done
 
     return $equal_return
+}
+
+# Check if an option is set to true (or 1) in a safe manner
+utils.is_true() {
+    local var="$1"
+
+    case $var in
+        true|True|TRUE|yes|Yes|YES|y|Y|1)
+            return 0
+            ;;
+        *)
+            return 1
+            ;;
+    esac
 }

@@ -6,7 +6,7 @@ load utils
 
 # Show message
 msg.print() {
-    if [ -t 1 ] || [ -n "$ELLIPSIS_FORCE_COLOR" ]; then
+    if [ -t 1 ] || utils.is_true "$ELLIPSIS_FORCE_COLOR"; then
         echo -e "$(msg.tabs)$@"
     else
         msg.log "$(msg.tabs)$@"
