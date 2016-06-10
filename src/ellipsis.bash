@@ -320,16 +320,102 @@ ellipsis.clean() {
 # Re-link unlinked packages.
 ellipsis.add() {
     if [ $# -lt 2 ]; then
-        log.fail "Usage: ellipsis add <package> <dotfile>"
+        log.fail "Usage: ellipsis add <package> <(dot)file>"
         exit 1
     fi
 
+    # Detect explicit additions
+    if [ $# -eq 2 ]; then
+        explicit_add=true
+    fi
+
     for file in "${@:2}"; do
+        # Ignore . and ..
+        if [ "$file" == '.' -o "$file" == '..' ]; then
+            continue
+        fi
+
         # Important to get absolute path of each file as we'll be changing
         # directory when hook is run.
         local file="$(path.abs_path "$file")"
+        local file_name="$(basename "$file")"
+
+        # Ignore if file is ellipsis related
+        if ellipsis.is_related "$file"; then
+            # Can be ignored without message
+            continue
+        fi
+
+        # Ignore useless files
+        if [ -z "$explicit_add" ] && ellipsis.is_useless "$file"; then
+            log.info "Ignored $file_name (marked useless)"
+            continue
+        fi
+
+        # Warn about sensitive files
+        if ellipsis.is_sensitive "$file"; then
+            log.warn "Attention, $file_name might contain sensitive information!"
+        fi
+
         pkg.init "$1"
         pkg.run_hook "add" "$file"
         pkg.del
     done
+}
+
+# Check if a file is related to ellipsis
+ellipsis.is_related() {
+    local file="$1"
+
+    # If link, check destination
+    if [ -L "$file" ]; then
+        file="$(readlink "$file")"
+    fi
+
+    case $file in
+        $ELLIPSIS_PATH|$ELLIPSIS_PACKAGES/*)
+            # File is ellipsis related
+            return 0
+            ;;
+        *)
+            # File is ok for this test
+            return 1
+            ;;
+    esac
+}
+
+# Check if a file is useless
+ellipsis.is_useless() {
+    local file="$1"
+
+    case $file in
+        $ELLIPSIS_HOME/.cache|$ELLIPSIS_HOME/.zcompdump|$ELLIPSIS_HOME/.ecryptfs \
+        |$ELLIPSIS_HOME/.Private|$ELLIPSIS_HOME/*.bak)
+            # Matched files are labled "useless"
+            return 0
+            ;;
+        *)
+            # File is ok for this test
+            return 1
+        ;;
+    esac
+}
+
+#Check if file is in the list of possibly sensitive files
+ellipsis.is_sensitive() {
+    local file="$1"
+
+    case $file in
+        $ELLIPSIS_HOME/.ssh|$ELLIPSIS_HOME/.gitconfig|$ELLIPSIS_HOME/.gemrc \
+        |$ELLIPSIS_HOME/.npmrc|$ELLIPSIS_HOME/.pypirc|$ELLIPSIS_HOME/.pgpass \
+        |$ELLIPSIS_HOME/.floorc|$ELLIPSIS_HOME/.gist|$ELLIPSIS_HOME/.netrc \
+        |$ELLIPSIS_HOME/.git-credential-cache|*history*)
+            # Matched files are labled "sensitive"
+            return 0
+        ;;
+        *)
+            # File is ok for this test
+            return 1
+        ;;
+    esac
 }
