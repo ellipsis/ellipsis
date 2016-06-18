@@ -21,9 +21,13 @@ teardown() {
     [ "$output" = "tmp" ]
 }
 
-@test "path.expand expands '~/' to '\$HOME'" {
+@test "path.expand expands '~/', '\$HOME' and '\$ELLIPSIS_HOME' to \$HOME or \$ELLIPSIS_HOME" {
     run path.expand '~/.ellipsis'
     [ "$output" = "$HOME/.ellipsis" ]
+    run path.expand '$HOME/.ellipsis'
+    [ "$output" = "$HOME/.ellipsis" ]
+    run path.expand '$ELLIPSIS_HOME/.ellipsis'
+    [ "$output" = "$ELLIPSIS_HOME/.ellipsis" ]
     run path.expand "tmp"
     [ "$output" = "tmp" ]
 }
