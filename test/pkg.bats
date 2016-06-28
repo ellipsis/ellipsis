@@ -20,11 +20,11 @@ teardown() {
     skip "No test implementation"
 }
 
-@test "pkg.init_globals should setup PKG_PATH and PKG_NAME properly" {
+@test "pkg.set_globals should setup PKG_PATH and PKG_NAME properly" {
     skip "No test implementation"
 }
 
-@test "pkg.init should initialize globals for package and source hooks" {
+@test "pkg.env_up should setup the package env (vars/hooks)" {
     skip "No test implementation"
 }
 
@@ -44,7 +44,7 @@ teardown() {
     skip "No test implementation"
 }
 
-@test "pkg.del should unset globals/hooks setup by package initialization" {
+@test "pkg.env_down should unset the package env (vars/hooks)" {
     skip "No test implementation"
 }
 
