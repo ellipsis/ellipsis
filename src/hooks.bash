@@ -13,6 +13,7 @@ load log
 
 # List of hooks available to package authors.
 PKG_HOOKS=(
+    init
     add
     install
     installed
@@ -24,6 +25,11 @@ PKG_HOOKS=(
     uninstall
     unlink
 )
+
+# Dummy, by default no inits
+hooks.init() {
+    :
+}
 
 # Symlink files in PKG_PATH into ELLIPSIS_HOME.
 hooks.add() {
