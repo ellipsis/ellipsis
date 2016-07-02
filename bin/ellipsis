@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-ELLIPSIS_BIN="${BASH_SOURCE[0]}"
+ELLIPSIS_BIN="${BASH_SOURCE[0]:-$0}"
 
 # Remove symlinks if present
 loopcount=0
@@ -16,13 +16,25 @@ do
     fi
 done
 
+# Set full path for bin folder
+ELLIPSIS_BIN="$(cd "$(dirname "$ELLIPSIS_BIN")" && pwd)"
+
 # Set path variables used by loader
-ELLIPSIS_PATH="${ELLIPSIS_PATH:-$(cd "$(dirname "$ELLIPSIS_BIN")/.." && pwd)}"
+ELLIPSIS_PATH="${ELLIPSIS_PATH:-$(cd "$ELLIPSIS_BIN/.." && pwd)}"
 ELLIPSIS_SRC="$ELLIPSIS_PATH/src"
 
-# Include the load function
+# Include the load function and other vars
 source "$ELLIPSIS_SRC/init.bash"
 
-load cli
+# Check if ellipsis is sourced or run, behave accordingly
+$(return >/dev/null 2>&1)
+if [ "$?" -eq "0" ]; then
+    # ELLIPSIS_LVL needs to be unset to keep the counting correct
+    unset ELLIPSIS_LVL
 
-cli.run "$@"
+    load env
+    env.init "$@"
+else
+    load cli
+    cli.run "$@"
+fi
