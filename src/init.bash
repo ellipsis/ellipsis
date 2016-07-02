@@ -10,7 +10,7 @@ else
     let ELLIPSIS_LVL=ELLIPSIS_LVL+1
 fi
 
-if [[ -z "$ELLIPSIS_USER" ]]; then
+if [ -z "$ELLIPSIS_USER" ]; then
     # Pipe to cat to squash git config's exit code 1 in case of missing key.
     GITHUB_USER="$(git config github.user | cat)"
     ELLIPSIS_USER="${GITHUB_USER:-${USERNAME:-$(whoami)}}"
@@ -31,12 +31,14 @@ PKG_NAME="${PKG_NAME:-${PKG_PATH##*/.}}"
 # Utility to load other modules. Uses a tiny bit of black magic to ensure each
 # module is only loaded once.
 load() {
-    # Use indirect expansion to reference dynamic variable which flags this
-    # module as loaded.
+    # Set dynamic loaded variable name
     local loaded="__loaded_$1"
 
+    # Get status of loaded variable
+    eval "local status=\"\$$loaded\""
+
     # Only source modules once
-    if [[ -z "${!loaded}" ]]; then
+    if [ -z "$status" ]; then
         # Mark this module as loaded, prevent infinite recursion, ya know...
         eval "$loaded=1"
 
