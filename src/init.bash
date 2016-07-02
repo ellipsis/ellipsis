@@ -13,7 +13,7 @@ fi
 if [[ -z "$ELLIPSIS_USER" ]]; then
     # Pipe to cat to squash git config's exit code 1 in case of missing key.
     GITHUB_USER="$(git config github.user | cat)"
-    ELLIPSIS_USER="${GITHUB_USER:-zeekay}"
+    ELLIPSIS_USER="${GITHUB_USER:-${USERNAME:-$(whoami)}}"
 fi
 
 # Repostitory defaults.
@@ -51,6 +51,3 @@ load() {
 
 # Load version info.
 load version
-
-# Set flag that we've been sourced already.
-ELLIPSIS_INIT=1
