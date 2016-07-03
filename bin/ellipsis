@@ -23,18 +23,20 @@ ELLIPSIS_BIN="$(cd "$(dirname "$ELLIPSIS_BIN")" && pwd)"
 ELLIPSIS_PATH="${ELLIPSIS_PATH:-$(cd "$ELLIPSIS_BIN/.." && pwd)}"
 ELLIPSIS_SRC="$ELLIPSIS_PATH/src"
 
-# Include the load function and other vars
-source "$ELLIPSIS_SRC/init.bash"
-
 # Check if ellipsis is sourced or run, behave accordingly
 $(return >/dev/null 2>&1)
 if [ "$?" -eq "0" ]; then
-    # ELLIPSIS_LVL needs to be unset to keep the counting correct
-    unset ELLIPSIS_LVL
+    # When sourced, load function is not used (prevent non POSIX code)
+    source "$ELLIPSIS_SRC/version.bash"
+    source "$ELLIPSIS_SRC/vars.bash"
+    source "$ELLIPSIS_SRC/env.sh"
 
-    load env
     env.init "$@"
 else
+    # Include the load function and other vars
+    source "$ELLIPSIS_SRC/init.bash"
+
     load cli
+
     cli.run "$@"
 fi
