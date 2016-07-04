@@ -2,9 +2,16 @@
 #
 # Functions to manage the env
 
+# Don't use ELLIPSIS_LVL
+unset ELLIPSIS_LVL
+
+env.api() {
+    bash ellipsis api "$@"
+}
+
 # PATH helper, if exists, prepend, no duplication
 env.prepend_path() {
-    local duplicates="$(grep -c "(^|:)$1(:|$)" <<< "$PATH")"
+    duplicates="$(grep -Ec "(^|:)$1(:|$)" <<< "$PATH")"
     if [ -d "$1" ] && [ "$duplicates" -eq 0 ]; then
         export PATH="$1:$PATH"
     fi
@@ -12,7 +19,7 @@ env.prepend_path() {
 
 # PATH helper, if exists, append, no duplication
 env.append_path() {
-    local duplicates="$(grep -c "(^|:)$1(:|$)" <<< "$PATH")"
+    duplicates="$(grep -Ec "(^|:)$1(:|$)" <<< "$PATH")"
     if [ -d "$1" ] && [ "$duplicates" -eq 0 ]; then
         export PATH="$PATH:$1"
     fi
@@ -28,32 +35,60 @@ env.init_ellipsis() {
 
     # Mainly for other scripts, as Ellipsis will be called from the wrapper
     # function
-    # @TODO: reenable when fixed
-    #env.append_path "$ELLIPSIS_BIN"
+    env.append_path "$ELLIPSIS_BIN"
 }
 
 env.init() {
-    local packages="$@"
+    packages="$@"
 
     # Init all packages if no package is given
     if [ "$#" -eq 0 ]; then
-        packages="ellipsis $(echo "$ELLIPSIS_PACKAGES/*")"
+        packages="ellipsis $(env.api ellipsis.list_packages)"
     fi
 
     for pkg in $packages; do
+        # @TODO: ? add some output if run interactively?
+
         if [ "$pkg" = "Ellipsis" -o "$pkg" = "ellipsis" ]; then
             env.init_ellipsis
         else
-            #pkg.env_up "$pkg"
-            #pkg.run_hook "init"
-            #pkg.env_down
-            echo "$pkg could not be initialized"
+            if env.api path.is_path "$pkg"; then
+                PKG_PATH="$pkg"
+                PKG_NAME="$(env.api pkg.name_from_path "$PKG_PATH")"
+            else
+                PKG_NAME="$pkg"
+                PKG_PATH="$(env.api pkg.path_from_name "$PKG_NAME")"
+            fi
+
+            # Check if package exists
+            if [ -d "$PKG_PATH" -a -f "$PKG_PATH/ellipsis.sh" ]; then
+
+                # Extract init function
+                pkg_init="$(bash -c "source $PKG_PATH/ellipsis.sh; declare -f pkg.init")"
+                eval "$pkg_init"
+
+                if hash "pkg.init" &> /dev/null; then
+                    cwd="$(pwd)"
+                    cd "$PKG_PATH"
+
+                    pkg.init
+
+                    cd "$cwd"
+                    unset -f pkg.init
+                fi
+
+                unset pkg_init
+            fi
+
+            unset PKG_PATH
+            unset PKG_NAME
         fi
     done
 
     # Clean up env
-    unset env.init_ellipsis
-    unset env.init
+    unset -f env.api
+    unset -f env.init_ellipsis
+    unset -f env.init
 }
 
 # Special wrapper function to catch init (env) commands. This wrapper makes it

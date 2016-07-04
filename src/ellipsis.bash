@@ -5,6 +5,7 @@
 load fs
 load git
 load pkg
+load path
 load utils
 load log
 load msg
@@ -29,6 +30,11 @@ ellipsis.each() {
         "$@"
         pkg.env_down
     done
+}
+
+# Use the ellipsis API from outside ellipsis
+ellipsis.api() {
+    "$@"
 }
 
 # Installs new ellipsis package, using install hook if one exists. If no hook is
