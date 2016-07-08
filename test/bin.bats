@@ -18,13 +18,27 @@ teardown() {
     rm -rf "$TESTS_DIR/tmp"
 }
 
+@test "ellipsis should be POSIX compliant when sourced" {
+    # Check with bash compatibility mode
+    run bash --posix -c "source $ELLIPSIS_PATH/bin/ellipsis"
+    [ "$status" -eq 0 ]
+
+    # Also check for double square brackets
+    run grep -E '\[\[|\]\]' "$ELLIPSIS_PATH/bin/ellipsis"
+    [ "$status" -ne 0 ]
+}
+
+@test "ellipsis should call env_init when sourced" {
+    skip "No test implementation"
+}
+
 @test "ellipsis <command> calls cli.run <command>" {
-  run ellipsis version
-  [ "$status" -eq 0 ]
-  [ $(expr "$output" : "v[0-9][0-9.]*") -ne 0 ]
+    run ellipsis version
+    [ "$status" -eq 0 ]
+    [ $(expr "$output" : "v[0-9][0-9.]*") -ne 0 ]
 }
 
 @test "ellipsis can find its location trough multiple symlinks" {
-  run "$TESTS_DIR/tmp/ellipsis" version
-  [ "$status" -eq 0 ]
+    run "$TESTS_DIR/tmp/ellipsis" version
+    [ "$status" -eq 0 ]
 }

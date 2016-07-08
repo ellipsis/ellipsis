@@ -5,12 +5,13 @@
 # Don't use ELLIPSIS_LVL
 unset ELLIPSIS_LVL
 
-env.api() {
+# Call functions from the ellipsis API
+env_api() {
     bash ellipsis api "$@"
 }
 
 # PATH helper, if exists, prepend, no duplication
-env.prepend_path() {
+env_prepend_path() {
     duplicates="$(grep -Ec "(^|:)$1(:|$)" <<< "$PATH")"
     if [ -d "$1" ] && [ "$duplicates" -eq 0 ]; then
         export PATH="$1:$PATH"
@@ -18,16 +19,15 @@ env.prepend_path() {
 }
 
 # PATH helper, if exists, append, no duplication
-env.append_path() {
+env_append_path() {
     duplicates="$(grep -Ec "(^|:)$1(:|$)" <<< "$PATH")"
     if [ -d "$1" ] && [ "$duplicates" -eq 0 ]; then
         export PATH="$PATH:$1"
     fi
 }
 
-env.init_ellipsis() {
-    export ELLIPSIS_BIN
-    export ELLIPSIS_SRC
+env_init_ellipsis() {
+    # Changable globals
     export ELLIPSIS_HOME
     export ELLIPSIS_PATH
     export ELLIPSIS_USER
@@ -35,29 +35,29 @@ env.init_ellipsis() {
 
     # Mainly for other scripts, as Ellipsis will be called from the wrapper
     # function
-    env.append_path "$ELLIPSIS_BIN"
+    env_append_path "$ELLIPSIS_BIN"
 }
 
-env.init() {
+env_init() {
     packages="$@"
 
     # Init all packages if no package is given
     if [ "$#" -eq 0 ]; then
-        packages="ellipsis $(env.api ellipsis.list_packages)"
+        packages="ellipsis $(env_api ellipsis.list_packages)"
     fi
 
     for pkg in $packages; do
         # @TODO: ? add some output if run interactively?
 
         if [ "$pkg" = "Ellipsis" -o "$pkg" = "ellipsis" ]; then
-            env.init_ellipsis
+            env_init_ellipsis
         else
-            if env.api path.is_path "$pkg"; then
+            if env_api path.is_path "$pkg"; then
                 PKG_PATH="$pkg"
-                PKG_NAME="$(env.api pkg.name_from_path "$PKG_PATH")"
+                PKG_NAME="$(env_api pkg.name_from_path "$PKG_PATH")"
             else
                 PKG_NAME="$pkg"
-                PKG_PATH="$(env.api pkg.path_from_name "$PKG_NAME")"
+                PKG_PATH="$(env_api pkg.path_from_name "$PKG_NAME")"
             fi
 
             # Check if package exists
@@ -65,16 +65,17 @@ env.init() {
 
                 # Extract init function
                 pkg_init="$(bash -c "source $PKG_PATH/ellipsis.sh; declare -f pkg.init")"
+                pkg_init="$(echo "$pkg_init" | sed 's/pkg.init/pkg_init/')"
                 eval "$pkg_init"
 
-                if hash "pkg.init" &> /dev/null; then
+                if hash "pkg_init" &> /dev/null; then
                     cwd="$(pwd)"
                     cd "$PKG_PATH"
 
-                    pkg.init
+                    pkg_init
 
                     cd "$cwd"
-                    unset -f pkg.init
+                    unset -f pkg_init
                 fi
 
                 unset pkg_init
@@ -86,9 +87,17 @@ env.init() {
     done
 
     # Clean up env
-    unset -f env.api
-    unset -f env.init_ellipsis
-    unset -f env.init
+    env_clean_up
+}
+
+# Keep the environment as clean as possible
+env_clean_up() {
+    unset -f env_api
+    unset -f env_prepend_path
+    unset -f env_append_path
+    unset -f env_init_ellipsis
+    unset -f env_init
+    unset -f env_clean_up
 }
 
 # Special wrapper function to catch init (env) commands. This wrapper makes it
@@ -100,11 +109,11 @@ ellipsis() {
             shift
 
             # Source ellipsis with current shell
-            source "$ELLIPSIS_BIN/ellipsis"
+            source "$ELLIPSIS_PATH/bin/ellipsis"
             ;;
         *)
             # Run ellipsis with bash
-            "$ELLIPSIS_BIN/ellipsis" "$@"
+            "$ELLIPSIS_PATH/bin/ellipsis" "$@"
             ;;
     esac
 }
