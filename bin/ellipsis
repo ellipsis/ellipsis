@@ -31,7 +31,7 @@ if [ "$?" -eq "0" ]; then
     source "$ELLIPSIS_SRC/vars.bash"
     source "$ELLIPSIS_SRC/env.sh"
 
-    env.init "$@"
+    env_init "$@"
 else
     # Include the load function and other vars
     source "$ELLIPSIS_SRC/init.bash"
