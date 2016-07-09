@@ -10,10 +10,10 @@ else
     let ELLIPSIS_LVL=ELLIPSIS_LVL+1
 fi
 
-if [[ -z "$ELLIPSIS_USER" ]]; then
+if [ -z "$ELLIPSIS_USER" ]; then
     # Pipe to cat to squash git config's exit code 1 in case of missing key.
     GITHUB_USER="$(git config github.user | cat)"
-    ELLIPSIS_USER="${GITHUB_USER:-zeekay}"
+    ELLIPSIS_USER="${GITHUB_USER:-${USERNAME:-$(whoami)}}"
 fi
 
 # Repostitory defaults.
@@ -49,5 +49,5 @@ load() {
     fi
 }
 
-# Load version info and global variables.
+# Load version info.
 load version

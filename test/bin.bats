@@ -18,10 +18,6 @@ teardown() {
     rm -rf "$TESTS_DIR/tmp"
 }
 
-@test "ellipsis should call env_init when sourced" {
-    skip "No test implementation"
-}
-
 @test "ellipsis <command> calls cli.run <command>" {
     run ellipsis version
     [ "$status" -eq 0 ]

@@ -17,6 +17,10 @@ path_wrapper() {
     echo "$PATH" > "$ELLIPSIS_TMP/path"
 }
 
+@test "init.sh should run the ellipsis init system" {
+    skip "No test implementation"
+}
+
 @test "env.sh should be POSIX compliant" {
     run sh -c ". $ELLIPSIS_SRC/env.sh"
     [ "$status" -eq 0 ]
