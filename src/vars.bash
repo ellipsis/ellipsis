@@ -1,4 +1,0 @@
-# vars.bash
-#
-# Global variables
-

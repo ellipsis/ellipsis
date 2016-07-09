@@ -3,12 +3,9 @@
 #
 # Functions to manage the env
 
-# Don't use ELLIPSIS_LVL
-unset ELLIPSIS_LVL
-
 # Call functions from the ellipsis API
 env_api() {
-    bash ellipsis api "$@"
+    bash "$ELLIPSIS_BIN/ellipsis" api "$@"
 }
 
 # PATH helper, if exists, prepend, no duplication
@@ -43,7 +40,7 @@ env_init() {
     packages="$@"
 
     # Init all packages if no package is given
-    if [ "$#" -eq 0 ]; then
+    if [ -z "$packages" ]; then
         packages="ellipsis $(env_api ellipsis.list_packages)"
     fi
 
@@ -69,7 +66,7 @@ env_init() {
                 pkg_init="$(echo "$pkg_init" | sed 's/pkg.init/pkg_init/')"
                 eval "$pkg_init"
 
-                if hash "pkg_init" &> /dev/null; then
+                if hash "pkg_init" 2>&1 >/dev/null; then
                     cwd="$(pwd)"
                     cd "$PKG_PATH"
 
@@ -110,10 +107,11 @@ ellipsis() {
             shift
 
             # Source ellipsis with current shell
-            source "$ELLIPSIS_PATH/bin/ellipsis"
+            . "$ELLIPSIS_PATH/init.sh"
             ;;
         *)
             # Run ellipsis with bash
+            # !! Use ELLIPSIS_PATH and not ELLIPSIS_BIN !
             "$ELLIPSIS_PATH/bin/ellipsis" "$@"
             ;;
     esac
