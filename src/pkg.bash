@@ -47,7 +47,7 @@ pkg.name_from_shorthand() {
 
 # Set PKG_NAME, PKG_PATH. If $1 looks like a path it's assumed to be
 # PKG_PATH and not PKG_NAME, otherwise assume PKG_NAME.
-pkg.init_globals() {
+pkg.set_globals() {
     if path.is_path "$1"; then
         PKG_PATH="$1"
         PKG_NAME="$(pkg.name_from_path "$PKG_PATH")"
@@ -57,9 +57,9 @@ pkg.init_globals() {
     fi
 }
 
-# Initialize a package and it's hooks.
-pkg.init() {
-    pkg.init_globals "${1:-"$PKG_PATH"}"
+# Setup the package env (vars/hooks)
+pkg.env_up() {
+    pkg.set_globals "${1:-"$PKG_PATH"}"
 
     # Exit if we're asked to operate on an unknown package.
     if [ ! -d "$PKG_PATH" ]; then
@@ -67,7 +67,7 @@ pkg.init() {
         exit 1
     fi
 
-    # Source ellipsis.sh if it exists to initialize package's hooks.
+    # Source ellipsis.sh if it exists to setup a package's hooks.
     if [ -f "$PKG_PATH/ellipsis.sh" ]; then
         source "$PKG_PATH/ellipsis.sh"
     fi
@@ -125,7 +125,7 @@ pkg.run_hook() {
 }
 
 # Clear globals, hooks.
-pkg.del() {
+pkg.env_down() {
     pkg._unset_vars
     pkg._unset_hooks
 }
