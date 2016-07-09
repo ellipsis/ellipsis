@@ -15,14 +15,14 @@ git.clone() {
 
 # Pull git repo.
 git.pull() {
-    pkg.init_globals "${1:-$PKG_NAME}"
+    pkg.set_globals "${1:-$PKG_NAME}"
     msg.bold "updating $PKG_NAME"
     git pull
 }
 
 # Push git repo.
 git.push() {
-    pkg.init_globals ${1:-$PKG_NAME}
+    pkg.set_globals ${1:-$PKG_NAME}
     msg.bold "pushing $PKG_NAME"
     git push
 }
