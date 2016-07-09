@@ -1,4 +1,5 @@
-# env.sh [POSIX]
+# env.sh
+# [POSIX]
 #
 # Functions to manage the env
 
@@ -12,7 +13,7 @@ env_api() {
 
 # PATH helper, if exists, prepend, no duplication
 env_prepend_path() {
-    duplicates="$(grep -Ec "(^|:)$1(:|$)" <<< "$PATH")"
+    duplicates="$(echo "$PATH" | grep -Ec "(^|:)$1(:|$)")"
     if [ -d "$1" ] && [ "$duplicates" -eq 0 ]; then
         export PATH="$1:$PATH"
     fi
@@ -20,7 +21,7 @@ env_prepend_path() {
 
 # PATH helper, if exists, append, no duplication
 env_append_path() {
-    duplicates="$(grep -Ec "(^|:)$1(:|$)" <<< "$PATH")"
+    duplicates="$(echo "$PATH" | grep -Ec "(^|:)$1(:|$)")"
     if [ -d "$1" ] && [ "$duplicates" -eq 0 ]; then
         export PATH="$PATH:$1"
     fi

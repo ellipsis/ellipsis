@@ -18,13 +18,8 @@ path_wrapper() {
 }
 
 @test "env.sh should be POSIX compliant" {
-    # Check with bash compatibility mode
-    run bash --posix -c "source $ELLIPSIS_SRC/env.sh"
+    run sh -c ". $ELLIPSIS_SRC/env.sh"
     [ "$status" -eq 0 ]
-
-    # Also check for double square brackets
-    run grep -E '\[\[|\]\]' "$ELLIPSIS_SRC/env.sh"
-    [ "$status" -ne 0 ]
 }
 
 @test "env_api should call an ellipsis api function" {
