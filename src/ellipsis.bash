@@ -5,6 +5,7 @@
 load fs
 load git
 load pkg
+load path
 load utils
 load log
 load msg
@@ -19,16 +20,21 @@ ellipsis.list_packages() {
 # Run commands across all packages.
 ellipsis.each() {
     # execute command for ellipsis first
-    pkg.init "$ELLIPSIS_PATH"
+    pkg.env_up "$ELLIPSIS_PATH"
     "$@"
-    pkg.del
+    pkg.env_down
 
     # loop over packages, excecuting command
     for pkg in $(ellipsis.list_packages); do
-        pkg.init "$pkg"
+        pkg.env_up "$pkg"
         "$@"
-        pkg.del
+        pkg.env_down
     done
+}
+
+# Use the ellipsis API from outside ellipsis
+ellipsis.api() {
+    "$@"
 }
 
 # Installs new ellipsis package, using install hook if one exists. If no hook is
@@ -91,10 +97,10 @@ ellipsis.install() {
             git.clone "$PKG_URL" "$PKG_PATH" --branch "$PKG_BRANCH"
         fi
 
-        pkg.init "$PKG_PATH"
+        pkg.env_up "$PKG_PATH"
         pkg.run_hook "install"
         pkg.run_hook "link"
-        pkg.del
+        pkg.env_down
     done
 }
 
@@ -106,11 +112,11 @@ ellipsis.uninstall() {
         exit 1
     fi
 
-    pkg.init "$1"
+    pkg.env_up "$1"
     pkg.run_hook "unlink"
     pkg.run_hook "uninstall"
     rm -rf "$PKG_PATH"
-    pkg.del
+    pkg.env_down
 }
 
 # Re-link unlinked packages.
@@ -120,9 +126,9 @@ ellipsis.link() {
         exit 1
     fi
 
-    pkg.init "$1"
+    pkg.env_up "$1"
     pkg.run_hook "link"
-    pkg.del
+    pkg.env_down
 }
 
 # Unlink package, using unlink hooks, using unlink hook if one exists. If no
@@ -133,9 +139,9 @@ ellipsis.unlink() {
         exit 1
     fi
 
-    pkg.init "$1"
+    pkg.env_up "$1"
     pkg.run_hook "unlink"
-    pkg.del
+    pkg.env_down
 }
 
 # List installed packages.
@@ -150,9 +156,9 @@ ellipsis.installed() {
 # List(s) package git status.
 ellipsis.status() {
     if [ $# -eq 1 ]; then
-        pkg.init "$1"
+        pkg.env_up "$1"
         pkg.run_hook "status"
-        pkg.del
+        pkg.env_down
     else
         ellipsis.each pkg.run_hook "status"
     fi
@@ -162,13 +168,13 @@ ellipsis.status() {
 ellipsis.pull() {
     if [ $# -eq 1 ]; then
         if [[ "$1" =~ ^[Ee]llipsis$ ]]; then
-            pkg.init "$ELLIPSIS_PATH"
+            pkg.env_up "$ELLIPSIS_PATH"
         else
-            pkg.init "$1"
+            pkg.env_up "$1"
         fi
 
         pkg.run_hook "pull"
-        pkg.del
+        pkg.env_down
     else
         ellipsis.each pkg.run_hook "pull"
     fi
@@ -177,9 +183,9 @@ ellipsis.pull() {
 # Push updated package(s) with git push.
 ellipsis.push() {
     if [ $# -eq 1 ]; then
-        pkg.init "$1"
+        pkg.env_up "$1"
         pkg.run_hook "push"
-        pkg.del
+        pkg.env_down
     else
         ellipsis.each pkg.run_hook "push"
     fi
@@ -189,9 +195,9 @@ ellipsis.push() {
 ellipsis.new() {
     # If no-argument is passed, use cwd as package path.
     if [ $# -eq 1 ]; then
-        pkg.init_globals "$1"
+        pkg.set_globals "$1"
     else
-        pkg.init_globals "$(pwd)"
+        pkg.set_globals "$(pwd)"
     fi
 
     # Create package dir if necessary.
@@ -261,7 +267,7 @@ EOF
 ellipsis.edit() {
     if [ $# -eq 1 ]; then
         # Edit package's ellipsis.sh file.
-        pkg.init "$1"
+        pkg.env_up "$1"
         "$EDITOR" "$PKG_PATH/ellipsis.sh"
     else
         # Open ellipsis dir in editor.
@@ -283,9 +289,9 @@ ellipsis._list_symlink_mappings() {
 # List all symlinks, or just symlinks for a given package
 ellipsis.links() {
     if [ $# -eq 1 ]; then
-        pkg.init "$1"
+        pkg.env_up "$1"
         pkg.run_hook "links"
-        pkg.del
+        pkg.env_down
     else
         if utils.cmd_exists column; then
             ellipsis._list_symlink_mappings | sort | column -t
@@ -357,9 +363,9 @@ ellipsis.add() {
             log.warn "Attention, $file_name might contain sensitive information!"
         fi
 
-        pkg.init "$1"
+        pkg.env_up "$1"
         pkg.run_hook "add" "$file"
-        pkg.del
+        pkg.env_down
     done
 }
 
