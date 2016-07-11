@@ -6,7 +6,7 @@
 # Call functions from the ellipsis API
 # Note: this is relatively slow, and should be avoided if possible
 env_api() {
-    bash "$ELLIPSIS_BIN/ellipsis" api "$@"
+    ELLIPSIS_INIT=1 bash "$ELLIPSIS_BIN/ellipsis" api "$@"
 }
 
 # PATH helper, if exists, prepend, no duplication
@@ -63,7 +63,9 @@ env_init_pkg() {
                 cwd="$(pwd)"
                 cd "$PKG_PATH"
 
-                pkg_init
+                if ! pkg_init; then
+                    env_api log.error "Ellipsis could not initialize $PKG_NAME"
+                fi
 
                 cd "$cwd"
                 unset -f pkg_init
@@ -92,8 +94,6 @@ env_init() {
     fi
 
     for pkg in $packages; do
-        # @TODO: ? add some output if run interactively?
-
         if [ "$pkg" = "Ellipsis" ] || [ "$pkg" = "ellipsis" ]; then
             env_init_ellipsis
         else
