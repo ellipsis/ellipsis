@@ -48,26 +48,29 @@ env_init_pkg() {
         PKG_PATH="$ELLIPSIS_PACKAGES/$PKG_NAME"
     fi
 
-    # Check if package exists and has an init hook
+    # Check if the package exists/has an ellipsis.sh file
     if [ -f "$PKG_PATH/ellipsis.sh" ]; then
+        # Check if the package has an init hook
         grep 'pkg.init' "$PKG_PATH/ellipsis.sh" 2>&1 >/dev/null
-        if [ "$?" -eq 0 ]; then
-
-            # Extract init function
+        if [ $? -eq 0 ]; then
+            # Use some magic to extract the init function
             pkg_init="$(bash -c "source $PKG_PATH/ellipsis.sh; declare -f pkg.init")"
             pkg_init="$(echo "$pkg_init" | sed 's/pkg.init/pkg_init/')"
             eval "$pkg_init"
 
+            # Handle some edge cases by checking if the function is available
             command -v 'pkg_init' 2>&1 >/dev/null
-            if [ "$?" -eq 0 ]; then
+            if [ $? -eq 0 ]; then
                 cwd="$(pwd)"
                 cd "$PKG_PATH"
 
+                # Init or log an error
                 if ! pkg_init; then
                     env_api log.error "Ellipsis could not initialize $PKG_NAME"
                 fi
 
                 cd "$cwd"
+                unset cwd
                 unset -f pkg_init
             fi
 
@@ -76,29 +79,35 @@ env_init_pkg() {
     fi
 
     unset pkg
-    unset PKG_PATH
     unset PKG_NAME
+    unset PKG_PATH
 }
 
+# Init Ellipsis and packages
+# !! Attention: Does not allow paths with spaces !!
 env_init() {
-    packages="$@"
-
     # Init all packages if no package is given
-    if [ -z "$packages" ]; then
+    if [ $# -eq 0 ]; then
         packages="$(echo "$ELLIPSIS_PACKAGES"/*)"
         if [  "$packages" = "$ELLIPSIS_PACKAGES/*" ]; then
             packages='ellipsis'
         else
             packages="ellipsis $packages"
         fi
+
+        # Reuse the only array we have ($@)
+        eval "set -- $packages"
     fi
 
-    for pkg in $packages; do
-        if [ "$pkg" = "Ellipsis" ] || [ "$pkg" = "ellipsis" ]; then
-            env_init_ellipsis
-        else
-            env_init_pkg "$pkg"
-        fi
+    for pkg in $@; do
+        case $pkg in
+            ellipsis|Ellipsis)
+                env_init_ellipsis
+                ;;
+            *)
+                env_init_pkg "$pkg"
+                ;;
+        esac
     done
 
     # Clean up env
