@@ -15,18 +15,19 @@ pkg.install() {
 
 The hooks available in your `ellipsis.sh` are:
 
-Hook            | Description
-----------------|------------
-`pkg.add`       | Customizes how files are added to your package.
-`pkg.install`   | Custom installation steps before linking the package.
-`pkg.installed` | Customize how a package is listed as installed.
-`pkg.link`      | Customizes which files are linked into `$ELLIPSIS_HOME`.
-`pkg.links`     | Customizes which files are detected as symlinks.
-`pkg.pull`      | Customize how changes are pulled in when `ellipsis pull` is used.
-`pkg.push`      | Customize how changes are pushed when `ellipsis push` is used.
-`pkg.status`    | Customize the output of `ellipsis status`.
-`pkg.uninstall` | Custom uninstall steps to undo the install steps.
-`pkg.unlink`    | Customize which files are unlinked by your package.
+| Hook             | Description                                                       |
+|------------------|-------------------------------------------------------------------|
+| `pkg.init`       | Run custom init code when a shell is spawned.                     |
+| `pkg.add`        | Customizes how files are added to your package.                   |
+| `pkg.install`    | Custom installation steps before linking the package.             |
+| `pkg.installed`  | Customize how a package is listed as installed.                   |
+| `pkg.link`       | Customizes which files are linked into `$ELLIPSIS_HOME`.          |
+| `pkg.links`      | Customizes which files are detected as symlinks.                  |
+| `pkg.pull`       | Customize how changes are pulled in when `ellipsis pull` is used. |
+| `pkg.push`       | Customize how changes are pushed when `ellipsis push` is used.    |
+| `pkg.status`     | Customize the output of `ellipsis status`.                        |
+| `pkg.uninstall`  | Custom uninstall steps to undo the install steps.                 |
+| `pkg.unlink`     | Customize which files are unlinked by your package.               |
 
 Lets look at this in more detail!
 
@@ -77,6 +78,21 @@ The `pkg.unlink` hook lets you customize which files are unlinked.
 The `pkg.uninstall` hook lets you run custom uninstall steps.
 If your `pkg.install` hook does anything outside of the `PKG_PATH` this is the
 place to restore the original state.
+
+### Initializing
+
+If the init system is used, all `pkg.init` hooks will be called when a new
+shell is spawned. How to enable the init system is explained in the [init
+chapter][init].
+
+##### pkg.init
+This hook is called when a new shell is spawned. It can be used to add
+functions, aliases, exports,... to the environment. The ellipsis api won't be
+directly available from this hook. You can use the `ellipsis api` command to
+access it, but for performance reasons it's not recommended.
+
+**Attention:** As this code will be sourced be the users shell (which could be
+any shell), this hook should be written with POSIX compliancy in mind!
 
 #### Examples
 Here's a more complete example (from
@@ -161,3 +177,4 @@ pkg.push() {
 [zeesh]:        https://github.com/zeekay/zeesh
 [dot-files]:    https://github.com/zeekay/dot-files
 [dot-vim]:      https://github.com/zeekay/dot-vim
+[init]:         init.md
