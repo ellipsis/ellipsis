@@ -4,8 +4,9 @@
 # Functions to manage the env
 
 # Call functions from the ellipsis API
+# Note: this is relatively slow, and should be avoided if possible
 env_api() {
-    bash "$ELLIPSIS_BIN/ellipsis" api "$@"
+    ELLIPSIS_INIT=1 bash "$ELLIPSIS_BIN/ellipsis" api "$@"
 }
 
 # PATH helper, if exists, prepend, no duplication
@@ -25,7 +26,7 @@ env_append_path() {
 }
 
 env_init_ellipsis() {
-    # Changable globals
+    # Changeable globals
     export ELLIPSIS_HOME
     export ELLIPSIS_PATH
     export ELLIPSIS_USER
@@ -36,66 +37,93 @@ env_init_ellipsis() {
     env_append_path "$ELLIPSIS_BIN"
 }
 
-env_init() {
-    packages="$@"
+env_init_pkg() {
+    pkg="$1"
 
-    # Init all packages if no package is given
-    if [ -z "$packages" ]; then
-        packages="ellipsis $(env_api ellipsis.list_packages)"
+    if [ -d "$pkg" ]; then
+        PKG_PATH="$pkg"
+        PKG_NAME="${PKG_PATH##*/}"
+    else
+        PKG_NAME="$pkg"
+        PKG_PATH="$ELLIPSIS_PACKAGES/$PKG_NAME"
     fi
 
-    for pkg in $packages; do
-        # @TODO: ? add some output if run interactively?
+    # Check if the package exists/has an ellipsis.sh file
+    if [ -f "$PKG_PATH/ellipsis.sh" ]; then
+        # Check if the package has an init hook
+        grep 'pkg.init' "$PKG_PATH/ellipsis.sh" 2>&1 >/dev/null
+        if [ $? -eq 0 ]; then
+            # Use some magic to extract the init function
+            pkg_init="$(bash -c "source $PKG_PATH/ellipsis.sh; declare -f pkg.init")"
+            pkg_init="$(echo "$pkg_init" | sed 's/pkg.init/pkg_init/')"
+            eval "$pkg_init"
 
-        if [ "$pkg" = "Ellipsis" -o "$pkg" = "ellipsis" ]; then
-            env_init_ellipsis
-        else
-            if env_api path.is_path "$pkg"; then
-                PKG_PATH="$pkg"
-                PKG_NAME="$(env_api pkg.name_from_path "$PKG_PATH")"
-            else
-                PKG_NAME="$pkg"
-                PKG_PATH="$(env_api pkg.path_from_name "$PKG_NAME")"
-            fi
+            # Handle some edge cases by checking if the function is available
+            command -v 'pkg_init' 2>&1 >/dev/null
+            if [ $? -eq 0 ]; then
+                cwd="$(pwd)"
+                cd "$PKG_PATH"
 
-            # Check if package exists
-            if [ -d "$PKG_PATH" -a -f "$PKG_PATH/ellipsis.sh" ]; then
-
-                # Extract init function
-                pkg_init="$(bash -c "source $PKG_PATH/ellipsis.sh; declare -f pkg.init")"
-                pkg_init="$(echo "$pkg_init" | sed 's/pkg.init/pkg_init/')"
-                eval "$pkg_init"
-
-                if hash "pkg_init" 2>&1 >/dev/null; then
-                    cwd="$(pwd)"
-                    cd "$PKG_PATH"
-
-                    pkg_init
-
-                    cd "$cwd"
-                    unset -f pkg_init
+                # Init or log an error
+                if ! pkg_init; then
+                    env_api log.error "Ellipsis could not initialize $PKG_NAME"
                 fi
 
-                unset pkg_init
+                cd "$cwd"
+                unset cwd
+                unset -f pkg_init
             fi
 
-            unset PKG_PATH
-            unset PKG_NAME
+            unset pkg_init
         fi
+    fi
+
+    unset pkg
+    unset PKG_NAME
+    unset PKG_PATH
+}
+
+# Init Ellipsis and packages
+# !! Attention: Does not allow paths with spaces !!
+env_init() {
+    # Init all packages if no package is given
+    if [ $# -eq 0 ]; then
+        packages="$(echo "$ELLIPSIS_PACKAGES"/*)"
+        if [  "$packages" = "$ELLIPSIS_PACKAGES/*" ]; then
+            packages='ellipsis'
+        else
+            packages="ellipsis $packages"
+        fi
+
+        # Reuse the only array we have ($@)
+        eval "set -- $packages"
+    fi
+
+    for pkg in $@; do
+        case $pkg in
+            ellipsis|Ellipsis)
+                env_init_ellipsis
+                ;;
+            *)
+                env_init_pkg "$pkg"
+                ;;
+        esac
     done
 
     # Clean up env
+    unset packages
     env_clean_up
 }
 
 # Keep the environment as clean as possible
 env_clean_up() {
     unset -f env_api
-    unset -f env_prepend_path
-    unset -f env_append_path
-    unset -f env_init_ellipsis
     unset -f env_init
     unset -f env_clean_up
+    unset -f env_init_pkg
+    unset -f env_append_path
+    unset -f env_prepend_path
+    unset -f env_init_ellipsis
 }
 
 # Special wrapper function to catch init (env) commands. This wrapper makes it
