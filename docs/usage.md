@@ -23,6 +23,7 @@ Usage: ellipsis <command>
     -v, --version  show version
 
   Commands:
+    init       source init code
     new        create a new package
     edit       edit an installed package
     add        add new dotfile to package
@@ -44,19 +45,18 @@ Usage: ellipsis <command>
 ### Configuration
 You can customize ellipsis by exporting a few different variables:
 
-Variable                        | Description
---------------------------------|------------
-`GITHUB_USER` / `ELLIPSIS_USER` | Customizes whose dotfiles are installed when you `ellipsis install` without specifying user or a full repo url. Defaults to `$(git config github.user)` or `zeekay`.
-`ELLIPSIS_REPO`                 | Customize location of ellipsis repo cloned during a curl-based install. Defaults to `https://github.com/ellipsis/ellipsis`.
-`ELLIPSIS_PROTO`                | Customizes which protocol new packages are cloned with, you can specify `https`,`ssh`, `git`. Defaults to `https`.
-`ELLIPSIS_HOME`                 | Customize which folder files are symlinked into, defaults to `$HOME`. (Mostly useful for testing)
-`ELLIPSIS_PATH`                 | Customize where ellipsis lives on your filesystem, defaults to `~/.ellipsis`.
-`ELLIPSIS_PACKAGE`              | Customize where ellipsis installs packages on your filesystem, defaults to `~/.ellipsis/packages`.
-`ELLIPSIS_LOGFILE`              | Customize location of the logfile, defaults to `/tmp/ellipsis.log`.
+| Variable                        | Description                                                                                                                                                          |
+|---------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `GITHUB_USER` / `ELLIPSIS_USER` | Customizes whose dotfiles are installed when you `ellipsis install` without specifying user or a full repo url. Defaults to `$(git config github.user)` or `whoami`. |
+| `ELLIPSIS_REPO`                 | Customize location of ellipsis repo cloned during a curl-based install. Defaults to `https://github.com/ellipsis/ellipsis`.                                          |
+| `ELLIPSIS_PROTO`                | Customizes which protocol new packages are cloned with, you can specify `https`,`ssh`, `git`. Defaults to `https`.                                                   |
+| `ELLIPSIS_HOME`                 | Customize which folder files are symlinked into, defaults to `$HOME`. (Mostly useful for testing)                                                                    |
+| `ELLIPSIS_PATH`                 | Customize where ellipsis lives on your filesystem, defaults to `~/.ellipsis`.                                                                                        |
+| `ELLIPSIS_PACKAGES`             | Customize where ellipsis installs packages on your filesystem, defaults to `~/.ellipsis/packages`.                                                                   |
+| `ELLIPSIS_LOGFILE`              | Customize location of the logfile, defaults to `/tmp/ellipsis.log`.                                                                                                  |
 
 ```bash
 export ELLIPSIS_USER="zeekay"
 export ELLIPSIS_PROTO="ssh"
 export ELLIPSIS_PATH="~/.el"
 ```
-

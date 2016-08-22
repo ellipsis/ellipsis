@@ -39,6 +39,10 @@ $ curl -sL ellipsis.sh | PACKAGES='vim zsh' sh
 Add `~/.ellipsis/bin` to your `$PATH` (or symlink somewhere convenient) and
 start managing your dotfiles in style :)
 
+As of version `1.7.3` you can also use the init system to automatically setup
+you environment. As a bonus it will allow you to use the powerful `pkg.init`
+hook to do the same for your packages.
+
 ### Usage
 Ellipsis comes with no dotfiles out of the box. To install packages, use
 `ellipsis install`. Packages can be specified by github-user/repo or full
@@ -59,15 +63,15 @@ the command line with the `-h` option.
 ### Configuration
 You can customize ellipsis by exporting a few different variables:
 
-Variable                        | Description
---------------------------------|------------
-`GITHUB_USER` / `ELLIPSIS_USER` | Customizes whose dotfiles are installed when you `ellipsis install` without specifying user or a full repo url. Defaults to `$(git config github.user)` or `zeekay`.
-`ELLIPSIS_REPO`                 | Customize location of ellipsis repo cloned during a curl-based install. Defaults to `https://github.com/ellipsis/ellipsis`.
-`ELLIPSIS_PROTO`                | Customizes which protocol new packages are cloned with, you can specify `https`,`ssh`, `git`. Defaults to `https`.
-`ELLIPSIS_HOME`                 | Customize which folder files are symlinked into, defaults to `$HOME`. (Mostly useful for testing)
-`ELLIPSIS_PATH`                 | Customize where ellipsis lives on your filesystem, defaults to `~/.ellipsis`.
-`ELLIPSIS_PACKAGE`              | Customize where ellipsis installs packages on your filesystem, defaults to `~/.ellipsis/packages`.
-`ELLIPSIS_LOGFILE`              | Customize location of the logfile, defaults to `/tmp/ellipsis.log`.
+| Variable                        | Description                                                                                                                                                          |
+|---------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `GITHUB_USER` / `ELLIPSIS_USER` | Customizes whose dotfiles are installed when you `ellipsis install` without specifying user or a full repo url. Defaults to `$(git config github.user)` or `whoami`. |
+| `ELLIPSIS_REPO`                 | Customize location of ellipsis repo cloned during a curl-based install. Defaults to `https://github.com/ellipsis/ellipsis`.                                          |
+| `ELLIPSIS_PROTO`                | Customizes which protocol new packages are cloned with, you can specify `https`,`ssh`, `git`. Defaults to `https`.                                                   |
+| `ELLIPSIS_HOME`                 | Customize which folder files are symlinked into, defaults to `$HOME`. (Mostly useful for testing)                                                                    |
+| `ELLIPSIS_PATH`                 | Customize where ellipsis lives on your filesystem, defaults to `~/.ellipsis`.                                                                                        |
+| `ELLIPSIS_PACKAGES`             | Customize where ellipsis installs packages on your filesystem, defaults to `~/.ellipsis/packages`.                                                                   |
+| `ELLIPSIS_LOGFILE`              | Customize location of the logfile, defaults to `/tmp/ellipsis.log`.                                                                                                  |
 
 ```bash
 export ELLIPSIS_USER="zeekay"
@@ -98,6 +102,7 @@ Please consult the [docs][docs-url] for more information.
 
 Specific parts that could be off interest:
 - [Hooks][docs-hooks]
+- [Init system][docs-init]
 - [API][docs-api]
 - [Package index][docs-pkgindex]
 - [Upgrading to Ellipsis][docs-upgrading]
@@ -125,6 +130,7 @@ Ellipsis is open-source software licensed under the [MIT license][mit-license].
 [docs-usage]:           http://docs.ellipsis.sh/usage
 [docs-packages]:        http://docs.ellipsis.sh/packages
 [docs-hooks]:           http://docs.ellipsis.sh/hooks
+[docs-init]:            http://docs.ellipsis.sh/init
 [docs-api]:             http://docs.ellipsis.sh/api
 [docs-pkgindex]:        http://docs.ellipsis.sh/pkgindex
 [docs-upgrading]:       http://docs.ellipsis.sh/upgrading

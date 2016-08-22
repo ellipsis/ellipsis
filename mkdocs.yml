@@ -11,6 +11,7 @@ pages:
   - Usage: usage.md
   - Packages: packages.md
   - Hooks: hooks.md
+  - Init system: init.md
   - API: api.md
   - Package index: pkgindex.md
   - Upgrading: upgrading.md
