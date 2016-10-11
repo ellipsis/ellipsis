@@ -103,8 +103,13 @@ pkg.run() {
     # run command
     "$@"
 
+    # keep return value
+    local return_code="$?"
+
     # return after running command
     cd "$cwd"
+
+    return "$return_code"
 }
 
 # run hook if it's defined, otherwise use default implementation
