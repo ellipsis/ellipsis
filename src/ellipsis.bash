@@ -98,7 +98,14 @@ ellipsis.install() {
         fi
 
         pkg.env_up "$PKG_PATH"
+
         pkg.run_hook "install"
+        if [ "$?" -ne 0 ]; then
+            rm -rf "$PKG_PATH"
+            log.fail "Could not install package $PKG_NAME"
+            exit 1
+        fi
+
         pkg.run_hook "link"
         pkg.env_down
     done
