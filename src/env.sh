@@ -6,7 +6,8 @@
 # Call functions from the ellipsis API
 # Note: this is relatively slow, and should be avoided if possible
 env_api() {
-    ELLIPSIS_INIT=1 bash "$ELLIPSIS_BIN/ellipsis" api "$@"
+    # Explicitly use bash by calling the bash scipt
+    bash "$ELLIPSIS_BIN/ellipsis" api "$@"
 }
 
 # PATH helper, if exists, prepend, no duplication
@@ -27,6 +28,7 @@ env_append_path() {
 
 env_init_ellipsis() {
     # Changeable globals
+    export ELLIPSIS_INIT
     export ELLIPSIS_HOME
     export ELLIPSIS_PATH
     export ELLIPSIS_USER
