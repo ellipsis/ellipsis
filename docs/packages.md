@@ -15,5 +15,16 @@ You can customize how ellipsis interacts with your package by adding an
 
 Yep, that's it :) If all you want to do is symlink some files into `$HOME`,
 adding an `ellipsis.sh` to your package is completely optional. But what if you
-need more? That's where hooks come in...
+need more? That's where [hooks][hooks] come in!
 
+The `ellipsis.sh` file also lets you specify the minimal Ellipsis version
+needed to use your package. This can be done by defining the
+`ELLIPSIS_VERSION_DEP` variable.
+
+```bash
+#!/usr/bin/env bash
+
+ELLIPSIS_VERSION_DEP="1.8.0"
+```
+
+[hooks]:         hooks.md
