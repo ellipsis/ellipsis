@@ -139,6 +139,7 @@ pkg.env_down() {
 pkg._unset_vars() {
     unset PKG_NAME
     unset PKG_PATH
+    unset ELLIPSIS_VERSION_DEP
 }
 
 # Unset any hooks that might have been defined by package.

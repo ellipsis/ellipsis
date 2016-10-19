@@ -12,7 +12,7 @@ file (bashrc, zshrc,...).
 if [ -f ~/.ellipsis/init.sh ]; then
     . ~/.ellipsis/init.sh
 else
-    export PATH=$PATH:~/.ellipsis/bin
+    export PATH="$PATH:~/.ellipsis/bin"
 fi
 ```
 

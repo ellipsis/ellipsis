@@ -52,6 +52,8 @@ The `pkg.install` hook lets you run custom install steps. The hook is run after
 cloning the repo.
 This is the place to install plugin managers, dependencies,...
 
+If the install hook returns with return code 1, the installation is aborted.
+
 ##### pkg.link
 The `pkg.link` hook lets you customize which files are linked. It is recommended
 to use the `fs.link_file` function, because it provides backup capability's.
@@ -91,7 +93,7 @@ functions, aliases, exports,... to the environment. The ellipsis api won't be
 directly available from this hook. You can use the `ellipsis api` command to
 access it, but for performance reasons it's not recommended.
 
-**Attention:** As this code will be sourced be the users shell (which could be
+**Attention:** As this code will be sourced by the users shell (which could be
 any shell), this hook should be written with POSIX compliancy in mind!
 
 #### Examples
