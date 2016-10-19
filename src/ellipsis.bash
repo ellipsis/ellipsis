@@ -99,10 +99,19 @@ ellipsis.install() {
 
         pkg.env_up "$PKG_PATH"
 
+        # Check for ellipsis version dependency if defined
+        if [ -n "$ELLIPSIS_VERSION_DEP" ] &&
+            utils.version_compare "$ELLIPSIS_VERSION" -lt "$ELLIPSIS_VERSION_DEP"; then
+
+            log.fail "Package $PKG_NAME needs at least Ellipsis version $ELLIPSIS_VERSION_DEP"
+            rm -rf "$PKG_PATH"
+            exit 1
+        fi
+
         pkg.run_hook "install"
         if [ "$?" -ne 0 ]; then
-            rm -rf "$PKG_PATH"
             log.fail "Could not install package $PKG_NAME"
+            rm -rf "$PKG_PATH"
             exit 1
         fi
 
