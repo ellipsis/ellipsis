@@ -213,6 +213,18 @@ teardown() {
     [ "$(readlink "$ELLIPSIS_HOME/.file")" == "$ELLIPSIS_PACKAGES/foo/file" ]
 }
 
+@test "ellipsis.remove should remove files from a package" {
+    # Test specific setup
+    run ellipsis.new foo
+    run ellipsis.add foo "$ELLIPSIS_HOME/.file"
+
+    run ellipsis.remove foo "$ELLIPSIS_HOME/.file"
+    [ $status -eq 0 ]
+    [ -f "$ELLIPSIS_HOME/.file" ]
+    [ ! -L "$ELLIPSIS_HOME/.file" ]
+    [ ! -e "$ELLIPSIS_PACKAGES/foo/file" ]
+}
+
 @test "ellipsis.is_related should detect ellipsis related files" {
     # Test specific setup
     touch "$TESTS_DIR/tmp/test_file"

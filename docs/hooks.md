@@ -15,19 +15,20 @@ pkg.install() {
 
 The hooks available in your `ellipsis.sh` are:
 
-| Hook             | Description                                                       |
-|------------------|-------------------------------------------------------------------|
-| `pkg.init`       | Run custom init code when a shell is spawned.                     |
-| `pkg.add`        | Customizes how files are added to your package.                   |
-| `pkg.install`    | Custom installation steps before linking the package.             |
-| `pkg.installed`  | Customize how a package is listed as installed.                   |
-| `pkg.link`       | Customizes which files are linked into `$ELLIPSIS_HOME`.          |
-| `pkg.links`      | Customizes which files are detected as symlinks.                  |
-| `pkg.pull`       | Customize how changes are pulled in when `ellipsis pull` is used. |
-| `pkg.push`       | Customize how changes are pushed when `ellipsis push` is used.    |
-| `pkg.status`     | Customize the output of `ellipsis status`.                        |
-| `pkg.uninstall`  | Custom uninstall steps to undo the install steps.                 |
-| `pkg.unlink`     | Customize which files are unlinked by your package.               |
+| Hook            | Description                                                       |
+|-----------------|-------------------------------------------------------------------|
+| `pkg.init`      | Run custom init code when a shell is spawned.                     |
+| `pkg.add`       | Customizes how files are added to your package.                   |
+| `pkg.remove`    | Customizes how files are removed from your package.               |
+| `pkg.install`   | Custom installation steps before linking the package.             |
+| `pkg.installed` | Customize how a package is listed as installed.                   |
+| `pkg.link`      | Customizes which files are linked into `$ELLIPSIS_HOME`.          |
+| `pkg.links`     | Customizes which files are detected as symlinks.                  |
+| `pkg.pull`      | Customize how changes are pulled in when `ellipsis pull` is used. |
+| `pkg.push`      | Customize how changes are pushed when `ellipsis push` is used.    |
+| `pkg.status`    | Customize the output of `ellipsis status`.                        |
+| `pkg.uninstall` | Custom uninstall steps to undo the install steps.                 |
+| `pkg.unlink`    | Customize which files are unlinked by your package.               |
 
 Lets look at this in more detail!
 
