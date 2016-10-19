@@ -15,6 +15,7 @@ load log
 PKG_HOOKS=(
     init
     add
+    remove
     install
     installed
     link
@@ -33,10 +34,10 @@ hooks.init() {
 
 # Symlink files in PKG_PATH into ELLIPSIS_HOME.
 hooks.add() {
-    local dst="$PKG_PATH/$(path.strip_dot "$(basename "$1")")"
+    local pkg_file="$PKG_PATH/$(path.strip_dot "$(basename "$1")")"
 
-    if fs.file_exists "$dst"; then
-        log.fail "$dst already exists!"
+    if fs.file_exists "$pkg_file"; then
+        log.fail "$pkg_file already exists!"
         exit 1
     fi
 
@@ -45,10 +46,34 @@ hooks.add() {
         exit 1
     fi
 
-    msg.print "mv $(path.relative_to_home "$1") $(path.relative_to_packages "$dst")"
-    mv "$1" "$dst"
+    msg.print "mv $(path.relative_to_home "$1") $(path.relative_to_packages "$pkg_file")"
+    mv "$1" "$pkg_file"
 
-    fs.link_file "$dst"
+    fs.link_file "$pkg_file"
+}
+
+hooks.remove() {
+    local pkg_file="$PKG_PATH/$(path.strip_dot "$(basename "$1")")"
+
+    # Check if file exists in package
+    if ! fs.file_exists "$pkg_file"; then
+        log.fail "$pkg_file does not exist!"
+        exit 1
+    fi
+
+    # Check if link is correct
+    if [ -e "$1" ]; then
+        if [ ! -L "$1" ] || [ "$(readlink "$1")" != "$pkg_file" ]; then
+            log.fail "$(path.relative_to_home "$1") is not linked to $(path.relative_to_packages "$pkg_file")"
+            exit 1
+        fi
+    else
+        log.warn "File was not linked"
+    fi
+
+    # Restore file from package
+    msg.print "mv $(path.relative_to_packages "$pkg_file") $(path.relative_to_home "$1")"
+    mv "$pkg_file" "$1"
 }
 
 # Symlink files in PKG_PATH into ELLIPSIS_HOME.

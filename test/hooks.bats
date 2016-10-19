@@ -22,6 +22,11 @@ teardown() {
     [ "$status" -eq 0 ]
 }
 
+@test "hooks.remove" {
+    skip "No test implementation"
+    [ "$status" -eq 0 ]
+}
+
 @test "hooks.install should exist" {
     run hooks.install
     [ "$status" -eq 0 ]

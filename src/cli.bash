@@ -69,10 +69,13 @@ cli.run() {
         add)
             ellipsis.add "${@:2}"
             ;;
+        remove|rm)
+            ellipsis.remove "${@:2}"
+            ;;
         install|in)
             ellipsis.install "${@:2}"
             ;;
-        uninstall|remove|rm)
+        uninstall|un)
             ellipsis.uninstall $2
             ;;
         broken)
