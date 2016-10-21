@@ -339,7 +339,7 @@ ellipsis.clean() {
     done
 }
 
-# Re-link unlinked packages.
+# Add file to package
 ellipsis.add() {
     if [ $# -lt 2 ]; then
         log.fail "Usage: ellipsis add <package> <(dot)file>"
@@ -381,6 +381,30 @@ ellipsis.add() {
 
         pkg.env_up "$1"
         pkg.run_hook "add" "$file"
+        pkg.env_down
+    done
+}
+
+# Remove file from package
+ellipsis.remove() {
+    if [ $# -lt 2 ]; then
+        log.fail "Usage: ellipsis remove <package> <(dot)file>"
+        exit 1
+    fi
+
+    for file in "${@:2}"; do
+        # Ignore . and ..
+        if [ "$file" == '.' -o "$file" == '..' ]; then
+            continue
+        fi
+
+        # Important to get absolute path of each file as we'll be changing
+        # directory when hook is run.
+        local file="$(path.abs_path "$file")"
+        local file_name="$(basename "$file")"
+
+        pkg.env_up "$1"
+        pkg.run_hook "remove" "$file"
         pkg.env_down
     done
 }
