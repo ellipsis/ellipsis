@@ -10,7 +10,11 @@ utils.cmd_exists() {
 # prompt with message and return true if yes/YES, otherwise false
 utils.prompt() {
     read -r -p "$1 " answer
-    return utils.is_true "$answer"
+
+    if ! utils.is_true "$answer"; then
+        return 1
+    fi
+    return 0
 }
 
 # Run web-based installers
