@@ -221,7 +221,7 @@ ellipsis.new() {
 
     # If path is not empty, ensure they are serious.
     if ! $(fs.folder_empty "$PKG_PATH"); then
-        utils.prompt "destination is not empty, continue? [y/n]" || exit 1
+        utils.prompt "destination is not empty, continue? [y/n]" "y" || exit 1
     fi
 
     # Template variables.

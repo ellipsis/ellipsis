@@ -357,6 +357,9 @@ TODO
 <h5>utils.prompt</h5>
 Prompts user `$1` message and returns true if `YES` or `yes` is input.
 
+A default answer can be provided as a second argument. If there is no
+controlling terminal, this will be used instead of asking for input.
+
 ``` bash
 # example ()
 TODO
