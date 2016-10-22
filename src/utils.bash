@@ -8,8 +8,23 @@ utils.cmd_exists() {
 }
 
 # prompt with message and return true if yes/YES, otherwise false
+# If a default is provided, there will be no prompt in a non interactive terminal
 utils.prompt() {
-    read -r -p "$1 " answer
+    local prompt="$1"
+    local default="$2"
+
+    case $- in
+        *i*)    # interactive shell
+            read -r -p "$prompt " answer
+            ;;
+        *)      # non-interactive shell
+            if [ -z "$default" ]; then
+                read -r -p "$prompt " answer
+            else
+                answer="$default"
+            fi
+            ;;
+    esac
 
     if ! utils.is_true "$answer"; then
         return 1

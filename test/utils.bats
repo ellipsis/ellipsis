@@ -12,6 +12,14 @@ teardown() {
     rm -rf tmp
 }
 
+utils_prompt_yes() {
+    echo y | utils.prompt "select yes"
+}
+
+utils_prompt_no() {
+    echo n | utils.prompt "select no"
+}
+
 @test "utils.cmd_exists should find command in PATH" {
     run utils.cmd_exists bats
     [ $status -eq 0 ]
@@ -22,15 +30,23 @@ teardown() {
     [ $status -eq 1 ]
 }
 
-@test "utils.prompt should return true if yes otherwise no" {
-    skip "No test implementation"
-    run echo y | utils.prompt "select yes"
+@test "utils.prompt should return true if yes" {
+    run utils_prompt_yes
     [ $status -eq 0 ]
 }
 
-@test "utils.prompt should return true if yes otherwise no" {
-    skip "No test implementation"
-    run echo n | utils.prompt "select yes"
+@test "utils.prompt should return false if not true" {
+    run utils_prompt_no
+    [ $status -eq 1 ]
+}
+
+@test "utils.prompt should return true if no terminal and default true" {
+    run utils.prompt "select yes" "yes"
+    [ $status -eq 0 ]
+}
+
+@test "utils.prompt should return false if no terminal and default false" {
+    run utils.prompt "select yes" "no"
     [ $status -eq 1 ]
 }
 
