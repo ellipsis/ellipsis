@@ -50,6 +50,15 @@ git.has_changes() {
     return 0
 }
 
+# Check for untracked files
+# ! Only works if the pwd is the root of the repo
+git.has_untracked() {
+    if [ -z "$(git ls-files -o --exclude-standard)" ]; then
+        return 1
+    fi
+    return 0
+}
+
 # Print diffstat for git repo
 git.diffstat() {
     git --no-pager diff --stat --color=always
