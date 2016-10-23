@@ -44,6 +44,9 @@ git.ahead() {
 
 # Check whether get repo has changes.
 git.has_changes() {
+    # Refresh index before using it
+    git update-index --refresh 2>&1 > /dev/null
+
     if git diff-index --quiet HEAD --; then
         return 1
     fi
@@ -62,6 +65,11 @@ git.has_untracked() {
 # Print diffstat for git repo
 git.diffstat() {
     git --no-pager diff --stat --color=always
+}
+
+# Print status for git repo
+git.status() {
+    git status -s
 }
 
 # Checks if git is configured as we expect.
