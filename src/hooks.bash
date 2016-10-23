@@ -132,11 +132,11 @@ hooks.status() {
     local ahead="$(git.ahead)"
 
     # Return unless there are changes or we are behind.
-    git.has_changes || [ "$ahead" ] || return
+    git.has_changes || git.has_untracked || [ "$ahead" ] || return
 
     local sha1="$(git.sha1)"
     local last_updated="$(git.last_updated)"
 
     msg.print "\033[1m${1:-$PKG_NAME}\033[0m $sha1 (updated $last_updated) $ahead"
-    git.diffstat
+    git.status
 }
