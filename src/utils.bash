@@ -7,24 +7,29 @@ utils.cmd_exists() {
     hash "$1" &> /dev/null
 }
 
+# Check for interactive tty
+utils.is_interactive() {
+    if [ ! -t 1 ]; then
+        return 1
+    fi
+    return 0
+}
+
 # prompt with message and return true if yes/YES, otherwise false
 # If a default is provided, there will be no prompt in a non interactive terminal
 utils.prompt() {
     local prompt="$1"
     local default="$2"
 
-    case $- in
-        *i*)    # interactive shell
+    if utils.is_interactive || utils.is_true "$ELLIPSIS_FORCE_PROMPT"; then
+        read -r -p "$prompt " answer
+    else
+        if [ -z "$default" ]; then
             read -r -p "$prompt " answer
-            ;;
-        *)      # non-interactive shell
-            if [ -z "$default" ]; then
-                read -r -p "$prompt " answer
-            else
-                answer="$default"
-            fi
-            ;;
-    esac
+        else
+            answer="$default"
+        fi
+    fi
 
     if ! utils.is_true "$answer"; then
         return 1
