@@ -23,6 +23,7 @@ Usage: ellipsis <command>
     new        create a new package
     edit       edit an installed package
     add        add new dotfile to package
+    remove     remove a files form a package
     install    install new package
     uninstall  uninstall package
     link       link package
@@ -76,7 +77,7 @@ cli.run() {
             ellipsis.install "${@:2}"
             ;;
         uninstall|un)
-            ellipsis.uninstall $2
+            ellipsis.uninstall "${@:2}"
             ;;
         broken)
             ellipsis.broken $2

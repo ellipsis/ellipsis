@@ -23,7 +23,9 @@ variables which ellipsis exposes for you:
 | `fs.strip_dot`              | Removes `.` prefix from files in a given directory.                                  |
 | `git.clone`                 | Clones a Git repo, identical to `git clone`.                                         |
 | `git.diffstat`              | Displays `git diff --stat`.                                                          |
+| `git.status`                | Displays `git status -s`.                                                          |
 | `git.has_changes`           | Returns true if repository has changes.                                              |
+| `git.has_untracked`         | Returns true if repository has untracked files.                                              |
 | `git.head`                  | Prints how far ahead a package is from origin.                                       |
 | `git.last_updated`          | Prints commit's relative last update time.                                           |
 | `git.pull`                  | Identical to `git pull`.                                                             |
@@ -37,6 +39,7 @@ variables which ellipsis exposes for you:
 | `path.relative_to_packages` | Strips `$ELLIPSIS_PACKAGES` from path.                                               |
 | `path.strip_dot`            | Strip dot from hidden files/folders.                                                 |
 | `utils.cmd_exists`          | Returns true if command exists.                                                      |
+| `utils.is_interactive`      | Returns true if ellipsis is running in an interactive terminal.
 | `utils.prompt`              | Prompts user `$1` message and returns true if `YES` or `yes` is input.               |
 | `utils.run_installer`       | Downloads and runs web-based shell script installers.                                |
 | `utils.version_compare`     | Compare version strings. Usage: `utils.version_compare "$Version1" ">=" "1.2.4"`.    |
@@ -222,8 +225,26 @@ TODO
 ```
 ---
 
+<h5>git.status</h5>
+Displays `git status -s`.
+
+``` bash
+# example ()
+TODO
+```
+---
+
 <h5>git.has_changes</h5>
 Returns true if repository has changes.
+
+``` bash
+# example ()
+TODO
+```
+---
+
+<h5>git.has_untracked</h5>
+Returns true if repository has untracked files.
 
 ``` bash
 # example ()
@@ -354,8 +375,20 @@ TODO
 ```
 ---
 
+<h5>utils.is_interactive</h5>
+Returns true if ellipsis is running in an interactive terminal.
+
+``` bash
+# example ()
+TODO
+```
+---
+
 <h5>utils.prompt</h5>
 Prompts user `$1` message and returns true if `YES` or `yes` is input.
+
+A default answer can be provided as a second argument. If there is no
+controlling terminal, this will be used instead of asking for input.
 
 ``` bash
 # example ()

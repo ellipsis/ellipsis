@@ -44,7 +44,19 @@ git.ahead() {
 
 # Check whether get repo has changes.
 git.has_changes() {
+    # Refresh index before using it
+    git update-index --refresh 2>&1 > /dev/null
+
     if git diff-index --quiet HEAD --; then
+        return 1
+    fi
+    return 0
+}
+
+# Check for untracked files
+# ! Only works if the pwd is the root of the repo
+git.has_untracked() {
+    if [ -z "$(git ls-files -o --exclude-standard)" ]; then
         return 1
     fi
     return 0
@@ -53,6 +65,11 @@ git.has_changes() {
 # Print diffstat for git repo
 git.diffstat() {
     git --no-pager diff --stat --color=always
+}
+
+# Print status for git repo
+git.status() {
+    git status -s
 }
 
 # Checks if git is configured as we expect.

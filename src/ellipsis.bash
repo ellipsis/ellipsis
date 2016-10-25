@@ -128,11 +128,22 @@ ellipsis.uninstall() {
         exit 1
     fi
 
-    pkg.env_up "$1"
-    pkg.run_hook "unlink"
-    pkg.run_hook "uninstall"
-    rm -rf "$PKG_PATH"
-    pkg.env_down
+    for package in "$@"; do
+        pkg.env_up "$package"
+
+        if pkg.run git.has_untracked || pkg.run git.has_changes; then
+            if ! utils.prompt "Uncommitted files or changes present, continue? [y/n]" "y"; then
+                pkg.env_down
+                continue
+            fi
+        fi
+
+        pkg.run_hook "unlink"
+        pkg.run_hook "uninstall"
+        rm -rf "$PKG_PATH"
+
+        pkg.env_down
+    done
 }
 
 # Re-link unlinked packages.
@@ -221,7 +232,7 @@ ellipsis.new() {
 
     # If path is not empty, ensure they are serious.
     if ! $(fs.folder_empty "$PKG_PATH"); then
-        utils.prompt "destination is not empty, continue? [y/n]" || exit 1
+        utils.prompt "destination is not empty, continue? [y/n]" "y" || exit 1
     fi
 
     # Template variables.
