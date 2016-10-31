@@ -16,6 +16,8 @@ env_prepend_path() {
     if [ -d "$1" ] && [ "$duplicates" -eq 0 ]; then
         export PATH="$1:$PATH"
     fi
+
+    unset duplicates
 }
 
 # PATH helper, if exists, append, no duplication
@@ -24,6 +26,8 @@ env_append_path() {
     if [ -d "$1" ] && [ "$duplicates" -eq 0 ]; then
         export PATH="$PATH:$1"
     fi
+
+    unset duplicates
 }
 
 env_init_ellipsis() {
@@ -40,20 +44,20 @@ env_init_ellipsis() {
 }
 
 env_init_pkg() {
-    pkg="$1"
-
-    if [ -d "$pkg" ]; then
-        PKG_PATH="$pkg"
+    # A path should contain at least one '/', this prevents local dirs with the
+    # same name as a package from messing with the test.
+    if [ "${1#/}" != "$1" ] && [ -d "$1" ]; then
+        PKG_PATH="$1"
         PKG_NAME="${PKG_PATH##*/}"
     else
-        PKG_NAME="$pkg"
+        PKG_NAME="$1"
         PKG_PATH="$ELLIPSIS_PACKAGES/$PKG_NAME"
     fi
 
     # Check if the package exists/has an ellipsis.sh file
     if [ -f "$PKG_PATH/ellipsis.sh" ]; then
         # Check if the package has an init hook
-        grep 'pkg.init' "$PKG_PATH/ellipsis.sh" 2>&1 >/dev/null
+        grep '^pkg.init' "$PKG_PATH/ellipsis.sh" 2>&1 >/dev/null
         if [ $? -eq 0 ]; then
             # Use some magic to extract the init function
             pkg_init="$(bash -c "source $PKG_PATH/ellipsis.sh; declare -f pkg.init")"
@@ -74,9 +78,16 @@ env_init_pkg() {
                 cd "$cwd"
                 unset cwd
                 unset -f pkg_init
+            else
+                env_api log.error "Could not source pkg.init function for package $PKG_NAME"
             fi
 
             unset pkg_init
+        fi
+    else
+        # Check if package exists or just hasn't got an ellipsis.sh file
+        if [ ! -d "$PKG_PATH" ]; then
+            env_api log.error "Package $PKG_NAME not found"
         fi
     fi
 
@@ -99,6 +110,7 @@ env_init() {
 
         # Reuse the only array we have ($@)
         eval "set -- $packages"
+        unset packages
     fi
 
     for pkg in $@; do
@@ -113,12 +125,12 @@ env_init() {
     done
 
     # Clean up env
-    unset packages
     env_clean_up
 }
 
 # Keep the environment as clean as possible
 env_clean_up() {
+    # Unset functions
     unset -f env_api
     unset -f env_init
     unset -f env_clean_up
