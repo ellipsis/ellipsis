@@ -75,7 +75,8 @@ The default unlink hook removes all symlinks to the package from the `$ELLIPSIS_
 `$HOME`).
 
 ##### pkg.unlink
-The `pkg.unlink` hook lets you customize which files are unlinked.
+The `pkg.unlink` hook lets you customize which files are unlinked. It should
+almost always be used when using a custom `pkg.link` hook.
 
 ##### pkg.uninstall
 The `pkg.uninstall` hook lets you run custom uninstall steps.
@@ -96,6 +97,39 @@ access it, but for performance reasons it's not recommended.
 
 **Attention:** As this code will be sourced by the users shell (which could be
 any shell), this hook should be written with POSIX compliancy in mind!
+
+### Other hooks
+
+##### pkg.add
+Alter the way an existing (dot)file is added to your package. By default the
+file will be moved to your package and linked to it's original location. New
+files will not be tracked by Git.
+
+##### pgk.remove
+Alter the way a (dot)file is deleted from your package. By default the file
+will be moved to it's original location. The file will not be untracked by Git.
+
+##### pkg.push
+Alter the way a repository is pushed to git. This can be useful if you also
+need to push submodules for example.
+
+##### pkg.pull
+Custom update hook, code to update plugins or submodules, recompile
+files,... goes here. Don't forget to update the package itself by calling the
+original update hook (`hooks.pull`).
+
+##### pkg.links
+The 'pkg.links' hook is purely informational and should echo the links to the
+package. This hook is not used by the `unlink` hook, so you should still unlink
+all custom links with the `pkg.unlink` hook.
+
+##### pkg.installed
+This hook should echo information about the installed version of your package,
+and is purely informational.
+
+##### pkg.status
+This hook should echo information about the installation status of your
+package. The hook is only used for informing the user.
 
 #### Examples
 Here's a more complete example (from
