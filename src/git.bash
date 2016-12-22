@@ -27,6 +27,11 @@ git.push() {
     git push
 }
 
+# Print remote branch name
+git.remote_branch() {
+  git rev-parse --abbrev-ref "@{u}"
+}
+
 # Print last commit's sha1 hash.
 git.sha1() {
     git rev-parse --short HEAD
@@ -42,7 +47,19 @@ git.ahead() {
     git status -sb --porcelain | grep -o '\[.*\]'
 }
 
-# Check whether get repo has changes.
+# Print how far behind git repo is
+git.behind() {
+  git rev-list "HEAD...$(git.remote_branch)" --count
+}
+
+git.is_behind() {
+  if [ "$(git.behind)" -ne "0" ]; then
+    return 1
+  fi
+  return 0
+}
+
+# Check whether git repo has changes.
 git.has_changes() {
     # Refresh index before using it
     git update-index --refresh 2>&1 > /dev/null
