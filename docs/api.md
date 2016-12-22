@@ -21,12 +21,14 @@ variables which ellipsis exposes for you:
 | `fs.list_dirs`              | Lists directories, useful for passing subdirectories to `fs.link_files`.             |
 | `fs.list_symlinks`          | Lists symlinks in a folder, defaulting to `$ELLIPSIS_HOME`.                          |
 | `fs.strip_dot`              | Removes `.` prefix from files in a given directory.                                  |
+| `git.behind`                | Prints number of commits local is behind remote.                                     |
 | `git.clone`                 | Clones a Git repo, identical to `git clone`.                                         |
 | `git.diffstat`              | Displays `git diff --stat`.                                                          |
-| `git.status`                | Displays `git status -s`.                                                          |
+| `git.status`                | Displays `git status -s`.                                                            |
 | `git.has_changes`           | Returns true if repository has changes.                                              |
-| `git.has_untracked`         | Returns true if repository has untracked files.                                              |
+| `git.has_untracked`         | Returns true if repository has untracked files.                                      |
 | `git.head`                  | Prints how far ahead a package is from origin.                                       |
+| `git.is_behind`             | Returns true if local repository is behind the remote.                               |
 | `git.last_updated`          | Prints commit's relative last update time.                                           |
 | `git.pull`                  | Identical to `git pull`.                                                             |
 | `git.push`                  | Identical to `git push`.                                                             |
@@ -206,6 +208,23 @@ TODO
 ---
 
 #### git
+<h5>git.ahead</h5>
+Prints how far ahead a package is from origin.
+
+``` bash
+# example ()
+TODO
+```
+---
+
+<h5>git.behind</h5>
+Prints how far behead a package is from origin.
+
+``` bash
+# example ()
+TODO
+```
+---
 
 <h5>git.clone</h5>
 Clones a Git repo, identical to `git clone`.
@@ -252,8 +271,8 @@ TODO
 ```
 ---
 
-<h5>git.head</h5>
-Prints how far ahead a package is from origin.
+<h5>git.is_behind</h5>
+Returns true if local is behind remote.
 
 ``` bash
 # example ()
@@ -285,6 +304,15 @@ Identical to `git push`.
 ``` bash
 # example ()
 TODO
+```
+---
+
+<h5>git.remote_branch</h5>
+Prints name of remote branch.
+
+``` bash
+# example ()
+
 ```
 ---
 
