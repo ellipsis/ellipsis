@@ -14,6 +14,9 @@ tag:
 test: deps/bats test/fixtures/dot-test/ellipsis.sh
 	deps/bats/bin/bats test $(TEST_OPTS)
 
+test/%: deps/bats test/fixtures/dot-test/ellipsis.sh
+	deps/bats/bin/bats $@.bats $(TEST_OPTS)
+
 deps/bats:
 	@mkdir -p deps
 	git clone --depth 1 git://github.com/sstephenson/bats.git deps/bats
