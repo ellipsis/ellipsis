@@ -107,3 +107,14 @@ git.add_include() {
     fi
     git config --global --add include.path $1
 }
+
+# Indicates if an update is needed (not perfect)
+git.needs_update() {
+    # Update remote references
+    git remote update 2>&1 > /dev/null
+
+    if [ -z "$(git status -s -uno)" ]; then
+        return 1
+    fi
+    return 0
+}
