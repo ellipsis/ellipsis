@@ -29,7 +29,7 @@ git.push() {
 
 # Print remote branch name
 git.remote_branch() {
-  git rev-parse --abbrev-ref "@{u}"
+    git rev-parse --abbrev-ref "@{u}"
 }
 
 # Print last commit's sha1 hash.
@@ -49,14 +49,15 @@ git.ahead() {
 
 # Print how far behind git repo is
 git.behind() {
-  git rev-list "HEAD...$(git.remote_branch)" --count
+    git rev-list "HEAD...$(git.remote_branch)" --count
 }
 
+# Return if current repo is behind remote branch
 git.is_behind() {
-  if [ "$(git.behind)" -ne "0" ]; then
-    return 1
-  fi
-  return 0
+    if [ "$(git.behind)" -eq "0" ]; then
+        return 1
+    fi
+    return 0
 }
 
 # Check whether git repo has changes.
@@ -108,7 +109,8 @@ git.add_include() {
     git config --global --add include.path $1
 }
 
-# Indicates if an update is needed (not perfect)
+# Indicates if an update is needed (not perfect + rather slow)
+# Generaly you want to use git.is_behind
 git.needs_update() {
     # Update remote references
     git remote update 2>&1 > /dev/null
