@@ -20,6 +20,10 @@ utils_prompt_no() {
     echo n | utils.prompt "select no"
 }
 
+utils_prompt_empty() {
+    echo | utils.prompt "empty" "$@"
+}
+
 @test "utils.cmd_exists should find command in PATH" {
     run utils.cmd_exists bats
     [ $status -eq 0 ]
@@ -31,21 +35,31 @@ utils_prompt_no() {
 }
 
 @test "utils.prompt should return true if yes" {
+    ELLIPSIS_FORCE_PROMPT=1\
     run utils_prompt_yes
     [ $status -eq 0 ]
 }
 
 @test "utils.prompt should return false if not true" {
+    ELLIPSIS_FORCE_PROMPT=1\
     run utils_prompt_no
     [ $status -eq 1 ]
 }
 
-@test "utils.prompt should return true if no terminal and default true" {
-    run utils.prompt "select yes" "yes"
+@test "utils.prompt should use default on empty input" {
+    ELLIPSIS_FORCE_PROMPT=1\
+    run utils_prompt_empty "yes"
     [ $status -eq 0 ]
+
+    ELLIPSIS_FORCE_PROMPT=1\
+    run utils_prompt_empty "no"
+    [ $status -eq 1 ]
 }
 
-@test "utils.prompt should return false if no terminal and default false" {
+@test "utils.prompt should not prompt in non-interactive terminal" {
+    run utils.prompt "select yes" "yes"
+    [ $status -eq 0 ]
+
     run utils.prompt "select yes" "no"
     [ $status -eq 1 ]
 }
