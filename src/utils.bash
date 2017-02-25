@@ -23,12 +23,11 @@ utils.prompt() {
 
     if utils.is_interactive || utils.is_true "$ELLIPSIS_FORCE_PROMPT"; then
         read -r -p "$prompt " answer
-    else
-        if [ -z "$default" ]; then
-            read -r -p "$prompt " answer
-        else
-            answer="$default"
-        fi
+    fi
+
+    # Use default if answer is empty or tty is non interactive
+    if [ -z "$answer" ]; then
+        answer="$default"
     fi
 
     if ! utils.is_true "$answer"; then
