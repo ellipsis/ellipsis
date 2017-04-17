@@ -1,5 +1,7 @@
 # Ellipsis [![Build Status][travis-image]][travis-url] [![Documentation status][docs-image]][docs-url] [![Latest tag][tag-image]][tag-url] [![Gitter chat][gitter-image]][gitter-url]
 
+[![Join the chat at https://gitter.im/ellipsis/ellipsis](https://badges.gitter.im/ellipsis/ellipsis.svg)](https://gitter.im/ellipsis/ellipsis?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ```
  _    _    _
 /\_\ /\_\ /\_\
