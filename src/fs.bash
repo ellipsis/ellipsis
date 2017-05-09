@@ -146,3 +146,15 @@ fs.strip_dot() {
         mv "$file" "$dir/$stripped"
     done
 }
+
+# source first found
+fs.source_first() {
+    for file in "$@"; do
+        if [ -f "$file" ]; then
+            echo "$file"
+            source "$file"
+            return 0
+        fi
+    done
+    return 1
+}
