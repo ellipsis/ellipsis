@@ -21,6 +21,7 @@ variables which ellipsis exposes for you:
 | `fs.list_dirs`              | Lists directories, useful for passing subdirectories to `fs.link_files`.             |
 | `fs.list_symlinks`          | Lists symlinks in a folder, defaulting to `$ELLIPSIS_HOME`.                          |
 | `fs.strip_dot`              | Removes `.` prefix from files in a given directory.                                  |
+| `fs.source_first`           | Sources (and echo's) first file found.                                               |
 | `git.behind`                | Prints number of commits local is behind remote.                                     |
 | `git.clone`                 | Clones a Git repo, identical to `git clone`.                                         |
 | `git.diffstat`              | Displays `git diff --stat`.                                                          |
@@ -41,7 +42,7 @@ variables which ellipsis exposes for you:
 | `path.relative_to_packages` | Strips `$ELLIPSIS_PACKAGES` from path.                                               |
 | `path.strip_dot`            | Strip dot from hidden files/folders.                                                 |
 | `utils.cmd_exists`          | Returns true if command exists.                                                      |
-| `utils.is_interactive`      | Returns true if ellipsis is running in an interactive terminal.
+| `utils.is_interactive`      | Returns true if ellipsis is running in an interactive terminal.                      |
 | `utils.prompt`              | Prompts user `$1` message and returns true if `YES` or `yes` is input.               |
 | `utils.run_installer`       | Downloads and runs web-based shell script installers.                                |
 | `utils.version_compare`     | Compare version strings. Usage: `utils.version_compare "$Version1" ">=" "1.2.4"`.    |
@@ -204,6 +205,15 @@ Removes `.` prefix from files in a given directory.
 ``` bash
 # example ()
 TODO
+```
+---
+
+<h5>fs.source_first</h5>
+Sources the first found file in a list. The sourced file will be echoed. If no
+file found return code will be 1.
+
+``` bash
+fs.source_first 'file1' '/tmp/file2' "$HOME/file3" || echo "No file found"
 ```
 ---
 
