@@ -40,6 +40,8 @@ Usage: ellipsis <command>
     status     show status of package(s)
     publish    publish package to repository
     search     search package repository
+    strip      strip . from filenames
+    info       show ellipsis info
 ```
 
 ### Configuration
