@@ -38,6 +38,7 @@ Usage: ellipsis <command>
     publish    publish package to repository
     search     search package repository
     strip      strip . from filenames
+    info       show ellipsis info
 EOF
 }
 
@@ -52,8 +53,41 @@ cli.version() {
     cd "$cwd"
 }
 
+cli.info() {
+    cli.version
+    msg.print "  Home: $ELLIPSIS_HOME"
+    msg.print "  User: $ELLIPSIS_USER"
+    msg.print "  Init: $ELLIPSIS_INIT"
+    msg.print "  Path: $ELLIPSIS_PATH"
+    msg.print "  Config: $ELLIPSIS_CCONFIG"
+    msg.print "  Packages: $ELLIPSIS_PACKAGES"
+}
+
+cli.load_config() {
+    local config_paths=()
+
+    if [ -n "$ELLIPSIS_CONFIG" ]; then
+        config_paths+=("$ELLIPSIS_CONFIG")
+    fi
+
+    if [ -n "$XDG_CONFIG_HOME" ]; then
+        config_paths+=("$XDG_CONFIG_HOME/ellipsisrc")
+        config_paths+=("$XDG_CONFIG_HOME/ellipsis/ellipsisrc")
+    fi
+
+    config_paths+=("$HOME/.ellipsisrc")
+    config_paths+=("$HOME/.ellipsis/ellipsisrc")
+
+    ELLIPSIS_CCONFIG="$(fs.source_first "${config_paths[@]}")"
+    if [ "$?" -eq 0 ]; then
+        ELLIPSIS_CCONFIG="$(path.abs_path "$ELLIPSIS_CCONFIG")"
+    fi
+}
+
 # run ellipsis
 cli.run() {
+    cli.load_config
+
     case "$1" in
         api)
             ellipsis.api "${@:2}"
@@ -123,6 +157,9 @@ cli.run() {
             ;;
         version|--version|-v)
             cli.version
+            ;;
+        info)
+            cli.info
             ;;
         *)
             if [ $# -gt 0 ]; then
