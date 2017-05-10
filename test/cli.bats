@@ -3,6 +3,30 @@
 load _helper
 load cli
 
+@test "cli.usage shows usage info" {
+  skip "No test implementation"
+  run cli.usage
+  [ "$status" -eq 0 ]
+}
+
+@test "cli.version prints version" {
+  skip "No test implementation"
+  run cli.version
+  [ "$status" -eq 0 ]
+}
+
+@test "cli.info shows ellipsis info" {
+  skip "No test implementation"
+  run cli.info
+  [ "$status" -eq 0 ]
+}
+
+@test "cli.load_config sources first found config file" {
+  skip "No test implementation"
+  run cli.load_config
+  [ "$status" -eq 0 ]
+}
+
 @test "cli.run without command prints usage" {
   run cli.run
   [ "$status" -eq 1 ]
