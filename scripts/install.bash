@@ -46,8 +46,12 @@ load os
 load msg
 load log
 
+# Set paths to final location
 ELLIPSIS_PATH="$FINAL_ELLIPSIS_PATH"
+ELLIPSIS_BIN="$ELLIPSIS_PATH/bin"
 ELLIPSIS_SRC="$ELLIPSIS_PATH/src"
+
+ELLIPSIS_PACKAGES="$ELLIPSIS_PATH/packages"
 
 # Backup existing ~/.ellipsis if necessary
 fs.backup "$ELLIPSIS_PATH"
