@@ -11,6 +11,12 @@ tag:
 	@git commit -m v$(version)
 	@git tag v$(version)
 
+stag:
+	@echo ELLIPSIS_VERSION=$(version) > src/version.bash
+	@git add src/version.bash
+	@git commit -m v$(version)
+	@git tag -s v$(version)
+
 test: deps/bats test/fixtures/dot-test/ellipsis.sh
 	deps/bats/bin/bats test $(TEST_OPTS)
 
