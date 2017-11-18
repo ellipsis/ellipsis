@@ -173,6 +173,15 @@ fs.link_rfile file $HOME/.other_file
 ```
 ---
 
+<h5>fs.link_rfiles</h5>
+Symlinks all (regular) files in given folder as dotfiles into `$ELLIPSIS_HOME`.
+
+``` bash
+# example (Links all (regular) files in 'dir' to $HOME)
+fs.link_rfiles dir
+```
+---
+
 <h5>fs.link_files</h5>
 Symlinks all files in given folder as dotfiles into `$ELLIPSIS_HOME`.
 
