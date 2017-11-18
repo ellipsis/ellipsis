@@ -17,6 +17,7 @@ variables which ellipsis exposes for you:
 | `fs.is_symlink`             | Returns true if file is a symlink.                                                   |
 | `fs.link_rfile`             | Symlinks a single (regular) file into `$ELLIPSIS_HOME`.                              |
 | `fs.link_file`              | Symlinks a single (dot) file into `$ELLIPSIS_HOME`.                                  |
+| `fs.link_rfiles`            | Symlinks all (regular) files in given folder into `$ELLIPSIS_HOME`.                  |
 | `fs.link_files`             | Symlinks all files in given folder into `$ELLIPSIS_HOME`.                            |
 | `fs.list_dirs`              | Lists directories, useful for passing subdirectories to `fs.link_files`.             |
 | `fs.list_symlinks`          | Lists symlinks in a folder, defaulting to `$ELLIPSIS_HOME`.                          |
@@ -169,6 +170,15 @@ fs.link_file file
 
 # example (Links 'file' to '.other_file' in $HOME)
 fs.link_rfile file $HOME/.other_file
+```
+---
+
+<h5>fs.link_rfiles</h5>
+Symlinks all (regular) files in given folder as dotfiles into `$ELLIPSIS_HOME`.
+
+``` bash
+# example (Links all (regular) files in 'dir' to $HOME)
+fs.link_rfiles dir
 ```
 ---
 
