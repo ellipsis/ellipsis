@@ -121,6 +121,23 @@ fs.link_file() {
     fs.link_rfile "$1" "$dest"
 }
 
+# find all (regular) files in dir excluding the dir itself, hidden files, README,
+# LICENSE, *.rst, *.md, and *.txt and symlink into ELLIPSIS_HOME.
+fs.link_rfiles() {
+    for file in $(find "$1" -maxdepth 1 -name '*' \
+                                      ! -name '.*' \
+                                      ! -name 'README' \
+                                      ! -name 'LICENSE' \
+                                      ! -name '*.md' \
+                                      ! -name '*.rst' \
+                                      ! -name '*.txt' \
+                                      ! -name "ellipsis.sh" | sort); do
+        if [ ! "$1" = "$file" ]; then
+            fs.link_rfile "$file"
+        fi
+    done
+}
+
 # find all files in dir excluding the dir itself, hidden files, README,
 # LICENSE, *.rst, *.md, and *.txt and symlink into ELLIPSIS_HOME.
 fs.link_files() {
