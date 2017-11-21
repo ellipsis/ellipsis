@@ -124,6 +124,19 @@ fs.link_file() {
 # find all files in dir excluding the dir itself, hidden files, README,
 # LICENSE, *.rst, *.md, and *.txt and symlink into ELLIPSIS_HOME.
 fs.link_files() {
+    local src_dir="${1:-.}"
+    local dest_dir="${2:-$ELLIPSIS_HOME}"
+
+    fs.link_rfiles "$src_dir" "$dest_dir" '.'
+}
+
+# find all files in dir excluding the dir itself, hidden files, README,
+# LICENSE, *.rst, *.md, and *.txt and symlink into ELLIPSIS_HOME.
+fs.link_rfiles() {
+    local src_dir="${1:-.}"
+    local dest_dir="${2:-$ELLIPSIS_HOME}"
+    local prefix="$3"
+
     for file in $(find "$1" -maxdepth 1 -name '*' \
                                       ! -name '.*' \
                                       ! -name 'README' \
@@ -133,7 +146,10 @@ fs.link_files() {
                                       ! -name '*.txt' \
                                       ! -name "ellipsis.sh" | sort); do
         if [ ! "$1" = "$file" ]; then
-            fs.link_file "$file"
+            local src="$(path.abs_path "$file")"
+            local name="${src##*/}"
+            local dest="${dest_dir}/${prefix}${name}"
+            fs.link_rfile "$file" "$dest"
         fi
     done
 }
