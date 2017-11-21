@@ -109,12 +109,34 @@ teardown() {
     [ ! -e tmp/broken_symlink ]
 }
 
-@test "fs.link_rfile should link a file into HOME" {
+@test "fs.link_rfile should link a regular file into HOME" {
     run fs.link_rfile tmp/file_to_link
     [ $status -eq 0 ]
     [ -f "$(readlink "$ELLIPSIS_HOME/file_to_link")" ]
     [ -f tmp/file_to_link ]
     [[ "$output" == linking* ]] || false
+}
+
+@test "fs.link_rfile should link a regular file to a custom location" {
+    # Setup
+    mkdir tmp/test
+
+    run fs.link_rfile tmp/file_to_link tmp/test/file1
+    [ $status -eq 0 ]
+    [ -f "$(readlink "tmp/test/file1")" ]
+    [ -f tmp/file_to_link ]
+    [[ "$output" == linking* ]] || false
+}
+
+@test "fs.link_rfile should create a backup for existing files" {
+    # Setup
+    touch "$ELLIPSIS_HOME/file_to_link"
+
+    run fs.link_rfile tmp/file_to_link
+    [ $status -eq 0 ]
+    [ -f "$(readlink "$ELLIPSIS_HOME/file_to_link")" ]
+    [ -f tmp/file_to_link ]
+    [ -f "$ELLIPSIS_HOME/file_to_link.bak" ]
 }
 
 @test "fs.link_file should link a file into HOME" {
@@ -125,7 +147,43 @@ teardown() {
     [[ "$output" == linking* ]] || false
 }
 
-@test "fs.link_files should link all the files in folder into HOME" {
+@test "fs.link_rfiles should link all regular files in a folder into HOME" {
+    run fs.link_rfiles tmp
+    [ $status -eq 0 ]
+    [ -f "$(readlink "$ELLIPSIS_HOME/file_to_link")" ]
+    [ -f tmp/file_to_link ]
+    [ -f "$(readlink "$ELLIPSIS_HOME/file_to_backup")" ]
+    [ -f tmp/file_to_backup ]
+    [[ "$output" == linking* ]] || false
+}
+
+@test "fs.link_rfiles should link all regular files in a folder to a custom location" {
+    # Setup
+    mkdir tmp/test
+
+    run fs.link_rfiles tmp tmp/test
+    [ $status -eq 0 ]
+    [ -f "$(readlink "tmp/test/file_to_link")" ]
+    [ -f tmp/file_to_link ]
+    [ -f "$(readlink "tmp/test/file_to_backup")" ]
+    [ -f tmp/file_to_backup ]
+    [[ "$output" == linking* ]] || false
+}
+
+@test "fs.link_rfiles should link all regular files in a folder with a custom prefix" {
+    # Setup
+    mkdir tmp/test
+
+    run fs.link_rfiles tmp tmp/test 'test_'
+    [ $status -eq 0 ]
+    [ -f "$(readlink "tmp/test/test_file_to_link")" ]
+    [ -f tmp/file_to_link ]
+    [ -f "$(readlink "tmp/test/test_file_to_backup")" ]
+    [ -f tmp/file_to_backup ]
+    [[ "$output" == linking* ]] || false
+}
+
+@test "fs.link_files should link all the files in a folder into HOME" {
     run fs.link_files tmp
     [ $status -eq 0 ]
     [ -f "$(readlink "$ELLIPSIS_HOME/.file_to_link")" ]
@@ -134,6 +192,20 @@ teardown() {
     [ -f tmp/file_to_backup ]
     [[ "$output" == linking* ]] || false
 }
+
+@test "fs.link_files should link all the files in a folder to a custom location" {
+    # Setup
+    mkdir tmp/test
+
+    run fs.link_files tmp tmp/test
+    [ $status -eq 0 ]
+    [ -f "$(readlink "tmp/test/.file_to_link")" ]
+    [ -f tmp/file_to_link ]
+    [ -f "$(readlink "tmp/test/.file_to_backup")" ]
+    [ -f tmp/file_to_backup ]
+    [[ "$output" == linking* ]] || false
+}
+
 
 @test "fs.is_ellipsis_symlink should detect symlink pointing back to ELLIPSIS_PATH" {
     run fs.is_ellipsis_symlink $ELLIPSIS_HOME/.test
