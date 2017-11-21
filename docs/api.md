@@ -15,9 +15,10 @@ variables which ellipsis exposes for you:
 | `fs.is_broken_symlink`      | Returns true if file is a broken symlink.                                            |
 | `fs.is_ellipsis_symlink`    | Returns true if file is a symlink pointing to an ellipsis package.                   |
 | `fs.is_symlink`             | Returns true if file is a symlink.                                                   |
-| `fs.link_rfile`             | Symlinks a single (regular) file into `$ELLIPSIS_HOME`.                              |
-| `fs.link_file`              | Symlinks a single (dot) file into `$ELLIPSIS_HOME`.                                  |
-| `fs.link_files`             | Symlinks all files in given folder into `$ELLIPSIS_HOME`.                            |
+| `fs.link_rfile`             | Symlinks a single file.                                                              |
+| `fs.link_file`              | Symlinks a single file and prepends a dot.                                           |
+| `fs.link_rfiles`            | Symlinks all files in a given folder.                                                |
+| `fs.link_files`             | Symlinks all files in a given folder and prepends a dot.                             |
 | `fs.list_dirs`              | Lists directories, useful for passing subdirectories to `fs.link_files`.             |
 | `fs.list_symlinks`          | Lists symlinks in a folder, defaulting to `$ELLIPSIS_HOME`.                          |
 | `fs.strip_dot`              | Removes `.` prefix from files in a given directory.                                  |
@@ -141,13 +142,15 @@ fi
 ---
 
 <h5>fs.link_rfile</h5>
-Symlinks a single (regular) file into `$ELLIPSIS_HOME`.
+Symlinks a single file.
 
-By default the file will be symlinked into `$HOME`, but another location can be
-provided as a second parameter.
+By default the file will be symlinked into `$ELLIPSIS_HOME`, but another location can be
+provided as a second parameter (including filename).
+
+A backup will be made if the destination exists.
 
 ``` bash
-# example (Links 'file' to 'file' in $HOME)
+# example (Links 'file' to 'file' in $ELLIPSIS_HOME)
 fs.link_rfile file
 
 # example (Links 'file' to 'other_file' in $HOME)
@@ -156,28 +159,50 @@ fs.link_rfile file $HOME/other_file
 ---
 
 <h5>fs.link_file</h5>
-Symlinks a single (dot) file into `$ELLIPSIS_HOME`. A dot will be prepended if
-needed.
+Symlinks a single file and prepends a dot if needed.
 
-By default the file will be symlinked into `$HOME`, but another location can be
-provided as a second parameter. If you provide a destination there won't be a
+By default the file will be symlinked into `$ELLIPSIS_HOME`, but another location can be
+provided as a second parameter (including filename). If you provide a destination there won't be a
 dot prepended.
 
+A backup will be made if the destination exists.
+
 ``` bash
-# example (Links 'file' to '.file' in $HOME)
+# example (Links 'file' to '.file' in $ELLIPSIS_HOME)
 fs.link_file file
 
 # example (Links 'file' to '.other_file' in $HOME)
-fs.link_rfile file $HOME/.other_file
+fs.link_file file $HOME/.other_file
+```
+---
+
+<h5>fs.link_rfiles</h5>
+Calls `fs.link_rfile` for all files in a given directory.
+
+The function accepts an optional second parameter to link to another directory
+then `$ELLIPSIS_HOME`.
+
+``` bash
+# example (Links all files in 'dir' to $ELLIPSIS_HOME)
+fs.link_files dir
+
+# example (Links all files in 'dir' to $HOME/.config)
+fs.link_files dir $HOME/.config
 ```
 ---
 
 <h5>fs.link_files</h5>
-Symlinks all files in given folder as dotfiles into `$ELLIPSIS_HOME`.
+Calls `fs.link_file` for all files in a given directory.
+
+The function accepts an optional second parameter to link to another directory
+then `$ELLIPSIS_HOME`.
 
 ``` bash
-# example (Links all files in 'dir' to $HOME)
+# example (Links all files in 'dir' to $ELLIPSIS_HOME, prepended with a dot)
 fs.link_files dir
+
+# example (Links all files in 'dir' to $HOME/.config, prepended with a dot)
+fs.link_files dir $HOME/.config
 ```
 ---
 
