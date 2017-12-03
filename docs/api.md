@@ -22,7 +22,7 @@ variables which ellipsis exposes for you:
 | `fs.list_dirs`              | Lists directories, useful for passing subdirectories to `fs.link_files`.             |
 | `fs.list_symlinks`          | Lists symlinks in a folder, defaulting to `$ELLIPSIS_HOME`.                          |
 | `fs.strip_dot`              | Removes `.` prefix from files in a given directory.                                  |
-| `fs.source_first`           | Sources (and echo's) first file found.                                               |
+| `fs.first_found`            | Echo first file found from a list of files.                                               |
 | `git.behind`                | Prints number of commits local is behind remote.                                     |
 | `git.clone`                 | Clones a Git repo, identical to `git clone`.                                         |
 | `git.diffstat`              | Displays `git diff --stat`.                                                          |
@@ -233,12 +233,12 @@ TODO
 ```
 ---
 
-<h5>fs.source_first</h5>
-Sources the first found file in a list. The sourced file will be echoed. If no
-file found return code will be 1.
+<h5>fs.first_found</h5>
+Echoes the first found file in a list. If no file was found return code will be
+1.
 
 ``` bash
-fs.source_first 'file1' '/tmp/file2' "$HOME/file3" || echo "No file found"
+fs.first_found 'file1' '/tmp/file2' "$HOME/file3" || echo "No file found"
 ```
 ---
 

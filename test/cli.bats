@@ -3,6 +3,10 @@
 load _helper
 load cli
 
+teardown() {
+    rm -rf tmp
+}
+
 @test "cli.usage shows usage info" {
   skip "No test implementation"
   run cli.usage
@@ -22,9 +26,28 @@ load cli
 }
 
 @test "cli.load_config sources first found config file" {
-  skip "No test implementation"
-  run cli.load_config
-  [ "$status" -eq 0 ]
+    # Setup
+    mkdir -p tmp/source_files
+    echo "TEST_VAR=file2" > tmp/source_files/file2
+    echo "TEST_VAR=file3" > tmp/source_files/file3
+    test_cli_load_config() {
+        export HOME='/does-not-exist'
+        export XDG_CONFIG_HOME=''
+        cli.load_config
+        echo "$ELLIPSIS_CCONFIG"
+        echo "$TEST_VAR"
+    }
+
+    # Test successful
+    ELLIPSIS_CONFIG='tmp/source_files/file2' run test_cli_load_config
+    [ $status -eq 0 ]
+    [ "${lines[0]}" == "${PWD}/tmp/source_files/file2" ]
+    [ "${lines[1]}" == "file2" ]
+
+    # Test failing source
+    ELLIPSIS_CONFIG='tmp/source_files/file1' run test_cli_load_config
+    [ $status -eq 0 ]
+    [ "$output" = "" ]
 }
 
 @test "cli.run without command prints usage" {
