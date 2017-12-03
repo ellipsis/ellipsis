@@ -78,9 +78,10 @@ cli.load_config() {
     config_paths+=("$HOME/.ellipsisrc")
     config_paths+=("$HOME/.ellipsis/ellipsisrc")
 
-    ELLIPSIS_CCONFIG="$(fs.source_first "${config_paths[@]}")"
-    if [ "$?" -eq 0 ]; then
+    ELLIPSIS_CCONFIG="$(fs.first_found "${config_paths[@]}")"
+    if [ -n "$ELLIPSIS_CCONFIG" ]; then
         ELLIPSIS_CCONFIG="$(path.abs_path "$ELLIPSIS_CCONFIG")"
+        source "$ELLIPSIS_CCONFIG"
     fi
 }
 

@@ -163,12 +163,11 @@ fs.strip_dot() {
     done
 }
 
-# source first found
-fs.source_first() {
+# Echo first file found
+fs.first_found() {
     for file in "$@"; do
         if [ -f "$file" ]; then
             echo "$file"
-            source "$file"
             return 0
         fi
     done

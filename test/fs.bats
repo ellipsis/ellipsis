@@ -212,24 +212,19 @@ teardown() {
     [ $status -eq 0 ]
 }
 
-@test "fs.source_first should source first file found in filelist" {
+@test "fs.first_found should echo first file found in filelist" {
     # Setup
-    mkdir -p tmp/source_files
-    echo "TEST_VAR=file2" > tmp/source_files/file2
-    echo "TEST_VAR=file3" > tmp/source_files/file3
-    test_source_first(){
-        fs.source_first "$@"
-        echo "$TEST_VAR"
-    }
+    mkdir -p tmp/files
+    touch tmp/files/file2
+    touch tmp/files/file3
 
-    # Test successful source
-    run test_source_first tmp/source_files/file1 tmp/source_files/file2 tmp/source_files/file3
+    # Test successful
+    run fs.first_found tmp/files/file1 tmp/files/file2 tmp/files/file3
     [ $status -eq 0 ]
-    [ "${lines[0]}" == "tmp/source_files/file2" ]
-    [ "${lines[1]}" == "file2" ]
+    [ "$output" == "tmp/files/file2" ]
 
     # Test failing source
-    run fs.source_first does_not_exist_1 does_not_exist_2
+    run fs.first_found does_not_exist_1 does_not_exist_2
     [ $status -eq 1 ]
     [ "$output" = "" ]
 }
