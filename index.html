@@ -47,14 +47,17 @@ updated and in-sync across systems.</li>
 <h3 id="install">Install</h3>
 <p><strong>Requirements:</strong> bash, curl, git</p>
 <p>Clone and symlink or use handy-dandy installer:</p>
-<pre><code class="lang-bash">$ curl <span class="hljs-operator">-s</span>L ellipsis.sh | sh
+<pre><code class="lang-bash">$ curl ellipsis.sh | sh
 </code></pre>
 <p><sup>...no you didn&#39;t read that wrong, <a href="https://github.com/ellipsis/ellipsis/blob/gh-pages/index.html">the ellipsis.sh website also doubles as the installer</a></sup></p>
 <p>You can also specify which packages to install by setting the <code>PACKAGES</code> variable, i.e.:</p>
-<pre><code class="lang-bash">$ curl <span class="hljs-operator">-s</span>L ellipsis.sh | PACKAGES=<span class="hljs-string">'vim zsh'</span> sh
+<pre><code class="lang-bash">$ curl ellipsis.sh | PACKAGES=<span class="hljs-string">'vim zsh'</span> sh
 </code></pre>
 <p>Add <code>~/.ellipsis/bin</code> to your <code>$PATH</code> (or symlink somewhere convenient) and
 start managing your dotfiles in style :)</p>
+<p>As of version <code>1.7.3</code> you can also use the init system to automatically setup
+you environment. As a bonus it will allow you to use the powerful <code>pkg.init</code>
+hook to do the same for your packages.</p>
 <h3 id="usage">Usage</h3>
 <p>Ellipsis comes with no dotfiles out of the box. To install packages, use
 <code>ellipsis install</code>. Packages can be specified by github-user/repo or full
@@ -79,7 +82,7 @@ the command line with the <code>-h</code> option.</p>
 <tbody>
 <tr>
 <td><code>GITHUB_USER</code> / <code>ELLIPSIS_USER</code></td>
-<td>Customizes whose dotfiles are installed when you <code>ellipsis install</code> without specifying user or a full repo url. Defaults to <code>$(git config github.user)</code> or <code>zeekay</code>.</td>
+<td>Customizes whose dotfiles are installed when you <code>ellipsis install</code> without specifying user or a full repo url. Defaults to <code>$(git config github.user)</code> or <code>whoami</code>.</td>
 </tr>
 <tr>
 <td><code>ELLIPSIS_REPO</code></td>
@@ -98,7 +101,7 @@ the command line with the <code>-h</code> option.</p>
 <td>Customize where ellipsis lives on your filesystem, defaults to <code>~/.ellipsis</code>.</td>
 </tr>
 <tr>
-<td><code>ELLIPSIS_PACKAGE</code></td>
+<td><code>ELLIPSIS_PACKAGES</code></td>
 <td>Customize where ellipsis installs packages on your filesystem, defaults to <code>~/.ellipsis/packages</code>.</td>
 </tr>
 <tr>
@@ -107,9 +110,9 @@ the command line with the <code>-h</code> option.</p>
 </tr>
 </tbody>
 </table>
-<pre><code class="lang-bash"><span class="hljs-keyword">export</span> ELLIPSIS_USER=<span class="hljs-string">"zeekay"</span>
-<span class="hljs-keyword">export</span> ELLIPSIS_PROTO=<span class="hljs-string">"ssh"</span>
-<span class="hljs-keyword">export</span> ELLIPSIS_PATH=<span class="hljs-string">"~/.el"</span>
+<pre><code class="lang-bash"><span class="hljs-built_in">export</span> ELLIPSIS_USER=<span class="hljs-string">"zeekay"</span>
+<span class="hljs-built_in">export</span> ELLIPSIS_PROTO=<span class="hljs-string">"ssh"</span>
+<span class="hljs-built_in">export</span> ELLIPSIS_PATH=<span class="hljs-string">"~/.el"</span>
 </code></pre>
 <h3 id="packages">Packages</h3>
 <p>A package is any repo with files you want to symlink into <code>$ELLIPSIS_HOME</code>
@@ -119,7 +122,7 @@ of a few common text files (<code>README</code>, <code>LICENSE</code>, etc).</p>
 <p>You can customize how ellipsis interacts with your package by adding an
 <code>ellipsis.sh</code> file to the root of your project. Here&#39;s an example of a complete
 <code>ellipsis.sh</code> file:</p>
-<pre><code class="lang-bash"><span class="hljs-shebang">#!/usr/bin/env bash</span>
+<pre><code class="lang-bash"><span class="hljs-meta">#!/usr/bin/env bash</span>
 </code></pre>
 <p>Yep, that&#39;s it :) If all you want to do is symlink some files into <code>$HOME</code>,
 adding an <code>ellipsis.sh</code> to your package is completely optional. But what if you
@@ -129,6 +132,7 @@ need more? <a href="http://docs.ellipsis.sh/hooks">That&#39;s where hooks come i
 <p>Specific parts that could be off interest:</p>
 <ul>
 <li><a href="http://docs.ellipsis.sh/hooks">Hooks</a></li>
+<li><a href="http://docs.ellipsis.sh/init">Init system</a></li>
 <li><a href="http://docs.ellipsis.sh/api">API</a></li>
 <li><a href="http://docs.ellipsis.sh/pkgindex">Package index</a></li>
 <li><a href="http://docs.ellipsis.sh/upgrading">Upgrading to Ellipsis</a></li>
