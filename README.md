@@ -25,7 +25,7 @@ Ellipsis is a package manager for dotfiles.
 Clone and symlink or use handy-dandy installer:
 
 ```bash
-$ curl -sL ellipsis.sh | sh
+$ curl ellipsis.sh | sh
 ```
 
 <sup>...no you didn't read that wrong, [the ellipsis.sh website also doubles as the installer][installer]</sup>
@@ -33,7 +33,7 @@ $ curl -sL ellipsis.sh | sh
 You can also specify which packages to install by setting the `PACKAGES` variable, i.e.:
 
 ```bash
-$ curl -sL ellipsis.sh | PACKAGES='vim zsh' sh
+$ curl ellipsis.sh | PACKAGES='vim zsh' sh
 ```
 
 Add `~/.ellipsis/bin` to your `$PATH` (or symlink somewhere convenient) and
