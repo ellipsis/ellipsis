@@ -12,12 +12,12 @@ load utils
 
 # Split name/branch to use
 pkg.split_name() {
-    echo ${1//@/ }
+    echo "${1//@/ }"
 }
 
-# Strip leading dot- from package name.
+# Strip prefix from package the name.
 pkg.name_stripped() {
-    echo $1 | sed -e "s/^dot-//"
+    sed -e "s/^dot-//" <<< "$1"
 }
 
 # Convert package name to path.
@@ -27,22 +27,22 @@ pkg.path_from_name() {
 
 # Convert package path to name, stripping any leading dots.
 pkg.name_from_path() {
-    echo "${1##*/}" | sed -e "s/^\.//"
+    sed -e "s/^\.//" <<< "${1##*/}"
 }
 
 # Pull name out as last path component of url
 pkg.name_from_url() {
-    echo "$1" | rev | cut -d '/' -f 1 | rev
+    rev <<< "$1" | cut -d '/' -f 1 | rev
 }
 
 # Get user from github-user/name shorthand syntax.
 pkg.user_from_shorthand() {
-    echo "$1" | cut -d '/' -f1
+    cut -d '/' -f1 <<< "$1"
 }
 
 # Get name from github-user/name shorthand syntax.
 pkg.name_from_shorthand() {
-    echo "$1" | cut -d '/' -f2
+    cut -d '/' -f2 <<< "$1"
 }
 
 # Set PKG_NAME, PKG_PATH. If $1 looks like a path it's assumed to be
