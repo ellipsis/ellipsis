@@ -17,7 +17,7 @@ pkg.split_name() {
 
 # Strip prefix from package the name.
 pkg.name_stripped() {
-    sed -e "s/^dot-//" <<< "$1"
+    sed -e "s/^${ELLIPSIS_PREFIX}//" <<< "$1"
 }
 
 # Convert package name to path.

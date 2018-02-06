@@ -34,6 +34,11 @@ teardown() {
     run pkg.name_stripped "my-dot-test"
     [ "$status" -eq 0 ]
     [ "$output" == "my-dot-test" ]
+
+    ELLIPSIS_PREFIX="custom-"
+    run pkg.name_stripped "custom-test"
+    [ "$status" -eq 0 ]
+    [ "$output" == "test" ]
 }
 
 @test "pkg.path_from_name should derive package path from package name" {

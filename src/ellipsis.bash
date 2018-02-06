@@ -73,7 +73,7 @@ ellipsis.install() {
                 */*)
                     PKG_USER="$(pkg.user_from_shorthand "$PKG_RAW")"
                     PKG_NAME="$(pkg.name_from_shorthand "$PKG_RAW")"
-                    PKG_URL="$ELLIPSIS_PROTO://github.com/$PKG_USER/dot-$(pkg.name_stripped "$PKG_NAME")"
+                    PKG_URL="$ELLIPSIS_PROTO://github.com/$PKG_USER/${ELLIPSIS_PREFIX}$(pkg.name_stripped "$PKG_NAME")"
                 ;;
                 # Easy extension installation
                 ellipsis-*)
@@ -82,12 +82,12 @@ ellipsis.install() {
                 ;;
                 *)
                     PKG_NAME="$PKG_RAW"
-                    PKG_URL="$ELLIPSIS_PROTO://github.com/$ELLIPSIS_USER/dot-$(pkg.name_stripped "$PKG_NAME")"
+                    PKG_URL="$ELLIPSIS_PROTO://github.com/$ELLIPSIS_USER/${ELLIPSIS_PREFIX}$(pkg.name_stripped "$PKG_NAME")"
                 ;;
             esac
         fi
 
-        # strip leading dot- from name as a convenience
+        # strip prefix from name as a convenience
         PKG_NAME="$(pkg.name_stripped "$PKG_NAME")"
         PKG_PATH="$(pkg.path_from_name "$PKG_NAME")"
 

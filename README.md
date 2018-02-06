@@ -55,7 +55,7 @@ $ ellipsis install zsh
 ```
 
 ...all work. By convention `username/package` and `package` are aliases for
-https://github.com/username/dot-package.
+https://github.com/username/dot-package. (customizable using `ELLIPSIS_PREFIX`)
 
 For full usage information you can read the [docs][docs-usage] or ask help from
 the command line with the `-h` option.
@@ -68,6 +68,7 @@ You can customize ellipsis by exporting a few different variables:
 | `GITHUB_USER` / `ELLIPSIS_USER` | Customizes whose dotfiles are installed when you `ellipsis install` without specifying user or a full repo url. Defaults to `$(git config github.user)` or `whoami`. |
 | `ELLIPSIS_REPO`                 | Customize location of ellipsis repo cloned during a curl-based install. Defaults to `https://github.com/ellipsis/ellipsis`.                                          |
 | `ELLIPSIS_PROTO`                | Customizes which protocol new packages are cloned with, you can specify `https`,`ssh`, `git`. Defaults to `https`.                                                   |
+| `ELLIPSIS_PREFIX`               | Customizes the prefix of ellipsis configuration packages (default: `dot-`).                                                                                                            |
 | `ELLIPSIS_HOME`                 | Customize which folder files are symlinked into, defaults to `$HOME`. (Mostly useful for testing)                                                                    |
 | `ELLIPSIS_PATH`                 | Customize where ellipsis lives on your filesystem, defaults to `~/.ellipsis`.                                                                                        |
 | `ELLIPSIS_PACKAGES`             | Customize where ellipsis installs packages on your filesystem, defaults to `~/.ellipsis/packages`.                                                                   |
