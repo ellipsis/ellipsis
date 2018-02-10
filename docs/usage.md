@@ -31,6 +31,7 @@ Usage: ellipsis <command>
     uninstall  uninstall package
     link       link package
     unlink     unlink package
+    relink     relink package
     broken     list any broken symlinks
     clean      rm broken symlinks
     installed  list installed packages
