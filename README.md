@@ -25,12 +25,17 @@ Ellipsis is a package manager for dotfiles.
 Clone and symlink or use handy-dandy installer:
 
 ```bash
+# Manual install
+$ git clone https://github.com/ellipsis/ellipsis .ellipsis
+
+# Using installer
 $ curl ellipsis.sh | sh
 ```
 
 <sup>...no you didn't read that wrong, [the ellipsis.sh website also doubles as the installer][installer]</sup>
 
-You can also specify which packages to install by setting the `PACKAGES` variable, i.e.:
+With the installer you can also specify which packages to install by setting
+the `PACKAGES` variable, i.e.:
 
 ```bash
 $ curl ellipsis.sh | PACKAGES='vim zsh' sh
@@ -39,9 +44,9 @@ $ curl ellipsis.sh | PACKAGES='vim zsh' sh
 Add `~/.ellipsis/bin` to your `$PATH` (or symlink somewhere convenient) and
 start managing your dotfiles in style :)
 
-As of version `1.7.3` you can also use the init system to automatically setup
-you environment. As a bonus it will allow you to use the powerful `pkg.init`
-hook to do the same for your packages.
+As of version `1.7.3` you can also use [the init system][docs-init] to
+automatically setup you environment. As a bonus it will allow you to use the
+powerful `pkg.init` hook to do the same for your packages.
 
 ### Usage
 Ellipsis comes with no dotfiles out of the box. To install packages, use
