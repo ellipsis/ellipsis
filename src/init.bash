@@ -24,6 +24,9 @@ ELLIPSIS_REPO="${ELLIPSIS_REPO:-https://github.com/$ELLIPSIS_USER/ellipsis}"
 ELLIPSIS_HOME="${ELLIPSIS_HOME:-$HOME}"
 ELLIPSIS_PACKAGES="${ELLIPSIS_PACKAGES:-$ELLIPSIS_PATH/packages}"
 
+# Default package prefix
+ELLIPSIS_PREFIX="${ELLIPSIS_PREFIX:-dot-}"
+
 # Ellipsis is the default package.
 PKG_PATH="${PKG_PATH:-$ELLIPSIS_PATH}"
 PKG_NAME="${PKG_NAME:-${PKG_PATH##*/.}}"
