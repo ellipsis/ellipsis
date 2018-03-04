@@ -68,7 +68,7 @@ env_init_pkg() {
     if [ -f "$PKG_PATH/ellipsis.sh" ]; then
         # Check if the package has an init hook
         pkg_init="$(sed -n '/^pkg.init\(\)/,/^}/p' "$PKG_PATH/ellipsis.sh" | sed '1 s/\./_/')"
-        if [ ! -z "$pkg_init" ]; then
+        if [ -n "$pkg_init" ]; then
             eval "$pkg_init"
             # Handle some edge cases by checking if the function is available
             if command -v 'pkg_init' >/dev/null 2>&1; then
