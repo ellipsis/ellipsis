@@ -73,7 +73,10 @@ env_init_pkg() {
             # Handle some edge cases by checking if the function is available
             if command -v 'pkg_init' >/dev/null 2>&1; then
                 {
-                    cd "$PKG_PATH" || return
+                    cd "$PKG_PATH" || {
+                        env_api log.error "Ellipsis could not cd to $PKG_PATH"
+                        return
+                    }
 
                     # Init or log an error
                     if ! pkg_init; then
@@ -115,6 +118,7 @@ env_init() {
         unset packages
     fi
 
+    cwd=$PWD
     for pkg in "$@"; do
         case $pkg in
             ellipsis|Ellipsis)
@@ -125,6 +129,12 @@ env_init() {
                 ;;
         esac
     done
+    cd "$cwd" || {
+        env_api log.error "Ellipsis could not cd to $cwd"
+        return
+    }
+
+    unset cwd
 
     # Clean up env
     env_clean_up
