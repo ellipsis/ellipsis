@@ -12,22 +12,32 @@ env_api() {
 
 # PATH helper, if exists, prepend, no duplication
 env_prepend_path() {
-    duplicates="$(echo "$PATH" | grep -Ec "(^|:)$1(:|$)")"
-    if [ -d "$1" ] && [ "$duplicates" -eq 0 ]; then
-        export PATH="$1:$PATH"
-    fi
+    [ -d "$1" ] || {
+        env_api log.error "Could not prepend '$1' to \$PATH, not a directory"
+        return
+    }
 
-    unset duplicates
+    # Remove $1 if it's already in the path to prevent duplicates
+    PATH="${PATH//:$1/}"
+    PATH="${PATH//:$1:/}"
+    PATH="${PATH//$1:/}"
+
+    export PATH="$1${PATH:+":$PATH"}"
 }
 
 # PATH helper, if exists, append, no duplication
 env_append_path() {
-    duplicates="$(echo "$PATH" | grep -Ec "(^|:)$1(:|$)")"
-    if [ -d "$1" ] && [ "$duplicates" -eq 0 ]; then
-        export PATH="$PATH:$1"
-    fi
+    [ -d "$1" ] || {
+        env_api log.error "Could not append '$1' to \$PATH, not a directory"
+        return
+    }
 
-    unset duplicates
+    # Remove $1 if it's already in the path to prevent duplicates
+    PATH="${PATH//:$1/}"
+    PATH="${PATH//:$1:/}"
+    PATH="${PATH//$1:/}"
+
+    export PATH="${PATH:+"$PATH:"}$1"
 }
 
 env_init_ellipsis() {
@@ -57,7 +67,7 @@ env_init_pkg() {
     # Check if the package exists/has an ellipsis.sh file
     if [ -f "$PKG_PATH/ellipsis.sh" ]; then
         # Check if the package has an init hook
-        grep '^pkg.init' "$PKG_PATH/ellipsis.sh" 2>&1 >/dev/null
+        grep '^pkg.init' "$PKG_PATH/ellipsis.sh" >/dev/null 2>&1
         if [ $? -eq 0 ]; then
             # Use some magic to extract the init function
             pkg_init="$(bash -c "source $PKG_PATH/ellipsis.sh; declare -f pkg.init")"
@@ -65,7 +75,7 @@ env_init_pkg() {
             eval "$pkg_init"
 
             # Handle some edge cases by checking if the function is available
-            command -v 'pkg_init' 2>&1 >/dev/null
+            command -v 'pkg_init' >/dev/null 2>&1
             if [ $? -eq 0 ]; then
                 cwd="$(pwd)"
                 cd "$PKG_PATH"
@@ -113,7 +123,7 @@ env_init() {
         unset packages
     fi
 
-    for pkg in $@; do
+    for pkg in "$@"; do
         case $pkg in
             ellipsis|Ellipsis)
                 env_init_ellipsis
