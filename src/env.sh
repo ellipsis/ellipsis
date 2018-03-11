@@ -67,38 +67,37 @@ env_init_pkg() {
     # Check if the package exists/has an ellipsis.sh file
     if [ -f "$PKG_PATH/ellipsis.sh" ]; then
         # Check if the package has an init hook
-        grep '^pkg.init' "$PKG_PATH/ellipsis.sh" >/dev/null 2>&1
-        if [ $? -eq 0 ]; then
+        if grep '^pkg.init' "$PKG_PATH/ellipsis.sh" >/dev/null 2>&1; then
             # Use some magic to extract the init function
-            pkg_init="$(bash -c "source $PKG_PATH/ellipsis.sh; declare -f pkg.init")"
-            pkg_init="$(echo "$pkg_init" | sed 's/pkg.init/pkg_init/')"
-            eval "$pkg_init"
+            init_func="$(bash -c "source $PKG_PATH/ellipsis.sh; declare -f pkg.init")"
+            init_func="${init_func/pkg.init/pkg_init}"
+            eval "$init_func"
 
             # Handle some edge cases by checking if the function is available
-            command -v 'pkg_init' >/dev/null 2>&1
-            if [ $? -eq 0 ]; then
-                cwd="$(pwd)"
-                cd "$PKG_PATH"
+
+            if command -v 'pkg_init' >/dev/null 2>&1; then
+                cd "$PKG_PATH" || {
+                    env_api log.error "Ellipsis could not cd to $PKG_PATH"
+                    return
+                }
 
                 # Init or log an error
-                if ! pkg_init; then
+                pkg_init || {
                     env_api log.error "Ellipsis could not initialize $PKG_NAME"
-                fi
+                }
 
-                cd "$cwd"
-                unset cwd
                 unset -f pkg_init
             else
                 env_api log.error "Could not source pkg.init function for package $PKG_NAME"
             fi
 
-            unset pkg_init
+            unset init_func
         fi
     else
         # Check if package exists or just hasn't got an ellipsis.sh file
-        if [ ! -d "$PKG_PATH" ]; then
+        [ -d "$PKG_PATH" ] || {
             env_api log.error "Package $PKG_NAME not found"
-        fi
+        }
     fi
 
     unset pkg
@@ -123,6 +122,8 @@ env_init() {
         unset packages
     fi
 
+    cwd="$(pwd)"
+
     for pkg in "$@"; do
         case $pkg in
             ellipsis|Ellipsis)
@@ -133,6 +134,12 @@ env_init() {
                 ;;
         esac
     done
+
+    cd "$cwd" || {
+        env_api log.error "Ellipsis could not cd to $cwd"
+        return
+    }
+    unset cwd
 
     # Clean up env
     env_clean_up
