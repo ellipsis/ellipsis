@@ -38,7 +38,7 @@ With the installer you can also specify which packages to install by setting
 the `PACKAGES` variable, i.e.:
 
 ```bash
-$ curl ellipsis.sh | PACKAGES='vim zsh' sh
+$ curl https://ellipsis.sh | PACKAGES='vim zsh' sh
 ```
 
 Add `~/.ellipsis/bin` to your `$PATH` (or symlink somewhere convenient) and
