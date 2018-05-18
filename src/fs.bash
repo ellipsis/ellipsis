@@ -69,7 +69,7 @@ fs.backup() {
 
     # remove broken symlink
     if fs.is_broken_symlink "$original"; then
-        msg.dim "rm ~/$name (broken link to $(readlink "$original"))"
+        msg.dim "rm $(path.relative_to_home "$original") (broken link to $(readlink "$original"))"
         rm "$original"
         return
     fi
@@ -81,7 +81,7 @@ fs.backup() {
 
     # if file exists and is a symlink to ellipsis, remove
     if fs.is_ellipsis_symlink "$original"; then
-        msg.dim "rm ~/$name (linked to $(path.relative_to_packages "$(readlink "$original")"))"
+        msg.dim "rm $(path.relative_to_home "$original") (linked to $(path.relative_to_packages "$(readlink "$original")"))"
         rm "$original"
         return
     fi
