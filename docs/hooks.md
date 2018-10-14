@@ -29,6 +29,7 @@ The hooks available in your `ellipsis.sh` are:
 | `pkg.status`    | Customize the output of `ellipsis status`.                        |
 | `pkg.uninstall` | Custom uninstall steps to undo the install steps.                 |
 | `pkg.unlink`    | Customize which files are unlinked by your package.               |
+| `pkg.reinstall` | Customize the re-install behavior.                                |
 
 Lets look at this in more detail!
 
@@ -130,6 +131,14 @@ and is purely informational.
 ##### pkg.status
 This hook should echo information about the installation status of your
 package. The hook is only used for informing the user.
+
+##### pkg.reinstall
+The `pkg.reinstall` hook lets you run custom reinstall steps. The hook is run
+when the reinstall command is called.
+
+By default the the unlink and uninstall hook is called followed by the install
+and link hook. The package will not be cloned from version control again.
+
 
 #### Examples
 Here's a more complete example (from
