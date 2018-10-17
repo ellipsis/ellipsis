@@ -93,6 +93,14 @@ hooks.unlink() {
     done
 }
 
+# Reinstall a package without cloning it again
+hooks.reinstall() {
+    pkg.run_hook "unlink"
+    pkg.run_hook "uninstall"
+    pkg.run_hook "install"
+    pkg.run_hook "link"
+}
+
 # Dummy, by default only removing symlinks and package
 hooks.uninstall() {
     :

@@ -120,6 +120,36 @@ ellipsis.install() {
     done
 }
 
+# Re-install a package
+#
+# Calls the reinstall hook
+ellipsis.reinstall() {
+    if [ $# -ne 1 ]; then
+        log.fail "No package specified for re-install"
+        exit 1
+    fi
+
+    for package in "$@"; do
+        if [[ "$1" =~ ^[Ee]llipsis$ ]]; then
+            log.fail "Can't reinstall ellipsis in this way"
+            continue
+        fi
+
+        pkg.env_up "$package"
+
+        if pkg.run git.has_untracked || pkg.run git.has_changes; then
+            if ! utils.prompt "Uncommitted files or changes present, continue? [y/n]" "y"; then
+                pkg.env_down
+                continue
+            fi
+        fi
+
+        pkg.run_hook "reinstall"
+
+        pkg.env_down
+    done
+}
+
 # Uninstall package, using uninstall hook if one exists. If no hook is
 # defined, all symlinked files in ELLIPSIS_HOME are removed and package is rm -rf'd.
 ellipsis.uninstall() {
