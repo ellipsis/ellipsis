@@ -25,6 +25,7 @@ Usage: ellipsis <command>
     add        add new dotfile to package
     remove     remove a files form a package
     install    install new package
+    reinstall  re-install a package
     uninstall  uninstall package
     link       link package
     unlink     unlink package
@@ -110,6 +111,9 @@ cli.run() {
             ;;
         install|in)
             ellipsis.install "${@:2}"
+            ;;
+        reinstall)
+            ellipsis.reinstall "${@:2}"
             ;;
         uninstall|un)
             ellipsis.uninstall "${@:2}"
