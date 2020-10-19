@@ -32,7 +32,7 @@ pkg.name_from_path() {
 
 # Pull name out as last path component of url
 pkg.name_from_url() {
-    rev <<< "$1" | cut -d '/' -f 1 | rev
+    echo "${1##*/}"
 }
 
 # Get user from github-user/name shorthand syntax.
