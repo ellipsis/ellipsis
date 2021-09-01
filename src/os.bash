@@ -7,13 +7,19 @@ os.platform() {
         CYGWIN*)
             echo cygwin
             ;;
-        Darwin)
+        *WSL2|*microsoft-standard)
+            echo wsl2
+            ;;
+        *Microsoft)
+            echo wsl1
+            ;;
+        Darwin*)
             echo osx
             ;;
-        FreeBSD)
+        FreeBSD*)
             echo freebsd
             ;;
-        Linux)
+        Linux*)
             echo linux
             ;;
     esac

@@ -35,7 +35,7 @@ variables which ellipsis exposes for you:
 | `git.pull`                  | Identical to `git pull`.                                                             |
 | `git.push`                  | Identical to `git push`.                                                             |
 | `git.sha1`                  | Prints last commit's sha1 using `git rev-parse --short HEAD`.                        |
-| `os.platform`               | Returns one of `cygwin`, `freebsd`, `linux`, `osx`.                                  |
+| `os.platform`               | Returns one of `cygwin`, `freebsd`, `linux`, `osx`, `wsl1`, `wsl2`.                                  |
 | `path.abs_path`             | Return absolute path to `$1`.                                                        |
 | `path.is_path`              | Simple heuristic to determine if `$1` is a path.                                     |
 | `path.relative_to_home`     | Replaces `$HOME` with `~`                                                            |
@@ -363,7 +363,7 @@ TODO
 #### os
 
 <h5>os.platform</h5>
-Returns one of `cygwin`, `freebsd`, `linux`, `osx`.
+Returns one of `cygwin`, `freebsd`, `linux`, `osx`, `wsl1`, `wsl2`.
 
 ``` bash
 # example ()
