@@ -3,7 +3,7 @@
 # Platform detection and OS functions.
 
 os.platform() {
-    case "$(uname)" in
+    case "$(uname -rs)" in
         CYGWIN*)
             echo cygwin
             ;;
