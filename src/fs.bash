@@ -58,8 +58,7 @@ fs.list_symlinks() {
 
 fs.list_dirs() {
     dir="${1:-.}"
-    # TODO: Non posix compliant
-    find "$dir" -maxdepth 1 -mindepth 1 ! -path "$dir" -type d -printf "%f\n"
+    find "$dir" -maxdepth 1 -mindepth 1 ! -path "$dir" -type d
 }
 
 # backup existing file, ensuring you don't overwrite existing backups
