@@ -11,6 +11,3 @@ load init
     skip "No test implementation"
 }
 
-@test "load should source extension specific files if possible" {
-    skip "No test implementation"
-}
