@@ -30,9 +30,17 @@ fs.is_symlink() {
     return 1
 }
 
-# check whether file is a symlink
+# check whether file is symlinked to ellipsis internal library
 fs.is_ellipsis_symlink() {
     if [[ -L "$1" && "$(readlink "$1")" == $ELLIPSIS_PATH/* ]]; then
+        return 0
+    fi
+    return 1
+}
+
+# check whether file is symlinked to one package
+fs.is_package_symlink() {
+    if [[ -L "$1" && "$(readlink "$1")" == $ELLIPSIS_PACKAGES/* ]]; then
         return 0
     fi
     return 1
