@@ -64,6 +64,9 @@ env_init_pkg() {
         PKG_PATH="$ELLIPSIS_PACKAGES/$PKG_NAME"
     fi
 
+    # Skip non directory packages
+    [ -d "$PKG_PATH" ] || return 0
+
     # Check if the package exists/has an ellipsis.sh file
     if [ -f "$PKG_PATH/ellipsis.sh" ]; then
         # Check if the package has an init hook
