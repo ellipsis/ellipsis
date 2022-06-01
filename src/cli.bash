@@ -52,6 +52,7 @@ Usage: ellipsis <command>
     # Utils
     strip      strip . from filenames
     init       source init code for your shell
+
 EOF
 }
 
