@@ -19,27 +19,39 @@ Usage: ellipsis <command>
     -v, --version  show version
 
   Commands:
-    init       source init code
+
+    # Informations
+    info       show ellipsis info
+    search     search package repository
+    list       list installed packages
+    status     show status of package(s)
+    links      show symlinks installed by package(s)
+
+    # Package manager
+    install    install new package
+    link       link package
+    reinstall  re-install a package
+    unlink     unlink package
+    uninstall  uninstall package
+
+    # Package editor
     new        create a new package
     edit       edit an installed package
     add        add new dotfile to package
     remove     remove a files form a package
-    install    install new package
-    reinstall  re-install a package
-    uninstall  uninstall package
-    link       link package
-    unlink     unlink package
-    broken     list any broken symlinks
-    clean      rm broken symlinks
-    installed  list installed packages
-    links      show symlinks installed by package(s)
+
+    # Repository
     pull       git pull package(s)
     push       git push package(s)
-    status     show status of package(s)
     publish    publish package to repository
-    search     search package repository
+
+    # Maintenance
+    broken     list any broken symlinks
+    clean      rm broken symlinks
+
+    # Utils
     strip      strip . from filenames
-    info       show ellipsis info
+    init       source init code for your shell
 EOF
 }
 
