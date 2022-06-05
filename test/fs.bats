@@ -206,9 +206,12 @@ teardown() {
     [[ "$output" == linking* ]] || false
 }
 
+@test "fs.is_ellipsis_symlink should detect symlink pointing back to ELLIPSIS_PACKAGES" {
+    skip "No test implementation"
+}
 
-@test "fs.is_ellipsis_symlink should detect symlink pointing back to ELLIPSIS_PATH" {
-    run fs.is_ellipsis_symlink $ELLIPSIS_HOME/.test
+@test "fs.is_ellipsis_core_symlink should detect symlink pointing back to ELLIPSIS_PATH" {
+    run fs.is_ellipsis_core_symlink $ELLIPSIS_HOME/.test
     [ $status -eq 0 ]
 }
 
