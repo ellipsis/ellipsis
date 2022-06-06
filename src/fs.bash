@@ -76,7 +76,7 @@ fs.list_symlinks() {
 
 fs.list_dirs() {
     dir="${1:-.}"
-    find "$dir" -maxdepth 1 ! -path "$dir" -type d
+    find "$dir" -maxdepth 1 -mindepth 1 ! -path "$dir" -type d
 }
 
 # backup existing file, ensuring you don't overwrite existing backups

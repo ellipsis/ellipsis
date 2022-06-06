@@ -13,7 +13,7 @@ load msg
 # List all installed packages.
 ellipsis.list_packages() {
     if ! fs.folder_empty "$ELLIPSIS_PACKAGES"; then
-        echo "$ELLIPSIS_PACKAGES"/*
+        fs.list_dirs "$ELLIPSIS_PACKAGES" | sort
     fi
 }
 
