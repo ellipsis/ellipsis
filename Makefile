@@ -25,7 +25,7 @@ test/%: deps/bats test/fixtures/dot-test/ellipsis.sh
 
 deps/bats:
 	@mkdir -p deps
-	git clone --depth 1 https://github.com/bats-core/bats-core.git deps/bats
+	git clone --depth 1 --branch v1.7.0 https://github.com/bats-core/bats-core.git deps/bats
 
 test/fixtures/dot-test/ellipsis.sh:
 	git submodule init
