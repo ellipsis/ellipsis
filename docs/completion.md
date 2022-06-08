@@ -5,7 +5,7 @@ Completion file for [bash][bashcomp] and [zsh][zshcomp] are provided.
 For bash, you just need to source `_ellipsis_bash`:
 
 ```bash
-. $HOME/.ellipsis/comp $fpath
+. $HOME/.ellipsis/comp/_ellipsis_bash
 ```
 
 For zsh, add `_ellipsis` to your `fpath` and ensure auto-completion is enabled:
