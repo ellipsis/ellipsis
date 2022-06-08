@@ -23,25 +23,40 @@ Usage: ellipsis <command>
     -v, --version  show version
 
   Commands:
-    init       source init code
+
+    # Informations
+    info       show ellipsis info
+    search     search package repository
+    list       list installed packages
+    status     show status of package(s)
+    links      show symlinks installed by package(s)
+
+    # Package manager
+    install    install new package
+    link       link package
+    reinstall  re-install a package
+    unlink     unlink package
+    uninstall  uninstall package
+
+    # Package editor
     new        create a new package
     edit       edit an installed package
     add        add new dotfile to package
-    install    install new package
-    uninstall  uninstall package
-    link       link package
-    unlink     unlink package
-    broken     list any broken symlinks
-    clean      rm broken symlinks
-    installed  list installed packages
-    links      show symlinks installed by package(s)
+    remove     remove a files form a package
+
+    # Repository
     pull       git pull package(s)
     push       git push package(s)
-    status     show status of package(s)
     publish    publish package to repository
-    search     search package repository
+
+    # Maintenance
+    broken     list any broken symlinks
+    clean      rm broken symlinks
+
+    # Utils
     strip      strip . from filenames
-    info       show ellipsis info
+    init       source init code for your shell
+
 ```
 
 ### Configuration
@@ -52,7 +67,7 @@ You can customize ellipsis by exporting a few different variables:
 | `GITHUB_USER` / `ELLIPSIS_USER` | Customizes whose dotfiles are installed when you `ellipsis install` without specifying user or a full repo url. Defaults to `$(git config github.user)` or `whoami`. |
 | `ELLIPSIS_REPO`                 | Customize location of ellipsis repo cloned during a curl-based install. Defaults to `https://github.com/ellipsis/ellipsis`.                                          |
 | `ELLIPSIS_PROTO`                | Customizes which protocol new packages are cloned with, you can specify `https`,`ssh`, `git`. Defaults to `https`.                                                   |
-| `ELLIPSIS_PREFIX`               | Customizes the prefix of ellipsis configuration packages (default: `dot-`).                                                                                                            |
+| `ELLIPSIS_PREFIX`               | Customizes the prefix of ellipsis configuration packages (default: `dot-`).                                                                                          |
 | `ELLIPSIS_HOME`                 | Customize which folder files are symlinked into, defaults to `$HOME`. (Mostly useful for testing)                                                                    |
 | `ELLIPSIS_PATH`                 | Customize where ellipsis lives on your filesystem, defaults to `~/.ellipsis`.                                                                                        |
 | `ELLIPSIS_PACKAGES`             | Customize where ellipsis installs packages on your filesystem, defaults to `~/.ellipsis/packages`.                                                                   |

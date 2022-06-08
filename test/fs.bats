@@ -18,10 +18,14 @@ setup() {
     ln -s ../not_empty/file tmp/symlinks/symlink
     ln -s $ELLIPSIS_PATH/test $ELLIPSIS_HOME/.test
     ln -s does_not_exist tmp/symlinks/brokensymlink
+    mkdir -p $ELLIPSIS_PACKAGES
+    touch $ELLIPSIS_PACKAGES/.test
+    ln -s $ELLIPSIS_PACKAGES/.test $ELLIPSIS_HOME/.test_pkg
 }
 
 teardown() {
     rm -rf tmp
+    rm $ELLIPSIS_PACKAGES/.test
 }
 
 @test "fs.file_exists should detect file that exists" {
@@ -206,10 +210,27 @@ teardown() {
     [[ "$output" == linking* ]] || false
 }
 
-
-@test "fs.is_ellipsis_symlink should detect symlink pointing back to ELLIPSIS_PATH" {
+@test "fs.is_ellipsis_symlink should detect symlink pointing back to ELLIPSIS_PATH or ELLIPSIS_PACKAGES" {
     run fs.is_ellipsis_symlink $ELLIPSIS_HOME/.test
     [ $status -eq 0 ]
+    run fs.is_ellipsis_symlink $ELLIPSIS_HOME/.test_pkg
+    [ $status -eq 0 ]
+    run fs.is_ellipsis_symlink tmp/not_empty
+    [ $status -eq 1 ]
+}
+
+@test "fs.is_ellipsis_core_symlink should detect symlink pointing back to ELLIPSIS_PATH" {
+    run fs.is_ellipsis_core_symlink $ELLIPSIS_HOME/.test
+    [ $status -eq 0 ]
+    run fs.is_ellipsis_core_symlink $ELLIPSIS_HOME/.test_pkg
+    [ $status -eq 1 ]
+}
+
+@test "fs.is_ellipsis_package_symlink should detect symlink pointing back to ELLIPSIS_PACKAGES" {
+    run fs.is_ellipsis_package_symlink $ELLIPSIS_HOME/.test_pkg
+    [ $status -eq 0 ]
+    run fs.is_ellipsis_package_symlink $ELLIPSIS_HOME/.test
+    [ $status -eq 1 ]
 }
 
 @test "fs.first_found should echo first file found in filelist" {

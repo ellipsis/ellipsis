@@ -13,7 +13,7 @@ load msg
 # List all installed packages.
 ellipsis.list_packages() {
     if ! fs.folder_empty "$ELLIPSIS_PACKAGES"; then
-        echo "$ELLIPSIS_PACKAGES"/*
+        fs.list_dirs "$ELLIPSIS_PACKAGES" | sort
     fi
 }
 
@@ -337,7 +337,7 @@ ellipsis.edit() {
 ellipsis._list_symlink_mappings() {
     for file in $(fs.list_symlinks); do
         local link="$(readlink "$file")"
-        if [[ "$link" == $ELLIPSIS_PATH* ]]; then
+        if [[ "$link" == $ELLIPSIS_PACKAGES* ]]; then
             msg.print "$(path.relative_to_packages "$link") -> $(path.relative_to_home "$file")"
         fi
     done
