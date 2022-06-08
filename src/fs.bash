@@ -30,9 +30,9 @@ fs.is_symlink() {
     return 1
 }
 
-# check whether file is symlinked to a package
+# check whether file is related to ellipsis
 fs.is_ellipsis_symlink() {
-    fs.is_target_symlink "$1" "$ELLIPSIS_PACKAGES"
+  fs.is_ellipsis_core_symlink "$1" || fs.is_ellipsis_package_symlink "$1"
 }
 
 # check whether file is symlinked to ellipsis internal library
@@ -40,17 +40,14 @@ fs.is_ellipsis_core_symlink() {
     fs.is_target_symlink "$1" "$ELLIPSIS_PATH"
 }
 
+# check whether file is symlinked to a package
+fs.is_ellipsis_package_symlink() {
+    fs.is_target_symlink "$1" "$ELLIPSIS_PACKAGES"
+}
+
 # check whether file is symlinked to target
 fs.is_target_symlink() {
     if [[ -L "$1" && "$(readlink "$1")" == "$2"/* ]]; then
-        return 0
-    fi
-    return 1
-}
-
-# check whether file is symlinked to one package
-fs.is_package_symlink() {
-    if [[ -L "$1" && "$(readlink "$1")" == $ELLIPSIS_PACKAGES/* ]]; then
         return 0
     fi
     return 1
