@@ -18,6 +18,7 @@ setup() {
     ln -s ../not_empty/file tmp/symlinks/symlink
     ln -s $ELLIPSIS_PATH/test $ELLIPSIS_HOME/.test
     ln -s does_not_exist tmp/symlinks/brokensymlink
+    mkdir -p $ELLIPSIS_PACKAGES
     touch $ELLIPSIS_PACKAGES/.test
     ln -s $ELLIPSIS_PACKAGES/.test $ELLIPSIS_HOME/.test_pkg
 }
