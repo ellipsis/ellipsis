@@ -1,0 +1,68 @@
+#/usr/bin/env bash
+
+_ellipsis()
+{
+  local -a CMD_PKG=()
+  local -a CMD_PKG_FILE=()
+  local -a CMD_FILE=()
+  local -a CMD_SIMPLE=()
+  local PKG_LIST=$(find "$ELLIPSIS_PACKAGES" -mindepth 1 -maxdepth 1 -type d -printf "%f\n")
+
+  # Command definitions
+  CMD_SIMPLE+=("info")
+  CMD_SIMPLE+=("search")
+  CMD_SIMPLE+=("list")
+  CMD_SIMPLE+=("status")
+  CMD_SIMPLE+=("links")
+  CMD_SIMPLE+=("broken")
+  CMD_SIMPLE+=("clean")
+  CMD_SIMPLE+=("init")
+
+  CMD_PKG+=("install")
+  CMD_PKG+=("link")
+  CMD_PKG+=("unlink")
+  CMD_PKG+=("reinstall")
+  CMD_PKG+=("uninstall")
+  CMD_PKG+=("new")
+  CMD_PKG+=("edit")
+  CMD_PKG+=("pull")
+  CMD_PKG+=("push")
+  CMD_PKG+=("publish")
+
+  CMD_PKG_FILE+=("add")
+
+  CMD_FILE+=("strip")
+
+  # Prepare comp
+  local cur prev prevprev
+  cur=${COMP_WORDS[COMP_CWORD]}
+  prev=${COMP_WORDS[COMP_CWORD-1]}
+  prevprev=${COMP_WORDS[COMP_CWORD-2]}
+
+  # Run comp
+  local CMD_ALL=("${CMD_PKG[@]}" "${CMD_PKG_FILE[@]}" "${CMD_PKG_FILE[@]} ${CMD_FILE[@]}")
+  case "${COMP_CWORD}" in
+    1)
+      COMPREPLY=($(compgen -W "${CMD_ALL[*]}" -- "${COMP_WORDS[1]}"))
+    ;;
+    2)
+      if [[ " ${CMD_PKG[*]} ${CMD_PKG_FILE[*]} " =~ " $prev " ]]; then
+        COMPREPLY=($(compgen -W "$PKG_LIST" -- "${COMP_WORDS[2]}"))
+      fi
+    ;;
+    3)
+      if [[ " ${CMD_PKG_FILE[*]} " =~ " $prevprev " ]]; then
+        compopt -o nospace -o bashdefault -o default
+        COMPREPLY=(
+          $(compgen -f -- "${COMP_WORDS[3]}")
+        )
+      fi
+    ;;
+    *)
+      COMPREPLY=()
+    ;;
+  esac
+
+}
+
+complete -F _ellipsis ellipsis
