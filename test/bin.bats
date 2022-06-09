@@ -18,6 +18,12 @@ teardown() {
     rm -rf "$TESTS_DIR/tmp"
 }
 
+@test "ensure ellipsis is in real git repository" {
+    # Ensure we are not in a worktree
+    [ ! -f "$ELLIPSIS_PATH/.git" ]
+    [ -d "$ELLIPSIS_PATH/.git" ]
+}
+
 @test "ellipsis <command> calls cli.run <command>" {
     run ellipsis version
     [ "$status" -eq 0 ]

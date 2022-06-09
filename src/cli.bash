@@ -61,8 +61,8 @@ cli.version() {
     local cwd="$(pwd)"
     cd "$ELLIPSIS_PATH"
 
-    local sha1="$(git.sha1)"
-    msg.print "\033[1mv$ELLIPSIS_VERSION\033[0m ($sha1)"
+    local sha1="$(git.sha1 2>/dev/null)"
+    msg.print "\033[1mv$ELLIPSIS_VERSION\033[0m${sha1:+ ($sha1)}"
 
     cd "$cwd"
 }
