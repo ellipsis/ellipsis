@@ -50,7 +50,11 @@ pkg.name_from_shorthand() {
 pkg.set_globals() {
     if path.is_path "$1"; then
         PKG_PATH="$1"
-        PKG_NAME="$(pkg.name_from_path "$PKG_PATH")"
+        if [[ -n "${2-}" ]]; then
+          PKG_NAME="$2"
+        else
+          PKG_NAME="$(pkg.name_from_path "$PKG_PATH")"
+        fi
     else
         PKG_NAME="$1"
         PKG_PATH="$(pkg.path_from_name "$PKG_NAME")"
@@ -59,7 +63,7 @@ pkg.set_globals() {
 
 # Setup the package env (vars/hooks)
 pkg.env_up() {
-    pkg.set_globals "${1:-"$PKG_PATH"}"
+    pkg.set_globals "${1:-"$PKG_PATH"}" "${2-}"
 
     # Exit if we're asked to operate on an unknown package.
     if [ ! -d "$PKG_PATH" ]; then

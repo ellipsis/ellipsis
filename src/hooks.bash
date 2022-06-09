@@ -129,8 +129,8 @@ hooks.push() {
 
 # List repo status.
 hooks.installed() {
-    local sha1="$(git.sha1)"
-    local last_updated="$(git.last_updated)"
+    local sha1="$(git.sha1 2>/dev/null || echo -)"
+    local last_updated="$(git.last_updated 2>/dev/null || echo unknown)"
 
     msg.print "\033[1m${1:-$PKG_NAME}\033[0m\t$sha1\t(updated $last_updated)"
 }

@@ -20,7 +20,7 @@ ellipsis.list_packages() {
 # Run commands across all packages.
 ellipsis.each() {
     # execute command for ellipsis first
-    pkg.env_up "$ELLIPSIS_PATH"
+    pkg.env_up "$ELLIPSIS_PATH" ellipsis
     "$@"
     pkg.env_down
 

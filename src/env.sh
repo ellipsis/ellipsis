@@ -122,7 +122,7 @@ env_init() {
         unset packages
     fi
 
-    cwd="$(pwd)"
+    local cwd="$(pwd)"
 
     for pkg in "$@"; do
         case $pkg in
@@ -139,7 +139,6 @@ env_init() {
         env_api log.error "Ellipsis could not cd to $cwd"
         return
     }
-    unset cwd
 
     # Clean up env
     env_clean_up
