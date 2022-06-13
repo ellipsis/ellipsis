@@ -17,8 +17,8 @@ teardown() {
     [ "$output" = "~/.ellipsis" ]
     run path.relative_to_home ~/.ellipsis
     [ "$output" = "~/.ellipsis" ]
-    run path.relative_to_home tmp
-    [ "$output" = "tmp" ]
+    run path.relative_to_home $TESTS_DIR2/tmp
+    [ "$output" = "~${TESTS_DIR2##$HOME}/tmp" ]
 }
 
 @test "path.expand expands '~/', '\$HOME' and '\$ELLIPSIS_HOME' to \$HOME or \$ELLIPSIS_HOME" {

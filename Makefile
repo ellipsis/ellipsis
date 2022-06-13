@@ -19,10 +19,10 @@ stag:
 
 # Run test suite
 test: deps/bats test/fixtures/dot-test/ellipsis.sh
-	deps/bats/bin/bats test $(TEST_OPTS)
+	env -i TERM=xterm deps/bats/bin/bats --verbose-run test $(TEST_OPTS)
 
 test/%: deps/bats test/fixtures/dot-test/ellipsis.sh
-	deps/bats/bin/bats $@.bats $(TEST_OPTS)
+	env -i TERM=xterm deps/bats/bin/bats $@.bats $(TEST_OPTS)
 
 deps/bats:
 	@mkdir -p deps

@@ -2,12 +2,11 @@
 #
 # Checks if bin/ellipsis does all it needs to do.
 
+load _helper
+
 setup() {
-    export TESTS_DIR="$BATS_TEST_DIRNAME"
-    export _ELLIPSIS_PATH="$(cd "$TESTS_DIR/.." && pwd)"
-    export PATH="$_ELLIPSIS_PATH/bin:$PATH"
     mkdir -p "$TESTS_DIR/tmp"
-    ln -s "$_ELLIPSIS_PATH/bin/ellipsis" "$TESTS_DIR/tmp/l1"
+    ln -s "$ELLIPSIS_PATH/bin/ellipsis" "$TESTS_DIR/tmp/l1"
     ln -s "$TESTS_DIR/tmp/l1" "$TESTS_DIR/tmp/l2"
     ln -s "$TESTS_DIR/tmp/l2" "$TESTS_DIR/tmp/l3"
     ln -s "$TESTS_DIR/tmp/l3" "$TESTS_DIR/tmp/l4"

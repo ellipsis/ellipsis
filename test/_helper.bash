@@ -4,10 +4,14 @@
 # Just a little helper file for bats.
 
 # Set path vars
-export TESTS_DIR="$BATS_TEST_DIRNAME"
-export ELLIPSIS_PATH="$(cd "$TESTS_DIR/.." && pwd)"
+export TESTS_DIR=$( cd "${ELLIPSIS_TESTS_DIR:-$BATS_TEST_DIRNAME}" && pwd)
+export ELLIPSIS_PATH="${ELLIPSIS_TESTS_PATH:-$(cd "$TESTS_DIR/.." && pwd)}"
 export ELLIPSIS_SRC="$ELLIPSIS_PATH/src"
 export PATH="$ELLIPSIS_PATH/bin:$PATH"
+
+# Set tests directory (Read/Write)
+export HOME=${HOME:-$ELLIPSIS_PATH/tmp_home}
+export TESTS_DIR2="${HOME}/tmp_tests"
 
 # Don't log tests
 export ELLIPSIS_LOGFILE="/dev/null"
