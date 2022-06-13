@@ -26,7 +26,7 @@ teardown() {
 @test "ellipsis <command> calls cli.run <command>" {
     run ellipsis version
     [ "$status" -eq 0 ]
-    [ $(expr "$output" : "v[0-9][0-9.]*") -ne 0 ]
+    [ $(expr "$output" : "\s*v[0-9][0-9.]*") -ne 0 ]
 }
 
 @test "ellipsis can find its location trough multiple symlinks" {
