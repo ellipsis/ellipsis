@@ -1,4 +1,4 @@
-## ellipsis [![Build Status](https://travis-ci.org/zeekay/ellipsis.svg?branch=master)](https://travis-ci.org/zeekay/ellipsis)
+# Ellipsis [![Build Status][travis-image]][travis-url] [![Documentation status][docs-image]][docs-url] [![Latest tag][tag-image]][tag-url] [![Gitter chat][gitter-image]][gitter-url]
 
 ```
  _    _    _
@@ -6,39 +6,52 @@
 \/_/ \/_/ \/_/   …because $HOME is where the <3 is!
 ```
 
-ellipsis is a package manager for dotfiles.
+Ellipsis is a package manager for dotfiles.
 
 ### Features
 - Creating new packages is trivial (any git repository is already a package).
-- Ellipsis packages make it easy to share specific bits of your dotfiles. Say a
-  friend wants to test out your ZSH setup but doesn't want to adopt the madness
-  that is your Vim config? No problem, he can just `ellipsis install
-  github-user/dot-zsh`
-- Quickly see which dotfiles have been modified, and keep them updated and in
-  sync across systems.
+- Modular configuration files are easier to maintain and share with others.
+- Allows you to quickly see which dotfiles have been modified, and keep them
+  updated and in-sync across systems.
+- Adding new dotfiles to your collection can be automated with `ellipsis add`.
 - Cross platform, known to work on Mac OS X, Linux, FreeBSD and even Cygwin.
+- Large test suite to ensure your `$HOME` doesn't get ravaged.
 - Completely customizable.
+- [Works with existing dotfiles!][docs-upgrading]
 
 ### Install
+**Requirements:** bash, curl, git
+
 Clone and symlink or use handy-dandy installer:
 
 ```bash
-$ curl -sL ellipsis.sh | sh
+# Manual install
+$ git clone https://github.com/ellipsis/ellipsis .ellipsis
+
+# Using installer
+$ curl ellipsis.sh | sh
 ```
 
-You can also specify which packages to install by setting the `PACKAGES` variable, i.e.:
+<sup>...no you didn't read that wrong, [the ellipsis.sh website also doubles as the installer][installer]</sup>
+
+With the installer you can also specify which packages to install by setting
+the `PACKAGES` variable, i.e.:
 
 ```bash
-$ curl -sL ellipsis.sh | PACKAGES='vim zsh' sh
+$ curl https://ellipsis.sh | PACKAGES='vim zsh' sh
 ```
 
-I recommend adding `~/.ellipsis/bin` to your `$PATH`, but you can also just
-symlink `~/.ellipsis/bin/ellipsis` somewhere convenient.
+Add `~/.ellipsis/bin` to your `$PATH` (or symlink somewhere convenient) and
+start managing your dotfiles in style :)
+
+As of version `1.7.3` you can also use [the init system][docs-init] to
+automatically setup you environment. As a bonus it will allow you to use the
+powerful `pkg.init` hook to do the same for your packages.
 
 ### Usage
-Ellipsis comes with no dotfiles out of the box. To add a dotfiles packages, use
-`ellipsis install`. Packages to install can be specified by github-user/repo or
-full ssh/git/http(s) urls:
+Ellipsis comes with no dotfiles out of the box. To install packages, use
+`ellipsis install`. Packages can be specified by github-user/repo or full
+ssh/git/http(s) urls:
 
 ```bash
 $ ellipsis install ssh://github.com/zeekay/private.git
@@ -46,168 +59,91 @@ $ ellipsis install zeekay/vim
 $ ellipsis install zsh
 ```
 
-...all work.
+...all work. By convention `username/package` and `package` are aliases for
+https://github.com/username/dot-package. (customizable using `ELLIPSIS_PREFIX`)
 
-Full usage available via `ellipsis` executable:
-
-```
-$ ellipsis -h
-Usage: ellipsis <command>
-  Options:
-    -h, --help     show help
-    -v, --version  show version
-
-  Commands:
-    new        create a new package
-    edit       edit an installed package
-    install    install new package
-    uninstall  uninstall package
-    unlink     unlink package
-    broken     list any broken symlinks
-    clean      rm broken symlinks
-    list       list installed packages
-    links      show symlinks installed by package(s)
-    pull       git pull package(s)
-    push       git push package(s)
-    status     show status of package(s)
-    publish    publish package to repository
-    search     search package repository
-```
+For full usage information you can read the [docs][docs-usage] or ask help from
+the command line with the `-h` option.
 
 ### Configuration
-You can customize ellipsis by exporting a few different variables.
+You can customize ellipsis by exporting a few different variables:
 
-#### ELLIPSIS_USER
-Customize whose dotfiles are installed when you `ellipsis install` without
-specifiying user or a full repo url.
-
-#### ELLIPSIS_REPO
-Customize location of ellipsis repo cloned during a curl-based install.
-
-#### ELLIPSIS_PACKAGES_URL
-Customizes which url is used to display available packages.
+| Variable                        | Description                                                                                                                                                          |
+|---------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `GITHUB_USER` / `ELLIPSIS_USER` | Customizes whose dotfiles are installed when you `ellipsis install` without specifying user or a full repo url. Defaults to `$(git config github.user)` or `whoami`. |
+| `ELLIPSIS_REPO`                 | Customize location of ellipsis repo cloned during a curl-based install. Defaults to `https://github.com/ellipsis/ellipsis`.                                          |
+| `ELLIPSIS_PROTO`                | Customizes which protocol new packages are cloned with, you can specify `https`,`ssh`, `git`. Defaults to `https`.                                                   |
+| `ELLIPSIS_PREFIX`               | Customizes the prefix of ellipsis configuration packages (default: `dot-`).                                                                                                            |
+| `ELLIPSIS_HOME`                 | Customize which folder files are symlinked into, defaults to `$HOME`. (Mostly useful for testing)                                                                    |
+| `ELLIPSIS_PATH`                 | Customize where ellipsis lives on your filesystem, defaults to `~/.ellipsis`.                                                                                        |
+| `ELLIPSIS_PACKAGES`             | Customize where ellipsis installs packages on your filesystem, defaults to `~/.ellipsis/packages`.                                                                   |
+| `ELLIPSIS_LOGFILE`              | Customize location of the logfile, defaults to `/tmp/ellipsis.log`.                                                                                                  |
 
 ```bash
 export ELLIPSIS_USER="zeekay"
-export ELLIPSIS_REPO="https://github.com/zeekay/ellipsis"
-export ELLIPSIS_PACKAGES_URL="https://raw.githubusercontent.com/zeekay/ellipsis/master/available-packages.txt"
+export ELLIPSIS_PROTO="ssh"
+export ELLIPSIS_PATH="~/.el"
 ```
 
 ### Packages
-A package is any repo with files you want to symlink into `$HOME`. By default a
-given repo's non-hidden files (read: not beginning with a `.`) will naively be
-linked into `$HOME`. Of course this isn't sufficient for a lot of cases, so you
-can customize how ellipsis treats your package by defining hooks in an
-`ellipsis.sh` file at the root of your repository.
+A package is any repo with files you want to symlink into `$ELLIPSIS_HOME`
+(typically `$HOME`). By default all of a repository's non-hidden files (read:
+not beginning with a `.`) will naively be linked into place, with the exception
+of a few common text files (`README`, `LICENSE`, etc).
 
-### Hooks
-Hooks allow you to customize how ellipsis interacts with your package.  For
-instance if you want to change how your package is installed you can define
-`pkg.install` and specifiy exactly which files are symlinked into `$HOME`,
-compile any libraries, etc.
-
-The follow hooks/variables are available in your `ellipsis.sh`:
-
-#### pkg.install
-Customize how package is installed. By default all files are symlinked into
-`$HOME`.
-
-#### pkg.uninstall
-Customize how package is uninstalled. By default all symlinks are removed from
-`$HOME`.
-
-#### pkg.push
-Customize how how changes are pushed `ellipsis push` is used.
-
-#### pkg.pull
-Customize how how changes are pulled in when `ellipsis pull` is used.
-
-#### pkg.status
-Customize output of `ellipsis status`.
-
-#### $PKG_NAME
-Name of your package.
-
-#### $PKG_PATH
-Path to your package.
-
-### API
-There are a number of functions ellipsis exposes which can be useful in your
-package's hooks:
-
-#### ellipsis.backup
-Moves existing file `$1` to `$1.bak`, taking care not to overwrite any existing
-backups.
-
-#### ellipsis.link_file
-Link a single file `$1` into `$HOME`, taking care to backup an existing file.
-
-#### ellipsis.link_files
-Links files in `$1` into `$HOME`, taking care to backup any existing files.
-
-#### ellipsis.run_installer
-Download an installation script from url `$1` with `curl` and execute it.
-
-#### utils.platform
-Platform detection, returns lowercase result of `uname`.
-
-#### git.[command]
-There are also several wrappers around common git operations which can be used
-for consistency with the rest of ellipsis: **git.clone**, **git.pull**,
-**git.push**, and **git.status**.
-
-### Available packages
-
-#### [zeekay/dot-alfred][alfred]
-Alfred configuration files.
-
-#### [zeekay/dot-atom][atom]
-Atom configuration files.
-
-#### [zeekay/dot-emacs][emacs]
-Emacs configuration files.
-
-#### [zeekay/dot-files][files]
-Default dotfiles for ellipsis.
-
-#### [zeekay/dot-irssi][irssi]
-Irssi configuration.
-
-#### [zeekay/dot-iterm2][iterm2]
-iTerm2 configuration files.
-
-#### [zeekay/dot-vim][vim]
-Vim configuration based on vice framework.
-
-#### [zeekay/dot-xmonad][xmonad]
-Xmonad configuration.
-
-#### [zeekay/dot-zsh][zsh]
-Zsh configuration using zeesh! framework.
-
-### Completions
-Completion file for zsh is [included](zshcomp). To use it you need to add
-`_ellipsis` to your `fpath` and enable auto-completion:
+You can customize how ellipsis interacts with your package by adding an
+`ellipsis.sh` file to the root of your project. Here's an example of a complete
+`ellipsis.sh` file:
 
 ```bash
-fpath=($HOME/.ellipsis/comp $fpath)
-autoload -U compinit; compinit
+#!/usr/bin/env bash
 ```
 
+Yep, that's it :) If all you want to do is symlink some files into `$HOME`,
+adding an `ellipsis.sh` to your package is completely optional. But what if you
+need more? [That's where hooks come in...][docs-hooks]
+
+### Docs
+Please consult the [docs][docs-url] for more information.
+
+Specific parts that could be off interest:
+- [Hooks][docs-hooks]
+- [Init system][docs-init]
+- [API][docs-api]
+- [Package index][docs-pkgindex]
+- [Upgrading to Ellipsis][docs-upgrading]
+- [Zsh completion][docs-completion]
+
 ### Development
-Pull requests welcome! New code should follow [Google's style
-guide][style-guide]. To run tests you need to install [bats][bats].
+Pull requests welcome! New code should follow the [existing style][style-guide]
+(and ideally include [tests][bats]).
 
-To suggest a feature or report a bug: http://github.com/zeekay/ellipsis/issues.
+Suggest a feature or report a bug? Create an [issue][issues]!
 
-[alfred]:      https://github.com/zeekay/dot-alfred
-[atom]:        https://github.com/zeekay/dot-atom
-[emacs]:       https://github.com/zeekay/dot-emacs
-[files]:       https://github.com/zeekay/dot-files
-[irssi]:       https://github.com/zeekay/dot-irssi
-[iterm2]:      https://github.com/zeekay/dot-iterm2
-[vim]:         https://github.com/zeekay/dot-vim
-[xmonad]:      https://github.com/zeekay/dot-xmonad
-[zsh]:         https://github.com/zeekay/dot-zsh
-[style-guide]: https://google-styleguide.googlecode.com/svn/trunk/shell.xml
-[bats]:        https://github.com/sstephenson/bats
+### License
+Ellipsis is open-source software licensed under the [MIT license][mit-license].
+
+[travis-image]: https://img.shields.io/travis/ellipsis/ellipsis.svg
+[travis-url]:   https://travis-ci.org/ellipsis/ellipsis
+[docs-image]:   https://readthedocs.org/projects/ellipsis/badge/?version=master
+[docs-url]:     http://docs.ellipsis.sh
+[tag-image]:    https://img.shields.io/github/tag/ellipsis/ellipsis.svg
+[tag-url]:      https://github.com/ellipsis/ellipsis/tags
+[gitter-image]: https://badges.gitter.im/ellipsis/ellipsis.svg
+[gitter-url]:   https://gitter.im/ellipsis/ellipsis
+
+[docs-installation]:    http://docs.ellipsis.sh/install
+[docs-usage]:           http://docs.ellipsis.sh/usage
+[docs-packages]:        http://docs.ellipsis.sh/packages
+[docs-hooks]:           http://docs.ellipsis.sh/hooks
+[docs-init]:            http://docs.ellipsis.sh/init
+[docs-api]:             http://docs.ellipsis.sh/api
+[docs-pkgindex]:        http://docs.ellipsis.sh/pkgindex
+[docs-upgrading]:       http://docs.ellipsis.sh/upgrading
+[docs-completion]:      http://docs.ellipsis.sh/completion
+
+[bats]:         https://github.com/sstephenson/bats
+[installer]:    https://github.com/ellipsis/ellipsis/blob/gh-pages/index.html
+[style-guide]:  https://google.github.io/styleguide/shell.xml
+[issues]:       http://github.com/ellipsis/ellipsis/issues
+[mit-license]:  http://opensource.org/licenses/MIT

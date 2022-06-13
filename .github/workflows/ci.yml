@@ -1,0 +1,14 @@
+name: "CI"
+on: [push, pull_request]
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Check out code
+        uses: actions/checkout@v1
+
+      - name: Test code with BATS
+        run: make test
+

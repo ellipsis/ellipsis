@@ -2,72 +2,282 @@
 
 load _helper
 load ellipsis
+load utils
 
 setup() {
-    mkdir -p tmp/ellipsis_home
-    export ELLIPSIS_HOME=tmp/ellipsis_home
+    export ELLIPSIS_HOME="$TESTS_DIR/tmp/ellipsis_home"
+    export ELLIPSIS_PACKAGES="$ELLIPSIS_HOME/.ellipsis/packages"
+    mkdir -p "$ELLIPSIS_PACKAGES"
+    echo 'old' > "$ELLIPSIS_HOME/.file"
+}
+
+clone_test_package() {
+    git clone "$TESTS_DIR/fixtures/dot-test" "$ELLIPSIS_PACKAGES/test" &>/dev/null
+}
+
+link_test_package() {
+    mv "$ELLIPSIS_HOME/.file" "$ELLIPSIS_HOME/.file.bak"
+    ln -s "$ELLIPSIS_PACKAGES/test/common/file" "$ELLIPSIS_HOME/.file"
+}
+
+link_broken() {
+    ln -s "$ELLIPSIS_PACKAGES/test/doesnotexist" "$ELLIPSIS_HOME/.doesnotexist"
+}
+
+modify_test_package() {
+    echo modified > "$ELLIPSIS_PACKAGES/test/common/file"
 }
 
 teardown() {
-    rm -rf tmp
+    rm -rf "$TESTS_DIR/tmp"
 }
 
-@test "ellipsis.install should install a new package" {
-    skip
+@test "ellipsis.install should install package" {
+    run ellipsis.install test/fixtures/dot-test
+    [ $status -eq 0 ]
+    # packages gets installed into packages
+    [ -e "$ELLIPSIS_PACKAGES/test/ellipsis.sh" ]
+    # creates symlinks
+    [ -L "$ELLIPSIS_HOME/.file" ]
+    [ "$(readlink "$ELLIPSIS_HOME/.file")" = "$ELLIPSIS_PACKAGES/test/common/file" ]
+    # creates backups
+    [ -e "$ELLIPSIS_HOME/.file.bak" ]
+    [ ! "$(cat "$ELLIPSIS_HOME/.file")" = old ]
+    run ellipsis.uninstall test
+}
+
+@test "ellipsis.install should install package using branch" {
+    run ellipsis.install ellipsis/dot-test2@test-branch
+    [ $status -eq 0 ]
+    # packages gets installed into packages
+    [ -e "$ELLIPSIS_PACKAGES/test2/ellipsis.sh" ]
+}
+
+@test "ellipsis.link should link a package" {
+    # Test specific setup
+    clone_test_package
+
+    run ellipsis.link test
+    [ $status -eq 0 ]
+    [ -L "$ELLIPSIS_HOME/.file" ]
 }
 
 @test "ellipsis.uninstall should uninstall a package" {
-    skip
+    # Test specific setup
+    clone_test_package
+    link_test_package
+
+    run ellipsis.uninstall test
+    [ $status -eq 0 ]
+    [ ! -e "$ELLIPSIS_PACKAGES/test/ellipsis.sh" ]
+    [ ! -e "$ELLIPSIS_HOME/.file" ]
 }
 
 @test "ellipsis.unlink should unlink a package" {
-    skip
+    # Test specific setup
+    clone_test_package
+    link_test_package
+
+    run ellipsis.unlink test
+    [ $status -eq 0 ]
+    [ ! -L "$ELLIPSIS_HOME/.file" ]
 }
 
-@test "ellipsis.list should list installed packages" {
-    skip
-}
+@test "ellipsis.installed should list installed packages" {
+    # Test specific setup
+    clone_test_package
+    link_test_package
 
-@test "ellipsis.new should create a new package" {
-    skip
+    run ellipsis.installed
+    [ $status -eq 0 ]
+    [[ "$(utils.strip_colors ${lines[0]})" == ellipsis* ]] || false
+    [[ "$(utils.strip_colors ${lines[1]})" == test* ]] || false
 }
 
 @test "ellipsis.edit should edit package ellipsis.sh" {
-    skip
+    # Test specific setup
+    clone_test_package
+    link_test_package
+
+    export EDITOR=cat
+    run ellipsis.edit test
+    [ $status -eq 0 ]
+    [ "${lines[0]}" = "#!/usr/bin/env bash" ]
+}
+
+@test "ellipsis.new should create a new package" {
+    run ellipsis.new foo
+    [ $status -eq 0 ]
+    [ -e "$ELLIPSIS_PACKAGES/foo/ellipsis.sh" ]
+    [ -e "$ELLIPSIS_PACKAGES/foo/README.md" ]
 }
 
 @test "ellipsis.each should run hook for each installed package" {
-    skip
+    # Test specific setup
+    clone_test_package
+    link_test_package
+
+    run ellipsis.each pkg.run_hook "installed"
+    [ $status -eq 0 ]
+    [[ "$(utils.strip_colors ${lines[0]})" == ellipsis* ]] || false
+    [[ "$(utils.strip_colors ${lines[1]})" == test* ]] || false
 }
 
 @test "ellipsis.list_packages should list installed packages" {
-    skip
+    # Test specific setup
+    clone_test_package
+    link_test_package
+
+    run ellipsis.list_packages
+    [ $status -eq 0 ]
+    [[ "$output" == "$ELLIPSIS_PACKAGES/test" ]] || false
 }
 
-@test "ellipsis.list_symlinks should list symlinks to installed packages" {
-    skip
+@test "ellipsis.links should list symlinks to installed packages" {
+    # Test specific setup
+    clone_test_package
+    link_test_package
+
+    run ellipsis.links
+    [ $status -eq 0 ]
+    [[ "${lines[0]}" == test/common/file* ]] || false
 }
 
-@test "ellipsis.symlinks should list symlinks to installed packages" {
-    skip
+@test "ellipsis.broken should not list symlinks if none are broken" {
+    # Test specific setup
+    clone_test_package
+    link_test_package
+
+    run ellipsis.broken
+    [[ "$output" == "" ]] || false
 }
 
-@test "ellipsis.broken should list broken symlinks in ELLIPSIS_HOME " {
-    skip
+@test "ellipsis.broken should list broken symlinks" {
+    # Test specific setup
+    link_broken
+
+    run ellipsis.broken
+    [[ "$output" == test/doesnotexist* ]] || false
 }
 
 @test "ellipsis.clean should remove broken symlinks from ELLIPSIS_HOME" {
-    skip
+    # Test specific setup
+    link_broken
+
+    run ellipsis.clean
+    [ $status -eq 0 ]
+    [ ! -e "$ELLIPSIS_HOME/.doesnotexist" ]
 }
 
 @test "ellipsis.status should show diffstat if changes in packages" {
-    skip
+    # Test specific setup
+    clone_test_package
+    link_test_package
+    modify_test_package
+
+    run ellipsis.status
+    [ $status -eq 0 ]
+    [[ "$output" = *common/file* ]] || false
 }
 
 @test "ellipsis.pull should update packages" {
-    skip
+    skip "No test implementation"
+
+    # Test specific setup
+    clone_test_package
+    link_test_package
+
+    run ellipsis.pull
+    [ $status -eq 0 ]
 }
 
 @test "ellipsis.push should push changes in packages" {
-    skip
+    skip "No test implementation"
+
+    # Test specific setup
+    clone_test_package
+    link_test_package
+
+    run ellipsis.push
+    [ $status -eq 0 ]
+}
+
+@test "ellipsis.add should add files to a package" {
+    # Test specific setup
+    run ellipsis.new foo
+
+    run ellipsis.add foo "$ELLIPSIS_HOME/.file"
+    [ $status -eq 0 ]
+    [ -L "$ELLIPSIS_HOME/.file" ]
+    [ -e "$ELLIPSIS_PACKAGES/foo/file" ]
+    [ "$(readlink "$ELLIPSIS_HOME/.file")" == "$ELLIPSIS_PACKAGES/foo/file" ]
+}
+
+@test "ellipsis.remove should remove files from a package" {
+    # Test specific setup
+    run ellipsis.new foo
+    run ellipsis.add foo "$ELLIPSIS_HOME/.file"
+
+    run ellipsis.remove foo "$ELLIPSIS_HOME/.file"
+    [ $status -eq 0 ]
+    [ -f "$ELLIPSIS_HOME/.file" ]
+    [ ! -L "$ELLIPSIS_HOME/.file" ]
+    [ ! -e "$ELLIPSIS_PACKAGES/foo/file" ]
+}
+
+@test "ellipsis.is_related should detect ellipsis related files" {
+    # Test specific setup
+    touch "$TESTS_DIR/tmp/test_file"
+    touch "$ELLIPSIS_HOME/test_file"
+    clone_test_package
+    link_test_package
+
+    run ellipsis.is_related "$TESTS_DIR/tmp/test_file"
+    [ $status -eq 1 ]
+    run ellipsis.is_related "$ELLIPSIS_HOME/test_file"
+    [ $status -eq 1 ]
+    run ellipsis.is_related "$ELLIPSIS_PATH"
+    [ $status -eq 0 ]
+    run ellipsis.is_related "$ELLIPSIS_HOME/.file"
+    [ $status -eq 0 ]
+    run ellipsis.is_related "$ELLIPSIS_PACKAGES/test/ellipsis.sh"
+    [ $status -eq 0 ]
+}
+
+@test "ellipsis.is_useless should detect \"useless\" files" {
+    # Test specific setup
+    touch "$TESTS_DIR/tmp/test_file"
+    touch "$ELLIPSIS_HOME/test_file"
+
+    run ellipsis.is_useless "$TESTS_DIR/tmp/test_file"
+    [ $status -eq 1 ]
+    run ellipsis.is_useless "$ELLIPSIS_HOME/test_file"
+    [ $status -eq 1 ]
+    run ellipsis.is_useless "$ELLIPSIS_HOME/.cache"
+    [ $status -eq 0 ]
+    run ellipsis.is_useless "$ELLIPSIS_HOME/.zcompdump"
+    [ $status -eq 0 ]
+    # Optionally test on all useless files
+}
+
+@test "ellipsis.is_sensitive should detect sensitive files" {
+    # Test specific setup
+    touch "$TESTS_DIR/tmp/test_file"
+    touch "$ELLIPSIS_HOME/test_file"
+    touch "$ELLIPSIS_HOME/test_file.history"
+
+    run ellipsis.is_sensitive "$TESTS_DIR/tmp/test_file"
+    [ $status -eq 1 ]
+    run ellipsis.is_sensitive "$ELLIPSIS_HOME/test_file"
+    [ $status -eq 1 ]
+    run ellipsis.is_sensitive "$ELLIPSIS_HOME/.ssh"
+    [ $status -eq 0 ]
+    run ellipsis.is_sensitive "$ELLIPSIS_HOME/.gitconfig"
+    [ $status -eq 0 ]
+    run ellipsis.is_sensitive "$ELLIPSIS_HOME/.gemrc"
+    [ $status -eq 0 ]
+    # Optionally test on all sensitive files
+
+    run ellipsis.is_sensitive "$ELLIPSIS_HOME/test_file.history"
+    [ $status -eq 0 ]
 }

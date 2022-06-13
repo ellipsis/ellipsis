@@ -7,74 +7,93 @@
 deps=(bash curl git)
 
 for dep in ${deps[*]}; do
-    hash $dep 2>/dev/null || { echo >&2 "ellipsis requires $dep to be installed."; exit 1; }
+    hash "$dep" 2>/dev/null || { echo >&2 "ellipsis requires $dep to be installed."; exit 1; }
 done
 
 # Create temp dir.
-tmp_dir=$(mktemp -d ${TMPDIR:-tmp}-XXXXXX)
+tmp_dir="$(mktemp -d "${TMPDIR:-tmp}"-XXXXXX)"
+
+# Build the repo url
+proto="${ELLIPSIS_PROTO:-https}"
+url="${ELLIPSIS_REPO:-$proto://github.com/ellipsis/ellipsis.git}"
 
 # Clone ellipsis into $tmp_dir.
-git clone --depth 1 git://github.com/zeekay/ellipsis.git $tmp_dir/ellipsis
+if ! git clone --depth 1 "$url" "$tmp_dir/ellipsis"; then
+    # Clean up
+    rm -rf "$tmp_dir"
+
+    # Print error message
+    echo >&2 "Installation failed!"
+    echo >&2 'Please check $ELLIPSIS_REPO and try again!'
+    exit 1
+fi
 
 # Save reference to specified ELLIPSIS_PATH (if any) otherwise final
 # destination: $HOME/.ellipsis.
-FINAL_ELLIPSIS_PATH=${ELLIPSIS_PATH:-$HOME/.ellipsis}
+FINAL_ELLIPSIS_PATH="${ELLIPSIS_PATH:-$HOME/.ellipsis}"
 
 # Temporarily set ellipsis PATH so we can load other files.
 ELLIPSIS_PATH="$tmp_dir/ellipsis"
+ELLIPSIS_SRC="$ELLIPSIS_PATH/src"
 
 # Initialize ellipsis.
-source $tmp_dir/ellipsis/src/init.bash
+source "$ELLIPSIS_SRC/init.bash"
 
 # Load modules.
 load ellipsis
 load fs
 load os
-load registry
+load msg
+load log
 
+# Set paths to final location
 ELLIPSIS_PATH="$FINAL_ELLIPSIS_PATH"
+ELLIPSIS_BIN="$ELLIPSIS_PATH/bin"
+ELLIPSIS_SRC="$ELLIPSIS_PATH/src"
 
-# Backup existing ~/.ellipsis if necessary and  move project into place.
-fs.backup $ELLIPSIS_PATH
-mv $tmp_dir/ellipsis $ELLIPSIS_PATH
+ELLIPSIS_PACKAGES="$ELLIPSIS_PATH/packages"
 
-# Clean up (only necessary on cygwin, really).
-rm -rf $tmp_dir
+# Backup existing ~/.ellipsis if necessary
+fs.backup "$ELLIPSIS_PATH"
 
-# Backwards compatability, originally referred to packages as modules.
-PACKAGES="${PACKAGES:-$MODULES}"
+# Move project into place
+if ! mv "$tmp_dir/ellipsis" "$ELLIPSIS_PATH"; then
+    # Clean up
+    rm -rf "$tmp_dir"
 
-if [ -z "$PACKAGES" ]; then
-    # List available packages.
-    registry.available
-
-    # List default packages for this platform.
-    if [ $(os.platform) = osx ]; then
-        default="zeekay/dot-files zeekay/dot-vim zeekay/dot-zsh zeekay/dot-alfred zeekay/dot-iterm2"
-    else
-        default="zeekay/dot-files zeekay/dot-vim zeekay/dot-zsh"
-    fi
-
-    echo "default: $default"
-
-    # allow user to override defaults
-    read packages < /dev/tty
-    packages="${packages:-$default}"
-else
-    # user already provided packages list to install
-    packages="$PACKAGES"
+    # Log error
+    log.fail "Installation failed!"
+    msg.print 'Please check $ELLIPSIS_PATH and try again!'
+    exit 1
 fi
 
-# install selected packages.
-for pkg in ${packages[*]}; do
-    echo -e "\033[1minstalling $pkg\033[0m"
-    ellipsis.install "$pkg"
-done
+# Clean up (only necessary on cygwin, really).
+rm -rf "$tmp_dir"
 
-echo
-echo 'Note: export PATH=~/.ellipsis/bin:$PATH to add ellipsis to your $PATH      '
-echo
-echo '   _    _    _'
-echo '  /\_\ /\_\ /\_\'
-echo '  \/_/ \/_/ \/_/                         …because $HOME is where the <3 is!'
-echo
+# Backwards compatibility, originally referred to packages as modules.
+PACKAGES="${PACKAGES:-$MODULES}"
+
+if [ "$PACKAGES" ]; then
+    msg.print ''
+    for pkg in ${PACKAGES[*]}; do
+        msg.bold "Installing $pkg"
+        ellipsis.install "$pkg"
+    done
+fi
+
+msg.print '
+                                   ~ fin ~
+   _    _    _
+  /\_\ /\_\ /\_\
+  \/_/ \/_/ \/_/                         …because $HOME is where the <3 is!
+
+Be sure to add `export PATH=~/.ellipsis/bin:$PATH` to your bashrc or zshrc.
+
+Run `ellipsis install <package>` to install a new package.
+Run `ellipsis search <query>` to search for packages to install.
+Run `ellipsis help` for additional options.'
+
+if [ -z "$PACKAGES" ]; then
+    msg.print ''
+    msg.print 'Check http://docs.ellipsis.sh/pkgindex for available packages!'
+fi

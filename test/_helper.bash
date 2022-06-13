@@ -3,13 +3,21 @@
 # test/_helper.bash
 # Just a little helper file for bats.
 
-export TESTS_DIR="$(cd `dirname "${BASH_SOURCE[0]}"` && pwd)"
-export PATH="$TESTS_DIR/../bin:$PATH"
+# Set path vars
+export TESTS_DIR=$( cd "${ELLIPSIS_TESTS_DIR:-$BATS_TEST_DIRNAME}" && pwd)
+export ELLIPSIS_PATH="${ELLIPSIS_TESTS_PATH:-$(cd "$TESTS_DIR/.." && pwd)}"
+export ELLIPSIS_SRC="$ELLIPSIS_PATH/src"
+export PATH="$ELLIPSIS_PATH/bin:$PATH"
+
+# Set tests directory (Read/Write)
+export HOME=${HOME:-$ELLIPSIS_PATH/tmp_home}
+export TESTS_DIR2="${HOME}/tmp_tests"
+
+# Don't log tests
+export ELLIPSIS_LOGFILE="/dev/null"
+
+# Reset nesting level
+export ELLIPSIS_LVL=0
 
 # Initialize ellipsis, which replaces bat's `load` function with ours.
 load ../src/init
-
-# Install ourselves for Travis CI
-if [ "$TRAVIS" ] && [ ! -e "/home/travis/.ellipsis" ]; then
-    ln -s /home/travis/build/zeekay/ellipsis /home/travis/.ellipsis
-fi

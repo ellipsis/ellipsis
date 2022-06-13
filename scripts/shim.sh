@@ -18,8 +18,8 @@ for dep in $deps; do
 done
 
 # Download full installer and execute with bash
-curl -sL https://raw.githubusercontent.com/zeekay/ellipsis/master/scripts/install.bash > install-$$.sh
-bash install-$$.sh
+curl -sL https://raw.githubusercontent.com/ellipsis/ellipsis/master/scripts/install.bash > install-$$.bash
+bash install-$$.bash
 
 # Clean up
-rm install-$$.sh
+rm install-$$.bash

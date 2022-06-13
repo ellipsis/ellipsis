@@ -1,3 +1,5 @@
 packages
 deps
 .DS_Store
+bin/*
+!bin/ellipsis

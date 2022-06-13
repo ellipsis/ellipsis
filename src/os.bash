@@ -3,17 +3,23 @@
 # Platform detection and OS functions.
 
 os.platform() {
-    case "$(uname | tr '[:upper:]' '[:lower:]')" in
-        cygwin*)
+    case "$(uname -rs)" in
+        CYGWIN*)
             echo cygwin
             ;;
-        darwin)
+        *WSL2|*microsoft-standard)
+            echo wsl2
+            ;;
+        *Microsoft)
+            echo wsl1
+            ;;
+        Darwin*)
             echo osx
             ;;
-        freebsd)
+        FreeBSD*)
             echo freebsd
             ;;
-        linux)
+        Linux*)
             echo linux
             ;;
     esac

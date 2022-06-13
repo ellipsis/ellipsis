@@ -18,10 +18,14 @@ setup() {
     ln -s ../not_empty/file tmp/symlinks/symlink
     ln -s $ELLIPSIS_PATH/test $ELLIPSIS_HOME/.test
     ln -s does_not_exist tmp/symlinks/brokensymlink
+    mkdir -p $ELLIPSIS_PACKAGES
+    touch $ELLIPSIS_PACKAGES/.test
+    ln -s $ELLIPSIS_PACKAGES/.test $ELLIPSIS_HOME/.test_pkg
 }
 
 teardown() {
     rm -rf tmp
+    rm $ELLIPSIS_PACKAGES/.test
 }
 
 @test "fs.file_exists should detect file that exists" {
@@ -109,25 +113,139 @@ teardown() {
     [ ! -e tmp/broken_symlink ]
 }
 
+@test "fs.link_rfile should link a regular file into HOME" {
+    run fs.link_rfile tmp/file_to_link
+    [ $status -eq 0 ]
+    [ -f "$(readlink "$ELLIPSIS_HOME/file_to_link")" ]
+    [ -f tmp/file_to_link ]
+    [[ "$output" == linking* ]] || false
+}
+
+@test "fs.link_rfile should link a regular file to a custom location" {
+    # Setup
+    mkdir tmp/test
+
+    run fs.link_rfile tmp/file_to_link tmp/test/file1
+    [ $status -eq 0 ]
+    [ -f "$(readlink "tmp/test/file1")" ]
+    [ -f tmp/file_to_link ]
+    [[ "$output" == linking* ]] || false
+}
+
+@test "fs.link_rfile should create a backup for existing files" {
+    # Setup
+    touch "$ELLIPSIS_HOME/file_to_link"
+
+    run fs.link_rfile tmp/file_to_link
+    [ $status -eq 0 ]
+    [ -f "$(readlink "$ELLIPSIS_HOME/file_to_link")" ]
+    [ -f tmp/file_to_link ]
+    [ -f "$ELLIPSIS_HOME/file_to_link.bak" ]
+}
+
 @test "fs.link_file should link a file into HOME" {
     run fs.link_file tmp/file_to_link
     [ $status -eq 0 ]
-    [ -f $(readlink $ELLIPSIS_HOME/.file_to_link) ]
+    [ -f "$(readlink "$ELLIPSIS_HOME/.file_to_link")" ]
     [ -f tmp/file_to_link ]
-    [[ "$output" == linking* ]]
+    [[ "$output" == linking* ]] || false
 }
 
-@test "fs.link_files should link all the files in folder into HOME" {
+@test "fs.link_rfiles should link all regular files in a folder into HOME" {
+    run fs.link_rfiles tmp
+    [ $status -eq 0 ]
+    [ -f "$(readlink "$ELLIPSIS_HOME/file_to_link")" ]
+    [ -f tmp/file_to_link ]
+    [ -f "$(readlink "$ELLIPSIS_HOME/file_to_backup")" ]
+    [ -f tmp/file_to_backup ]
+    [[ "$output" == linking* ]] || false
+}
+
+@test "fs.link_rfiles should link all regular files in a folder to a custom location" {
+    # Setup
+    mkdir tmp/test
+
+    run fs.link_rfiles tmp tmp/test
+    [ $status -eq 0 ]
+    [ -f "$(readlink "tmp/test/file_to_link")" ]
+    [ -f tmp/file_to_link ]
+    [ -f "$(readlink "tmp/test/file_to_backup")" ]
+    [ -f tmp/file_to_backup ]
+    [[ "$output" == linking* ]] || false
+}
+
+@test "fs.link_rfiles should link all regular files in a folder with a custom prefix" {
+    # Setup
+    mkdir tmp/test
+
+    run fs.link_rfiles tmp tmp/test 'test_'
+    [ $status -eq 0 ]
+    [ -f "$(readlink "tmp/test/test_file_to_link")" ]
+    [ -f tmp/file_to_link ]
+    [ -f "$(readlink "tmp/test/test_file_to_backup")" ]
+    [ -f tmp/file_to_backup ]
+    [[ "$output" == linking* ]] || false
+}
+
+@test "fs.link_files should link all the files in a folder into HOME" {
     run fs.link_files tmp
     [ $status -eq 0 ]
-    [ -f $(readlink $ELLIPSIS_HOME/.file_to_link) ]
+    [ -f "$(readlink "$ELLIPSIS_HOME/.file_to_link")" ]
     [ -f tmp/file_to_link ]
-    [ -f $(readlink $ELLIPSIS_HOME/.file_to_backup) ]
+    [ -f "$(readlink "$ELLIPSIS_HOME/.file_to_backup")" ]
     [ -f tmp/file_to_backup ]
-    [[ "$output" == linking* ]]
+    [[ "$output" == linking* ]] || false
 }
 
-@test "fs.is_ellipsis_symlink should detect symlink pointing back to ELLIPSIS_PATH" {
+@test "fs.link_files should link all the files in a folder to a custom location" {
+    # Setup
+    mkdir tmp/test
+
+    run fs.link_files tmp tmp/test
+    [ $status -eq 0 ]
+    [ -f "$(readlink "tmp/test/.file_to_link")" ]
+    [ -f tmp/file_to_link ]
+    [ -f "$(readlink "tmp/test/.file_to_backup")" ]
+    [ -f tmp/file_to_backup ]
+    [[ "$output" == linking* ]] || false
+}
+
+@test "fs.is_ellipsis_symlink should detect symlink pointing back to ELLIPSIS_PATH or ELLIPSIS_PACKAGES" {
     run fs.is_ellipsis_symlink $ELLIPSIS_HOME/.test
     [ $status -eq 0 ]
+    run fs.is_ellipsis_symlink $ELLIPSIS_HOME/.test_pkg
+    [ $status -eq 0 ]
+    run fs.is_ellipsis_symlink tmp/not_empty
+    [ $status -eq 1 ]
+}
+
+@test "fs.is_ellipsis_core_symlink should detect symlink pointing back to ELLIPSIS_PATH" {
+    run fs.is_ellipsis_core_symlink $ELLIPSIS_HOME/.test
+    [ $status -eq 0 ]
+    run fs.is_ellipsis_core_symlink $ELLIPSIS_HOME/.test_pkg
+    [ $status -eq 1 ]
+}
+
+@test "fs.is_ellipsis_package_symlink should detect symlink pointing back to ELLIPSIS_PACKAGES" {
+    run fs.is_ellipsis_package_symlink $ELLIPSIS_HOME/.test_pkg
+    [ $status -eq 0 ]
+    run fs.is_ellipsis_package_symlink $ELLIPSIS_HOME/.test
+    [ $status -eq 1 ]
+}
+
+@test "fs.first_found should echo first file found in filelist" {
+    # Setup
+    mkdir -p tmp/files
+    touch tmp/files/file2
+    touch tmp/files/file3
+
+    # Test successful
+    run fs.first_found tmp/files/file1 tmp/files/file2 tmp/files/file3
+    [ $status -eq 0 ]
+    [ "$output" == "tmp/files/file2" ]
+
+    # Test failing source
+    run fs.first_found does_not_exist_1 does_not_exist_2
+    [ $status -eq 1 ]
+    [ "$output" = "" ]
 }

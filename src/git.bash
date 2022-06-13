@@ -6,24 +6,30 @@
 # by package authors for consistency with them.
 
 load pkg
+load msg
 
 # Clone a Git repo.
 git.clone() {
-    git clone --depth 1 "$@" 2>&1 | grep 'Cloning into'
+    git clone --depth 1 "$@"
 }
 
 # Pull git repo.
 git.pull() {
-    pkg.init_globals ${1:-$PKG_NAME}
-    echo -e "\033[1mupdating $PKG_NAME\033[0m"
+    pkg.set_globals "${1:-$PKG_NAME}"
+    msg.bold "updating $PKG_NAME"
     git pull
 }
 
 # Push git repo.
 git.push() {
-    pkg.init_globals ${1:-$PKG_NAME}
-    echo -e "\033[1mpushing $PKG_NAME\033[0m"
+    pkg.set_globals ${1:-$PKG_NAME}
+    msg.bold "pushing $PKG_NAME"
     git push
+}
+
+# Print remote branch name
+git.remote_branch() {
+    git rev-parse --abbrev-ref "@{u}"
 }
 
 # Print last commit's sha1 hash.
@@ -38,18 +44,79 @@ git.last_updated() {
 
 # Print how far ahead git repo is
 git.ahead() {
-    git status -sb --porcelain | grep --color=no -o '\[.*\]'
+    git status -sb --porcelain | grep -o '\[.*\]'
 }
 
-# Check whether get repo has changes.
-git.has_changes() {
-    if  git diff-index --quiet HEAD --; then
-        return 0
+# Print how far behind git repo is
+git.behind() {
+    git rev-list "HEAD...$(git.remote_branch)" --count
+}
+
+# Return if current repo is behind remote branch
+git.is_behind() {
+    if [ "$(git.behind)" -eq "0" ]; then
+        return 1
     fi
-    return 1
+    return 0
+}
+
+# Check whether git repo has changes.
+git.has_changes() {
+    # Refresh index before using it
+    git update-index --refresh 2>&1 > /dev/null
+
+    if git diff-index --quiet HEAD --; then
+        return 1
+    fi
+    return 0
+}
+
+# Check for untracked files
+# ! Only works if the pwd is the root of the repo
+git.has_untracked() {
+    if [ -z "$(git ls-files -o --exclude-standard)" ]; then
+        return 1
+    fi
+    return 0
 }
 
 # Print diffstat for git repo
 git.diffstat() {
     git --no-pager diff --stat --color=always
+}
+
+# Print status for git repo
+git.status() {
+    git status -s
+}
+
+# Checks if git is configured as we expect.
+git.configured() {
+    for key in user.name user.email github.user; do
+        if [ -z "$(git config --global $key | cat)"  ]; then
+            return 1
+        fi
+    done
+    return 0
+}
+
+# Adds an include safely.
+git.add_include() {
+    git config --global --unset-all include.path $1
+    if [ -z "$(git config --global include.path)" ]; then
+        git config --global --remove-section include &>/dev/null
+    fi
+    git config --global --add include.path $1
+}
+
+# Indicates if an update is needed (not perfect + rather slow)
+# Generaly you want to use git.is_behind
+git.needs_update() {
+    # Update remote references
+    git remote update 2>&1 > /dev/null
+
+    if [ -z "$(git status -s -uno)" ]; then
+        return 1
+    fi
+    return 0
 }
