@@ -63,7 +63,7 @@ pkg.env_up() {
 
     # Exit if we're asked to operate on an unknown package.
     if [ ! -d "$PKG_PATH" ]; then
-        log.fail "Unkown package $PKG_NAME, $(path.relative_to_home "$PKG_PATH") missing!"
+        log.fail "Unknown package $PKG_NAME, $(path.relative_to_home "$PKG_PATH") missing!"
         exit 1
     fi
 
